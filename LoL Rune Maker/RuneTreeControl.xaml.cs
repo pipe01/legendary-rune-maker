@@ -21,7 +21,7 @@ namespace LoL_Rune_Maker
     /// Interaction logic for RuneTree.xaml
     /// </summary>
     public partial class RuneTreeControl : UserControl
-    {        
+    {
         private readonly WebClient Client = new WebClient();
 
         private Rune[] _SelectedRunes = new Rune[4];
@@ -39,16 +39,16 @@ namespace LoL_Rune_Maker
             Picker.SelectionChanged += Picker_SelectionChanged;
         }
         
-        private async void UserControl_Initialized(object sender, EventArgs e)
-        {
-            await Picker.SetIDs(new[] { 8000, 8100, 8200, 8300, 8400 });
-            SetTree((await Riot.GetRuneTrees())[0]);
-        }
-
         private async void Picker_SelectionChanged(object sender, EventArgs e)
         {
             SetTree((await Riot.GetRuneTrees()).Single(o => o.ID == Picker.SelectedTree));
             SelectedTreeChanged?.Invoke(this, Picker.SelectedTree);
+        }
+
+        public async Task Initialize()
+        {
+            await Picker.SetIDs(new[] { 8000, 8100, 8200, 8300, 8400 });
+            SetTree((await Riot.GetRuneTrees())[0]);
         }
 
         public void SetTree(RuneTree tree)

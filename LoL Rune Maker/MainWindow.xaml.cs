@@ -28,6 +28,8 @@ namespace LoL_Rune_Maker
     {
         public MainWindow()
         {
+            Application.Current.MainWindow = this;
+
             InitializeComponent();
         }
 
@@ -35,29 +37,20 @@ namespace LoL_Rune_Maker
 
         private async void Window_Initialized(object sender, EventArgs e)
         {
-            if (!LeagueClient.TryInit())
-            {
-                MessageBox.Show("Make sure the League of Legends client is open!");
-                this.Close();
-            }
-
-            await Riot.CacheAllImages();
-
             LeagueSocket.Subscribe<LolLobbyLobbyDto>(Lobby.Endpoint, LobbyChanged);
 
             RuneTree[] trees = await Riot.GetRuneTrees();
 
-            Tree.SetTree(trees[0]);
+            await Tree.Initialize();
             Second.SetTree(trees[1]);
             await SetSecondaryTrees();
+
+            this.Show();
         }
 
         private void LobbyChanged(string eventType, LolLobbyLobbyDto data)
         {
-            Dispatcher.Invoke(() =>
-            {
-                FirstPosition.Text = data.localMember.firstPositionPreference;
-            });
+            Dispatcher.Invoke(() => FirstPosition.Text = data.localMember.firstPositionPreference);
         }
 
         private async Task SetSecondaryTrees()

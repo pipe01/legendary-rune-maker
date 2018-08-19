@@ -19,7 +19,9 @@ namespace LoL_Rune_Maker.Data
     public class ImageCache
     {
         public static ImageCache Instance { get; } = new ImageCache("cache");
-        
+
+        public bool LocalCache => Directory.Exists(CachePath);
+
         private IDictionary<string, (BitmapSource n, BitmapSource g, byte[] d)> Dicc = new Dictionary<string, (BitmapSource, BitmapSource, byte[])>();
 
         private readonly string CachePath;

@@ -1,0 +1,15 @@
+﻿<Window x:Class="LoL_Rune_Maker.LoadingWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LoL_Rune_Maker"
+        mc:Ignorable="d"
+        Title="LoadingWindow" Height="172.556" Width="309.398" ResizeMode="NoResize" Initialized="Window_Initialized"
+        Background="#010A13" WindowStartupLocation="CenterScreen">
+    <StackPanel VerticalAlignment="Center">
+        <TextBlock Text="Loading..." FontSize="25" Style="{StaticResource LoLText}" HorizontalAlignment="Center" />
+
+        <ProgressBar x:Name="Progress" Maximum="1" Height="20" Margin="10 10 10 0" />
+    </StackPanel>
+</Window>

@@ -29,18 +29,17 @@ namespace LoL_Rune_Maker.Data
         public static async Task<IDictionary<int, RuneTree>> GetRuneTreesByID()
             => (await GetRuneTrees()).ToDictionary(o => o.ID);
 
-        public static async Task CacheAllImages()
+        public static async Task CacheAllImages(Action<double> progress)
         {
-            foreach (var tree in await GetRuneTrees())
+            int p = 0;
+            var runes = (await GetRuneTrees()).SelectMany(o => o.Slots).SelectMany(o => o.Runes);
+            int count = runes.Count();
+
+            await Task.WhenAll(runes.Select(async o =>
             {
-                foreach (var slot in tree.Slots)
-                {
-                    foreach (var rune in slot.Runes)
-                    {
-                        await ImageCache.Instance.Get(ImageEndpoint + rune.IconURL);
-                    }
-                }
-            }
+                await ImageCache.Instance.Get(ImageEndpoint + o.IconURL);
+                progress((double)p++ / count);
+            }));
         }
     }
 }

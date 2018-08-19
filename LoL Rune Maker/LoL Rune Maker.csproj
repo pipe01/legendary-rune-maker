@@ -69,6 +69,9 @@
     <Compile Include="GrayscaleImageControl.xaml.cs">
       <DependentUpon>GrayscaleImageControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="LoadingWindow.xaml.cs">
+      <DependentUpon>LoadingWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="LoLButton.xaml.cs">
       <DependentUpon>LoLButton.xaml</DependentUpon>
     </Compile>
@@ -86,6 +89,10 @@
     </Compile>
     <Compile Include="Utils\BitmapUtils.cs" />
     <Page Include="GrayscaleImageControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="LoadingWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
