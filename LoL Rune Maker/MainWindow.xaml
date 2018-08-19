@@ -1,0 +1,23 @@
+﻿<Window x:Class="LoL_Rune_Maker.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LoL_Rune_Maker"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800" Initialized="Window_Initialized" Background="#010A13">
+    <Grid>
+        <Grid Width="475" Height="250">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="25" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <local:LoLButton Width="Auto" Height="32" Margin="74,109,59,109" Text="Save" />
+
+            <local:RuneTreeControl Visibility="Hidden" x:Name="Tree" Grid.Column="0" Width="225" Height="250" SelectedTreeChanged="Tree_SelectedTreeChanged" />
+            <local:SecondaryTreeControl x:Name="Second" Grid.Column="2" Width="225" Height="225" />
+        </Grid>
+    </Grid>
+</Window>

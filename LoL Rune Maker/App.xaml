@@ -1,0 +1,27 @@
+﻿<Application x:Class="LoL_Rune_Maker.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:LoL_Rune_Maker"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <SolidColorBrush x:Key="Normal" Color="#D6C8A5" />
+        <SolidColorBrush x:Key="Pressed" Color="#5C5B57" />
+        
+        <FontFamily x:Key="BeaufortBold">pack://application:,,,/Fonts/#Beaufort</FontFamily>
+        <Style x:Key="LoLText" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="{StaticResource BeaufortBold}" />
+            <Setter Property="FontSize" Value="14.4" />
+            <Setter Property="Foreground" Value="{StaticResource Normal}" />
+        </Style>
+
+        <BitmapImage x:Key="HighlightedFill" UriSource="Images/highlighted-fill.png" />
+        <BitmapImage x:Key="HighlightedSide" UriSource="Images/highlighted-side.png" />
+        <BitmapImage x:Key="NormalFill" UriSource="Images/enabled-fill.png" />
+        <BitmapImage x:Key="NormalSide" UriSource="Images/enabled-side.png" />
+        <BitmapImage x:Key="DisabledFill" UriSource="Images/disabled-fill.png" />
+        <BitmapImage x:Key="DisabledSide" UriSource="Images/disabled-side.png" />
+        <BitmapImage x:Key="PressedFill" UriSource="Images/pressed-fill.png" />
+        <BitmapImage x:Key="PressedSide" UriSource="Images/pressed-side.png" />
+
+    </Application.Resources>
+</Application>
