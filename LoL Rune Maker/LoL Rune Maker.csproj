@@ -63,7 +63,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Data\ImageCache.cs" />
+    <Compile Include="Data\Position.cs" />
     <Compile Include="Data\Riot.cs" />
+    <Compile Include="Data\RunePage.cs" />
     <Compile Include="GrayscaleImageControl.xaml.cs">
       <DependentUpon>GrayscaleImageControl.xaml</DependentUpon>
     </Compile>
@@ -166,6 +168,15 @@
   <ItemGroup>
     <Resource Include="Images\pressed-fill.png" />
     <Resource Include="Images\pressed-side.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\background.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="H:\PIPENDOS\Projects\LoL API\LCU.NET\LCU.NET.csproj">
+      <Project>{531938f3-2e4e-4c45-be4d-ceced31ac294}</Project>
+      <Name>LCU.NET</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

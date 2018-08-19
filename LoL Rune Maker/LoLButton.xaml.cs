@@ -43,7 +43,9 @@ namespace LoL_Rune_Maker
             set { SetValue(FillProperty, value); }
         }
         public static readonly DependencyProperty FillProperty = DependencyProperty.Register("Fill", typeof(ImageSource), typeof(LoLButton));
-        
+
+        public event EventHandler Click;
+
         public LoLButton()
         {
             InitializeComponent();
@@ -60,13 +62,16 @@ namespace LoL_Rune_Maker
             => SetImages("Normal");
 
         private void UserControl_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
-            => SetImages("Disabled");
+            => SetImages(IsEnabled ? "Normal" : "Disabled");
 
         private void UserControl_MouseDown(object sender, MouseButtonEventArgs e)
             => SetImages("Pressed");
 
         private void UserControl_MouseUp(object sender, MouseButtonEventArgs e)
-            => SetImages("Highlighted");
+        {
+            SetImages("Highlighted");
+            Click?.Invoke(sender, EventArgs.Empty);
+        }
 
         private void SetImages(string phase)
         {

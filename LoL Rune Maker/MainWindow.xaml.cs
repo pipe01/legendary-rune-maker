@@ -1,4 +1,7 @@
-﻿using LoL_Rune_Maker.Data;
+﻿using LCU.NET;
+using LCU.NET.API_Models;
+using LCU.NET.Plugins.LoL;
+using LoL_Rune_Maker.Data;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -28,20 +31,44 @@ namespace LoL_Rune_Maker
             InitializeComponent();
         }
 
+        private int[] SelectedRunes => Tree.SelectedRunes.Concat(Second.SelectedRunes).Where(o => o != null).Select(o => o.ID).ToArray();
+
         private async void Window_Initialized(object sender, EventArgs e)
         {
+            if (!LeagueClient.TryInit())
+            {
+                MessageBox.Show("Make sure the League of Legends client is open!");
+                this.Close();
+            }
+
             await Riot.CacheAllImages();
 
             RuneTree[] trees = await Riot.GetRuneTrees();
 
             Tree.SetTree(trees[0]);
             Second.SetTree(trees[1]);
-            await Second.SetValidTrees((await Riot.GetRuneTrees()).Skip(1).Select(o => o.ID).ToArray());
+            await SetSecondaryTrees();
+        }
+
+        private async Task SetSecondaryTrees()
+        {
+            await Second.SetValidTrees((await Riot.GetRuneTreesByID()).Keys.Where(o => o != Tree.SelectedTree.ID).ToArray());
         }
 
         private async void Tree_SelectedTreeChanged(object sender, int e)
         {
-            await Second.SetValidTrees((await Riot.GetRuneTreesByID()).Keys.Where(o => o != e).ToArray());
+            await SetSecondaryTrees();
+        }
+        
+        private async void Upload_Click(object sender, EventArgs e)
+        {
+            var page = new RunePage(SelectedRunes, Tree.SelectedTree.ID, Second.SelectedTree.ID);
+            await page.UploadToClient();
+        }
+
+        private void Tree_SelectedRunesChanged(object sender, EventArgs e)
+        {
+            Upload.IsEnabled = SelectedRunes.Length == 6;
         }
     }
 }

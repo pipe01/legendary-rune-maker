@@ -5,13 +5,13 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:LoL_Rune_Maker"
              mc:Ignorable="d" IsEnabledChanged="UserControl_IsEnabledChanged"
-             Height="32" Width="78" Cursor="Hand" MouseEnter="UserControl_MouseEnter" MouseLeave="UserControl_MouseLeave"
-             MouseDown="UserControl_MouseDown" MouseUp="UserControl_MouseUp">
+             d:DesignHeight="32" d:DesignWidth="78" Cursor="Hand" MouseEnter="UserControl_MouseEnter"
+             MouseLeave="UserControl_MouseLeave" MouseDown="UserControl_MouseDown" MouseUp="UserControl_MouseUp">
 
-    <Grid Margin="0,0,-16,0">
+    <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="5" />
-            <ColumnDefinition Width="*" />
+            <ColumnDefinition />
             <ColumnDefinition Width="5" />
         </Grid.ColumnDefinitions>
 
@@ -27,10 +27,10 @@
                    VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource LoLText}"/>
 
         <Image x:Name="ImgLeft" Grid.Column="0" Source="{Binding Side}" Stretch="None" />
-        <Image x:Name="ImgRight" Grid.Column="2" Source="{Binding Side}" Stretch="None" RenderTransformOrigin="0.5,0.5">
-            <Image.RenderTransform>
+        <Image x:Name="ImgRight" Grid.Column="2" Source="{Binding Side}" Stretch="None" FlowDirection="RightToLeft" />
+        <!--<Image.RenderTransform>
                 <ScaleTransform ScaleX="-1" />
             </Image.RenderTransform>
-        </Image>
+        </Image>-->
     </Grid>
 </UserControl>

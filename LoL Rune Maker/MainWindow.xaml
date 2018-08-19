@@ -5,19 +5,47 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LoL_Rune_Maker"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" Initialized="Window_Initialized" Background="#010A13">
+        Title="MainWindow" Height="305" Width="800" Initialized="Window_Initialized">
+
+    <Window.Background>
+        <VisualBrush Stretch="UniformToFill">
+            <VisualBrush.Visual>
+                <Viewbox>
+                    <Grid>
+                        <Image Source="Images/background.png" />
+                        <Rectangle Fill="#B0000000" />
+                    </Grid>
+                </Viewbox>
+            </VisualBrush.Visual>
+        </VisualBrush>
+    </Window.Background>
+    
     <Grid>
-        <Grid Width="475" Height="250">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="500" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        
+        <Grid Grid.Column="0" Width="475" Height="250" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition Width="25" />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
-            <local:LoLButton Width="Auto" Height="32" Margin="74,109,59,109" Text="Save" />
+            <local:RuneTreeControl x:Name="Tree" Grid.Column="0" Width="225" Height="250"
+                                   SelectedTreeChanged="Tree_SelectedTreeChanged" SelectedRunesChanged="Tree_SelectedRunesChanged" />
+            <local:SecondaryTreeControl x:Name="Second" Grid.Column="2" Width="225" Height="225"
+                                   SelectedRunesChanged="Tree_SelectedRunesChanged" VerticalAlignment="Top" />
+        </Grid>
 
-            <local:RuneTreeControl Visibility="Hidden" x:Name="Tree" Grid.Column="0" Width="225" Height="250" SelectedTreeChanged="Tree_SelectedTreeChanged" />
-            <local:SecondaryTreeControl x:Name="Second" Grid.Column="2" Width="225" Height="225" />
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <local:LoLButton x:Name="Upload" Text="Upload" Margin="5" Click="Upload_Click" IsEnabled="False" />
         </Grid>
     </Grid>
 </Window>

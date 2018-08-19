@@ -19,16 +19,18 @@ namespace LoL_Rune_Maker
             InitializeComponent();
         }
 
-        public Rune[] Selection => SelectedRunes.Select(o => o.Rune).ToArray();
+        private IList<SRune> _SelectedRunes = new List<SRune>();
+        public Rune[] SelectedRunes => _SelectedRunes.Select(o => o.Rune).ToArray();
 
-        private IList<SRune> SelectedRunes = new List<SRune>();
-        private int CurrentTree;
+        public RuneTree SelectedTree { get; private set; }
 
+        public event EventHandler SelectedRunesChanged;
+        
         public async Task SetValidTrees(int[] trees)
         {
             await Picker.SetIDs(trees);
 
-            if (!trees.Contains(CurrentTree))
+            if (!trees.Contains(SelectedTree.ID))
             {
                 Picker.SelectedTree = trees[0];
                 SetTree((await Riot.GetRuneTreesByID())[trees[0]]);
@@ -37,7 +39,7 @@ namespace LoL_Rune_Maker
 
         public void SetTree(RuneTree tree)
         {
-            CurrentTree = tree.ID;
+            SelectedTree = tree;
             TreeGrid.Children.Clear();
             TreeGrid.RowDefinitions.Clear();
 
@@ -72,36 +74,38 @@ namespace LoL_Rune_Maker
             int col = Grid.GetColumn(el);
             int row = Grid.GetRow((UIElement)el.Parent);
 
-            if (SelectedRunes.Any(o => o.Control == el))
+            if (_SelectedRunes.Any(o => o.Control == el))
                 return;
 
-            var sameRow = SelectedRunes.SingleOrDefault(o => o.Row == row);
+            var sameRow = _SelectedRunes.SingleOrDefault(o => o.Row == row);
             if (!sameRow.Equals(default(SRune)))
             {
-                SelectedRunes.Remove(sameRow);
+                _SelectedRunes.Remove(sameRow);
                 sameRow.Control.Selected = false;
             }
 
-            if (SelectedRunes.Count >= 2)
+            if (_SelectedRunes.Count >= 2)
             {
-                var first = SelectedRunes[0];
-                SelectedRunes.RemoveAt(0);
+                var first = _SelectedRunes[0];
+                _SelectedRunes.RemoveAt(0);
 
                 first.Control.Selected = false;
             }
 
-            SelectedRunes.Add(new SRune
+            _SelectedRunes.Add(new SRune
             {
                 Column = col,
                 Row = row,
                 Rune = (Rune)el.Tag,
                 Control = el
             });
+
+            SelectedRunesChanged?.Invoke(this, EventArgs.Empty);
         }
 
         private async void Picker_SelectionChanged(object sender, EventArgs e)
         {
-            SelectedRunes.Clear();
+            _SelectedRunes.Clear();
             SetTree((await Riot.GetRuneTreesByID())[Picker.SelectedTree]);
         }
 
