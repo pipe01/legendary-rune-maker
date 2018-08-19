@@ -13,6 +13,8 @@ namespace LoL_Rune_Maker.Game
     {
         private static LolChampSelectChampSelectSession Session;
 
+        public static LolChampSelectChampSelectPlayerSelection CurrentSelection => Session?.myTeam.Single(o => o.cellId == Session.localPlayerCellId);
+
         public static event Action<LolChampSelectChampSelectSession> SessionUpdated;
 
         public static void Init()
