@@ -7,5 +7,33 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" Cursor="Hand" MouseEnter="UserControl_MouseEnter"
              MouseLeave="UserControl_MouseLeave" Initialized="UserControl_Initialized" MouseDown="UserControl_MouseDown">
-    <Image x:Name="View" />
+
+    <UserControl.Resources>
+        <Style TargetType="ToolTip">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ToolTip">
+                        <ContentPresenter />
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+
+    <Image x:Name="View" ToolTipService.ShowDuration="12000">
+        <Image.ToolTip>
+            <Grid Width="Auto" Height="Auto">
+                <Border Background="#010A13" BorderBrush="#463714" BorderThickness="2" />
+
+                <StackPanel Width="Auto" Height="Auto" MaxWidth="280" Margin="10">
+                    <TextBlock TextWrapping="Wrap" Text="{Binding Rune.UppercaseName}" Style="{StaticResource LoLText}"
+                               FontSize="15" Foreground="#F0E6D2" />
+                    <RichTextBox x:Name="Description" IsReadOnly="True" IsReadOnlyCaretVisible="False"
+                                 Background="Transparent" BorderThickness="0" Padding="0" Margin="0"
+                                 Foreground="#918C7F">
+                    </RichTextBox>
+                </StackPanel>
+            </Grid>
+        </Image.ToolTip>
+    </Image>
 </UserControl>

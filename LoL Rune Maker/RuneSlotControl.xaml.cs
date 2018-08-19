@@ -41,7 +41,7 @@ namespace LoL_Rune_Maker
             {
                 MainGrid.ColumnDefinitions.Add(new ColumnDefinition());
 
-                var image = new GrayscaleImageControl(Riot.ImageEndpoint + rune.IconURL);
+                var image = new GrayscaleImageControl(rune);
                 image.MouseDown += Image_MouseDown;
                 image.Tag = rune;
 

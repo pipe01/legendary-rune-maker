@@ -14,6 +14,7 @@ namespace LoL_Rune_Maker.Data
         public int SecondaryTree { get; set; }
 
         public int ChampionID { get; set; }
+        public Position Position { get; set; }
 
         public RunePage()
         {

@@ -43,11 +43,21 @@ namespace LoL_Rune_Maker
 
             await Riot.CacheAllImages();
 
+            LeagueSocket.Subscribe<LolLobbyLobbyDto>(Lobby.Endpoint, LobbyChanged);
+
             RuneTree[] trees = await Riot.GetRuneTrees();
 
             Tree.SetTree(trees[0]);
             Second.SetTree(trees[1]);
             await SetSecondaryTrees();
+        }
+
+        private void LobbyChanged(string eventType, LolLobbyLobbyDto data)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                FirstPosition.Text = data.localMember.firstPositionPreference;
+            });
         }
 
         private async Task SetSecondaryTrees()

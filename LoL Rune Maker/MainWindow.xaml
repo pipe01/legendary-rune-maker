@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LoL_Rune_Maker"
-        mc:Ignorable="d"
+        mc:Ignorable="d" ResizeMode="CanMinimize"
         Title="MainWindow" Height="305" Width="800" Initialized="Window_Initialized">
 
     <Window.Background>
@@ -41,11 +41,15 @@
 
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
                 <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
-            <local:LoLButton x:Name="Upload" Text="Upload" Margin="5" Click="Upload_Click" IsEnabled="False" />
+            <TextBlock x:Name="FirstPosition" Grid.Row="0" Style="{StaticResource LoLText}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+            <local:LoLButton x:Name="Upload" Grid.Row="4" Text="Upload" Margin="5" Click="Upload_Click" IsEnabled="False" />
         </Grid>
     </Grid>
 </Window>

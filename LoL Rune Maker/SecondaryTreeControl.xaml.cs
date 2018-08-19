@@ -58,7 +58,7 @@ namespace LoL_Rune_Maker
                 {
                     slotGrid.ColumnDefinitions.Add(new ColumnDefinition());
 
-                    var runeControl = new GrayscaleImageControl(Riot.ImageEndpoint + rune.IconURL);
+                    var runeControl = new GrayscaleImageControl(rune);
                     runeControl.MouseDown += RuneControl_MouseDown;
                     runeControl.Tag = rune;
 
