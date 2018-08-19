@@ -47,7 +47,7 @@ namespace LoL_Rune_Maker
 
         public async Task Initialize()
         {
-            await Picker.SetIDs(new[] { 8000, 8100, 8200, 8300, 8400 });
+            await Picker.SetIDs((await Riot.GetRuneTreesByID()).Keys.ToArray());
             SetTree((await Riot.GetRuneTrees())[0]);
         }
 
