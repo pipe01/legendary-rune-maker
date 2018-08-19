@@ -24,13 +24,27 @@ namespace LoL_Rune_Maker
     {
         private readonly WebClient Client = new WebClient();
 
-        private Rune[] _SelectedRunes = new Rune[4];
-        public Rune[] SelectedRunes => _SelectedRunes.ToArray();
+        private int[] _SelectedRunes = new int[4];
+        public int[] SelectedRunes
+        {
+            get => _SelectedRunes.ToArray();
+            set
+            {
+                _SelectedRunes = value;
+
+                for (int i = 0; i < _SelectedRunes.Length; i++)
+                {
+                    Slots[i].SelectedRuneID = value[i];
+                }
+            }
+        }
 
         public RuneTree SelectedTree { get; private set; }
 
         public event EventHandler<int> SelectedTreeChanged;
         public event EventHandler SelectedRunesChanged;
+
+        private List<RuneSlotControl> Slots = new List<RuneSlotControl>();
 
         public RuneTreeControl()
         {
@@ -47,14 +61,14 @@ namespace LoL_Rune_Maker
 
         public async Task Initialize()
         {
-            await Picker.SetIDs((await Riot.GetRuneTreesByID()).Keys.ToArray());
+            await Picker.SetIDs((await Riot.GetRuneTreesByIDAsync()).Keys.ToArray());
             SetTree((await Riot.GetRuneTrees())[0]);
         }
 
         public void SetTree(RuneTree tree)
         {
             this.SelectedTree = tree;
-            this._SelectedRunes = new Rune[4];
+            this._SelectedRunes = new int[4];
             TreeGrid.Children.Clear();
             TreeGrid.RowDefinitions.Clear();
 
@@ -65,8 +79,9 @@ namespace LoL_Rune_Maker
 
                 var slotControl = new RuneSlotControl(item, item == SelectedTree.Slots[0]);
                 slotControl.Tag = row;
-                slotControl.SelectedRune += SlotControl_SelectedRune;
+                slotControl.SelectedRuneChanged += SlotControl_SelectedRune;
 
+                Slots.Add(slotControl);
                 TreeGrid.Children.Add(slotControl);
                 Grid.SetRow(slotControl, row++);
             }
@@ -74,7 +89,7 @@ namespace LoL_Rune_Maker
 
         private void SlotControl_SelectedRune(object sender, Rune e)
         {
-            this._SelectedRunes[(int)((Control)sender).Tag] = e;
+            this._SelectedRunes[(int)((Control)sender).Tag] = e.ID;
             SelectedRunesChanged?.Invoke(this, EventArgs.Empty);
         }
     }

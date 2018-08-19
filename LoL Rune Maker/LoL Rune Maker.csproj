@@ -62,6 +62,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Data\Champion.cs" />
     <Compile Include="Data\ImageCache.cs" />
     <Compile Include="Data\Position.cs" />
     <Compile Include="Data\Riot.cs" />
@@ -186,6 +187,18 @@
       <Project>{531938f3-2e4e-4c45-be4d-ceced31ac294}</Project>
       <Name>LCU.NET</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\dropdown-highlighted.png" />
+    <Resource Include="Images\dropdown-pressed.png" />
+    <Resource Include="Images\dropdown.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Bottom_icon.png" />
+    <Resource Include="Images\Jungle_icon.png" />
+    <Resource Include="Images\Middle_icon.png" />
+    <Resource Include="Images\Support_icon.png" />
+    <Resource Include="Images\Top_icon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

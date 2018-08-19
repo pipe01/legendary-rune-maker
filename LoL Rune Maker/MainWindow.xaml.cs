@@ -34,7 +34,11 @@ namespace LoL_Rune_Maker
             InitializeComponent();
         }
 
-        private int[] SelectedRunes => Tree.SelectedRunes.Concat(Second.SelectedRunes).Where(o => o != null).Select(o => o.ID).ToArray();
+        private int[] SelectedRunes => Tree.SelectedRunes.Concat(Second.SelectedRunes).ToArray();
+
+        private RunePage Page => new RunePage(SelectedRunes, Tree.SelectedTree.ID, Second.SelectedTree.ID);
+
+        private int SelectedChampion, SelectedPosition;
 
         private async void Window_Initialized(object sender, EventArgs e)
         {
@@ -46,12 +50,22 @@ namespace LoL_Rune_Maker
             Second.SetTree(trees[1]);
             await SetSecondaryTrees();
 
+            foreach (var item in await Riot.GetChampions())
+            {
+                ChampionDD.Items.Add(item.Name);
+            }
+
+            foreach (var item in new[] { "Top", "Jungle", "Mid", "Bottom", "Support" })
+            {
+                PositionDD.Items.Add(item);
+            }
+
             this.Show();
         }
         
         private async Task SetSecondaryTrees()
         {
-            await Second.SetValidTrees((await Riot.GetRuneTreesByID()).Keys.Where(o => o != Tree.SelectedTree.ID).ToArray());
+            await Second.SetValidTrees((await Riot.GetRuneTreesByIDAsync()).Keys.Where(o => o != Tree.SelectedTree.ID).ToArray());
         }
 
         private async void Tree_SelectedTreeChanged(object sender, int e)
@@ -61,13 +75,68 @@ namespace LoL_Rune_Maker
         
         private async void Upload_Click(object sender, EventArgs e)
         {
-            var page = new RunePage(SelectedRunes, Tree.SelectedTree.ID, Second.SelectedTree.ID);
-            await page.UploadToClient();
+            await Page.UploadToClient();
         }
 
         private void Tree_SelectedRunesChanged(object sender, EventArgs e)
         {
             Upload.IsEnabled = SelectedRunes.Length == 6;
+
+            if (Upload.IsEnabled)
+                SaveRunePageToBook();
+        }
+
+        private void PositionDD_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            SelectedPosition = PositionDD.SelectedIndex;
+            PositionImage.Source = Application.Current.FindResource(PositionDD.SelectedItem as string) as ImageSource;
+        }
+
+        private async void ChampionDD_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var champs = await Riot.GetChampions();
+            var champ = champs[ChampionDD.SelectedIndex];
+
+            SelectedChampion = champ.ID;
+            ChampionImage.Source = await ImageCache.Instance.Get(champ.ImageURL);
+        }
+
+        private void UpdateRunePageFromRuneBook()
+        {
+            var position = (Position)SelectedPosition;
+
+            var page = RuneBook.Instance.FirstOrDefault(o => o.ChampionID == SelectedChampion && o.Position == position);
+
+            if (page != null)
+            {
+                Tree.SetTree(Riot.GetRuneTreesByID()[page.PrimaryTree]);
+                Second.SetTree(Riot.GetRuneTreesByID()[page.SecondaryTree]);
+
+                Tree.SelectedRunes = page.RuneIDs.Take(4).ToArray();
+            }
+        }
+
+        private void Clear_Click(object sender, EventArgs e)
+        {
+            var page = RuneBook.Instance.FirstOrDefault(o => o.ChampionID == SelectedChampion && o.Position == (Position)SelectedPosition);
+            RuneBook.Instance.Remove(page);
+
+            Tree.SelectedRunes = new int[4];
+            Second.SelectedRunes = new int[0];
+        }
+
+        private void SaveRunePageToBook()
+        {
+            var position = (Position)SelectedPosition;
+
+            var page = RuneBook.Instance.FirstOrDefault(o => o.ChampionID == SelectedChampion && o.Position == position);
+
+            if (page != null)
+            {
+                RuneBook.Instance.Remove(page);
+            }
+
+            RuneBook.Instance.Add(Page);
         }
     }
 }

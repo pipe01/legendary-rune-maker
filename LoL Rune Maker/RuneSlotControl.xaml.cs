@@ -20,7 +20,22 @@ namespace LoL_Rune_Maker
         public static readonly DependencyProperty SecondarySlotsHeightProperty =
             DependencyProperty.Register("SecondarySlotsHeight", typeof(double), typeof(RuneTreeControl), new PropertyMetadata(40.0));
 
-        public event EventHandler<Rune> SelectedRune;
+        public event EventHandler<Rune> SelectedRuneChanged;
+
+        private int _selectedRuneID;
+        public int SelectedRuneID
+        {
+            get => _selectedRuneID;
+            set
+            {
+                _selectedRuneID = value;
+
+                for (int i = 0; i < Runes.Count; i++)
+                {
+                    Runes[i].Selected = ((Rune)Runes[i].Tag).ID == value;
+                }
+            }
+        }
 
         private RuneSlot Slot;
         private IList<GrayscaleImageControl> Runes = new List<GrayscaleImageControl>();
@@ -53,7 +68,7 @@ namespace LoL_Rune_Maker
                 Grid.SetColumn(image, col++);
             }
         }
-
+        
         private void Image_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             foreach (var item in Runes)
@@ -62,7 +77,9 @@ namespace LoL_Rune_Maker
                     item.Selected = false;
             }
 
-            SelectedRune?.Invoke(this, ((Control)sender).Tag as Rune);
+            var rune = ((Control)sender).Tag as Rune;
+            _selectedRuneID = rune.ID;
+            SelectedRuneChanged?.Invoke(this, rune);
         }
     }
 }

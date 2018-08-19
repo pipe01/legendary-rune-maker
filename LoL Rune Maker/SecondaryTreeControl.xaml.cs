@@ -20,9 +20,41 @@ namespace LoL_Rune_Maker
         }
 
         private IList<SRune> _SelectedRunes = new List<SRune>();
-        public Rune[] SelectedRunes => _SelectedRunes.Select(o => o.Rune).ToArray();
+        public int[] SelectedRunes
+        {
+            get => _SelectedRunes.Where(o => o.Rune != null).Select(o => o.Rune.ID).ToArray();
+            set
+            {
+                _SelectedRunes.Clear();
+
+                var runes = Riot.GetRuneTreesByID().Values.SelectMany(o => o.Slots).SelectMany(o => o.Runes).ToDictionary(o => o.ID);
+
+                int i = 0;
+                foreach (var item in value)
+                {
+                    var c = Runes[i++];
+                    int col = Grid.GetColumn(c);
+                    int row = Grid.GetRow(c);
+
+                    _SelectedRunes.Add(new SRune
+                    {
+                        Column = col,
+                        Row = row,
+                        Control = c,
+                        Rune = runes.TryGetValue(item, out var v) ? v : null
+                    });
+                }
+
+                foreach (var item in Runes)
+                {
+                    item.Selected = value.Contains(((Rune)item.Tag).ID);
+                }
+            }
+        }
 
         public RuneTree SelectedTree { get; private set; }
+
+        private List<GrayscaleImageControl> Runes = new List<GrayscaleImageControl>();
 
         public event EventHandler SelectedRunesChanged;
         
@@ -33,7 +65,7 @@ namespace LoL_Rune_Maker
             if (!trees.Contains(SelectedTree.ID))
             {
                 Picker.SelectedTree = trees[0];
-                SetTree((await Riot.GetRuneTreesByID())[trees[0]]);
+                SetTree((await Riot.GetRuneTreesByIDAsync())[trees[0]]);
             }
         }
 
@@ -62,6 +94,7 @@ namespace LoL_Rune_Maker
                     runeControl.MouseDown += RuneControl_MouseDown;
                     runeControl.Tag = rune;
 
+                    Runes.Add(runeControl);
                     slotGrid.Children.Add(runeControl);
                     Grid.SetColumn(runeControl, col++);
                 }
@@ -106,7 +139,7 @@ namespace LoL_Rune_Maker
         private async void Picker_SelectionChanged(object sender, EventArgs e)
         {
             _SelectedRunes.Clear();
-            SetTree((await Riot.GetRuneTreesByID())[Picker.SelectedTree]);
+            SetTree((await Riot.GetRuneTreesByIDAsync())[Picker.SelectedTree]);
         }
 
         private struct SRune

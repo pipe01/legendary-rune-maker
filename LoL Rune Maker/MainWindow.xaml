@@ -19,13 +19,13 @@
             </VisualBrush.Visual>
         </VisualBrush>
     </Window.Background>
-    
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="500" />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        
+
         <Grid Grid.Column="0" Width="475" Height="250" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
@@ -42,14 +42,33 @@
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
                 <RowDefinition />
-                <RowDefinition />
-                <RowDefinition />
-                <RowDefinition />
+                <RowDefinition Height="42" />
+                <RowDefinition Height="42" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
-            <TextBlock x:Name="FirstPosition" Grid.Row="0" Style="{StaticResource LoLText}" HorizontalAlignment="Center" VerticalAlignment="Center" />
-            <local:LoLButton x:Name="Upload" Grid.Row="4" Text="Upload" Margin="5" Click="Upload_Click" IsEnabled="False" />
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <Image x:Name="ChampionImage" Grid.Column="0" Width="120" Height="120" />
+                <Image x:Name="PositionImage" Grid.Column="1" Width="136" Height="136" />
+            </Grid>
+            
+            <ComboBox x:Name="ChampionDD" Grid.Row="1" IsEditable="False" Height="32" Margin="5" SelectionChanged="ChampionDD_SelectionChanged" />
+            <ComboBox x:Name="PositionDD" Grid.Row="2" IsEditable="False" Height="32" Margin="5" SelectionChanged="PositionDD_SelectionChanged" />
+
+            <Grid Grid.Row="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <local:LoLButton Grid.Column="0" x:Name="Clear" Text="Clear" Margin="5" Click="Clear_Click" />
+                <local:LoLButton Grid.Column="1" x:Name="Upload" Text="Upload" Margin="5" Click="Upload_Click" IsEnabled="False" />
+            </Grid>
         </Grid>
     </Grid>
 </Window>
