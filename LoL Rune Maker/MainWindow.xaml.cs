@@ -2,6 +2,7 @@
 using LCU.NET.API_Models;
 using LCU.NET.Plugins.LoL;
 using LoL_Rune_Maker.Data;
+using LoL_Rune_Maker.Game;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -37,7 +38,7 @@ namespace LoL_Rune_Maker
 
         private async void Window_Initialized(object sender, EventArgs e)
         {
-            LeagueSocket.Subscribe<LolLobbyLobbyDto>(Lobby.Endpoint, LobbyChanged);
+            ChampSelectDetector.Init();
 
             RuneTree[] trees = await Riot.GetRuneTrees();
 
@@ -47,12 +48,7 @@ namespace LoL_Rune_Maker
 
             this.Show();
         }
-
-        private void LobbyChanged(string eventType, LolLobbyLobbyDto data)
-        {
-            Dispatcher.Invoke(() => FirstPosition.Text = data.localMember.firstPositionPreference);
-        }
-
+        
         private async Task SetSecondaryTrees()
         {
             await Second.SetValidTrees((await Riot.GetRuneTreesByID()).Keys.Where(o => o != Tree.SelectedTree.ID).ToArray());

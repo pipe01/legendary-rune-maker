@@ -66,6 +66,7 @@
     <Compile Include="Data\Position.cs" />
     <Compile Include="Data\Riot.cs" />
     <Compile Include="Data\RunePage.cs" />
+    <Compile Include="Game\ChampSelectDetector.cs" />
     <Compile Include="GrayscaleImageControl.xaml.cs">
       <DependentUpon>GrayscaleImageControl.xaml</DependentUpon>
     </Compile>
