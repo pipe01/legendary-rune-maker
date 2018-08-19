@@ -90,6 +90,8 @@ namespace LoL_Rune_Maker
         {
             SelectedPosition = PositionDD.SelectedIndex;
             PositionImage.Source = Application.Current.FindResource(PositionDD.SelectedItem as string) as ImageSource;
+
+            UpdateRunePageFromRuneBook();
         }
 
         private async void ChampionDD_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -99,6 +101,8 @@ namespace LoL_Rune_Maker
 
             SelectedChampion = champ.ID;
             ChampionImage.Source = await ImageCache.Instance.Get(champ.ImageURL);
+
+            UpdateRunePageFromRuneBook();
         }
 
         private void UpdateRunePageFromRuneBook()
@@ -116,13 +120,17 @@ namespace LoL_Rune_Maker
             }
         }
 
-        private void Clear_Click(object sender, EventArgs e)
+        private async void Clear_Click(object sender, EventArgs e)
         {
             var page = RuneBook.Instance.FirstOrDefault(o => o.ChampionID == SelectedChampion && o.Position == (Position)SelectedPosition);
-            RuneBook.Instance.Remove(page);
 
             Tree.SelectedRunes = new int[4];
             Second.SelectedRunes = new int[0];
+            RuneBook.Instance.Remove(page);
+
+            Tree.SetTree(Riot.GetRuneTreesByID().Values.First());
+            //Second.SetTree(Riot.GetRuneTreesByID().Values.ElementAt(2));
+            await SetSecondaryTrees();
         }
 
         private void SaveRunePageToBook()
@@ -136,7 +144,11 @@ namespace LoL_Rune_Maker
                 RuneBook.Instance.Remove(page);
             }
 
-            RuneBook.Instance.Add(Page);
+            page = this.Page;
+            page.ChampionID = SelectedChampion;
+            page.Position = position;
+
+            RuneBook.Instance.Add(page);
         }
     }
 }

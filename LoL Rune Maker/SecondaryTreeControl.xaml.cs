@@ -74,6 +74,7 @@ namespace LoL_Rune_Maker
             SelectedTree = tree;
             TreeGrid.Children.Clear();
             TreeGrid.RowDefinitions.Clear();
+            Picker.SelectedTree = tree.ID;
 
             int row = 0;
             foreach (var slot in tree.Slots.Skip(1))

@@ -71,6 +71,7 @@ namespace LoL_Rune_Maker
             this._SelectedRunes = new int[4];
             TreeGrid.Children.Clear();
             TreeGrid.RowDefinitions.Clear();
+            Picker.SelectedTree = tree.ID;
 
             int row = 0;
             foreach (var item in SelectedTree.Slots)
@@ -87,9 +88,9 @@ namespace LoL_Rune_Maker
             }
         }
 
-        private void SlotControl_SelectedRune(object sender, Rune e)
+        private void SlotControl_SelectedRune(object sender, int e)
         {
-            this._SelectedRunes[(int)((Control)sender).Tag] = e.ID;
+            this._SelectedRunes[(int)((Control)sender).Tag] = e;
             SelectedRunesChanged?.Invoke(this, EventArgs.Empty);
         }
     }

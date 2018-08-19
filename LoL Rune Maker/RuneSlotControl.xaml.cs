@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -20,7 +21,7 @@ namespace LoL_Rune_Maker
         public static readonly DependencyProperty SecondarySlotsHeightProperty =
             DependencyProperty.Register("SecondarySlotsHeight", typeof(double), typeof(RuneTreeControl), new PropertyMetadata(40.0));
 
-        public event EventHandler<Rune> SelectedRuneChanged;
+        public event EventHandler<int> SelectedRuneChanged;
 
         private int _selectedRuneID;
         public int SelectedRuneID
@@ -29,10 +30,11 @@ namespace LoL_Rune_Maker
             set
             {
                 _selectedRuneID = value;
+                SelectedRuneChanged?.Invoke(this, value);
 
                 for (int i = 0; i < Runes.Count; i++)
                 {
-                    Runes[i].Selected = ((Rune)Runes[i].Tag).ID == value;
+                    Runes[i].Selected = Runes[i].Rune.ID == value;
                 }
             }
         }
@@ -58,7 +60,6 @@ namespace LoL_Rune_Maker
 
                 var image = new GrayscaleImageControl(rune);
                 image.MouseDown += Image_MouseDown;
-                image.Tag = rune;
 
                 if (first)
                     image.Height = 65;
@@ -71,15 +72,7 @@ namespace LoL_Rune_Maker
         
         private void Image_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            foreach (var item in Runes)
-            {
-                if (item != (GrayscaleImageControl)sender)
-                    item.Selected = false;
-            }
-
-            var rune = ((Control)sender).Tag as Rune;
-            _selectedRuneID = rune.ID;
-            SelectedRuneChanged?.Invoke(this, rune);
+            SelectedRuneID = ((GrayscaleImageControl)sender).Rune.ID;
         }
     }
 }

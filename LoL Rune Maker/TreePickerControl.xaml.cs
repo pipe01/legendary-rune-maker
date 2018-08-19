@@ -31,7 +31,8 @@ namespace LoL_Rune_Maker
             {
                 _SelectedTree = value;
 
-                SelectionChanged(this, EventArgs.Empty);
+                if (ValidIDs == null)
+                    return;
 
                 int i = ValidIDs.ToList().IndexOf(value);
                 Grid.SetColumn(Selector, i == -1 ? 0 : i);
@@ -89,6 +90,7 @@ namespace LoL_Rune_Maker
         private void Icon_MouseDown(object sender, MouseButtonEventArgs e)
         {
             SelectedTree = ((RuneTree)((Image)sender).Tag).ID;
+            SelectionChanged(this, EventArgs.Empty);
         }
     }
 }
