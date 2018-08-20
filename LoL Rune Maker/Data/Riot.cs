@@ -59,6 +59,9 @@ namespace LoL_Rune_Maker.Data
         public static IDictionary<int, RuneTree> GetRuneTreesByID()
             => Trees.ToDictionary(o => o.ID);
 
+        public static IDictionary<int, Rune> GetAllRunes()
+            => Trees.SelectMany(o => o.Slots).SelectMany(o => o.Runes).ToDictionary(o => o.ID);
+
         public static async Task CacheAll(Action<double> progress)
         {
             int p = 0;

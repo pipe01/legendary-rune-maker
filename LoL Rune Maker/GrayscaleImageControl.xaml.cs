@@ -1,6 +1,5 @@
 ﻿using LoL_Rune_Maker.Data;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -26,6 +25,8 @@ namespace LoL_Rune_Maker
         public static readonly DependencyProperty SelectedProperty =
             DependencyProperty.Register("Selected", typeof(bool), typeof(GrayscaleImageControl));
 
+        public event EventHandler<bool> SelectedChanged;
+
         public Rune Rune { get; }
 
         private BitmapSource Normal, Gray;
@@ -37,14 +38,8 @@ namespace LoL_Rune_Maker
 
             InitializeComponent();
 
-            try
-            {
+            Description.Document = XamlReader.Parse(rune.RichLongDesc) as FlowDocument;
 
-                Description.Document = SetRTF(rune.RichLongDesc);
-            }
-            catch (Exception)
-            {
-            }
             var paragraph = Description.Document.Blocks.First() as Paragraph;
 
             var inlines = paragraph.Inlines.ToList();
@@ -58,7 +53,7 @@ namespace LoL_Rune_Maker
                 {
                     var ruler = new Line { X1 = 0, Y1 = 0, X2 = 1000, Y2 = 0, Stroke = new SolidColorBrush(Color.FromRgb(81, 82, 80)), StrokeThickness = 2 };
                     ruler.Margin = new Thickness(0, 5, 0, 5);
-                    
+
                     paragraph.Inlines.Add(new InlineUIContainer(ruler, Description.CaretPosition.GetInsertionPosition(LogicalDirection.Forward)));
                 }
                 else
@@ -67,19 +62,7 @@ namespace LoL_Rune_Maker
                 }
             }
         }
-
-        private static FlowDocument SetRTF(string xamlString)
-        {
-            try
-            {
-                return XamlReader.Parse(xamlString) as FlowDocument;
-            }
-            catch (Exception ex)
-            {
-            }
-            return null;
-        }
-
+        
         private async void UserControl_Initialized(object sender, EventArgs e)
         {
             this.Normal = await ImageCache.Instance.Get(Riot.ImageEndpoint + this.Rune.IconURL);
@@ -91,6 +74,7 @@ namespace LoL_Rune_Maker
         private void SetSelected()
         {
             View.Source = Selected ? this.Normal : this.Gray;
+            SelectedChanged?.Invoke(this, Selected);
         }
 
         private void UserControl_MouseDown(object sender, MouseButtonEventArgs e)
@@ -102,6 +86,9 @@ namespace LoL_Rune_Maker
         {
             if (!Selected)
                 View.Source = this.Normal;
+
+            if (e.LeftButton == MouseButtonState.Pressed)
+                Selected = true;
         }
 
         private void UserControl_MouseLeave(object sender, MouseEventArgs e)

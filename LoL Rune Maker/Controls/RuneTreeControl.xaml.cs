@@ -62,8 +62,11 @@ namespace LoL_Rune_Maker.Controls
             }
         }
 
+        public event EventHandler SelectionChanged;
+
         private List<List<GrayscaleImageControl>> PrimaryControls = new List<List<GrayscaleImageControl>>();
         private List<List<GrayscaleImageControl>> SecondaryControls = new List<List<GrayscaleImageControl>>();
+        private bool SettingSelection;
 
         private void SetTree(RuneTree tree, bool secondary, bool setPicker = true)
         {
@@ -81,6 +84,14 @@ namespace LoL_Rune_Maker.Controls
                 {
                     SetTree(Riot.GetRuneTreesByID()[trees[0]], true);
                 }
+
+                _PrimaryTree = tree;
+                _SelectedPrimary = new Rune[4];
+            }
+            else
+            {
+                _SecondaryTree = tree;
+                _SelectedSecondary = new Rune[2];
             }
 
             var grid = secondary ? Secondary : Primary;
@@ -90,9 +101,7 @@ namespace LoL_Rune_Maker.Controls
             grid.Children.Clear();
             grid.RowDefinitions.Clear();
             controls.Clear();
-
-            Clear();
-
+            
             int row = 0;
             foreach (var slot in slots)
             {
@@ -109,7 +118,7 @@ namespace LoL_Rune_Maker.Controls
                     slotGrid.ColumnDefinitions.Add(new ColumnDefinition());
 
                     var runeControl = new GrayscaleImageControl(rune);
-                    runeControl.MouseDown += RuneControl_MouseDown;
+                    runeControl.SelectedChanged += RuneControl_SelectedChanged;
                     runeControl.Tag = secondary;
 
                     if (!(row == 1 && !secondary))
@@ -124,6 +133,8 @@ namespace LoL_Rune_Maker.Controls
 
         private void SetSelected(Rune[] runes, bool secondary)
         {
+            SettingSelection = true;
+
             var controls = secondary ? SecondaryControls : PrimaryControls;
 
             int i = 0;
@@ -136,16 +147,23 @@ namespace LoL_Rune_Maker.Controls
 
                 i++;
             }
+
+            SettingSelection = false;
         }
 
         public void Clear()
         {
             SelectedPrimary = new Rune[4];
             SelectedSecondary = new Rune[2];
+
+            SelectionChanged?.Invoke(this, EventArgs.Empty);
         }
 
-        private void RuneControl_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void RuneControl_SelectedChanged(object sender, bool e)
         {
+            if (!e || SettingSelection)
+                return;
+
             var control = (GrayscaleImageControl)sender;
             bool secondary = (bool)control.Tag;
             int row = Grid.GetRow((UIElement)control.Parent);
@@ -183,6 +201,8 @@ namespace LoL_Rune_Maker.Controls
                 SelectedSecondary = runes;
             else
                 SelectedPrimary = runes;
+
+            SelectionChanged?.Invoke(this, EventArgs.Empty);
         }
 
         private async void UserControl_Initialized(object sender, EventArgs e)
@@ -198,11 +218,15 @@ namespace LoL_Rune_Maker.Controls
         private void SecondaryPicker_SelectionChanged(object sender, EventArgs e)
         {
             SetTree(Riot.GetRuneTreesByID()[SecondaryPicker.SelectedTree], true, false);
+
+            SelectionChanged?.Invoke(this, EventArgs.Empty);
         }
 
         private void PrimaryPicker_SelectionChanged(object sender, EventArgs e)
         {
             SetTree(Riot.GetRuneTreesByID()[PrimaryPicker.SelectedTree], false, false);
+
+            SelectionChanged?.Invoke(this, EventArgs.Empty);
         }
     }
 }

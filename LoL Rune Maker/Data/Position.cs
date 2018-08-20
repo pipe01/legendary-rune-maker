@@ -2,12 +2,12 @@
 {
     public enum Position
     {
-        TOP,
-        JUNGLE,
-        MID,
-        BOTTOM,
-        UTILITY,
-        FILL,
+        Top,
+        Jungle,
+        Mid,
+        Bottom,
+        Support,
+        Fill,
         UNSELECTED
     }
 }

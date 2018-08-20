@@ -28,7 +28,7 @@
         </Grid.ColumnDefinitions>
 
         <controls:RuneTreeControl x:Name="Tree" Grid.Column="0" Width="475" Height="250" HorizontalAlignment="Left"
-                                  VerticalAlignment="Top" Margin="10">
+                                  VerticalAlignment="Top" Margin="10" SelectionChanged="Tree_SelectedRunesChanged">
             
         </controls:RuneTreeControl>
 

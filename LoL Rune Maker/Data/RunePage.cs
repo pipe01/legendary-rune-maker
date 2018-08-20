@@ -20,11 +20,13 @@ namespace LoL_Rune_Maker.Data
         {
         }
 
-        public RunePage(int[] runeIDs, int primaryTree, int secondaryTree)
+        public RunePage(int[] runeIDs, int primaryTree, int secondaryTree, int championId, Position position)
         {
             this.RuneIDs = runeIDs;
             this.PrimaryTree = primaryTree;
             this.SecondaryTree = secondaryTree;
+            this.ChampionID = championId;
+            this.Position = position;
         }
 
         public async Task UploadToClient()
@@ -34,6 +36,7 @@ namespace LoL_Rune_Maker.Data
             page.primaryStyleId = PrimaryTree;
             page.subStyleId = SecondaryTree;
             page.selectedPerkIds = RuneIDs;
+            page.name = (await Riot.GetChampions()).Single(o => o.ID == ChampionID).Name + " - " + Enum.GetName(typeof(Position), Position);
 
             await Perks.PutPageAsync(page.id, page);
         }

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace LoL_Rune_Maker.Data
 {
@@ -38,6 +39,18 @@ namespace LoL_Rune_Maker.Data
                 Inner = new List<RunePage>();
                 Save();
             }
+        }
+
+        public RunePage Get(int championId, Position position)
+        {
+            return Inner.SingleOrDefault(o => o.ChampionID == championId && o.Position == position);
+        }
+
+        public void Remove(int championId, Position position)
+        {
+            var page = Get(championId, position);
+            if (page != null)
+                Remove(page);
         }
 
         public void Save()
