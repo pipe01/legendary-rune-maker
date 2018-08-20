@@ -2,6 +2,7 @@
 using LoL_Rune_Maker.Data;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,6 +26,8 @@ namespace LoL_Rune_Maker
 
         public LoadingWindow()
         {
+            Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.High;
+
             if (!LeagueClient.TryInit())
             {
                 MessageBox.Show("Make sure the League of Legends client is open!");

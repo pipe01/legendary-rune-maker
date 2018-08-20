@@ -175,16 +175,14 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\dropdown-highlighted.png" />
-    <Resource Include="Images\dropdown-pressed.png" />
-    <Resource Include="Images\dropdown.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Images\Bottom_icon.png" />
     <Resource Include="Images\Jungle_icon.png" />
     <Resource Include="Images\Middle_icon.png" />
     <Resource Include="Images\Support_icon.png" />
     <Resource Include="Images\Top_icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Fill_icon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -19,7 +19,7 @@ namespace LoL_Rune_Maker.Game
 
         public static void Init()
         {
-            LeagueSocket.Subscribe<LolChampSelectChampSelectSession>(ChampSelect.Endpoint, ChampSelectUpdate);
+            LeagueSocket.Subscribe<LolChampSelectChampSelectSession>(ChampSelect.Endpoint + "/session", ChampSelectUpdate);
         }
 
         private static void ChampSelectUpdate(string eventType, LolChampSelectChampSelectSession data)
@@ -30,6 +30,8 @@ namespace LoL_Rune_Maker.Game
                 SessionUpdated?.Invoke(data);
             }
         }
+
+        public static async Task ForceUpdate() => ChampSelectUpdate("Update", await GetSession());
 
         public static async Task<LolChampSelectChampSelectSession> GetSession()
         {

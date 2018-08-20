@@ -43,7 +43,7 @@ namespace LoL_Rune_Maker.Data
 
         public RunePage Get(int championId, Position position)
         {
-            return Inner.SingleOrDefault(o => o.ChampionID == championId && o.Position == position);
+            return Inner.SingleOrDefault(o => o.ChampionID == championId && (o.Position == position || position == Position.Fill));
         }
 
         public void Remove(int championId, Position position)

@@ -23,6 +23,7 @@
         <BitmapImage x:Key="PressedFill" UriSource="Images/pressed-fill.png" />
         <BitmapImage x:Key="PressedSide" UriSource="Images/pressed-side.png" />
 
+        <BitmapImage x:Key="Fill" UriSource="Images/Fill_icon.png" />
         <BitmapImage x:Key="Top" UriSource="Images/Top_icon.png" />
         <BitmapImage x:Key="Jungle" UriSource="Images/Jungle_icon.png" />
         <BitmapImage x:Key="Mid" UriSource="Images/Middle_icon.png" />
