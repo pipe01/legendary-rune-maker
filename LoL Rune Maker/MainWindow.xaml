@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LoL_Rune_Maker"
+        xmlns:controls="clr-namespace:LoL_Rune_Maker.Controls"
         mc:Ignorable="d" ResizeMode="CanMinimize"
         Title="MainWindow" Height="305" Width="800" Initialized="Window_Initialized" WindowStartupLocation="CenterScreen">
 
@@ -26,18 +27,10 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
-        <Grid Grid.Column="0" Width="475" Height="250" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition Width="25" />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-
-            <local:RuneTreeControl x:Name="Tree" Grid.Column="0" Width="225" Height="250"
-                                   SelectedTreeChanged="Tree_SelectedTreeChanged" SelectedRunesChanged="Tree_SelectedRunesChanged" />
-            <local:SecondaryTreeControl x:Name="Second" Grid.Column="2" Width="225" Height="225"
-                                   SelectedRunesChanged="Tree_SelectedRunesChanged" VerticalAlignment="Top" />
-        </Grid>
+        <controls:RuneTreeControl x:Name="Tree" Grid.Column="0" Width="475" Height="250" HorizontalAlignment="Left"
+                                  VerticalAlignment="Top" Margin="10">
+            
+        </controls:RuneTreeControl>
 
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>

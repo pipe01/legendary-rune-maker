@@ -1,0 +1,40 @@
+﻿<UserControl x:Class="LoL_Rune_Maker.Controls.RuneTreeControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:LoL_Rune_Maker"
+             mc:Ignorable="d" 
+             d:DesignHeight="250" d:DesignWidth="470" Initialized="UserControl_Initialized">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Grid.Column="0">
+            <local:TreePickerControl x:Name="PrimaryPicker" Height="38" SelectionChanged="PrimaryPicker_SelectionChanged" />
+
+            <Grid x:Name="Primary" Height="212">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+            </Grid>
+        </StackPanel>
+
+        <StackPanel Grid.Column="1" Margin="20 0 0 0">
+            <local:TreePickerControl x:Name="SecondaryPicker" Height="38" SelectionChanged="SecondaryPicker_SelectionChanged" />
+
+            <Grid x:Name="Secondary" Height="159">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+            </Grid>
+        </StackPanel>
+    </Grid>
+</UserControl>

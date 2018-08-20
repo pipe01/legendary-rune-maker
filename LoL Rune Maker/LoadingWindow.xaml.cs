@@ -28,7 +28,7 @@ namespace LoL_Rune_Maker
             if (!LeagueClient.TryInit())
             {
                 MessageBox.Show("Make sure the League of Legends client is open!");
-                this.Close();
+                //this.Close();
             }
 
             InitializeComponent();
@@ -48,7 +48,7 @@ namespace LoL_Rune_Maker
         {
             if (!ImageCache.Instance.LocalCache)
             {
-                await Riot.CacheAllImages(o => Dispatcher.Invoke(() => Progress.Value = o));
+                await Riot.CacheAll(o => Dispatcher.Invoke(() => Progress.Value = o));
             }
 
             ShowMainWindow();
