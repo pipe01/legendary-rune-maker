@@ -62,6 +62,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controls\FadeImage.xaml.cs">
+      <DependentUpon>FadeImage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Game\GameState.cs" />
     <Compile Include="Controls\RuneTreeControl.xaml.cs">
       <DependentUpon>RuneTreeControl.xaml</DependentUpon>
     </Compile>
@@ -72,6 +76,7 @@
     <Compile Include="Data\RuneBook.cs" />
     <Compile Include="Data\RunePage.cs" />
     <Compile Include="Game\ChampSelectDetector.cs" />
+    <Compile Include="Game\LoginDetector.cs" />
     <Compile Include="GrayscaleImageControl.xaml.cs">
       <DependentUpon>GrayscaleImageControl.xaml</DependentUpon>
     </Compile>
@@ -85,6 +90,10 @@
       <DependentUpon>TreePickerControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Utils\BitmapUtils.cs" />
+    <Page Include="Controls\FadeImage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\RuneTreeControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -169,6 +178,10 @@
     <Resource Include="Images\background.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\PiMachine\PiMachine.csproj">
+      <Project>{8a62e48d-6109-4721-8f56-b4eef47d012f}</Project>
+      <Name>PiMachine</Name>
+    </ProjectReference>
     <ProjectReference Include="H:\PIPENDOS\Projects\LoL API\LCU.NET\LCU.NET.csproj">
       <Project>{531938f3-2e4e-4c45-be4d-ceced31ac294}</Project>
       <Name>LCU.NET</Name>

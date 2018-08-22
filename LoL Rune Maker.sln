@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoL Rune Maker", "LoL Rune 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LCU.NET", "H:\PIPENDOS\Projects\LoL API\LCU.NET\LCU.NET.csproj", "{531938F3-2E4E-4C45-BE4D-CECED31AC294}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PiMachine", "..\PiMachine\PiMachine.csproj", "{8A62E48D-6109-4721-8F56-B4EEF47D012F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{531938F3-2E4E-4C45-BE4D-CECED31AC294}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{531938F3-2E4E-4C45-BE4D-CECED31AC294}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{531938F3-2E4E-4C45-BE4D-CECED31AC294}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A62E48D-6109-4721-8F56-B4EEF47D012F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A62E48D-6109-4721-8F56-B4EEF47D012F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A62E48D-6109-4721-8F56-B4EEF47D012F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A62E48D-6109-4721-8F56-B4EEF47D012F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

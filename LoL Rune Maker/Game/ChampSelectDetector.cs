@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace LoL_Rune_Maker.Game
 {
-    public static class ChampSelectDetector
+    internal static class ChampSelectDetector
     {
         private static LolChampSelectChampSelectSession Session;
 
@@ -17,21 +17,46 @@ namespace LoL_Rune_Maker.Game
 
         public static event Action<LolChampSelectChampSelectSession> SessionUpdated;
 
-        public static void Init()
+        public static async Task Init()
         {
-            LeagueSocket.Subscribe<LolChampSelectChampSelectSession>(ChampSelect.Endpoint + "/session", ChampSelectUpdate);
-        }
+            LeagueSocket.Subscribe<LolChampSelectChampSelectSession>(ChampSelect.Endpoint, ChampSelectUpdate);
 
-        private static void ChampSelectUpdate(string eventType, LolChampSelectChampSelectSession data)
-        {
-            if (eventType == "Update")
+            try
             {
-                Session = data;
-                SessionUpdated?.Invoke(data);
+                ChampSelectUpdate(EventType.Create, await ChampSelect.GetSessionAsync());
+            }
+            catch (APIErrorException ex) when (ex.Message == "No active delegate")
+            {
             }
         }
 
-        public static async Task ForceUpdate() => ChampSelectUpdate("Update", await GetSession());
+        private static void ChampSelectUpdate(EventType eventType, LolChampSelectChampSelectSession data)
+        {
+            if (data == null)
+                return;
+
+            if (eventType == EventType.Update)
+            {
+                Session = data;
+
+                bool lockedIn = data.actions.Select(o => o[0]).LastOrDefault(o => o.actorCellId == CurrentSelection.cellId && o.type == "pick")?.completed ?? false;
+
+                if (lockedIn)
+                    GameState.State.Fire(GameTriggers.LockIn);
+
+                SessionUpdated?.Invoke(data);
+            }
+            else if (eventType == EventType.Create)
+            {
+                GameState.State.Fire(GameTriggers.EnterChampSelect);
+            }
+            else if (eventType == EventType.Delete)
+            {
+                GameState.State.Fire(GameTriggers.ExitChampSelect);
+            }
+        }
+
+        public static async Task ForceUpdate() => ChampSelectUpdate(EventType.Update, await GetSession());
 
         public static async Task<LolChampSelectChampSelectSession> GetSession()
         {

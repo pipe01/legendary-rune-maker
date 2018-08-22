@@ -6,9 +6,12 @@ using LoL_Rune_Maker.Game;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -27,9 +30,12 @@ namespace LoL_Rune_Maker
     /// </summary>
     public partial class MainWindow : Window
     {
+        public static bool InDesigner => DesignerProperties.GetIsInDesignMode(new DependencyObject());
+
         public MainWindow()
         {
-            Application.Current.MainWindow = this;
+            if (!InDesigner)
+                Application.Current.MainWindow = this;
 
             InitializeComponent();
         }
@@ -45,15 +51,41 @@ namespace LoL_Rune_Maker
 
         private async void Window_Initialized(object sender, EventArgs e)
         {
-            ChampSelectDetector.SessionUpdated += ChampSelectDetector_SessionUpdated;
-            ChampSelectDetector.Init();
+            await InitDetectors();
+            await InitControls();
+            
+            this.Show();
+        }
 
-            try
+        private async Task InitDetectors()
+        {
+            GameState.State.EnteredState += State_EnteredState;
+
+            LeagueClient.ConnectedChanged += LeagueClient_ConnectedChanged;
+            
+            if (!LeagueClient.TryInit())
             {
-                await ChampSelectDetector.ForceUpdate();
+                LeagueClient.BeginTryInit();
             }
-            catch (APIErrorException) { }
 
+            ChampSelectDetector.SessionUpdated += ChampSelectDetector_SessionUpdated;
+
+            LoginDetector.Init();
+            
+            if (LeagueClient.Connected)
+            {
+                try
+                {
+                    await LoginDetector.ForceUpdate();
+                }
+                catch (APIErrorException) { }
+
+                await ChampSelectDetector.Init();
+            }
+        }
+
+        private async Task InitControls()
+        {
             foreach (var item in await Riot.GetChampions())
             {
                 ChampionDD.Items.Add(item.Name);
@@ -64,19 +96,67 @@ namespace LoL_Rune_Maker
                 PositionDD.Items.Add(item);
             }
             SetPosition(Position.Fill);
-
-            this.Show();
         }
 
+        private void LeagueClient_ConnectedChanged(bool connected)
+        {
+            Debug.WriteLine("Connected: " + connected);
+
+            if (connected)
+            {
+                GameState.State.Fire(GameTriggers.OpenGame);
+            }
+            else
+            {
+                GameState.State.Fire(GameTriggers.CloseGame);
+            }
+        }
+
+        private void State_EnteredState(GameStates state)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                switch (state)
+                {
+                    case GameStates.Disconnected:
+                        Status.Foreground = new SolidColorBrush(Colors.Red);
+                        Status.Text = "disconnected";
+
+                        Task.Run(async () =>
+                        {
+                            await Task.Delay(1000);
+                            LeagueClient.BeginTryInit();
+                        });
+                        break;
+                    case GameStates.NotLoggedIn:
+                        Status.Foreground = new SolidColorBrush(Colors.Orange);
+                        Status.Text = "not logged in";
+                        break;
+                    case GameStates.LoggedIn:
+                        Status.Foreground = new SolidColorBrush(Colors.Green);
+                        Status.Text = "logged in";
+                        break;
+                    case GameStates.InChampSelect:
+                        Status.Foreground = new SolidColorBrush(Colors.SlateBlue);
+                        Status.Text = "in champ select";
+                        break;
+                    case GameStates.LockedIn:
+                        Status.Foreground = new SolidColorBrush(Colors.YellowGreen);
+                        Status.Text = "locked in";
+
+                        Task.Run(Page.UploadToClient);
+                        break;
+                }
+            });
+        }
+        
         private void ChampSelectDetector_SessionUpdated(LolChampSelectChampSelectSession obj)
         {
             var player = ChampSelectDetector.CurrentSelection;
 
             if (player == null || player.championId == 0)
                 return;
-
-            bool lockedIn = obj.actions.Select(o => o[0]).LastOrDefault(o => o.actorCellId == player.cellId && o.type == "pick")?.completed ?? false;
-
+            
             Position p;
 
             switch (player.assignedPosition)
@@ -105,9 +185,6 @@ namespace LoL_Rune_Maker
             {
                 SetPosition(p);
                 await SetChampion(player.championId);
-
-                if (lockedIn && ValidPage)
-                    await Page.UploadToClient();
             });
         }
 
@@ -123,7 +200,7 @@ namespace LoL_Rune_Maker
 
         private void RefreshAndSave()
         {
-            Upload.IsEnabled = ValidPage = SelectedRunes.Length == 6 && SelectedChampion != 0;
+            Upload.IsEnabled = ValidPage = SelectedRunes.Length == 6 && SelectedChampion != 0 && GameState.CanUpload;
 
             if (ValidPage)
                 SaveRunePageToBook();

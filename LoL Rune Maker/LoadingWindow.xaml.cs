@@ -27,13 +27,7 @@ namespace LoL_Rune_Maker
         public LoadingWindow()
         {
             Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.High;
-
-            if (!LeagueClient.TryInit())
-            {
-                MessageBox.Show("Make sure the League of Legends client is open!");
-                //this.Close();
-            }
-
+            
             InitializeComponent();
         }
 

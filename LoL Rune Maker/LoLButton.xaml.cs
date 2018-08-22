@@ -51,8 +51,11 @@ namespace LoL_Rune_Maker
             InitializeComponent();
 
             this.DataContext = this;
+
             if (IsEnabled)
                 SetImages("Normal");
+            else
+                SetImages("Disabled");
         }
 
         private void UserControl_MouseEnter(object sender, MouseEventArgs e)

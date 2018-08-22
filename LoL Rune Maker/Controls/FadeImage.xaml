@@ -1,0 +1,68 @@
+﻿<UserControl x:Class="LoL_Rune_Maker.Controls.FadeImage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:LoL_Rune_Maker.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <Style x:Key="FadeOut" TargetType="Image">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding ShowA}" Value="True">
+                    <DataTrigger.EnterActions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimationUsingKeyFrames>
+                                    <LinearDoubleKeyFrame Storyboard.TargetProperty="Opacity" Value="1" />
+                                    <LinearDoubleKeyFrame Storyboard.TargetProperty="Opacity" Value="0" />
+                                </DoubleAnimationUsingKeyFrames>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </DataTrigger.EnterActions>
+                    <DataTrigger.ExitActions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimationUsingKeyFrames>
+                                    <LinearDoubleKeyFrame Storyboard.TargetProperty="Opacity" Value="0" />
+                                    <LinearDoubleKeyFrame Storyboard.TargetProperty="Opacity" Value="1" />
+                                </DoubleAnimationUsingKeyFrames>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </DataTrigger.ExitActions>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="FadeIn" TargetType="Image">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding ShowA}" Value="True">
+                    <DataTrigger.EnterActions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimationUsingKeyFrames>
+                                    <LinearDoubleKeyFrame Storyboard.TargetProperty="Opacity" Value="0" />
+                                    <LinearDoubleKeyFrame Storyboard.TargetProperty="Opacity" Value="1" />
+                                </DoubleAnimationUsingKeyFrames>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </DataTrigger.EnterActions>
+                    <DataTrigger.ExitActions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimationUsingKeyFrames>
+                                    <LinearDoubleKeyFrame Storyboard.TargetProperty="Opacity" Value="0" />
+                                    <LinearDoubleKeyFrame Storyboard.TargetProperty="Opacity" Value="1" />
+                                </DoubleAnimationUsingKeyFrames>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </DataTrigger.ExitActions>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+    
+    <Grid>
+        <!--<Image x:Name="ImageA" Source="{StaticResource Bottom}" Style="{StaticResource FadeIn}" />
+        <Image x:Name="ImageB" Source="{StaticResource Support}" Opacity="0" Style="{StaticResource FadeOut}" />-->
+    </Grid>
+</UserControl>

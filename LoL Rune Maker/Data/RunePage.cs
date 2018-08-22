@@ -1,4 +1,5 @@
 ﻿using LCU.NET.Plugins.LoL;
+using LoL_Rune_Maker.Game;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,6 +32,9 @@ namespace LoL_Rune_Maker.Data
 
         public async Task UploadToClient()
         {
+            if (!GameState.CanUpload)
+                return;
+
             var page = await Perks.GetCurrentPageAsync();
 
             page.primaryStyleId = PrimaryTree;

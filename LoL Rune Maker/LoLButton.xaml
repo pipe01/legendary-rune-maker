@@ -28,9 +28,5 @@
 
         <Image x:Name="ImgLeft" Grid.Column="0" Source="{Binding Side}" Stretch="None" />
         <Image x:Name="ImgRight" Grid.Column="2" Source="{Binding Side}" Stretch="None" FlowDirection="RightToLeft" />
-        <!--<Image.RenderTransform>
-                <ScaleTransform ScaleX="-1" />
-            </Image.RenderTransform>
-        </Image>-->
     </Grid>
 </UserControl>
