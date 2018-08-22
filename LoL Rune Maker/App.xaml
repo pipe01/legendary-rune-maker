@@ -1,7 +1,7 @@
-﻿<Application x:Class="LoL_Rune_Maker.App"
+﻿<Application x:Class="Legendary_Rune_Maker.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:LoL_Rune_Maker"
+             xmlns:local="clr-namespace:Legendary_Rune_Maker"
              StartupUri="LoadingWindow.xaml">
     <Application.Resources>
         <SolidColorBrush x:Key="Normal" Color="#D6C8A5" />

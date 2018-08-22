@@ -16,7 +16,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace LoL_Rune_Maker
+namespace Legendary_Rune_Maker
 {
     /// <summary>
     /// Interaction logic for LoLButton.xaml

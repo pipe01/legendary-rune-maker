@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace LoL_Rune_Maker.Controls
+namespace Legendary_Rune_Maker.Controls
 {
     /// <summary>
     /// Interaction logic for FadeImage.xaml

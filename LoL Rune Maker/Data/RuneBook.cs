@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace LoL_Rune_Maker.Data
+namespace Legendary_Rune_Maker.Data
 {
     public class RuneBook : IList<RunePage>
     {

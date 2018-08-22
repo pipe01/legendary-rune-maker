@@ -1,10 +1,10 @@
-﻿<Window x:Class="LoL_Rune_Maker.MainWindow"
+﻿<Window x:Class="Legendary_Rune_Maker.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:LoL_Rune_Maker"
-        xmlns:controls="clr-namespace:LoL_Rune_Maker.Controls"
+        xmlns:local="clr-namespace:Legendary_Rune_Maker"
+        xmlns:controls="clr-namespace:Legendary_Rune_Maker.Controls"
         mc:Ignorable="d" ResizeMode="CanMinimize"
         Title="MainWindow" Height="355" Width="800" Initialized="Window_Initialized" WindowStartupLocation="CenterScreen"
         DataContext="{Binding RelativeSource={RelativeSource Self}}">

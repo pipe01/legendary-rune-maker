@@ -1,4 +1,4 @@
-﻿using LoL_Rune_Maker.Data;
+﻿using Legendary_Rune_Maker.Data;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,7 +6,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace LoL_Rune_Maker.Controls
+namespace Legendary_Rune_Maker.Controls
 {
     /// <summary>
     /// Interaction logic for RuneTreeControl.xaml

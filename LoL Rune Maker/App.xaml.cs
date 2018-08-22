@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace LoL_Rune_Maker
+namespace Legendary_Rune_Maker
 {
     /// <summary>
     /// Interaction logic for App.xaml

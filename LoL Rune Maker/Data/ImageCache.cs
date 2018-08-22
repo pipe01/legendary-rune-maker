@@ -1,4 +1,4 @@
-﻿using LoL_Rune_Maker.Utils;
+﻿using Legendary_Rune_Maker.Utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -15,7 +15,7 @@ using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
-namespace LoL_Rune_Maker.Data
+namespace Legendary_Rune_Maker.Data
 {
     public class ImageCache
     {

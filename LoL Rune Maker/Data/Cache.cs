@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LoL_Rune_Maker.Data
+namespace Legendary_Rune_Maker.Data
 {
     internal class Cache<TKey, TValue>
     {

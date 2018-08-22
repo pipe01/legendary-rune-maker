@@ -1,4 +1,4 @@
-﻿using LoL_Rune_Maker.Data;
+﻿using Legendary_Rune_Maker.Data;
 using System;
 using System.Linq;
 using System.Windows;
@@ -10,7 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace LoL_Rune_Maker
+namespace Legendary_Rune_Maker
 {
     /// <summary>
     /// Interaction logic for GrayscaleImageControl.xaml

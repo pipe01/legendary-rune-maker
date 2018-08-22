@@ -1,8 +1,8 @@
 ﻿using LCU.NET;
 using LCU.NET.API_Models;
 using LCU.NET.Plugins.LoL;
-using LoL_Rune_Maker.Data;
-using LoL_Rune_Maker.Game;
+using Legendary_Rune_Maker.Data;
+using Legendary_Rune_Maker.Game;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -23,7 +23,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace LoL_Rune_Maker
+namespace Legendary_Rune_Maker
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

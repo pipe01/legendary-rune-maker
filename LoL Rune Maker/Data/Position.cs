@@ -1,4 +1,4 @@
-﻿namespace LoL_Rune_Maker.Data
+﻿namespace Legendary_Rune_Maker.Data
 {
     public enum Position
     {

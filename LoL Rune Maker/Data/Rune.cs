@@ -6,7 +6,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace LoL_Rune_Maker.Data
+namespace Legendary_Rune_Maker.Data
 {
     public class Rune
     {

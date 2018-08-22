@@ -1,12 +1,12 @@
 ﻿using LCU.NET.Plugins.LoL;
-using LoL_Rune_Maker.Game;
+using Legendary_Rune_Maker.Game;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LoL_Rune_Maker.Data
+namespace Legendary_Rune_Maker.Data
 {
     public class RunePage
     {

@@ -7,7 +7,7 @@ using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media.Imaging;
 
-namespace LoL_Rune_Maker.Utils
+namespace Legendary_Rune_Maker.Utils
 {
     public static class BitmapUtils
     {

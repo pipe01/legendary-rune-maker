@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LoL_Rune_Maker.Game
+namespace Legendary_Rune_Maker.Game
 {
     internal static class ChampSelectDetector
     {
