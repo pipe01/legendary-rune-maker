@@ -31,15 +31,14 @@ namespace LoL_Rune_Maker
     public partial class MainWindow : Window
     {
         public static bool InDesigner => DesignerProperties.GetIsInDesignMode(new DependencyObject());
-
-        public MainWindow()
+        
+        public bool UploadOnLock
         {
-            if (!InDesigner)
-                Application.Current.MainWindow = this;
-
-            InitializeComponent();
+            get { return (bool)GetValue(UploadOnLockProperty); }
+            set { SetValue(UploadOnLockProperty, value); }
         }
-
+        public static readonly DependencyProperty UploadOnLockProperty = DependencyProperty.Register("UploadOnLock", typeof(bool), typeof(MainWindow), new PropertyMetadata(true));
+        
         private Rune[] SelectedRunes => Tree.SelectedPrimary.Concat(Tree.SelectedSecondary).Where(o => o != null).ToArray();
 
         private RunePage Page => new RunePage(SelectedRunes.Select(o => o.ID).ToArray(), Tree.PrimaryTree.ID, Tree.SecondaryTree.ID, SelectedChampion, SelectedPosition);
@@ -48,6 +47,14 @@ namespace LoL_Rune_Maker
 
         private int SelectedChampion;
         private Position SelectedPosition;
+
+        public MainWindow()
+        {
+            if (!InDesigner)
+                Application.Current.MainWindow = this;
+
+            InitializeComponent();
+        }
 
         private async void Window_Initialized(object sender, EventArgs e)
         {
@@ -144,7 +151,9 @@ namespace LoL_Rune_Maker
                         Status.Foreground = new SolidColorBrush(Colors.YellowGreen);
                         Status.Text = "locked in";
 
-                        Task.Run(Page.UploadToClient);
+                        if (UploadOnLock)
+                            Task.Run(Page.UploadToClient);
+
                         break;
                 }
             });

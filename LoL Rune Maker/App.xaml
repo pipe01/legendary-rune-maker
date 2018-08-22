@@ -22,6 +22,10 @@
         <BitmapImage x:Key="DisabledSide" UriSource="Images/disabled-side.png" />
         <BitmapImage x:Key="PressedFill" UriSource="Images/pressed-fill.png" />
         <BitmapImage x:Key="PressedSide" UriSource="Images/pressed-side.png" />
+        <BitmapImage x:Key="Checkbox" UriSource="Images/checkbox.png" />
+        <BitmapImage x:Key="CheckboxHover" UriSource="Images/checkbox-hover.png" />
+        <BitmapImage x:Key="CheckboxChecked" UriSource="Images/checkbox-checked.png" />
+        <BitmapImage x:Key="CheckboxHoverChecked" UriSource="Images/checkbox-hover-checked.png" />
 
         <BitmapImage x:Key="Fill" UriSource="Images/Fill_icon.png" />
         <BitmapImage x:Key="Top" UriSource="Images/Top_icon.png" />
@@ -225,5 +229,42 @@
             </Setter>
         </Style>
 
+        <Style TargetType="CheckBox">
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Foreground" Value="#A09684" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type CheckBox}">
+                        <StackPanel Orientation="Horizontal">
+                            <Image x:Name="checkboxImage" Source="{StaticResource Checkbox}" Width="12" Margin="1 0 3 0"
+                                   SnapsToDevicePixels="True" RenderOptions.BitmapScalingMode="NearestNeighbor" />
+                            <ContentPresenter/>
+                        </StackPanel>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="checkboxImage" Property="Source" Value="{StaticResource CheckboxChecked}"/>
+                            </Trigger>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsMouseOver" Value="True"/>
+                                    <Condition Property="IsChecked" Value="False"/>
+                                </MultiTrigger.Conditions>
+                                <Setter TargetName="checkboxImage" Property="Source" Value="{StaticResource CheckboxHover}"/>
+                            </MultiTrigger>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsMouseOver" Value="True"/>
+                                    <Condition Property="IsChecked" Value="True"/>
+                                </MultiTrigger.Conditions>
+                                <Setter TargetName="checkboxImage" Property="Source" Value="{StaticResource CheckboxHoverChecked}"/>
+                            </MultiTrigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Foreground" Value="#F0E6CC" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Application.Resources>
 </Application>

@@ -6,7 +6,8 @@
              xmlns:local="clr-namespace:LoL_Rune_Maker"
              mc:Ignorable="d" IsEnabledChanged="UserControl_IsEnabledChanged"
              d:DesignHeight="32" d:DesignWidth="78" Cursor="Hand" MouseEnter="UserControl_MouseEnter"
-             MouseLeave="UserControl_MouseLeave" MouseDown="UserControl_MouseDown" MouseUp="UserControl_MouseUp">
+             MouseLeave="UserControl_MouseLeave" MouseDown="UserControl_MouseDown" MouseUp="UserControl_MouseUp"
+             Initialized="UserControl_Initialized" DataContext="{Binding RelativeSource={RelativeSource Self}}">
 
     <Grid>
         <Grid.ColumnDefinitions>

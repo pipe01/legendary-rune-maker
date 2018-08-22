@@ -197,5 +197,11 @@
   <ItemGroup>
     <Resource Include="Images\Fill_icon.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\checkbox-checked.png" />
+    <Resource Include="Images\checkbox-hover-checked.png" />
+    <Resource Include="Images\checkbox-hover.png" />
+    <Resource Include="Images\checkbox.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

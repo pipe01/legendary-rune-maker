@@ -49,13 +49,6 @@ namespace LoL_Rune_Maker
         public LoLButton()
         {
             InitializeComponent();
-
-            this.DataContext = this;
-
-            if (IsEnabled)
-                SetImages("Normal");
-            else
-                SetImages("Disabled");
         }
 
         private void UserControl_MouseEnter(object sender, MouseEventArgs e)
@@ -85,6 +78,14 @@ namespace LoL_Rune_Maker
                 TextLabel.Foreground = Application.Current.FindResource("Pressed") as Brush;
             else
                 TextLabel.Foreground = Application.Current.FindResource("Normal") as Brush;
+        }
+
+        private void UserControl_Initialized(object sender, EventArgs e)
+        {
+            if (IsEnabled)
+                SetImages("Normal");
+            else
+                SetImages("Disabled");
         }
     }
 

@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:LoL_Rune_Maker"
         xmlns:controls="clr-namespace:LoL_Rune_Maker.Controls"
         mc:Ignorable="d" ResizeMode="CanMinimize"
-        Title="MainWindow" Height="355" Width="800" Initialized="Window_Initialized" WindowStartupLocation="CenterScreen">
+        Title="MainWindow" Height="355" Width="800" Initialized="Window_Initialized" WindowStartupLocation="CenterScreen"
+        DataContext="{Binding RelativeSource={RelativeSource Self}}">
 
     <Window.Background>
         <VisualBrush Stretch="UniformToFill">
@@ -34,9 +35,7 @@
             </Grid.ColumnDefinitions>
 
             <controls:RuneTreeControl x:Name="Tree" Grid.Column="0" Width="475" Height="250" HorizontalAlignment="Left"
-                                  VerticalAlignment="Top" Margin="10" SelectionChanged="Tree_SelectedRunesChanged">
-
-            </controls:RuneTreeControl>
+                                      VerticalAlignment="Top" Margin="10" SelectionChanged="Tree_SelectedRunesChanged" />
 
             <Grid Grid.Column="1">
                 <Grid.RowDefinitions>
@@ -73,6 +72,11 @@
         </Grid>
 
         <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="500" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            
             <RichTextBox FontFamily="{StaticResource BeaufortBold}" Foreground="{StaticResource Normal}" Background="Transparent"
                          BorderThickness="0" FontSize="25" VerticalAlignment="Center" IsHitTestVisible="False" Focusable="False"
                          Margin="7 0 0 0">
@@ -83,6 +87,11 @@
                     </Paragraph>
                 </FlowDocument>
             </RichTextBox>
+
+            <CheckBox IsChecked="{Binding UploadOnLock, Mode=TwoWay}" Grid.Column="1" VerticalAlignment="Center"
+                      HorizontalAlignment="Center">
+                Upload on champion lock
+            </CheckBox>
         </Grid>
     </Grid>
 </Window>
