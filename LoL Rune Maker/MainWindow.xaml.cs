@@ -151,7 +151,7 @@ namespace LoL_Rune_Maker
                         Status.Foreground = new SolidColorBrush(Colors.YellowGreen);
                         Status.Text = "locked in";
 
-                        if (UploadOnLock)
+                        if (UploadOnLock && ValidPage)
                             Task.Run(Page.UploadToClient);
 
                         break;

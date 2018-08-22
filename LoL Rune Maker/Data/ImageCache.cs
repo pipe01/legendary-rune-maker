@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Net;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Text;
@@ -35,7 +36,7 @@ namespace LoL_Rune_Maker.Data
         {
             if (!Dicc.TryGetValue(url, out var img))
             {
-                string file = Path.Combine(CachePath, ToMD5(url));
+                string file = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), CachePath, ToMD5(url));
                 byte[] data;
 
                 if (File.Exists(file))

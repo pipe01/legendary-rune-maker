@@ -67,7 +67,7 @@ namespace LoL_Rune_Maker.Data
             int p = 0;
             var runes = (await GetRuneTrees()).SelectMany(o => o.Slots).SelectMany(o => o.Runes).Select(o => ImageEndpoint + o.IconURL);
             var champions = (await GetChampions()).Select(o => o.ImageURL);
-            var total = runes.Concat(champions);
+            var total = runes.Concat(champions).Concat((await GetRuneTrees()).Select(o => ImageEndpoint + o.IconURL));
             int count = total.Count();
 
             await Task.WhenAll(total.Select(async o =>
