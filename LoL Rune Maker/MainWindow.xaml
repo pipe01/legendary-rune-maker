@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Legendary_Rune_Maker"
         xmlns:controls="clr-namespace:Legendary_Rune_Maker.Controls"
         mc:Ignorable="d" ResizeMode="CanMinimize"
-        Title="MainWindow" Height="355" Width="800" Initialized="Window_Initialized" WindowStartupLocation="CenterScreen"
+        Title="pipe01's Legendary Rune Maker" Height="355" Width="800" Initialized="Window_Initialized" WindowStartupLocation="CenterScreen"
         DataContext="{Binding RelativeSource={RelativeSource Self}}">
 
     <Window.Background>

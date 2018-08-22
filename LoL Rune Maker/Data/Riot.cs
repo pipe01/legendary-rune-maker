@@ -1,7 +1,10 @@
-﻿using Newtonsoft.Json;
+﻿using ICSharpCode.SharpZipLib.Core;
+using ICSharpCode.SharpZipLib.Zip;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -15,6 +18,11 @@ namespace Legendary_Rune_Maker.Data
 
         public static string VersionEndpoint => CdnEndpoint + "8.16.1/"; //TODO Get version automatically
         public static string ImageEndpoint => CdnEndpoint + "img/";
+
+        private static readonly string[] CacheZipURLs = new[]
+        {
+            "https://www.dropbox.com/s/jre9wq13mu1k7bc/cache.zip?dl=1"
+        };
 
         private static RuneTree[] Trees;
         public static async Task<RuneTree[]> GetRuneTrees()
@@ -75,6 +83,43 @@ namespace Legendary_Rune_Maker.Data
                 await ImageCache.Instance.Get(o);
                 progress((double)p++ / count);
             }));
+        }
+
+        public static async Task DownloadCacheCompressed(int host = 0)
+        {
+            var client = new WebClient();
+
+            if (!Directory.Exists(ImageCache.Instance.FullCachePath))
+                Directory.CreateDirectory(ImageCache.Instance.FullCachePath);
+
+            using (Stream file = await client.OpenReadTaskAsync(CacheZipURLs[host]))
+            {
+                var zip = new ZipInputStream(file);
+                ZipEntry entry;
+
+                while ((entry = zip.GetNextEntry()) != null)
+                {
+                    string path = Path.Combine(ImageCache.Instance.FullCachePath, entry.Name);
+                    
+                    using (Stream local = File.OpenWrite(path))
+                    {
+                        await Copy(zip, local);
+                    }
+                }
+            }
+        }
+
+        private static async Task Copy(Stream source, Stream target)
+        {
+            byte[] buffer = new byte[4096];
+            int read;
+
+            while ((read = await source.ReadAsync(buffer, 0, 4096)) != 0)
+            {
+                await target.WriteAsync(buffer, 0, read);
+            }
+
+            await target.FlushAsync();
         }
     }
 }

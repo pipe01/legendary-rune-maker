@@ -5,11 +5,22 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Legendary_Rune_Maker"
         mc:Ignorable="d"
-        Title="LoadingWindow" Height="172.556" Width="309.398" ResizeMode="NoResize" Initialized="Window_Initialized"
+        Title="" Height="172.556" Width="309.398" ResizeMode="NoResize" Initialized="Window_Initialized"
         Background="#010A13" WindowStartupLocation="CenterScreen">
-    <StackPanel VerticalAlignment="Center">
-        <TextBlock Text="Loading..." FontSize="25" Style="{StaticResource LoLText}" HorizontalAlignment="Center" />
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        
+        <TextBlock Grid.Row="0" Text="Loading..." FontSize="25" Style="{StaticResource LoLText}" HorizontalAlignment="Center"
+                   VerticalAlignment="Bottom"/>
 
-        <ProgressBar x:Name="Progress" Maximum="1" Height="20" Margin="10 10 10 0" />
-    </StackPanel>
+        <ProgressBar Grid.Row="1" x:Name="Progress" Maximum="1" Height="20" Margin="10 0 10 0" />
+
+        <TextBlock Grid.Row="2" Text="This will only happen the first time you open the application."
+                   TextWrapping="Wrap" HorizontalAlignment="Center" TextAlignment="Center" FontFamily="{StaticResource BeaufortBold}"
+                   Foreground="{StaticResource Pressed}"/>
+    </Grid>
 </Window>

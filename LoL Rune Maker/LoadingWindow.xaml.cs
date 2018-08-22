@@ -46,6 +46,7 @@ namespace Legendary_Rune_Maker
             if (!ImageCache.Instance.LocalCache)
             {
                 await Riot.CacheAll(o => Dispatcher.Invoke(() => Progress.Value = o));
+                //await Riot.DownloadCacheCompressed();
             }
 
             ShowMainWindow();

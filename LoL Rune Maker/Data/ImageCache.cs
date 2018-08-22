@@ -23,6 +23,8 @@ namespace Legendary_Rune_Maker.Data
 
         public bool LocalCache => Directory.Exists(CachePath);
 
+        public string FullCachePath => Path.Combine(Path.GetFullPath("./"), CachePath);
+
         private IDictionary<string, (BitmapSource n, BitmapSource g, byte[] d)> Dicc = new Dictionary<string, (BitmapSource, BitmapSource, byte[])>();
 
         private readonly string CachePath;
