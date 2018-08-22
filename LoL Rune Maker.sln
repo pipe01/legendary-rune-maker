@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Legendary Rune Maker", "LoL Rune Maker\Legendary Rune Maker.csproj", "{F9A8635F-EB66-4F88-8581-CF779CF3AA59}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Legendary Rune Maker", "Legendary Rune Maker\Legendary Rune Maker.csproj", "{F9A8635F-EB66-4F88-8581-CF779CF3AA59}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LCU.NET", "H:\PIPENDOS\Projects\LoL API\LCU.NET\LCU.NET.csproj", "{531938F3-2E4E-4C45-BE4D-CECED31AC294}"
 EndProject

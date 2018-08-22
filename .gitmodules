@@ -1,0 +1,6 @@
+[submodule "pimachine"]
+	path = pimachine
+	url = https://github.com/pipe01/pimachine.git
+[submodule "LCU.NET"]
+	path = LCU.NET
+	url = https://github.com/pipe01/LCU.NET.git
