@@ -15,8 +15,7 @@ namespace Legendary_Rune_Maker.Data
     internal static class Riot
     {
         public const string CdnEndpoint = "https://ddragon.leagueoflegends.com/cdn/";
-
-        public static string VersionEndpoint => CdnEndpoint + "8.16.1/"; //TODO Get version automatically
+        
         public static string ImageEndpoint => CdnEndpoint + "img/";
 
         public static string Locale { get; set; } = "en_US";
@@ -31,7 +30,7 @@ namespace Legendary_Rune_Maker.Data
         {
             if (Trees == null)
             {
-                Trees = JsonConvert.DeserializeObject<RuneTree[]>(await new WebClient().DownloadStringTaskAsync($"{VersionEndpoint}data/{Locale}/runesReforged.json")).OrderBy(o => o.ID).ToArray();
+                Trees = JsonConvert.DeserializeObject<RuneTree[]>(await new WebClient().DownloadStringTaskAsync($"{CdnEndpoint}{await GetLatestVersionAsync()}/data/{Locale}/runesReforged.json")).OrderBy(o => o.ID).ToArray();
             }
 
             return Trees;
@@ -42,7 +41,7 @@ namespace Legendary_Rune_Maker.Data
         {
             if (Champions == null)
             {
-                string json = await new WebClient().DownloadStringTaskAsync($"{VersionEndpoint}data/{Locale}/champion.json");
+                string json = await new WebClient().DownloadStringTaskAsync($"{CdnEndpoint}{await GetLatestVersionAsync()}/data/{Locale}/champion.json");
 
                 var jobj = JObject.Parse(json);
                 var data = jobj["data"];
@@ -55,13 +54,17 @@ namespace Legendary_Rune_Maker.Data
                         ID = p.Value["key"].ToObject<int>(),
                         Key = p.Value["id"].ToObject<string>(),
                         Name = p.Value["name"].ToObject<string>(),
-                        ImageURL = VersionEndpoint + "img/champion/" + p.Value["image"]["full"].ToObject<string>()
+                        ImageURL = $"{CdnEndpoint}{LatestVersion}/img/champion/" + p.Value["image"]["full"].ToObject<string>()
                     };
                 }).ToArray();
             }
 
             return Champions;
         }
+
+        private static string LatestVersion;
+        public static async Task<string> GetLatestVersionAsync()
+            => LatestVersion ?? (LatestVersion = JsonConvert.DeserializeObject<string[]>(await new WebClient().DownloadStringTaskAsync("https://ddragon.leagueoflegends.com/api/versions.json"))[0]);
 
         public static async Task<IDictionary<int, RuneTree>> GetRuneTreesByIDAsync()
             => (await GetRuneTrees()).ToDictionary(o => o.ID);
