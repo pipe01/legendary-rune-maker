@@ -77,6 +77,8 @@ namespace Legendary_Rune_Maker.Data
 
         public static async Task CacheAll(Action<double> progress)
         {
+            await GetLatestVersionAsync();
+
             int p = 0;
             var runes = (await GetRuneTrees()).SelectMany(o => o.Slots).SelectMany(o => o.Runes).Select(o => ImageEndpoint + o.IconURL);
             var champions = (await GetChampions()).Select(o => o.ImageURL);

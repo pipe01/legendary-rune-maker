@@ -43,12 +43,10 @@ namespace Legendary_Rune_Maker
 
         private async void Window_Initialized(object sender, EventArgs e)
         {
-            if (!ImageCache.Instance.LocalCache)
-            {
-                await Riot.CacheAll(o => Dispatcher.Invoke(() => Progress.Value = o));
-                //await Riot.DownloadCacheCompressed();
-            }
+            Progress.IsIndeterminate = ImageCache.Instance.LocalCache;
 
+            await Riot.CacheAll(o => Dispatcher.Invoke(() => Progress.Value = o));
+            
             ShowMainWindow();
         }
     }
