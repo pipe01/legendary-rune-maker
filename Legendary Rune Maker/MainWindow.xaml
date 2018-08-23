@@ -7,11 +7,7 @@
         xmlns:controls="clr-namespace:Legendary_Rune_Maker.Controls"
         mc:Ignorable="d" ResizeMode="CanMinimize"
         Title="pipe01's Legendary Rune Maker" Height="360" Width="810" Initialized="Window_Initialized" WindowStartupLocation="CenterScreen"
-        DataContext="{Binding RelativeSource={RelativeSource Self}}" MouseDown="Window_MouseDown">
-
-    <WindowChrome.WindowChrome>
-        <WindowChrome GlassFrameThickness="0" CornerRadius="0" CaptionHeight="0" UseAeroCaptionButtons="False" ResizeBorderThickness="7"/>
-    </WindowChrome.WindowChrome>
+        DataContext="{Binding RelativeSource={RelativeSource Self}}" MouseDown="Window_MouseDown" Style="{StaticResource Borderless}">
 
     <Window.Background>
         <VisualBrush Stretch="UniformToFill">

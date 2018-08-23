@@ -271,5 +271,14 @@
                 </Setter.Value>
             </Setter>
         </Style>
+
+        <Style x:Key="Borderless" TargetType="Window">
+            <Setter Property="WindowChrome.WindowChrome">
+                <Setter.Value>
+                    <WindowChrome GlassFrameThickness="0" CaptionHeight="0" UseAeroCaptionButtons="False" ResizeBorderThickness="7"
+                                  CornerRadius="0" />
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Application.Resources>
 </Application>

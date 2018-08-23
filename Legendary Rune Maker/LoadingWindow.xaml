@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Legendary_Rune_Maker"
         mc:Ignorable="d"
         Title="" Height="172.556" Width="309.398" ResizeMode="NoResize" Initialized="Window_Initialized"
-        Background="#010A13" WindowStartupLocation="CenterScreen">
+        Background="#010A13" WindowStartupLocation="CenterScreen" Style="{StaticResource Borderless}">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition />
@@ -21,6 +21,6 @@
 
         <TextBlock Grid.Row="2" Text="This will take longer the first time you open the application."
                    TextWrapping="Wrap" HorizontalAlignment="Center" TextAlignment="Center" FontFamily="{StaticResource BeaufortBold}"
-                   Foreground="{StaticResource Pressed}"/>
+                   Foreground="{StaticResource Pressed}" Margin="5"/>
     </Grid>
 </Window>
