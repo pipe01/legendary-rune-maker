@@ -31,13 +31,13 @@ namespace Legendary_Rune_Maker
 
         private BitmapSource Normal, Gray;
 
-        public GrayscaleImageControl(Rune rune)
+        public GrayscaleImageControl(Rune rune, bool main)
         {
             this.Rune = rune;
             this.DataContext = this;
 
             InitializeComponent();
-
+            
             var description = (View.ToolTip as DependencyObject).FindChild<RichTextBox>("Description");
 
             description.Document = XamlReader.Parse(rune.RichLongDesc) as FlowDocument;

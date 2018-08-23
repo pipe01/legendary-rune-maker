@@ -9,21 +9,15 @@
     
     <UserControl.Resources>
         <Storyboard x:Key="FadeIn">
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="Opacity">
-                <LinearDoubleKeyFrame Value="0.2" KeyTime="0:0:0.0" />
-                <LinearDoubleKeyFrame Value="1" KeyTime="0:0:0.2" />
-            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimation To="1" Duration="0:0:0.2" Storyboard.TargetProperty="Opacity" />
         </Storyboard>
         <Storyboard x:Key="FadeOut">
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="Opacity">
-                <LinearDoubleKeyFrame Value="1" KeyTime="0:0:0.0" />
-                <LinearDoubleKeyFrame Value="0" KeyTime="0:0:0.2" />
-            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimation To="0" Duration="0:0:0.2" Storyboard.TargetProperty="Opacity" />
         </Storyboard>
     </UserControl.Resources>
     
     <Grid>
-        <Image x:Name="ImageA" />
-        <Image x:Name="ImageB" Opacity="0" />
+        <Image x:Name="ImageA" Panel.ZIndex="1" />
+        <Image x:Name="ImageB" Panel.ZIndex="0" Opacity="0" />
     </Grid>
 </UserControl>

@@ -19,6 +19,8 @@ namespace Legendary_Rune_Maker.Data
         public static string VersionEndpoint => CdnEndpoint + "8.16.1/"; //TODO Get version automatically
         public static string ImageEndpoint => CdnEndpoint + "img/";
 
+        public static string Locale { get; set; } = "en_US";
+
         private static readonly string[] CacheZipURLs = new[]
         {
             "https://www.dropbox.com/s/jre9wq13mu1k7bc/cache.zip?dl=1"
@@ -29,7 +31,7 @@ namespace Legendary_Rune_Maker.Data
         {
             if (Trees == null)
             {
-                Trees = JsonConvert.DeserializeObject<RuneTree[]>(await new WebClient().DownloadStringTaskAsync(VersionEndpoint + "data/en_US/runesReforged.json")).OrderBy(o => o.ID).ToArray();
+                Trees = JsonConvert.DeserializeObject<RuneTree[]>(await new WebClient().DownloadStringTaskAsync($"{VersionEndpoint}data/{Locale}/runesReforged.json")).OrderBy(o => o.ID).ToArray();
             }
 
             return Trees;
@@ -40,7 +42,7 @@ namespace Legendary_Rune_Maker.Data
         {
             if (Champions == null)
             {
-                string json = await new WebClient().DownloadStringTaskAsync(VersionEndpoint + "data/en_US/champion.json");
+                string json = await new WebClient().DownloadStringTaskAsync($"{VersionEndpoint}data/{Locale}/champion.json");
 
                 var jobj = JObject.Parse(json);
                 var data = jobj["data"];

@@ -33,8 +33,6 @@ namespace Legendary_Rune_Maker
         private RunePage Page => new RunePage(SelectedRunes.Select(o => o.ID).ToArray(), Tree.PrimaryTree.ID, Tree.SecondaryTree.ID, SelectedChampion, SelectedPosition);
 
         private bool ValidPage;
-        private bool MovingWindow;
-        private Point MoveStart;
         private int SelectedChampion;
         private Position SelectedPosition;
 

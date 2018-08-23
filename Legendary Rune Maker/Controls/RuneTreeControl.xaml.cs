@@ -123,7 +123,7 @@ namespace Legendary_Rune_Maker.Controls
                 {
                     slotGrid.ColumnDefinitions.Add(new ColumnDefinition());
 
-                    var runeControl = new GrayscaleImageControl(rune);
+                    var runeControl = new GrayscaleImageControl(rune, row == 1 && !secondary);
                     runeControl.SelectedChanged += RuneControl_SelectedChanged;
                     runeControl.Tag = secondary;
 

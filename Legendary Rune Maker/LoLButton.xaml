@@ -10,6 +10,13 @@
              MouseLeave="UserControl_MouseLeave" MouseDown="UserControl_MouseDown" MouseUp="UserControl_MouseUp"
              Initialized="UserControl_Initialized" DataContext="{Binding RelativeSource={RelativeSource Self}}">
 
+    <UserControl.Resources>
+        <Style TargetType="controls:FadeImage">
+            <Setter Property="Stretch" Value="None" />
+            <Setter Property="SpeedRatio" Value="1.5" />
+        </Style>
+    </UserControl.Resources>
+    
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="5" />
@@ -20,7 +27,7 @@
         <Grid.Background>
             <VisualBrush TileMode="Tile">
                 <VisualBrush.Visual>
-                    <controls:FadeImage Source="{Binding Fill}" Stretch="None"  />
+                    <controls:FadeImage Source="{Binding Fill}" />
                 </VisualBrush.Visual>
             </VisualBrush>
         </Grid.Background>
@@ -28,7 +35,7 @@
         <TextBlock x:Name="TextLabel" Grid.Column="1" Text="{Binding Text, Converter={local:UppercaseConverter}}"
                    VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource LoLText}"/>
 
-        <controls:FadeImage x:Name="ImgLeft" Grid.Column="0" Source="{Binding Side}" Stretch="None" />
-        <controls:FadeImage x:Name="ImgRight" Grid.Column="2" Source="{Binding Right}" Stretch="None" />
+        <controls:FadeImage x:Name="ImgLeft" Grid.Column="0" Source="{Binding Side}" />
+        <controls:FadeImage x:Name="ImgRight" Grid.Column="2" Source="{Binding Right}" />
     </Grid>
 </UserControl>

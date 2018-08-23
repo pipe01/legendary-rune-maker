@@ -35,7 +35,15 @@ namespace Legendary_Rune_Maker.Controls
         }
         public static readonly DependencyProperty StretchProperty = DependencyProperty.Register("Stretch", typeof(Stretch), typeof(FadeImage));
         
+        public double SpeedRatio
+        {
+            get { return (double)GetValue(SpeedRatioProperty); }
+            set { SetValue(SpeedRatioProperty, value); }
+        }
+        public static readonly DependencyProperty SpeedRatioProperty = DependencyProperty.Register("SpeedRatio", typeof(double), typeof(FadeImage), new PropertyMetadata(1.0));
+
         private Image ImgA, ImgB;
+        private Storyboard FadeIn, FadeOut;
 
         public FadeImage()
         {
@@ -43,6 +51,9 @@ namespace Legendary_Rune_Maker.Controls
 
             ImgA = ImageA;
             ImgB = ImageB;
+
+            FadeIn = (Storyboard)Resources["FadeIn"];
+            FadeOut = (Storyboard)Resources["FadeOut"];
         }
         
         private static void SourceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -51,19 +62,20 @@ namespace Legendary_Rune_Maker.Controls
 
             if (e.OldValue != e.NewValue)
             {
-                fadeImage.ImgB.Source = e.NewValue as ImageSource;
-                fadeImage.Switch();
+                fadeImage.Switch(e.NewValue as ImageSource);
             }
         }
         
-        private void Switch()
+        private void Switch(ImageSource newImage)
         {
-            var sbIn = (Storyboard)Resources["FadeIn"];
-            sbIn.Begin(ImgB);
+            ImgB.Source = newImage;
 
-            var sbOut = (Storyboard)Resources["FadeOut"];
-            sbOut.Begin(ImgA);
+            FadeOut.SpeedRatio = SpeedRatio;
+            FadeIn.SpeedRatio = SpeedRatio;
 
+            FadeOut.Begin(ImgA);
+            FadeIn.Begin(ImgB);
+            
             var a = ImgA;
             ImgA = ImgB;
             ImgB = a;
