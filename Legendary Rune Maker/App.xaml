@@ -16,12 +16,16 @@
 
         <BitmapImage x:Key="HighlightedFill" UriSource="Images/highlighted-fill.png" />
         <BitmapImage x:Key="HighlightedSide" UriSource="Images/highlighted-side.png" />
+        <BitmapImage x:Key="HighlightedRight" UriSource="Images/highlighted-right.png" />
         <BitmapImage x:Key="NormalFill" UriSource="Images/enabled-fill.png" />
         <BitmapImage x:Key="NormalSide" UriSource="Images/enabled-side.png" />
+        <BitmapImage x:Key="NormalRight" UriSource="Images/enabled-right.png" />
         <BitmapImage x:Key="DisabledFill" UriSource="Images/disabled-fill.png" />
         <BitmapImage x:Key="DisabledSide" UriSource="Images/disabled-side.png" />
+        <BitmapImage x:Key="DisabledRight" UriSource="Images/disabled-right.png" />
         <BitmapImage x:Key="PressedFill" UriSource="Images/pressed-fill.png" />
         <BitmapImage x:Key="PressedSide" UriSource="Images/pressed-side.png" />
+        <BitmapImage x:Key="PressedRight" UriSource="Images/pressed-right.png" />
         <BitmapImage x:Key="Checkbox" UriSource="Images/checkbox.png" />
         <BitmapImage x:Key="CheckboxHover" UriSource="Images/checkbox-hover.png" />
         <BitmapImage x:Key="CheckboxChecked" UriSource="Images/checkbox-checked.png" />

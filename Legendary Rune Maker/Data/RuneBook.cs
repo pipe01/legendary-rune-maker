@@ -41,14 +41,15 @@ namespace Legendary_Rune_Maker.Data
             }
         }
 
-        public RunePage Get(int championId, Position position)
+        public RunePage Get(int championId, Position position, bool getFill = true)
         {
-            return Inner.SingleOrDefault(o => o.ChampionID == championId && (o.Position == position || position == Position.Fill));
+            return Inner.Find(o => o.ChampionID == championId && o.Position == position)
+                ?? (getFill ? Inner.Find(o => o.ChampionID == championId && o.Position == Position.Fill) : null);
         }
 
         public void Remove(int championId, Position position)
         {
-            var page = Get(championId, position);
+            var page = Get(championId, position, false);
             if (page != null)
                 Remove(page);
         }

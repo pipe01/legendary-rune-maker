@@ -1,4 +1,5 @@
 ﻿using Legendary_Rune_Maker.Data;
+using Legendary_Rune_Maker.Utils;
 using System;
 using System.Linq;
 using System.Windows;
@@ -22,9 +23,8 @@ namespace Legendary_Rune_Maker
             get => (bool)GetValue(SelectedProperty);
             set { SetValue(SelectedProperty, value); SetSelected(); }
         }
-        public static readonly DependencyProperty SelectedProperty =
-            DependencyProperty.Register("Selected", typeof(bool), typeof(GrayscaleImageControl));
-
+        public static readonly DependencyProperty SelectedProperty = DependencyProperty.Register("Selected", typeof(bool), typeof(GrayscaleImageControl));
+        
         public event EventHandler<bool> SelectedChanged;
 
         public Rune Rune { get; }
@@ -38,9 +38,11 @@ namespace Legendary_Rune_Maker
 
             InitializeComponent();
 
-            Description.Document = XamlReader.Parse(rune.RichLongDesc) as FlowDocument;
+            var description = (View.ToolTip as DependencyObject).FindChild<RichTextBox>("Description");
 
-            var paragraph = Description.Document.Blocks.First() as Paragraph;
+            description.Document = XamlReader.Parse(rune.RichLongDesc) as FlowDocument;
+
+            var paragraph = description.Document.Blocks.First() as Paragraph;
 
             var inlines = paragraph.Inlines.ToList();
             paragraph.Inlines.Clear();
@@ -54,7 +56,7 @@ namespace Legendary_Rune_Maker
                     var ruler = new Line { X1 = 0, Y1 = 0, X2 = 1000, Y2 = 0, Stroke = new SolidColorBrush(Color.FromRgb(81, 82, 80)), StrokeThickness = 2 };
                     ruler.Margin = new Thickness(0, 5, 0, 5);
 
-                    paragraph.Inlines.Add(new InlineUIContainer(ruler, Description.CaretPosition.GetInsertionPosition(LogicalDirection.Forward)));
+                    paragraph.Inlines.Add(new InlineUIContainer(ruler, description.CaretPosition.GetInsertionPosition(LogicalDirection.Forward)));
                 }
                 else
                 {

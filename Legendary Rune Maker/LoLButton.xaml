@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Legendary_Rune_Maker"
+             xmlns:controls="clr-namespace:Legendary_Rune_Maker.Controls"
              mc:Ignorable="d" IsEnabledChanged="UserControl_IsEnabledChanged"
              d:DesignHeight="32" d:DesignWidth="78" Cursor="Hand" MouseEnter="UserControl_MouseEnter"
              MouseLeave="UserControl_MouseLeave" MouseDown="UserControl_MouseDown" MouseUp="UserControl_MouseUp"
@@ -19,7 +20,7 @@
         <Grid.Background>
             <VisualBrush TileMode="Tile">
                 <VisualBrush.Visual>
-                    <Image Source="{Binding Fill}" Stretch="None"  />
+                    <controls:FadeImage Source="{Binding Fill}" Stretch="None"  />
                 </VisualBrush.Visual>
             </VisualBrush>
         </Grid.Background>
@@ -27,7 +28,7 @@
         <TextBlock x:Name="TextLabel" Grid.Column="1" Text="{Binding Text, Converter={local:UppercaseConverter}}"
                    VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource LoLText}"/>
 
-        <Image x:Name="ImgLeft" Grid.Column="0" Source="{Binding Side}" Stretch="None" />
-        <Image x:Name="ImgRight" Grid.Column="2" Source="{Binding Side}" Stretch="None" FlowDirection="RightToLeft" />
+        <controls:FadeImage x:Name="ImgLeft" Grid.Column="0" Source="{Binding Side}" Stretch="None" />
+        <controls:FadeImage x:Name="ImgRight" Grid.Column="2" Source="{Binding Right}" Stretch="None" />
     </Grid>
 </UserControl>

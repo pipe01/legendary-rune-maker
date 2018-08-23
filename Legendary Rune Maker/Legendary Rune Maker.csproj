@@ -93,6 +93,7 @@
       <DependentUpon>TreePickerControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Utils\BitmapUtils.cs" />
+    <Compile Include="Utils\VisualHierarchyHelper.cs" />
     <Page Include="Controls\FadeImage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -204,6 +205,14 @@
     <Resource Include="Images\checkbox-hover-checked.png" />
     <Resource Include="Images\checkbox-hover.png" />
     <Resource Include="Images\checkbox.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\enabled-right.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\disabled-right.png" />
+    <Resource Include="Images\highlighted-right.png" />
+    <Resource Include="Images\pressed-right.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

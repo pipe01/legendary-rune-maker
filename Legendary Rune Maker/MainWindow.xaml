@@ -27,7 +27,7 @@
     </Window.Background>
 
     <Grid>
-        <Line X1="0" Y1="0" X2="100000" Y2="0" Stroke="#785A28" StrokeThickness="3" SnapsToDevicePixels="True" />
+        <Line X1="0" Y1="0" X2="100000" Y2="0" Stroke="#785A28" StrokeThickness="4" SnapsToDevicePixels="True" />
 
         <Grid Margin="5">
             <Grid.RowDefinitions>
@@ -116,9 +116,8 @@
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
 
-                        <Image x:Name="ChampionImage" Grid.Column="0" Width="120" Height="120" />
-                        <Image x:Name="PositionImage" Grid.Column="1" Width="136" Height="136" />
-                        <!--<controls:FadeImage x:Name="PositionImage" Grid.Column="1" />-->
+                        <controls:FadeImage x:Name="ChampionImage" Grid.Column="0" Width="120" Height="120" />
+                        <controls:FadeImage x:Name="PositionImage" Grid.Column="1" />
                     </Grid>
 
                     <ComboBox x:Name="ChampionDD" Grid.Row="2" IsEditable="False" Height="32" Margin="5" SelectionChanged="ChampionDD_SelectionChanged" />

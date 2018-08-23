@@ -24,8 +24,11 @@ namespace Legendary_Rune_Maker.Controls
             get => _PrimaryTree;
             set
             {
+                bool changed = _PrimaryTree != value;
                 _PrimaryTree = value;
-                SetTree(value, false);
+
+                if (changed)
+                    SetTree(value, false);
             }
         }
 
@@ -35,8 +38,11 @@ namespace Legendary_Rune_Maker.Controls
             get => _SecondaryTree;
             set
             {
+                bool changed = _SecondaryTree != value;
                 _SecondaryTree = value;
-                SetTree(value, true);
+
+                if (changed)
+                    SetTree(value, true);
             }
         }
 

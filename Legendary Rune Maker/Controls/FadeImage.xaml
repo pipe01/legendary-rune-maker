@@ -6,63 +6,24 @@
              xmlns:local="clr-namespace:Legendary_Rune_Maker.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    
     <UserControl.Resources>
-        <Style x:Key="FadeOut" TargetType="Image">
-            <Style.Triggers>
-                <DataTrigger Binding="{Binding ShowA}" Value="True">
-                    <DataTrigger.EnterActions>
-                        <BeginStoryboard>
-                            <Storyboard>
-                                <DoubleAnimationUsingKeyFrames>
-                                    <LinearDoubleKeyFrame Storyboard.TargetProperty="Opacity" Value="1" />
-                                    <LinearDoubleKeyFrame Storyboard.TargetProperty="Opacity" Value="0" />
-                                </DoubleAnimationUsingKeyFrames>
-                            </Storyboard>
-                        </BeginStoryboard>
-                    </DataTrigger.EnterActions>
-                    <DataTrigger.ExitActions>
-                        <BeginStoryboard>
-                            <Storyboard>
-                                <DoubleAnimationUsingKeyFrames>
-                                    <LinearDoubleKeyFrame Storyboard.TargetProperty="Opacity" Value="0" />
-                                    <LinearDoubleKeyFrame Storyboard.TargetProperty="Opacity" Value="1" />
-                                </DoubleAnimationUsingKeyFrames>
-                            </Storyboard>
-                        </BeginStoryboard>
-                    </DataTrigger.ExitActions>
-                </DataTrigger>
-            </Style.Triggers>
-        </Style>
-        <Style x:Key="FadeIn" TargetType="Image">
-            <Style.Triggers>
-                <DataTrigger Binding="{Binding ShowA}" Value="True">
-                    <DataTrigger.EnterActions>
-                        <BeginStoryboard>
-                            <Storyboard>
-                                <DoubleAnimationUsingKeyFrames>
-                                    <LinearDoubleKeyFrame Storyboard.TargetProperty="Opacity" Value="0" />
-                                    <LinearDoubleKeyFrame Storyboard.TargetProperty="Opacity" Value="1" />
-                                </DoubleAnimationUsingKeyFrames>
-                            </Storyboard>
-                        </BeginStoryboard>
-                    </DataTrigger.EnterActions>
-                    <DataTrigger.ExitActions>
-                        <BeginStoryboard>
-                            <Storyboard>
-                                <DoubleAnimationUsingKeyFrames>
-                                    <LinearDoubleKeyFrame Storyboard.TargetProperty="Opacity" Value="0" />
-                                    <LinearDoubleKeyFrame Storyboard.TargetProperty="Opacity" Value="1" />
-                                </DoubleAnimationUsingKeyFrames>
-                            </Storyboard>
-                        </BeginStoryboard>
-                    </DataTrigger.ExitActions>
-                </DataTrigger>
-            </Style.Triggers>
-        </Style>
+        <Storyboard x:Key="FadeIn">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="Opacity">
+                <LinearDoubleKeyFrame Value="0.2" KeyTime="0:0:0.0" />
+                <LinearDoubleKeyFrame Value="1" KeyTime="0:0:0.2" />
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="FadeOut">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="Opacity">
+                <LinearDoubleKeyFrame Value="1" KeyTime="0:0:0.0" />
+                <LinearDoubleKeyFrame Value="0" KeyTime="0:0:0.2" />
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
     </UserControl.Resources>
     
     <Grid>
-        <!--<Image x:Name="ImageA" Source="{StaticResource Bottom}" Style="{StaticResource FadeIn}" />
-        <Image x:Name="ImageB" Source="{StaticResource Support}" Opacity="0" Style="{StaticResource FadeOut}" />-->
+        <Image x:Name="ImageA" />
+        <Image x:Name="ImageB" Opacity="0" />
     </Grid>
 </UserControl>

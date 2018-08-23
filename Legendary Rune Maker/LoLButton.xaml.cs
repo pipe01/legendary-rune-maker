@@ -37,6 +37,13 @@ namespace Legendary_Rune_Maker
         }
         public static readonly DependencyProperty SideProperty = DependencyProperty.Register("Side", typeof(ImageSource), typeof(LoLButton));
         
+        public ImageSource Right
+        {
+            get { return (ImageSource)GetValue(RightProperty); }
+            set { SetValue(RightProperty, value); }
+        }
+        public static readonly DependencyProperty RightProperty = DependencyProperty.Register("Right", typeof(ImageSource), typeof(LoLButton));
+        
         public ImageSource Fill
         {
             get { return (ImageSource)GetValue(FillProperty); }
@@ -73,6 +80,7 @@ namespace Legendary_Rune_Maker
         {
             Side = Application.Current.FindResource(phase + "Side") as ImageSource;
             Fill = Application.Current.FindResource(phase + "Fill") as ImageSource;
+            Right = Application.Current.FindResource(phase + "Right") as ImageSource;
 
             if (phase == "Pressed" || phase == "Disabled")
                 TextLabel.Foreground = Application.Current.FindResource("Pressed") as Brush;
