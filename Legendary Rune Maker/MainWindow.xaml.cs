@@ -1,27 +1,16 @@
 ﻿using LCU.NET;
 using LCU.NET.API_Models;
-using LCU.NET.Plugins.LoL;
 using Legendary_Rune_Maker.Data;
 using Legendary_Rune_Maker.Game;
-using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Legendary_Rune_Maker
 {
@@ -31,14 +20,14 @@ namespace Legendary_Rune_Maker
     public partial class MainWindow : Window
     {
         public static bool InDesigner => DesignerProperties.GetIsInDesignMode(new DependencyObject());
-        
+
         public bool UploadOnLock
         {
-            get { return (bool)GetValue(UploadOnLockProperty); }
-            set { SetValue(UploadOnLockProperty, value); }
+            get => (bool)GetValue(UploadOnLockProperty);
+            set => SetValue(UploadOnLockProperty, value);
         }
         public static readonly DependencyProperty UploadOnLockProperty = DependencyProperty.Register("UploadOnLock", typeof(bool), typeof(MainWindow), new PropertyMetadata(true));
-        
+
         private Rune[] SelectedRunes => Tree.SelectedPrimary.Concat(Tree.SelectedSecondary).Where(o => o != null).ToArray();
 
         private RunePage Page => new RunePage(SelectedRunes.Select(o => o.ID).ToArray(), Tree.PrimaryTree.ID, Tree.SecondaryTree.ID, SelectedChampion, SelectedPosition);
@@ -60,7 +49,7 @@ namespace Legendary_Rune_Maker
         {
             await InitDetectors();
             await InitControls();
-            
+
             this.Show();
         }
 
@@ -69,7 +58,7 @@ namespace Legendary_Rune_Maker
             GameState.State.EnteredState += State_EnteredState;
 
             LeagueClient.ConnectedChanged += LeagueClient_ConnectedChanged;
-            
+
             if (!LeagueClient.TryInit())
             {
                 LeagueClient.BeginTryInit();
@@ -78,7 +67,7 @@ namespace Legendary_Rune_Maker
             ChampSelectDetector.SessionUpdated += ChampSelectDetector_SessionUpdated;
 
             LoginDetector.Init();
-            
+
             if (LeagueClient.Connected)
             {
                 try
@@ -158,14 +147,14 @@ namespace Legendary_Rune_Maker
                 }
             });
         }
-        
+
         private void ChampSelectDetector_SessionUpdated(LolChampSelectChampSelectSession obj)
         {
             var player = ChampSelectDetector.CurrentSelection;
 
             if (player == null || player.championId == 0)
                 return;
-            
+
             Position p;
 
             switch (player.assignedPosition)
@@ -274,8 +263,14 @@ namespace Legendary_Rune_Maker
             RuneBook.Instance.Remove(SelectedChampion, SelectedPosition);
         }
 
-        private void UpdateRunePageFromRuneBook()
+        private void UpdateRunePageFromRuneBook(bool canCopy = true)
         {
+            if (canCopy && ((Keyboard.Modifiers & ModifierKeys.Shift) == ModifierKeys.Shift))
+            {
+                SaveRunePageToBook();
+                return;
+            }
+
             var page = RuneBook.Instance.Get(SelectedChampion, SelectedPosition);
 
             if (page != null)
@@ -300,7 +295,7 @@ namespace Legendary_Rune_Maker
         private void SaveRunePageToBook()
         {
             RuneBook.Instance.Remove(SelectedChampion, SelectedPosition);
-            
+
             if (SelectedChampion != 0)
                 RuneBook.Instance.Add(this.Page);
         }

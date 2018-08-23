@@ -5,9 +5,9 @@ VisualStudioVersion = 15.0.28010.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Legendary Rune Maker", "Legendary Rune Maker\Legendary Rune Maker.csproj", "{F9A8635F-EB66-4F88-8581-CF779CF3AA59}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LCU.NET", "H:\PIPENDOS\Projects\LoL API\LCU.NET\LCU.NET.csproj", "{531938F3-2E4E-4C45-BE4D-CECED31AC294}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PiMachine", "pimachine\PiMachine.csproj", "{F4A1E544-6DE4-493B-9BD0-F0D5FCA3F836}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PiMachine", "..\PiMachine\PiMachine.csproj", "{8A62E48D-6109-4721-8F56-B4EEF47D012F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LCU.NET", "LCU.NET\LCU.NET.csproj", "{531938F3-2E4E-4C45-BE4D-CECED31AC294}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,14 +19,14 @@ Global
 		{F9A8635F-EB66-4F88-8581-CF779CF3AA59}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F9A8635F-EB66-4F88-8581-CF779CF3AA59}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F9A8635F-EB66-4F88-8581-CF779CF3AA59}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F4A1E544-6DE4-493B-9BD0-F0D5FCA3F836}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4A1E544-6DE4-493B-9BD0-F0D5FCA3F836}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4A1E544-6DE4-493B-9BD0-F0D5FCA3F836}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4A1E544-6DE4-493B-9BD0-F0D5FCA3F836}.Release|Any CPU.Build.0 = Release|Any CPU
 		{531938F3-2E4E-4C45-BE4D-CECED31AC294}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{531938F3-2E4E-4C45-BE4D-CECED31AC294}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{531938F3-2E4E-4C45-BE4D-CECED31AC294}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{531938F3-2E4E-4C45-BE4D-CECED31AC294}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8A62E48D-6109-4721-8F56-B4EEF47D012F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8A62E48D-6109-4721-8F56-B4EEF47D012F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8A62E48D-6109-4721-8F56-B4EEF47D012F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8A62E48D-6109-4721-8F56-B4EEF47D012F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

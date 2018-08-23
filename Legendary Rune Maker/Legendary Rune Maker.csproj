@@ -180,13 +180,13 @@
     <Resource Include="Images\background.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\PiMachine\PiMachine.csproj">
-      <Project>{8a62e48d-6109-4721-8f56-b4eef47d012f}</Project>
-      <Name>PiMachine</Name>
-    </ProjectReference>
-    <ProjectReference Include="H:\PIPENDOS\Projects\LoL API\LCU.NET\LCU.NET.csproj">
+    <ProjectReference Include="..\LCU.NET\LCU.NET.csproj">
       <Project>{531938f3-2e4e-4c45-be4d-ceced31ac294}</Project>
       <Name>LCU.NET</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\pimachine\PiMachine.csproj">
+      <Project>{f4a1e544-6de4-493b-9bd0-f0d5fca3f836}</Project>
+      <Name>PiMachine</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

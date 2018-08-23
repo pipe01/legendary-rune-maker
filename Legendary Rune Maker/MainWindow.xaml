@@ -83,7 +83,7 @@
                 <FlowDocument>
                     <Paragraph>
                         Status:
-                        <Run x:Name="Status"></Run>
+                        <Run x:Name="Status" Foreground="Red">disconnected</Run>
                     </Paragraph>
                 </FlowDocument>
             </RichTextBox>
