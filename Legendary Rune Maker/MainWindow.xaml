@@ -6,8 +6,12 @@
         xmlns:local="clr-namespace:Legendary_Rune_Maker"
         xmlns:controls="clr-namespace:Legendary_Rune_Maker.Controls"
         mc:Ignorable="d" ResizeMode="CanMinimize"
-        Title="pipe01's Legendary Rune Maker" Height="355" Width="800" Initialized="Window_Initialized" WindowStartupLocation="CenterScreen"
-        DataContext="{Binding RelativeSource={RelativeSource Self}}">
+        Title="pipe01's Legendary Rune Maker" Height="360" Width="810" Initialized="Window_Initialized" WindowStartupLocation="CenterScreen"
+        DataContext="{Binding RelativeSource={RelativeSource Self}}" MouseDown="Window_MouseDown">
+
+    <WindowChrome.WindowChrome>
+        <WindowChrome GlassFrameThickness="0" CornerRadius="0" CaptionHeight="0" UseAeroCaptionButtons="False" ResizeBorderThickness="7"/>
+    </WindowChrome.WindowChrome>
 
     <Window.Background>
         <VisualBrush Stretch="UniformToFill">
@@ -22,7 +26,7 @@
         </VisualBrush>
     </Window.Background>
 
-    <Grid>
+    <Grid Margin="5">
         <Grid.RowDefinitions>
             <RowDefinition />
             <RowDefinition Height="50" />
@@ -39,6 +43,7 @@
 
             <Grid Grid.Column="1">
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="20" />
                     <RowDefinition />
                     <RowDefinition Height="42" />
                     <RowDefinition Height="42" />
@@ -46,6 +51,63 @@
                 </Grid.RowDefinitions>
 
                 <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="20" />
+                        <ColumnDefinition Width="20" />
+                    </Grid.ColumnDefinitions>
+
+                    <Grid x:Name="Close" Grid.Column="2" Width="20" Height="20" Cursor="Hand" MouseUp="Close_MouseUp"
+                          Background="Transparent">
+                        <Image Width="10" Height="10">
+                            <Image.Source>
+                                <DrawingImage>
+                                    <DrawingImage.Drawing>
+                                        <DrawingGroup>
+                                            <GeometryDrawing>
+                                                <GeometryDrawing.Pen>
+                                                    <Pen Brush="#A09B8C" Thickness="10" />
+                                                </GeometryDrawing.Pen>
+                                                <GeometryDrawing.Geometry>
+                                                    <GeometryGroup>
+                                                        <LineGeometry StartPoint="0,0" EndPoint="1,1" />
+                                                        <LineGeometry StartPoint="1,0" EndPoint="0,1" />
+                                                    </GeometryGroup>
+                                                </GeometryDrawing.Geometry>
+                                            </GeometryDrawing>
+                                        </DrawingGroup>
+                                    </DrawingImage.Drawing>
+                                </DrawingImage>
+                            </Image.Source>
+                        </Image>
+                    </Grid>
+
+                    <Grid x:Name="Minimize" Grid.Column="1" Width="20" Height="20" Cursor="Hand" MouseUp="Minimize_MouseUp"
+                          Background="Transparent">
+                        <Image Width="10" Height="10" VerticalAlignment="Bottom" Margin="5">
+                            <Image.Source>
+                                <DrawingImage>
+                                    <DrawingImage.Drawing>
+                                        <DrawingGroup>
+                                            <GeometryDrawing>
+                                                <GeometryDrawing.Pen>
+                                                    <Pen x:Name="ClosePen" Brush="#A09B8C" Thickness="3" />
+                                                </GeometryDrawing.Pen>
+                                                <GeometryDrawing.Geometry>
+                                                    <GeometryGroup>
+                                                        <LineGeometry StartPoint="0,0" EndPoint="0,1" />
+                                                    </GeometryGroup>
+                                                </GeometryDrawing.Geometry>
+                                            </GeometryDrawing>
+                                        </DrawingGroup>
+                                    </DrawingImage.Drawing>
+                                </DrawingImage>
+                            </Image.Source>
+                        </Image>
+                    </Grid>
+                </Grid>
+                
+                <Grid Grid.Row="1">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />
                         <ColumnDefinition />
@@ -56,10 +118,10 @@
                     <!--<controls:FadeImage x:Name="PositionImage" Grid.Column="1" />-->
                 </Grid>
 
-                <ComboBox x:Name="ChampionDD" Grid.Row="1" IsEditable="False" Height="32" Margin="5" SelectionChanged="ChampionDD_SelectionChanged" />
-                <ComboBox x:Name="PositionDD" Grid.Row="2" IsEditable="False" Height="32" Margin="5" SelectionChanged="PositionDD_SelectionChanged" />
+                <ComboBox x:Name="ChampionDD" Grid.Row="2" IsEditable="False" Height="32" Margin="5" SelectionChanged="ChampionDD_SelectionChanged" />
+                <ComboBox x:Name="PositionDD" Grid.Row="3" IsEditable="False" Height="32" Margin="5" SelectionChanged="PositionDD_SelectionChanged" />
 
-                <Grid Grid.Row="3">
+                <Grid Grid.Row="4">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />
                         <ColumnDefinition />
@@ -76,7 +138,7 @@
                 <ColumnDefinition Width="500" />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            
+
             <RichTextBox FontFamily="{StaticResource BeaufortBold}" Foreground="{StaticResource Normal}" Background="Transparent"
                          BorderThickness="0" FontSize="25" VerticalAlignment="Center" IsHitTestVisible="False" Focusable="False"
                          Margin="7 0 0 0">

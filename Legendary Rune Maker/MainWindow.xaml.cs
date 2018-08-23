@@ -33,7 +33,8 @@ namespace Legendary_Rune_Maker
         private RunePage Page => new RunePage(SelectedRunes.Select(o => o.ID).ToArray(), Tree.PrimaryTree.ID, Tree.SecondaryTree.ID, SelectedChampion, SelectedPosition);
 
         private bool ValidPage;
-
+        private bool MovingWindow;
+        private Point MoveStart;
         private int SelectedChampion;
         private Position SelectedPosition;
 
@@ -298,6 +299,24 @@ namespace Legendary_Rune_Maker
 
             if (SelectedChampion != 0)
                 RuneBook.Instance.Add(this.Page);
+        }
+
+        private void Close_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void Minimize_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            this.WindowState = WindowState.Minimized;
+        }
+
+        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed && e.Source == this)
+            {
+                DragMove();
+            }
         }
     }
 }
