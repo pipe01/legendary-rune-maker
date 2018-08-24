@@ -56,7 +56,9 @@ namespace Legendary_Rune_Maker.Data
                         Name = p.Value["name"].ToObject<string>(),
                         ImageURL = $"{CdnEndpoint}{LatestVersion}/img/champion/" + p.Value["image"]["full"].ToObject<string>()
                     };
-                }).ToArray();
+                })
+                .OrderBy(o => o.Name)
+                .ToArray();
             }
 
             return Champions;
