@@ -98,8 +98,6 @@ namespace Legendary_Rune_Maker
                 {
                     manager.LaunchUpdater(update.LastVersion);
                     Environment.Exit(0);
-
-                    return; //Just in case
                 }
             }
         }

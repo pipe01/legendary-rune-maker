@@ -41,6 +41,9 @@
         <BitmapImage x:Key="Bottom" UriSource="Images/Bottom_icon.png" />
         <BitmapImage x:Key="Support" UriSource="Images/Support_icon.png" />
 
+        <BitmapImage x:Key="Selector" UriSource="Images/selector.png" />
+        <BitmapImage x:Key="SelectorRune" UriSource="Images/selector-rune.png" />
+
         <LinearGradientBrush x:Key="DropdownHover" StartPoint="0,0" EndPoint="0,1">
             <GradientStop Color="#101921" Offset="0" />
             <GradientStop Color="#2C2E2C" Offset="1" />

@@ -25,13 +25,20 @@ namespace Legendary_Rune_Maker
         }
         public static readonly DependencyProperty SelectedProperty = DependencyProperty.Register("Selected", typeof(bool), typeof(GrayscaleImageControl));
         
+        public bool ShowSelector
+        {
+            get { return (bool)GetValue(ShowSelectorProperty); }
+            set { SetValue(ShowSelectorProperty, value); }
+        }
+        public static readonly DependencyProperty ShowSelectorProperty = DependencyProperty.Register("ShowSelector", typeof(bool), typeof(GrayscaleImageControl), new PropertyMetadata(false, ShowSelectorChanged));
+        
         public event EventHandler<bool> SelectedChanged;
 
         public Rune Rune { get; }
 
         private BitmapSource Normal, Gray;
 
-        public GrayscaleImageControl(Rune rune, bool main)
+        public GrayscaleImageControl(Rune rune)
         {
             this.Rune = rune;
             this.DataContext = this;
@@ -76,7 +83,15 @@ namespace Legendary_Rune_Maker
         private void SetSelected()
         {
             View.Source = Selected ? this.Normal : this.Gray;
+            Selector.Visibility = (Selected && ShowSelector) ? Visibility.Visible : Visibility.Hidden;
+
             SelectedChanged?.Invoke(this, Selected);
+        }
+        
+        private static void ShowSelectorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var image = d as GrayscaleImageControl;
+            image.Selector.Visibility = (image.Selected && (bool)e.NewValue) ? Visibility.Visible : Visibility.Hidden;
         }
 
         private void UserControl_MouseDown(object sender, MouseButtonEventArgs e)

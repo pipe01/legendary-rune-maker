@@ -7,6 +7,6 @@
              mc:Ignorable="d" 
              Height="38" d:DesignWidth="183">
     <Grid x:Name="MainGrid">
-        <Image x:Name="Selector" Source="/images/selector.png" />
+        <Image x:Name="Selector" Source="{StaticResource Selector}" />
     </Grid>
 </UserControl>

@@ -1,6 +1,5 @@
 ﻿using Legendary_Rune_Maker.Data;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
@@ -67,7 +66,7 @@ namespace Legendary_Rune_Maker.Controls
                 SetSelected(value, true);
             }
         }
-        
+
         public event EventHandler SelectionChanged;
 
         private List<List<GrayscaleImageControl>> PrimaryControls = new List<List<GrayscaleImageControl>>();
@@ -107,7 +106,7 @@ namespace Legendary_Rune_Maker.Controls
             grid.Children.Clear();
             grid.RowDefinitions.Clear();
             controls.Clear();
-            
+
             int row = 0;
             foreach (var slot in slots)
             {
@@ -123,12 +122,15 @@ namespace Legendary_Rune_Maker.Controls
                 {
                     slotGrid.ColumnDefinitions.Add(new ColumnDefinition());
 
-                    var runeControl = new GrayscaleImageControl(rune, row == 1 && !secondary);
+                    var runeControl = new GrayscaleImageControl(rune);
                     runeControl.SelectedChanged += RuneControl_SelectedChanged;
                     runeControl.Tag = secondary;
 
-                    if (!(row == 1 && !secondary))
+                    if (row != 1 || secondary)
+                    {
                         runeControl.Width = runeControl.Height = 40;
+                        runeControl.ShowSelector = true;
+                    }
 
                     controls[row - 1].Add(runeControl);
                     slotGrid.Children.Add(runeControl);
@@ -148,6 +150,8 @@ namespace Legendary_Rune_Maker.Controls
             {
                 foreach (var control in row)
                 {
+                    var grid = (Grid)control.Parent;
+
                     control.Selected = secondary ? runes.Any(o => o?.ID == control.Rune.ID) : control.Rune.ID == runes[i]?.ID;
                 }
 

@@ -39,5 +39,8 @@
         </Style>
     </UserControl.Resources>
 
-    <controls:FadeImage x:Name="View" ToolTipService.ShowDuration="12000" />
+    <Grid>
+        <controls:FadeImage x:Name="View" ToolTipService.ShowDuration="12000" />
+        <Image x:Name="Selector" Source="{StaticResource SelectorRune}" />
+    </Grid>
 </UserControl>
