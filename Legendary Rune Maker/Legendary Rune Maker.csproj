@@ -209,6 +209,10 @@
       <Project>{531938f3-2e4e-4c45-be4d-ceced31ac294}</Project>
       <Name>LCU.NET</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Notifications.Wpf\Notifications.Wpf\Notifications.Wpf.csproj">
+      <Project>{5c9a4f46-263d-4c23-b361-f09e14bb109e}</Project>
+      <Name>Notifications.Wpf</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Onova\Onova\Onova.csproj">
       <Project>{15cf3641-6eb9-4913-a22b-f1feb5e0df23}</Project>
       <Name>Onova</Name>
