@@ -8,6 +8,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Markup;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
@@ -21,16 +22,16 @@ namespace Legendary_Rune_Maker
         public bool Selected
         {
             get => (bool)GetValue(SelectedProperty);
-            set { SetValue(SelectedProperty, value); SetSelected(); }
+            set { SetValue(SelectedProperty, value); }
         }
-        public static readonly DependencyProperty SelectedProperty = DependencyProperty.Register("Selected", typeof(bool), typeof(GrayscaleImageControl));
-        
+        public static readonly DependencyProperty SelectedProperty = DependencyProperty.Register("Selected", typeof(bool), typeof(GrayscaleImageControl), new PropertyMetadata(OnSelectedChanged));
+
         public bool ShowSelector
         {
             get { return (bool)GetValue(ShowSelectorProperty); }
             set { SetValue(ShowSelectorProperty, value); }
         }
-        public static readonly DependencyProperty ShowSelectorProperty = DependencyProperty.Register("ShowSelector", typeof(bool), typeof(GrayscaleImageControl), new PropertyMetadata(false, ShowSelectorChanged));
+        public static readonly DependencyProperty ShowSelectorProperty = DependencyProperty.Register("ShowSelector", typeof(bool), typeof(GrayscaleImageControl), new PropertyMetadata(false));
         
         public event EventHandler<bool> SelectedChanged;
 
@@ -79,21 +80,27 @@ namespace Legendary_Rune_Maker
 
             View.Source = this.Gray;
         }
-
-        private void SetSelected()
+        
+        private static void OnSelectedChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            View.Source = Selected ? this.Normal : this.Gray;
-            Selector.Visibility = (Selected && ShowSelector) ? Visibility.Visible : Visibility.Hidden;
+            if (e.OldValue == e.NewValue)
+                return;
 
-            SelectedChanged?.Invoke(this, Selected);
+            var image = d as GrayscaleImageControl;
+            image.View.Source = (bool)e.NewValue ? image.Normal : image.Gray;
+
+            if ((bool)e.NewValue)
+            {
+                ((Storyboard)image.FindResource("FadeIn")).Begin();
+            }
+            else
+            {
+                ((Storyboard)image.FindResource("FadeOut")).Begin();
+            }
+
+            image.SelectedChanged?.Invoke(image, (bool)e.NewValue);
         }
         
-        private static void ShowSelectorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var image = d as GrayscaleImageControl;
-            image.Selector.Visibility = (image.Selected && (bool)e.NewValue) ? Visibility.Visible : Visibility.Hidden;
-        }
-
         private void UserControl_MouseDown(object sender, MouseButtonEventArgs e)
         {
             Selected = true;
