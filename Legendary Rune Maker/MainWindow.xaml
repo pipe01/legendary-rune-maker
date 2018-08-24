@@ -131,11 +131,6 @@
 
                         <local:LoLButton x:Name="Load" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Stretch" Margin="5"
                                          Text="Load" ContextMenuService.IsEnabled="False" Click="Load_Click">
-                            <local:LoLButton.ContextMenu>
-                                <ContextMenu>
-                                    <MenuItem Header="Runes.lol" />
-                                </ContextMenu>
-                            </local:LoLButton.ContextMenu>
                         </local:LoLButton>
                         <!--<local:LoLButton Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" Margin="5" IsEnabled="False" />-->
                     </Grid>

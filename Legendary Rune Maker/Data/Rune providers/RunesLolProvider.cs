@@ -21,6 +21,8 @@ namespace Legendary_Rune_Maker.Data.Rune_providers
             [Position.Fill] = ""
         };
 
+        public string Name => "Runes.lol";
+
         private static async Task<string> GetChampionKey(int championId)
             => (await Riot.GetChampions()).Single(o => o.ID == championId).Key;
 
@@ -68,7 +70,7 @@ namespace Legendary_Rune_Maker.Data.Rune_providers
             if (runes.Count != 6)
                 throw new FormatException("Couldn't find all runes.");
 
-            return new RunePage
+            var page = new RunePage
             {
                 ChampionID = championId,
                 Position = position,
@@ -77,7 +79,14 @@ namespace Legendary_Rune_Maker.Data.Rune_providers
                 RuneIDs = runes.Select(o => int.Parse(o.GetAttributeValue("data-id", "0"))).ToArray()
             };
 
+            page.PrimaryTree = Swap(page.PrimaryTree, 8300, 8400);
+            page.SecondaryTree = Swap(page.SecondaryTree, 8300, 8400);
+
+            return page;
+
             int GetRuneClass(HtmlNode node) => int.Parse(Regex.Match(node.ChildNodes[0].GetAttributeValue("src", ""), @"(?<=\/)\d+(?=\.)").Value);
+
+            int Swap(int v, int a, int b) => v == a ? b : v == b ? a : v;
         }
     }
 }

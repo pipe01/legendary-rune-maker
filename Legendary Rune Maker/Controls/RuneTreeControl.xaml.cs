@@ -67,7 +67,7 @@ namespace Legendary_Rune_Maker.Controls
                 SetSelected(value, true);
             }
         }
-
+        
         public event EventHandler SelectionChanged;
 
         private List<List<GrayscaleImageControl>> PrimaryControls = new List<List<GrayscaleImageControl>>();
@@ -231,6 +231,18 @@ namespace Legendary_Rune_Maker.Controls
         private void PrimaryPicker_SelectionChanged(object sender, EventArgs e)
         {
             SetTree(Riot.GetRuneTreesByID()[PrimaryPicker.SelectedTree], false, false);
+
+            SelectionChanged?.Invoke(this, EventArgs.Empty);
+        }
+
+        public void SetPage(RunePage page)
+        {
+            var trees = Riot.GetRuneTreesByID();
+
+            PrimaryTree = trees[page.PrimaryTree];
+            SecondaryTree = trees[page.SecondaryTree];
+            SelectedPrimary = PrimaryTree.Slots.SelectMany(o => o.Runes).Where(o => page.RuneIDs.Contains(o.ID)).ToArray();
+            SelectedSecondary = SecondaryTree.Slots.SelectMany(o => o.Runes).Where(o => page.RuneIDs.Contains(o.ID)).ToArray();
 
             SelectionChanged?.Invoke(this, EventArgs.Empty);
         }

@@ -1,8 +1,10 @@
 ﻿using LCU.NET;
 using LCU.NET.API_Models;
 using Legendary_Rune_Maker.Data;
+using Legendary_Rune_Maker.Data.Rune_providers;
 using Legendary_Rune_Maker.Game;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
@@ -32,6 +34,11 @@ namespace Legendary_Rune_Maker
 
         private RunePage Page => new RunePage(SelectedRunes.Select(o => o.ID).ToArray(), Tree.PrimaryTree.ID, Tree.SecondaryTree.ID, SelectedChampion, SelectedPosition);
 
+        private readonly IRuneProvider[] RuneProviders = new[]
+        {
+            new RunesLolProvider()
+        };
+
         private bool ValidPage;
         private int SelectedChampion;
         private Position SelectedPosition;
@@ -48,7 +55,7 @@ namespace Legendary_Rune_Maker
         {
             await InitDetectors();
             await InitControls();
-
+            
             this.Show();
         }
 
@@ -139,7 +146,7 @@ namespace Legendary_Rune_Maker
                         Status.Foreground = new SolidColorBrush(Colors.YellowGreen);
                         Status.Text = "locked in";
 
-                        if (UploadOnLock && ValidPage)
+                        if (UploadOnLock && ValidPage && GameState.CanUpload)
                             Task.Run(Page.UploadToClient);
 
                         break;
@@ -197,7 +204,9 @@ namespace Legendary_Rune_Maker
 
         private void RefreshAndSave()
         {
-            Upload.IsEnabled = ValidPage = SelectedRunes.Length == 6 && SelectedChampion != 0 && GameState.CanUpload;
+            ValidPage = SelectedRunes.Length == 6 && SelectedChampion != 0;
+
+            Upload.IsEnabled = ValidPage && GameState.CanUpload;
 
             if (ValidPage)
                 SaveRunePageToBook();
@@ -270,7 +279,7 @@ namespace Legendary_Rune_Maker
                 return;
             }
 
-            var page = RuneBook.Instance.Get(SelectedChampion, SelectedPosition);
+            var page = RuneBook.Instance.Get(SelectedChampion, SelectedPosition, false);
 
             if (page != null)
             {
@@ -317,9 +326,53 @@ namespace Legendary_Rune_Maker
             }
         }
 
-        private void Load_Click(object sender, EventArgs e)
+        private async void Load_Click(object sender, EventArgs e)
         {
-            Load.ContextMenu.IsOpen = true;
+            if (SelectedChampion == 0)
+                return;
+            
+            Load.IsEnabled = false;
+
+            var menu = new ContextMenu();
+            var availProviders = new List<(IRuneProvider Provider, Position Position)>();
+
+            foreach (var provider in RuneProviders)
+            {
+                var available = await provider.GetPossibleRoles(SelectedChampion);
+
+                if (SelectedPosition == Position.Fill)
+                {
+                    foreach (var avail in available)
+                    {
+                        availProviders.Add((provider, avail));
+                    }
+                }
+                else if (available.Contains(SelectedPosition))
+                {
+                    availProviders.Add((provider, SelectedPosition));
+                }
+            }
+
+            if (availProviders.Count > 0)
+                menu.Items.Add(new MenuItem { Header = "Load from:", IsEnabled = false });
+            else
+                menu.Items.Add(new MenuItem { Header = "None available", IsEnabled = false });
+
+            foreach (var item in availProviders)
+            {
+                var menuItem = new MenuItem { Header = item.Provider.Name + " - " + item.Position };
+                menuItem.Click += async (a, b) =>
+                {
+                    Tree.SetPage(await item.Provider.GetRunePage(SelectedChampion, item.Position));
+                    RefreshAndSave();
+                };
+
+                menu.Items.Add(menuItem);
+            }
+
+            Load.IsEnabled = true;
+            Load.ContextMenu = menu;
+            menu.IsOpen = true;
         }
     }
 }
