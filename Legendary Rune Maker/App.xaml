@@ -42,7 +42,18 @@
         <BitmapImage x:Key="Support" UriSource="Images/Support_icon.png" />
 
         <BitmapImage x:Key="Selector" UriSource="Images/selector.png" />
-        <BitmapImage x:Key="SelectorRune" UriSource="Images/selector-rune.png" />
+        <DrawingImage x:Key="SelectorRune">
+            <DrawingImage.Drawing>
+                <GeometryDrawing>
+                    <GeometryDrawing.Pen>
+                        <Pen Brush="#C4A972" Thickness="2" />
+                    </GeometryDrawing.Pen>
+                    <GeometryDrawing.Geometry>
+                        <EllipseGeometry Center="20,20" RadiusX="20" RadiusY="20" />
+                    </GeometryDrawing.Geometry>
+                </GeometryDrawing>
+            </DrawingImage.Drawing>
+        </DrawingImage>
 
         <LinearGradientBrush x:Key="DropdownHover" StartPoint="0,0" EndPoint="0,1">
             <GradientStop Color="#101921" Offset="0" />
