@@ -14,6 +14,8 @@
             <Setter Property="FontSize" Value="14.4" />
             <Setter Property="Foreground" Value="{StaticResource Normal}" />
         </Style>
+        
+        <BitmapImage x:Key="Icon" UriSource="Images/lrm_icon.ico" />
 
         <BitmapImage x:Key="HighlightedFill" UriSource="Images/highlighted-fill.png" />
         <BitmapImage x:Key="HighlightedSide" UriSource="Images/highlighted-side.png" />
