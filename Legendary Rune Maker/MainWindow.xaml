@@ -126,7 +126,8 @@
                         </Grid.ColumnDefinitions>
                         
                         <ComboBox x:Name="ChampionDD" Grid.Row="0" IsEditable="False" Height="32" Margin="5" SelectionChanged="ChampionDD_SelectionChanged" />
-                        <ComboBox x:Name="PositionDD" Grid.Row="1" IsEditable="False" Height="32" Margin="5" SelectionChanged="PositionDD_SelectionChanged" />
+                        <ComboBox x:Name="PositionDD" Grid.Row="1" Grid.ColumnSpan="2" IsEditable="False" Height="32" Margin="5"
+                                  SelectionChanged="PositionDD_SelectionChanged" />
 
                         <local:LoLButton x:Name="Load" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Stretch" Margin="5"
                                          Text="Load" ContextMenuService.IsEnabled="False" Click="Load_Click">
@@ -136,7 +137,7 @@
                                 </ContextMenu>
                             </local:LoLButton.ContextMenu>
                         </local:LoLButton>
-                        <local:LoLButton Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" Margin="5" IsEnabled="False" />
+                        <!--<local:LoLButton Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" Margin="5" IsEnabled="False" />-->
                     </Grid>
                     
                     <Grid Grid.Row="4">
