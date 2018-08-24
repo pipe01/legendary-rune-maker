@@ -47,6 +47,9 @@ namespace Legendary_Rune_Maker
 
         private async void Window_Initialized(object sender, EventArgs e)
         {
+            Status.Text = "Checking for updates...";
+            Progress.IsIndeterminate = true;
+
             var manager = new UpdateManager(
                 new WebPackageResolver("https://pipe0481.heliohost.org/plrm.man"),
                 new ZipPackageExtractor());
@@ -55,7 +58,6 @@ namespace Legendary_Rune_Maker
             if (update.CanUpdate)
             {
                 Status.Text = "Updating...";
-                Hint.Visibility = Visibility.Hidden;
                 Cancel.Visibility = Visibility.Visible;
                 Progress.IsIndeterminate = false;
                 
@@ -78,17 +80,15 @@ namespace Legendary_Rune_Maker
                 }
             }
 
-            Dispatcher.Invoke(() =>
-            {
-                Progress.Value = 0;
-                Status.Text = "Loading...";
-                Cancel.Visibility = Visibility.Hidden;
-                Hint.Visibility = Visibility.Visible;
-            });
+            Progress.IsIndeterminate = false;
+            Progress.Value = 0;
+            Status.Text = "Loading...";
+            Cancel.Visibility = Visibility.Hidden;
+            Hint.Visibility = Visibility.Visible;
 
             await Riot.CacheAll(o => Dispatcher.Invoke(() => Progress.Value = o));
             
-            Dispatcher.Invoke(ShowMainWindow);
+            ShowMainWindow();
         }
 
         private void Cancel_Click(object sender, EventArgs e)
