@@ -213,6 +213,10 @@
       <Project>{5c9a4f46-263d-4c23-b361-f09e14bb109e}</Project>
       <Name>Notifications.Wpf</Name>
     </ProjectReference>
+    <ProjectReference Include="..\notifyicon-wpf\Hardcodet.NotifyIcon.Wpf\Source\NotifyIconWpf\NotifyIconWpf.csproj">
+      <Project>{7ac63864-7638-41c4-969c-d3197ef2bed9}</Project>
+      <Name>NotifyIconWpf</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Onova\Onova\Onova.csproj">
       <Project>{15cf3641-6eb9-4913-a22b-f1feb5e0df23}</Project>
       <Name>Onova</Name>
