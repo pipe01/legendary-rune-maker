@@ -1,5 +1,6 @@
 ﻿using LCU.NET;
 using Legendary_Rune_Maker.Data;
+using Legendary_Rune_Maker.Properties;
 using Onova;
 using Onova.Services;
 using System;
@@ -47,6 +48,28 @@ namespace Legendary_Rune_Maker
 
         private async void Window_Initialized(object sender, EventArgs e)
         {
+            if (Settings.Default.CheckUpdatesBeforeStartup)
+                await CheckUpdates();
+
+            if (Settings.Default.LoadCacheBeforeStartup)
+                await LoadCache();
+
+            ShowMainWindow();
+        }
+
+        private async Task LoadCache()
+        {
+            Progress.IsIndeterminate = false;
+            Progress.Value = 0;
+            Status.Text = "Loading...";
+            Cancel.Visibility = Visibility.Hidden;
+            Hint.Visibility = ImageCache.Instance.LocalCache ? Visibility.Hidden : Visibility.Visible;
+
+            await Riot.CacheAll(o => Dispatcher.Invoke(() => Progress.Value = o));
+        }
+
+        private async Task CheckUpdates()
+        {
             Status.Text = "Checking for updates...";
             Progress.IsIndeterminate = true;
 
@@ -60,7 +83,7 @@ namespace Legendary_Rune_Maker
                 Status.Text = "Updating...";
                 Cancel.Visibility = Visibility.Visible;
                 Progress.IsIndeterminate = false;
-                
+
                 var progress = new Progress<double>(o => Progress.Value = o);
 
                 try
@@ -79,16 +102,6 @@ namespace Legendary_Rune_Maker
                     return; //Just in case
                 }
             }
-
-            Progress.IsIndeterminate = false;
-            Progress.Value = 0;
-            Status.Text = "Loading...";
-            Cancel.Visibility = Visibility.Hidden;
-            Hint.Visibility = Visibility.Visible;
-
-            await Riot.CacheAll(o => Dispatcher.Invoke(() => Progress.Value = o));
-            
-            ShowMainWindow();
         }
 
         private void Cancel_Click(object sender, EventArgs e)

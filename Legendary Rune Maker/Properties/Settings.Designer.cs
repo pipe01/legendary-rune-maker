@@ -34,5 +34,17 @@ namespace Legendary_Rune_Maker.Properties {
                 this["CheckUpdatesBeforeStartup"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool LoadCacheBeforeStartup {
+            get {
+                return ((bool)(this["LoadCacheBeforeStartup"]));
+            }
+            set {
+                this["LoadCacheBeforeStartup"] = value;
+            }
+        }
     }
 }
