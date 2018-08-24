@@ -16,7 +16,7 @@
             <Setter Property="SpeedRatio" Value="1.5" />
         </Style>
     </UserControl.Resources>
-    
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="5" />
@@ -24,18 +24,19 @@
             <ColumnDefinition Width="5" />
         </Grid.ColumnDefinitions>
 
-        <Grid.Background>
-            <VisualBrush TileMode="Tile">
-                <VisualBrush.Visual>
-                    <controls:FadeImage Source="{Binding Fill}" />
-                </VisualBrush.Visual>
-            </VisualBrush>
-        </Grid.Background>
+        <controls:FadeImage x:Name="ImgLeft" Grid.Column="0" Source="{Binding Side}" />
+        <Grid Grid.Column="1">
+            <Grid.Background>
+                <VisualBrush TileMode="Tile">
+                    <VisualBrush.Visual>
+                        <controls:FadeImage Source="{Binding Fill}" />
+                    </VisualBrush.Visual>
+                </VisualBrush>
+            </Grid.Background>
+        </Grid>
+        <controls:FadeImage x:Name="ImgRight" Grid.Column="2" Source="{Binding Right}" />
 
         <TextBlock x:Name="TextLabel" Grid.Column="1" Text="{Binding Text, Converter={local:UppercaseConverter}}"
                    VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource LoLText}"/>
-
-        <controls:FadeImage x:Name="ImgLeft" Grid.Column="0" Source="{Binding Side}" />
-        <controls:FadeImage x:Name="ImgRight" Grid.Column="2" Source="{Binding Right}" />
     </Grid>
 </UserControl>

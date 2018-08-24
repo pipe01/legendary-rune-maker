@@ -82,6 +82,8 @@ namespace Legendary_Rune_Maker
             {
                 Progress.Value = 0;
                 Status.Text = "Loading...";
+                Cancel.Visibility = Visibility.Hidden;
+                Hint.Visibility = Visibility.Visible;
             });
 
             await Riot.CacheAll(o => Dispatcher.Invoke(() => Progress.Value = o));
