@@ -68,12 +68,17 @@ namespace Legendary_Rune_Maker
             => SetImages(IsEnabled ? "Normal" : "Disabled");
 
         private void UserControl_MouseDown(object sender, MouseButtonEventArgs e)
-            => SetImages("Pressed");
+        {
+            if (e.ChangedButton == MouseButton.Left) SetImages("Pressed");
+        }
 
         private void UserControl_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            SetImages("Highlighted");
-            Click?.Invoke(sender, EventArgs.Empty);
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                SetImages("Highlighted");
+                Click?.Invoke(sender, EventArgs.Empty);
+            }
         }
 
         private void SetImages(string phase)

@@ -316,5 +316,10 @@ namespace Legendary_Rune_Maker
                 DragMove();
             }
         }
+
+        private void Load_Click(object sender, EventArgs e)
+        {
+            Load.ContextMenu.IsOpen = true;
+        }
     }
 }
