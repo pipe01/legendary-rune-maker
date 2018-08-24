@@ -22,5 +22,17 @@ namespace Legendary_Rune_Maker.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool CheckUpdatesBeforeStartup {
+            get {
+                return ((bool)(this["CheckUpdatesBeforeStartup"]));
+            }
+            set {
+                this["CheckUpdatesBeforeStartup"] = value;
+            }
+        }
     }
 }
