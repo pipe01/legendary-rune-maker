@@ -35,7 +35,7 @@ namespace Legendary_Rune_Maker.Game
             if (data == null)
                 return;
 
-            if (eventType == EventType.Update)
+            if (eventType == EventType.Update || eventType == EventType.Create)
             {
                 Session = data;
 
@@ -46,7 +46,8 @@ namespace Legendary_Rune_Maker.Game
 
                 SessionUpdated?.Invoke(data);
             }
-            else if (eventType == EventType.Create)
+
+            if (eventType == EventType.Create)
             {
                 GameState.State.Fire(GameTriggers.EnterChampSelect);
             }
