@@ -10,3 +10,6 @@
 [submodule "Notifications.Wpf"]
 	path = Notifications.Wpf
 	url = https://github.com/Federerer/Notifications.Wpf.git
+[submodule "notifyicon-wpf"]
+	path = notifyicon-wpf
+	url = https://bitbucket.org/hardcodet/notifyicon-wpf.git
