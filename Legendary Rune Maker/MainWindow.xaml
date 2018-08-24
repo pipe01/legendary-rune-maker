@@ -9,7 +9,7 @@
         mc:Ignorable="d" ResizeMode="CanMinimize"
         Title="pipe01's Legendary Rune Maker" Height="360" Width="810" Initialized="Window_Initialized" WindowStartupLocation="CenterScreen"
         DataContext="{Binding RelativeSource={RelativeSource Self}}" MouseDown="Window_MouseDown" Style="{StaticResource Borderless}"
-        Icon="{StaticResource Icon}">
+        Icon="{StaticResource Icon}" StateChanged="Window_StateChanged">
 
     <Window.Background>
         <VisualBrush Stretch="UniformToFill">
@@ -25,7 +25,7 @@
     </Window.Background>
 
     <Grid>
-        <tb:TaskbarIcon IconSource="{StaticResource Icon}" ToolTipText="Legendary Rune Maker" />
+        <tb:TaskbarIcon IconSource="{StaticResource Icon}" ToolTipText="Legendary Rune Maker" TrayLeftMouseDown="TaskbarIcon_TrayLeftMouseDown" />
 
         <Line X1="0" Y1="0" X2="100000" Y2="0" Stroke="#785A28" StrokeThickness="4" SnapsToDevicePixels="True" />
 

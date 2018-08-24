@@ -376,5 +376,23 @@ namespace Legendary_Rune_Maker
             Load.ContextMenu = menu;
             menu.IsOpen = true;
         }
+
+        private async void Window_StateChanged(object sender, EventArgs e)
+        {
+            if (this.WindowState == WindowState.Minimized)
+            {
+                await Task.Delay(500); //Wait for Windows' window minimize animation to finish, cuz it looks K00L
+                this.Hide();
+            }
+        }
+
+        private void TaskbarIcon_TrayLeftMouseDown(object sender, RoutedEventArgs e)
+        {
+            if (this.WindowState == WindowState.Minimized)
+            {
+                this.Show();
+                this.WindowState = WindowState.Normal;
+            }
+        }
     }
 }
