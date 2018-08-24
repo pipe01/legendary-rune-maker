@@ -4,3 +4,6 @@
 [submodule "LCU.NET"]
 	path = LCU.NET
 	url = https://github.com/pipe01/LCU.NET.git
+[submodule "Onova"]
+	path = Onova
+	url = https://github.com/pipe01/Onova.git
