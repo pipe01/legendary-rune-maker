@@ -18,14 +18,16 @@
                 <RowDefinition />
             </Grid.RowDefinitions>
 
-            <TextBlock Grid.Row="0" Text="Loading..." FontSize="25" Style="{StaticResource LoLText}" HorizontalAlignment="Center"
+            <TextBlock x:Name="Status" Grid.Row="0" Text="Loading..." FontSize="25" Style="{StaticResource LoLText}" HorizontalAlignment="Center"
                    VerticalAlignment="Bottom"/>
 
-            <ProgressBar Grid.Row="1" x:Name="Progress" Maximum="1" Height="20" Margin="10 0 10 0" />
+            <ProgressBar x:Name="Progress" Grid.Row="1" Maximum="1" Height="20" Margin="10 0 10 0" IsIndeterminate="True" />
 
-            <TextBlock Grid.Row="2" Text="This will take longer the first time you open the application."
+            <TextBlock x:Name="Hint" Grid.Row="2" Text="This will take longer the first time you open the application."
                    TextWrapping="Wrap" HorizontalAlignment="Center" TextAlignment="Center" FontFamily="{StaticResource BeaufortBold}"
                    Foreground="{StaticResource Pressed}" Margin="5"/>
+
+            <local:LoLButton x:Name="Cancel" Grid.Row="2" Text="Cancel" Width="100" Height="32" Visibility="Hidden" Click="Cancel_Click" />
         </Grid>
     </Grid>
 </Window>

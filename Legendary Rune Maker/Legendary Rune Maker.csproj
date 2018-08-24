@@ -44,6 +44,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL" />
     <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net461\System.ValueTuple.dll</HintPath>
     </Reference>
@@ -184,6 +185,10 @@
     <ProjectReference Include="..\LCU.NET\LCU.NET.csproj">
       <Project>{531938f3-2e4e-4c45-be4d-ceced31ac294}</Project>
       <Name>LCU.NET</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Onova\Onova\Onova.csproj">
+      <Project>{15cf3641-6eb9-4913-a22b-f1feb5e0df23}</Project>
+      <Name>Onova</Name>
     </ProjectReference>
     <ProjectReference Include="..\pimachine\PiMachine.csproj">
       <Project>{f4a1e544-6de4-493b-9bd0-f0d5fca3f836}</Project>

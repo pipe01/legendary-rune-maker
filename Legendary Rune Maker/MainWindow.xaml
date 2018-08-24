@@ -44,8 +44,7 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="20" />
                         <RowDefinition />
-                        <RowDefinition Height="42" />
-                        <RowDefinition Height="42" />
+                        <RowDefinition Height="84" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
 
@@ -116,9 +115,23 @@
                         <controls:FadeImage x:Name="PositionImage" Grid.Column="1" />
                     </Grid>
 
-                    <ComboBox x:Name="ChampionDD" Grid.Row="2" IsEditable="False" Height="32" Margin="5" SelectionChanged="ChampionDD_SelectionChanged" />
-                    <ComboBox x:Name="PositionDD" Grid.Row="3" IsEditable="False" Height="32" Margin="5" SelectionChanged="PositionDD_SelectionChanged" />
+                    <Grid Grid.Row="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="42" />
+                            <RowDefinition Height="42" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="100" />
+                        </Grid.ColumnDefinitions>
+                        
+                        <ComboBox x:Name="ChampionDD" Grid.Row="0" IsEditable="False" Height="32" Margin="5" SelectionChanged="ChampionDD_SelectionChanged" />
+                        <ComboBox x:Name="PositionDD" Grid.Row="1" IsEditable="False" Height="32" Margin="5" SelectionChanged="PositionDD_SelectionChanged" />
 
+                        <local:LoLButton Grid.Column="1" Grid.Row="0" HorizontalAlignment="Stretch" Margin="5" Text="Load" />
+                        <local:LoLButton Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" Margin="5" IsEnabled="False" />
+                    </Grid>
+                    
                     <Grid Grid.Row="4">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition />
