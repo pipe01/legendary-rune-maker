@@ -3,6 +3,7 @@ using LCU.NET.API_Models;
 using Legendary_Rune_Maker.Data;
 using Legendary_Rune_Maker.Data.Rune_providers;
 using Legendary_Rune_Maker.Game;
+using Notifications.Wpf;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -42,11 +43,14 @@ namespace Legendary_Rune_Maker
         private bool ValidPage;
         private int SelectedChampion;
         private Position SelectedPosition;
+        private INotificationManager NotificationManager;
 
         public MainWindow()
         {
             if (!InDesigner)
                 Application.Current.MainWindow = this;
+
+            NotificationManager = new NotificationManager(Dispatcher);
 
             InitializeComponent();
         }
@@ -55,7 +59,7 @@ namespace Legendary_Rune_Maker
         {
             await InitDetectors();
             await InitControls();
-            
+
             this.Show();
         }
 
@@ -116,7 +120,7 @@ namespace Legendary_Rune_Maker
 
         private void State_EnteredState(GameStates state)
         {
-            Dispatcher.Invoke(() =>
+            Dispatcher.Invoke(async () =>
             {
                 switch (state)
                 {
@@ -124,7 +128,7 @@ namespace Legendary_Rune_Maker
                         Status.Foreground = new SolidColorBrush(Colors.Red);
                         Status.Text = "disconnected";
 
-                        Task.Run(async () =>
+                        await Task.Run(async () =>
                         {
                             await Task.Delay(1000);
                             LeagueClient.BeginTryInit();
@@ -147,7 +151,18 @@ namespace Legendary_Rune_Maker
                         Status.Text = "locked in";
 
                         if (UploadOnLock && ValidPage && GameState.CanUpload)
-                            Task.Run(Page.UploadToClient);
+                        {
+                            string champion = (await Riot.GetChampions()).Single(o => o.ID == SelectedChampion).Name;
+
+                            NotificationManager.Show(new NotificationContent
+                            {
+                                Title = "Locked in",
+                                Message = champion + ", " + SelectedPosition.ToString().ToLower(),
+                                Type = NotificationType.Success
+                            });
+
+                            await Task.Run(Page.UploadToClient);
+                        }
 
                         break;
                 }
@@ -321,7 +336,7 @@ namespace Legendary_Rune_Maker
         {
             if (SelectedChampion == 0)
                 return;
-            
+
             Load.IsEnabled = false;
 
             var menu = new ContextMenu();
