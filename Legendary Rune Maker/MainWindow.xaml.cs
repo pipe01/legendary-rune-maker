@@ -283,16 +283,7 @@ namespace Legendary_Rune_Maker
 
             if (page != null)
             {
-                Tree.PrimaryTree = Riot.GetRuneTreesByID()[page.PrimaryTree];
-                Tree.SecondaryTree = Riot.GetRuneTreesByID()[page.SecondaryTree];
-
-                var allRunes = Riot.GetAllRunes();
-                var runes = page.RuneIDs.Select(o => allRunes[o]);
-
-                Tree.SelectedPrimary = runes.Take(4).ToArray();
-                Tree.SelectedSecondary = runes.Skip(4).Take(2).ToArray();
-
-                RefreshAndSave();
+                Tree.SetPage(page);
             }
             else
             {
@@ -361,11 +352,7 @@ namespace Legendary_Rune_Maker
             foreach (var item in availProviders)
             {
                 var menuItem = new MenuItem { Header = item.Provider.Name + " - " + item.Position };
-                menuItem.Click += async (a, b) =>
-                {
-                    Tree.SetPage(await item.Provider.GetRunePage(SelectedChampion, item.Position));
-                    RefreshAndSave();
-                };
+                menuItem.Click += async (a, b) => Tree.SetPage(await item.Provider.GetRunePage(SelectedChampion, item.Position));
 
                 menu.Items.Add(menuItem);
             }
