@@ -33,6 +33,7 @@ namespace Legendary_Rune_Maker.Game
                 .Permit(GameTriggers.LockIn, GameStates.LockedIn);
 
             machine.Configure(GameStates.LockedIn)
+                .Permit(GameTriggers.LockIn, GameStates.LockedIn)
                 .Permit(GameTriggers.ExitChampSelect, GameStates.LoggedIn);
 
             return machine;

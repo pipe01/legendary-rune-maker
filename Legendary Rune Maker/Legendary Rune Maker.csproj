@@ -39,6 +39,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>7.1</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -48,6 +49,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>7.1</LangVersion>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>Images\lrm_icon.ico</ApplicationIcon>
@@ -62,6 +64,7 @@
     <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="RestSharp, Version=106.3.1.0, Culture=neutral, PublicKeyToken=598062e77f915f75" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -92,6 +95,9 @@
     </Compile>
     <Compile Include="Data\Rune providers\IRuneProvider.cs" />
     <Compile Include="Data\Rune providers\RunesLolProvider.cs" />
+    <Compile Include="DebugProxyWindow.xaml.cs">
+      <DependentUpon>DebugProxyWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Game\GameState.cs" />
     <Compile Include="Controls\RuneTreeControl.xaml.cs">
       <DependentUpon>RuneTreeControl.xaml</DependentUpon>
@@ -123,6 +129,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\RuneTreeControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DebugProxyWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

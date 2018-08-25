@@ -13,13 +13,14 @@ namespace Legendary_Rune_Maker.Game
     {
         private static LolChampSelectChampSelectSession Session;
 
-        public static LolChampSelectChampSelectPlayerSelection CurrentSelection => Session?.myTeam.Single(o => o.cellId == Session.localPlayerCellId);
+        public static LolChampSelectChampSelectPlayerSelection CurrentSelection => Session?.myTeam?.SingleOrDefault(o => o.cellId == Session.localPlayerCellId);
 
         public static event Action<LolChampSelectChampSelectSession> SessionUpdated;
 
         public static async Task Init()
         {
             LeagueSocket.Subscribe<LolChampSelectChampSelectSession>(ChampSelect.Endpoint, ChampSelectUpdate);
+            LeagueSocket.Subscribe<int>("/lol-champ-select/v1/current-champion", CurrentChampionUpdate);
 
             try
             {
@@ -27,6 +28,14 @@ namespace Legendary_Rune_Maker.Game
             }
             catch (APIErrorException ex) when (ex.Message == "No active delegate")
             {
+            }
+        }
+
+        private static void CurrentChampionUpdate(EventType eventType, int data)
+        {
+            if (eventType != EventType.Delete)
+            {
+                GameState.State.Fire(GameTriggers.LockIn);
             }
         }
 
@@ -39,11 +48,8 @@ namespace Legendary_Rune_Maker.Game
             {
                 Session = data;
 
-                bool lockedIn = data.actions.Select(o => o[0]).LastOrDefault(o => o.actorCellId == CurrentSelection.cellId && o.type == "pick")?.completed ?? false;
-
-                if (lockedIn)
-                    GameState.State.Fire(GameTriggers.LockIn);
-
+                bool lockedIn = data.actions.Select(o => o[0]).LastOrDefault(o => o.actorCellId == CurrentSelection?.cellId && o.type == "pick")?.completed ?? false;
+                
                 SessionUpdated?.Invoke(data);
             }
 

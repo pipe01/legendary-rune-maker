@@ -60,6 +60,9 @@ namespace Legendary_Rune_Maker
             await InitDetectors();
             await InitControls();
 
+            //if (LeagueClient.Connected)
+            //    new DebugProxyWindow().Show();
+
             this.Show();
         }
 
@@ -392,6 +395,14 @@ namespace Legendary_Rune_Maker
             {
                 this.Show();
                 this.WindowState = WindowState.Normal;
+            }
+        }
+
+        private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.D && (Keyboard.Modifiers & ModifierKeys.Control) == ModifierKeys.Control)
+            {
+                new DebugProxyWindow().Show();
             }
         }
     }

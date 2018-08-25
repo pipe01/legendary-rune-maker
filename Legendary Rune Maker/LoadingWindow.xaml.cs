@@ -2,6 +2,7 @@
 using Legendary_Rune_Maker.Data;
 using Legendary_Rune_Maker.Properties;
 using Onova;
+using Onova.Models;
 using Onova.Services;
 using System;
 using System.Collections.Generic;
@@ -76,9 +77,10 @@ namespace Legendary_Rune_Maker
             var manager = new UpdateManager(
                 new WebPackageResolver("https://pipe0481.heliohost.org/plrm.man"),
                 new ZipPackageExtractor());
-            var update = await manager.CheckForUpdatesAsync();
 
-            if (update.CanUpdate)
+            var update = await await Task.WhenAny(Task.Delay(2000).ContinueWith<CheckForUpdatesResult>(_ => null), manager.CheckForUpdatesAsync());
+
+            if (update?.CanUpdate == true)
             {
                 Status.Text = "Updating...";
                 Cancel.Visibility = Visibility.Visible;
