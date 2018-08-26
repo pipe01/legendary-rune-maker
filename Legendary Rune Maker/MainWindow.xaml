@@ -156,16 +156,18 @@
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
 
-                <RichTextBox FontFamily="{StaticResource BeaufortBold}" Foreground="{StaticResource Normal}" Background="Transparent"
-                         BorderThickness="0" FontSize="25" VerticalAlignment="Center" IsHitTestVisible="False" Focusable="False"
-                         Margin="7 0 0 0">
-                    <FlowDocument>
-                        <Paragraph>
-                            Status:
-                            <Run x:Name="Status" Foreground="Red">disconnected</Run>
-                        </Paragraph>
-                    </FlowDocument>
-                </RichTextBox>
+                <Grid HorizontalAlignment="Left">
+                    <RichTextBox x:Name="StatusT" FontFamily="{StaticResource BeaufortBold}" Foreground="{StaticResource Normal}"
+                                 Background="Transparent" BorderThickness="0" FontSize="25" VerticalAlignment="Center"
+                                 Focusable="False" MouseDown="StatusT_MouseDown" Margin="7 0 0 0" Cursor="Hand">
+                        <FlowDocument>
+                            <Paragraph>
+                                Status:
+                                <Run x:Name="Status" Foreground="Red">disconnected</Run>
+                            </Paragraph>
+                        </FlowDocument>
+                    </RichTextBox>
+                </Grid>
 
                 <CheckBox IsChecked="{Binding UploadOnLock, Mode=TwoWay}" Grid.Column="1" VerticalAlignment="Center"
                       HorizontalAlignment="Center">

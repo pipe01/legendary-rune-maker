@@ -405,5 +405,11 @@ namespace Legendary_Rune_Maker
                 new DebugProxyWindow().Show();
             }
         }
+        
+        private async void StatusT_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            await LoginDetector.ForceUpdate();
+            await ChampSelectDetector.ForceUpdate();
+        }
     }
 }

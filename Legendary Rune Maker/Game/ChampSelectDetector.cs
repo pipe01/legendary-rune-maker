@@ -22,13 +22,10 @@ namespace Legendary_Rune_Maker.Game
             LeagueSocket.Subscribe<LolChampSelectChampSelectSession>(ChampSelect.Endpoint, ChampSelectUpdate);
             LeagueSocket.Subscribe<int>("/lol-champ-select/v1/current-champion", CurrentChampionUpdate);
 
-            try
-            {
-                ChampSelectUpdate(EventType.Create, await ChampSelect.GetSessionAsync());
-            }
-            catch (APIErrorException ex) when (ex.Message == "No active delegate")
-            {
-            }
+            var session = await TryGetSession();
+
+            if (session.Success)
+                ChampSelectUpdate(EventType.Create, session.Session);
         }
 
         private static void CurrentChampionUpdate(EventType eventType, int data)
@@ -63,16 +60,28 @@ namespace Legendary_Rune_Maker.Game
             }
         }
 
-        public static async Task ForceUpdate() => ChampSelectUpdate(EventType.Update, await GetSession());
-
-        public static async Task<LolChampSelectChampSelectSession> GetSession()
+        public static async Task ForceUpdate()
         {
-            if (Session == null)
-            {
-                Session = await ChampSelect.GetSessionAsync();
-            }
+            var session = await TryGetSession();
+            
+            var ev = EventType.Update;
 
-            return Session;
+            if (Session == null && session.Success)
+                ev = EventType.Create;
+
+            ChampSelectUpdate(ev, session.Session);
+        }
+
+        private static async Task<(bool Success, LolChampSelectChampSelectSession Session)> TryGetSession()
+        {
+            try
+            {
+                return (true, await ChampSelect.GetSessionAsync());
+            }
+            catch (APIErrorException ex) when (ex.Message == "No active delegate")
+            {
+                return (false, null);
+            }
         }
     }
 }
