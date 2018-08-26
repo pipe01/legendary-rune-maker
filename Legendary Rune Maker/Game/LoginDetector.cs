@@ -11,9 +11,11 @@ namespace Legendary_Rune_Maker.Game
 {
     internal static class LoginDetector
     {
-        public static void Init()
+        public static async Task Init()
         {
             LeagueSocket.Subscribe<LolLoginLoginSession>(Login.Endpoint, SessionEvent);
+
+            await ForceUpdate();
         }
 
         public static async Task ForceUpdate() => SessionEvent(EventType.Update, await Login.GetSessionAsync());

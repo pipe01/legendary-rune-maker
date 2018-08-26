@@ -159,7 +159,7 @@
                 <Grid HorizontalAlignment="Left">
                     <RichTextBox x:Name="StatusT" FontFamily="{StaticResource BeaufortBold}" Foreground="{StaticResource Normal}"
                                  Background="Transparent" BorderThickness="0" FontSize="25" VerticalAlignment="Center"
-                                 Focusable="False" MouseDown="StatusT_MouseDown" Margin="7 0 0 0" Cursor="Hand">
+                                 Focusable="False" MouseDown="StatusT_MouseDown" Margin="7 0 0 0" Cursor="Hand" Width="260">
                         <FlowDocument>
                             <Paragraph>
                                 Status:

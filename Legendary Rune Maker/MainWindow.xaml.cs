@@ -69,28 +69,16 @@ namespace Legendary_Rune_Maker
         private async Task InitDetectors()
         {
             GameState.State.EnteredState += State_EnteredState;
-
+            ChampSelectDetector.SessionUpdated += ChampSelectDetector_SessionUpdated;
             LeagueClient.ConnectedChanged += LeagueClient_ConnectedChanged;
 
             if (!LeagueClient.TryInit())
             {
                 LeagueClient.BeginTryInit();
             }
-
-            ChampSelectDetector.SessionUpdated += ChampSelectDetector_SessionUpdated;
-
-            LoginDetector.Init();
-
-            if (LeagueClient.Connected)
-            {
-                try
-                {
-                    await LoginDetector.ForceUpdate();
-                }
-                catch (APIErrorException) { }
-
-                await ChampSelectDetector.Init();
-            }
+            
+            await LoginDetector.Init();
+            await ChampSelectDetector.Init();
         }
 
         private async Task InitControls()
