@@ -1,6 +1,7 @@
 ﻿using LCU.NET;
 using LCU.NET.API_Models;
 using LCU.NET.Plugins.LoL;
+using Legendary_Rune_Maker.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,10 +23,7 @@ namespace Legendary_Rune_Maker.Game
             LeagueSocket.Subscribe<LolChampSelectChampSelectSession>(ChampSelect.Endpoint, ChampSelectUpdate);
             LeagueSocket.Subscribe<int>("/lol-champ-select/v1/current-champion", CurrentChampionUpdate);
 
-            var session = await TryGetSession();
-
-            if (session.Success)
-                ChampSelectUpdate(EventType.Create, session.Session);
+            await ForceUpdate();
         }
 
         private static void CurrentChampionUpdate(EventType eventType, int data)
@@ -44,8 +42,6 @@ namespace Legendary_Rune_Maker.Game
             if (eventType == EventType.Update || eventType == EventType.Create)
             {
                 Session = data;
-
-                bool lockedIn = data.actions.Select(o => o[0]).LastOrDefault(o => o.actorCellId == CurrentSelection?.cellId && o.type == "pick")?.completed ?? false;
                 
                 SessionUpdated?.Invoke(data);
             }
@@ -70,6 +66,24 @@ namespace Legendary_Rune_Maker.Game
                 ev = EventType.Create;
 
             ChampSelectUpdate(ev, session.Session);
+
+            if (GameState.State.CurrentState != GameStates.LockedIn)
+            {
+                int champId;
+
+                try
+                {
+                    champId = await ChampSelect.GetCurrentChampion();
+                }
+                catch (NoActiveDelegateException)
+                {
+                    return;
+                }
+
+                var eventType = (await Riot.GetChampions()).Any(o => o.ID == champId) ? EventType.Update : EventType.Delete;
+
+                CurrentChampionUpdate(eventType, champId);
+            }
         }
 
         private static async Task<(bool Success, LolChampSelectChampSelectSession Session)> TryGetSession()
@@ -78,7 +92,7 @@ namespace Legendary_Rune_Maker.Game
             {
                 return (true, await ChampSelect.GetSessionAsync());
             }
-            catch (APIErrorException ex) when (ex.Message == "No active delegate")
+            catch (NoActiveDelegateException)
             {
                 return (false, null);
             }
