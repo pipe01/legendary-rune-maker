@@ -15,7 +15,13 @@ namespace Legendary_Rune_Maker.Game
         {
             LeagueSocket.Subscribe<LolLoginLoginSession>(Login.Endpoint, SessionEvent);
 
-            await ForceUpdate();
+            try
+            {
+                await ForceUpdate();
+            }
+            catch (APIErrorException)
+            {
+            }
         }
 
         public static async Task ForceUpdate() => SessionEvent(EventType.Update, await Login.GetSessionAsync());
