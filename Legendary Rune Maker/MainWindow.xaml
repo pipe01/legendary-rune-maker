@@ -31,170 +31,149 @@
         <Line X1="0" Y1="0" X2="100000" Y2="0" Stroke="#785A28" StrokeThickness="4" SnapsToDevicePixels="True" />
 
         <Grid Margin="5">
-            <Grid x:Name="MainGrid">
-                <Grid Grid.Row="0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="500" />
-                        <ColumnDefinition />
-                    </Grid.ColumnDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="500" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
 
-                    <Grid Grid.Column="0">
-                        <Grid.RowDefinitions>
-                            <RowDefinition />
-                            <RowDefinition Height="35" />
-                        </Grid.RowDefinitions>
-                        
-                        <controls:RuneTreeControl x:Name="Tree" Grid.Column="0" Width="475" Height="250" HorizontalAlignment="Left"
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition Height="35" />
+                </Grid.RowDefinitions>
+
+                <controls:RuneTreeControl x:Name="Tree" Grid.Column="0" Width="475" Height="250" HorizontalAlignment="Left"
                                               VerticalAlignment="Top" Margin="10" SelectionChanged="Tree_SelectedRunesChanged" />
 
-                        <RichTextBox x:Name="StatusT" Grid.Row="1" FontFamily="{StaticResource BeaufortBold}"
+                <RichTextBox x:Name="StatusT" Grid.Row="1" FontFamily="{StaticResource BeaufortBold}"
                                      Foreground="{StaticResource Normal}" Background="Transparent" BorderThickness="0" FontSize="25"
                                      VerticalAlignment="Center" Focusable="False" MouseDown="StatusT_MouseDown" Cursor="Hand"
                                      Width="260" HorizontalAlignment="Left">
-                            <FlowDocument>
-                                <Paragraph>
-                                    <Run Text="Status: "/>
-                                    <Run x:Name="Status" Foreground="Red" Text="disconnected"/>
-                                </Paragraph>
-                            </FlowDocument>
-                        </RichTextBox>
+                    <FlowDocument>
+                        <Paragraph>
+                            <Run Text="Status: "/>
+                            <Run x:Name="Status" Foreground="Red" Text="disconnected"/>
+                        </Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
+            </Grid>
+
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="20" />
+                    <RowDefinition />
+                    <RowDefinition Height="84" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="20" />
+                        <ColumnDefinition Width="20" />
+                    </Grid.ColumnDefinitions>
+
+                    <Grid x:Name="Close" Grid.Column="2" Width="20" Height="20" Cursor="Hand" MouseUp="Close_MouseUp"
+                          Background="Transparent">
+                        <Image Width="10" Height="10">
+                            <Image.Source>
+                                <DrawingImage>
+                                    <DrawingImage.Drawing>
+                                        <DrawingGroup>
+                                            <GeometryDrawing>
+                                                <GeometryDrawing.Pen>
+                                                    <Pen Brush="#A09B8C" Thickness="10" />
+                                                </GeometryDrawing.Pen>
+                                                <GeometryDrawing.Geometry>
+                                                    <GeometryGroup>
+                                                        <LineGeometry StartPoint="0,0" EndPoint="1,1" />
+                                                        <LineGeometry StartPoint="1,0" EndPoint="0,1" />
+                                                    </GeometryGroup>
+                                                </GeometryDrawing.Geometry>
+                                            </GeometryDrawing>
+                                        </DrawingGroup>
+                                    </DrawingImage.Drawing>
+                                </DrawingImage>
+                            </Image.Source>
+                        </Image>
                     </Grid>
-                    
-                    <Grid Grid.Column="1">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="20" />
-                            <RowDefinition />
-                            <RowDefinition Height="84" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
 
-                        <Grid Grid.Row="0">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition />
-                                <ColumnDefinition Width="20" />
-                                <ColumnDefinition Width="20" />
-                            </Grid.ColumnDefinitions>
-
-                            <Grid x:Name="Close" Grid.Column="2" Width="20" Height="20" Cursor="Hand" MouseUp="Close_MouseUp"
+                    <Grid x:Name="Minimize" Grid.Column="1" Width="20" Height="20" Cursor="Hand" MouseUp="Minimize_MouseUp"
                           Background="Transparent">
-                                <Image Width="10" Height="10">
-                                    <Image.Source>
-                                        <DrawingImage>
-                                            <DrawingImage.Drawing>
-                                                <DrawingGroup>
-                                                    <GeometryDrawing>
-                                                        <GeometryDrawing.Pen>
-                                                            <Pen Brush="#A09B8C" Thickness="10" />
-                                                        </GeometryDrawing.Pen>
-                                                        <GeometryDrawing.Geometry>
-                                                            <GeometryGroup>
-                                                                <LineGeometry StartPoint="0,0" EndPoint="1,1" />
-                                                                <LineGeometry StartPoint="1,0" EndPoint="0,1" />
-                                                            </GeometryGroup>
-                                                        </GeometryDrawing.Geometry>
-                                                    </GeometryDrawing>
-                                                </DrawingGroup>
-                                            </DrawingImage.Drawing>
-                                        </DrawingImage>
-                                    </Image.Source>
-                                </Image>
-                            </Grid>
+                        <Image Width="10" Height="10" VerticalAlignment="Bottom" Margin="5">
+                            <Image.Source>
+                                <DrawingImage>
+                                    <DrawingImage.Drawing>
+                                        <DrawingGroup>
+                                            <GeometryDrawing>
+                                                <GeometryDrawing.Pen>
+                                                    <Pen x:Name="ClosePen" Brush="#A09B8C" Thickness="3" />
+                                                </GeometryDrawing.Pen>
+                                                <GeometryDrawing.Geometry>
+                                                    <GeometryGroup>
+                                                        <LineGeometry StartPoint="0,0" EndPoint="0,1" />
+                                                    </GeometryGroup>
+                                                </GeometryDrawing.Geometry>
+                                            </GeometryDrawing>
+                                        </DrawingGroup>
+                                    </DrawingImage.Drawing>
+                                </DrawingImage>
+                            </Image.Source>
+                        </Image>
+                    </Grid>
+                </Grid>
 
-                            <Grid x:Name="Minimize" Grid.Column="1" Width="20" Height="20" Cursor="Hand" MouseUp="Minimize_MouseUp"
-                          Background="Transparent">
-                                <Image Width="10" Height="10" VerticalAlignment="Bottom" Margin="5">
-                                    <Image.Source>
-                                        <DrawingImage>
-                                            <DrawingImage.Drawing>
-                                                <DrawingGroup>
-                                                    <GeometryDrawing>
-                                                        <GeometryDrawing.Pen>
-                                                            <Pen x:Name="ClosePen" Brush="#A09B8C" Thickness="3" />
-                                                        </GeometryDrawing.Pen>
-                                                        <GeometryDrawing.Geometry>
-                                                            <GeometryGroup>
-                                                                <LineGeometry StartPoint="0,0" EndPoint="0,1" />
-                                                            </GeometryGroup>
-                                                        </GeometryDrawing.Geometry>
-                                                    </GeometryDrawing>
-                                                </DrawingGroup>
-                                            </DrawingImage.Drawing>
-                                        </DrawingImage>
-                                    </Image.Source>
-                                </Image>
-                            </Grid>
-                        </Grid>
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
 
-                        <Grid Grid.Row="1">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition />
-                                <ColumnDefinition />
-                            </Grid.ColumnDefinitions>
+                    <controls:FadeImage x:Name="ChampionImage" Grid.Column="0" Width="120" Height="120" Cursor="Hand" MouseLeftButtonDown="ChampionImage_MouseLeftButtonDown" />
+                    <controls:FadeImage x:Name="PositionImage" Grid.Column="1" />
+                </Grid>
 
-                            <controls:FadeImage x:Name="ChampionImage" Grid.Column="0" Width="120" Height="120" Cursor="Hand" MouseLeftButtonDown="ChampionImage_MouseLeftButtonDown" />
-                            <controls:FadeImage x:Name="PositionImage" Grid.Column="1" />
-                        </Grid>
+                <Grid Grid.Row="2">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="42" />
+                        <RowDefinition Height="42" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="100" />
+                    </Grid.ColumnDefinitions>
 
-                        <Grid Grid.Row="2">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="42" />
-                                <RowDefinition Height="42" />
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition />
-                                <ColumnDefinition Width="100" />
-                            </Grid.ColumnDefinitions>
-
-                            <ComboBox x:Name="PositionDD" Grid.Row="1" IsEditable="False" Height="32" Margin="5"
+                    <ComboBox x:Name="PositionDD" Grid.Row="1" IsEditable="False" Height="32" Margin="5"
                                   SelectionChanged="PositionDD_SelectionChanged" />
 
-                            <local:LoLButton x:Name="Load" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" Margin="5"
+                    <local:LoLButton x:Name="Load" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" Margin="5"
                                          Text="Load" ContextMenuService.IsEnabled="False" Click="Load_Click" />
 
-                            <CheckBox Grid.Column="0" Grid.Row="0" IsChecked="{Binding UploadOnLock, Mode=TwoWay}"
+                    <CheckBox Grid.Column="0" Grid.Row="0" IsChecked="{Binding UploadOnLock, Mode=TwoWay}"
                                       VerticalAlignment="Center" HorizontalAlignment="Center" Content="Upload on champion lock"
                                       Margin="5 0 0 0"/>
 
-                            <CheckBox Grid.Column="1" Grid.Row="0" IsChecked="{Binding Attached, Mode=TwoWay}"
+                    <CheckBox Grid.Column="1" Grid.Row="0" IsChecked="{Binding Attached, Mode=TwoWay}"
                                       VerticalAlignment="Center" HorizontalAlignment="Center" Content="Attach"
                                       Margin="5 0 0 0"/>
-                        </Grid>
-
-                        <Grid Grid.Row="4">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition />
-                                <ColumnDefinition Width="50" />
-                                <ColumnDefinition />
-                            </Grid.ColumnDefinitions>
-
-                            <local:LoLButton Grid.Column="0" x:Name="Clear" Text="Clear" Margin="5" Click="Clear_Click" />
-                            <local:LoLButton Grid.Column="2" x:Name="Automation" Text="Automation" Margin="5" Click="Automation_Click" />
-                            <local:LoLButton Grid.Column="1" x:Name="Upload" Margin="5" Click="Upload_Click" IsEnabled="False"
-                                             Width="40" HorizontalAlignment="Right">
-                                <Viewbox Width="20" Height="20">
-                                    <Image Source="{StaticResource Upload}" />
-                                </Viewbox>
-                            </local:LoLButton>
-                        </Grid>
-                    </Grid>
                 </Grid>
-            </Grid>
 
-            <Grid x:Name="ChampionsGrid" Visibility="Hidden">
-                <ListView x:Name="Champions" Background="Transparent" BorderThickness="0"
-                          ScrollViewer.HorizontalScrollBarVisibility="Disabled">
-                    <ListView.ItemTemplate>
-                        <ItemContainerTemplate>
-                            <controls:ChampionImageControl Champion="{Binding Path=.}" Cursor="Hand" Width="50" Height="50"
-                                                           MouseLeftButtonDown="ChampionImageControl_MouseLeftButtonDown"/>
-                        </ItemContainerTemplate>
-                    </ListView.ItemTemplate>
-                    <ListView.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <WrapPanel IsItemsHost="True" Orientation="Horizontal" />
-                        </ItemsPanelTemplate>
-                    </ListView.ItemsPanel>
-                </ListView>
+                <Grid Grid.Row="4">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="50" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <local:LoLButton Grid.Column="0" x:Name="Clear" Text="Clear" Margin="5" Click="Clear_Click" />
+                    <local:LoLButton Grid.Column="2" x:Name="Automation" Text="Automation" Margin="5" Click="Automation_Click" />
+                    <local:LoLButton Grid.Column="1" x:Name="Upload" Margin="5" Click="Upload_Click" IsEnabled="False"
+                                             Width="40" HorizontalAlignment="Right">
+                        <Viewbox Width="20" Height="20">
+                            <Image Source="{StaticResource Upload}" />
+                        </Viewbox>
+                    </local:LoLButton>
+                </Grid>
             </Grid>
         </Grid>
     </Grid>

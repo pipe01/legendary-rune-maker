@@ -92,12 +92,6 @@ namespace Legendary_Rune_Maker
 
         private async Task InitControls()
         {
-            foreach (var item in await Riot.GetChampions())
-            {
-                Champions.Items.Add(item);
-                //ChampionDD.Items.Add(item.Name);
-            }
-
             await SetChampionIndex(0);
 
             foreach (var item in new[] { "Any", "Top", "Jungle", "Mid", "Bottom", "Support" })
@@ -410,16 +404,7 @@ namespace Legendary_Rune_Maker
 
         private void ChampionImage_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            MainGrid.Visibility = Visibility.Hidden;
-            ChampionsGrid.Visibility = Visibility.Visible;
-        }
-        
-        private async void ChampionImageControl_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            MainGrid.Visibility = Visibility.Visible;
-            ChampionsGrid.Visibility = Visibility.Hidden;
-            
-            await SetChampion(((ChampionImageControl)sender).Champion.ID);
+            //TODO Choose champion with dialog
         }
         
         private static async void AttachedChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
