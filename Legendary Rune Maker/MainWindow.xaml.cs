@@ -89,6 +89,7 @@ namespace Legendary_Rune_Maker
             
             await LoginDetector.Init();
             await ChampSelectDetector.Init();
+            ReadyCheckDetector.Init();
         }
 
         private async Task InitControls()
