@@ -54,7 +54,7 @@ namespace Legendary_Rune_Maker
 
             if (Settings.Default.LoadCacheBeforeStartup)
                 await LoadCache();
-
+            
             ShowMainWindow();
         }
 

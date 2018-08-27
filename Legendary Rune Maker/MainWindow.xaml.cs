@@ -1,5 +1,6 @@
 ﻿using LCU.NET;
 using LCU.NET.API_Models;
+using Legendary_Rune_Maker.Controls;
 using Legendary_Rune_Maker.Data;
 using Legendary_Rune_Maker.Data.Rune_providers;
 using Legendary_Rune_Maker.Game;
@@ -85,8 +86,11 @@ namespace Legendary_Rune_Maker
         {
             foreach (var item in await Riot.GetChampions())
             {
-                ChampionDD.Items.Add(item.Name);
+                Champions.Items.Add(item);
+                //ChampionDD.Items.Add(item.Name);
             }
+
+            await SetChampionIndex(0);
 
             foreach (var item in new[] { "Any", "Top", "Jungle", "Mid", "Bottom", "Support" })
             {
@@ -225,7 +229,7 @@ namespace Legendary_Rune_Maker
 
         private async void ChampionDD_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            await SetChampionIndex(ChampionDD.SelectedIndex);
+            //await SetChampionIndex(ChampionDD.SelectedIndex);
         }
 
         private void SetPosition(Position position)
@@ -263,7 +267,7 @@ namespace Legendary_Rune_Maker
                 return;
             }
 
-            ChampionDD.SelectedIndex = Array.IndexOf(champs, champ);
+            //ChampionDD.SelectedIndex = Array.IndexOf(champs, champ);
             SelectedChampion = champ.ID;
             ChampionImage.Source = await ImageCache.Instance.Get(champ.ImageURL);
 
@@ -398,6 +402,20 @@ namespace Legendary_Rune_Maker
         {
             await LoginDetector.ForceUpdate();
             await ChampSelectDetector.ForceUpdate();
+        }
+
+        private void ChampionImage_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            MainGrid.Visibility = Visibility.Hidden;
+            ChampionsGrid.Visibility = Visibility.Visible;
+        }
+        
+        private async void ChampionImageControl_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            MainGrid.Visibility = Visibility.Visible;
+            ChampionsGrid.Visibility = Visibility.Hidden;
+            
+            await SetChampion(((ChampionImageControl)sender).Champion.ID);
         }
     }
 }
