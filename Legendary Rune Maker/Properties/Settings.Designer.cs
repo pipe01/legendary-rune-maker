@@ -58,5 +58,17 @@ namespace Legendary_Rune_Maker.Properties {
                 this["AutoAccept"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool UploadOnLock {
+            get {
+                return ((bool)(this["UploadOnLock"]));
+            }
+            set {
+                this["UploadOnLock"] = value;
+            }
+        }
     }
 }
