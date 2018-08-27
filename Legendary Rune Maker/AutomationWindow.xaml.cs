@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Legendary_Rune_Maker.Properties;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,6 +23,11 @@ namespace Legendary_Rune_Maker
         public AutomationWindow()
         {
             InitializeComponent();
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            Settings.Default.Save();
         }
     }
 }

@@ -4,8 +4,10 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Legendary_Rune_Maker"
+        xmlns:properties="clr-namespace:Legendary_Rune_Maker.Properties"
         mc:Ignorable="d"
-        Title="AutomationWindow" Height="424.624" Width="766.165" Style="{StaticResource LoLWindow}">
+        Title="AutomationWindow" Height="424.624" Width="766.165" Style="{StaticResource LoLWindow}"
+        Closing="Window_Closing">
 
     <Window.Background>
         <ImageBrush Stretch="UniformToFill" ImageSource="{StaticResource BgBlue}" />
@@ -14,10 +16,10 @@
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <RowDefinition />
+            <RowDefinition Height="Auto" />
             <RowDefinition />
         </Grid.RowDefinitions>
-        
-        <CheckBox Content="Auto-accept" />
+
+        <CheckBox Content="Auto-accept" HorizontalAlignment="Left" IsChecked="{Binding Path=AutoAccept, Source={x:Static properties:Settings.Default}}" />
     </Grid>
 </Window>

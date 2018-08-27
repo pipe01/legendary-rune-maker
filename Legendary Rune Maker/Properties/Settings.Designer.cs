@@ -37,13 +37,25 @@ namespace Legendary_Rune_Maker.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool LoadCacheBeforeStartup {
             get {
                 return ((bool)(this["LoadCacheBeforeStartup"]));
             }
             set {
                 this["LoadCacheBeforeStartup"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool AutoAccept {
+            get {
+                return ((bool)(this["AutoAccept"]));
+            }
+            set {
+                this["AutoAccept"] = value;
             }
         }
     }
