@@ -129,7 +129,8 @@
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
 
-                    <controls:FadeImage x:Name="ChampionImage" Grid.Column="0" Width="120" Height="120" Cursor="Hand" MouseLeftButtonDown="ChampionImage_MouseLeftButtonDown" />
+                    <controls:FadeImage x:Name="ChampionImage" Grid.Column="0" Width="120" Height="120" Cursor="Hand"
+                                        MouseLeftButtonUp="ChampionImage_MouseLeftButtonUp" />
                     <controls:FadeImage x:Name="PositionImage" Grid.Column="1" />
                 </Grid>
 

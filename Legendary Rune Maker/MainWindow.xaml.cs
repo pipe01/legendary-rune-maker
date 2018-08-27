@@ -407,7 +407,7 @@ namespace Legendary_Rune_Maker
             await ChampSelectDetector.ForceUpdate();
         }
 
-        private async void ChampionImage_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private async void ChampionImage_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             var champ = PickChampionDialog.PickChampion();
 
