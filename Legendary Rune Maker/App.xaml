@@ -36,6 +36,15 @@
         <BitmapImage x:Key="CheckboxHoverChecked" UriSource="Images/checkbox-hover-checked.png" />
         <BitmapImage x:Key="Upload" UriSource="Images/upload-button.png" />
 
+        <BitmapImage x:Key="BgBlue" UriSource="Images/default-bg.jpg" />
+        <BitmapImage x:Key="BgForest" UriSource="Images/forest-bg.jpg" />
+        <BitmapImage x:Key="BgGray" UriSource="Images/gray-bg.jpg" />
+        <BitmapImage x:Key="BgGreen" UriSource="Images/green-bg.jpg" />
+        <BitmapImage x:Key="BgPurple" UriSource="Images/purple-bg.jpg" />
+        <BitmapImage x:Key="BgRed" UriSource="Images/red-bg.jpg" />
+        <BitmapImage x:Key="BgRedDark" UriSource="Images/red_dark-bg.jpg" />
+        <BitmapImage x:Key="BgShurima" UriSource="Images/shurima_desert-bg.jpg" />
+
         <DrawingImage x:Key="Close">
             <DrawingImage.Drawing>
                 <DrawingGroup>

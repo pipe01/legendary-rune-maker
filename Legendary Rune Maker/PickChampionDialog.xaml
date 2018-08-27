@@ -1,14 +1,13 @@
-﻿<Window x:Class="Legendary_Rune_Maker.AutomationWindow"
+﻿<Window x:Class="Legendary_Rune_Maker.PickChampionDialog"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Legendary_Rune_Maker"
         mc:Ignorable="d"
-        Title="AutomationWindow" Height="424.624" Width="766.165" Style="{StaticResource LoLWindow}">
-
+        Title="PickChampionDialog" Height="450" Width="800" Style="{StaticResource LoLWindow}">
     <Window.Background>
-        <ImageBrush Stretch="UniformToFill" ImageSource="{StaticResource BgBlue}" />
+        <ImageBrush Stretch="UniformToFill" ImageSource="{StaticResource BgGreen}" />
     </Window.Background>
 
     <Grid>

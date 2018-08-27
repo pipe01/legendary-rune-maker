@@ -124,6 +124,9 @@
     <Compile Include="LoLButton.xaml.cs">
       <DependentUpon>LoLButton.xaml</DependentUpon>
     </Compile>
+    <Compile Include="PickChampionDialog.xaml.cs">
+      <DependentUpon>PickChampionDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="TreePickerControl.xaml.cs">
       <DependentUpon>TreePickerControl.xaml</DependentUpon>
     </Compile>
@@ -174,6 +177,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="PickChampionDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Themes\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -298,6 +305,17 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\default-bg.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\purple-bg.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\forest-bg.png" />
+    <Resource Include="Images\gray-bg.jpg" />
+    <Resource Include="Images\green-bg.jpg" />
+    <Resource Include="Images\red-bg.jpg" />
+    <Resource Include="Images\red_dark-bg.jpg" />
+    <Resource Include="Images\shurima-desert-bg.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
