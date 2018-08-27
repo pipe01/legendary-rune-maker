@@ -33,6 +33,8 @@
                     </VisualBrush.Visual>
                 </VisualBrush>
             </Grid.Background>
+
+            <ContentPresenter Content="{Binding AdditionalContent}" IsHitTestVisible="False" />
         </Grid>
         <controls:FadeImage x:Name="ImgRight" Grid.Column="2" Source="{Binding Right}" />
 

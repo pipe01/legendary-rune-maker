@@ -21,6 +21,7 @@ namespace Legendary_Rune_Maker
     /// <summary>
     /// Interaction logic for LoLButton.xaml
     /// </summary>
+    [ContentProperty("AdditionalContent")]
     public partial class LoLButton : UserControl
     {
         public string Text
@@ -29,6 +30,13 @@ namespace Legendary_Rune_Maker
             set { SetValue(TextProperty, value); }
         }
         public static readonly DependencyProperty TextProperty = DependencyProperty.Register("Text", typeof(string), typeof(LoLButton));
+        
+        public object AdditionalContent
+        {
+            get { return GetValue(AdditionalContentProperty); }
+            set { SetValue(AdditionalContentProperty, value); }
+        }
+        public static readonly DependencyProperty AdditionalContentProperty = DependencyProperty.Register("AdditionalContent", typeof(object), typeof(LoLButton));
         
         public ImageSource Side
         {
