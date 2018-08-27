@@ -13,6 +13,9 @@ namespace Legendary_Rune_Maker.Data
         public static Config Default { get; } = Load();
 
         private const string FilePath = "config.json";
+        private const int LatestVersion = 1;
+
+        public int ConfigVersion { get; set; } = LatestVersion;
 
         public bool CheckUpdatesBeforeStartup { get; set; } = true;
         public bool LoadCacheBeforeStartup { get; set; }
@@ -29,7 +32,12 @@ namespace Legendary_Rune_Maker.Data
             if (!File.Exists(FilePath))
                 return new Config();
 
-            return JsonConvert.DeserializeObject<Config>(File.ReadAllText(FilePath));
+            var c = JsonConvert.DeserializeObject<Config>(File.ReadAllText(FilePath));
+
+            if (c.ConfigVersion < LatestVersion)
+                c.Save();
+
+            return c;
         }
     }
 }
