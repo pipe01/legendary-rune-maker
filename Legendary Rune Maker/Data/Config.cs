@@ -13,7 +13,7 @@ namespace Legendary_Rune_Maker.Data
         public static Config Default { get; } = Load();
 
         private const string FilePath = "config.json";
-        private const int LatestVersion = 1;
+        private const int LatestVersion = 2;
 
         public int ConfigVersion { get; set; } = LatestVersion;
 
@@ -21,6 +21,7 @@ namespace Legendary_Rune_Maker.Data
         public bool LoadCacheBeforeStartup { get; set; }
         public bool AutoAccept { get; set; }
         public bool UploadOnLock { get; set; } = true;
+        public int[] PickChampions { get; set; } = new int[0];
 
         public void Save()
         {
@@ -35,7 +36,10 @@ namespace Legendary_Rune_Maker.Data
             var c = JsonConvert.DeserializeObject<Config>(File.ReadAllText(FilePath));
 
             if (c.ConfigVersion < LatestVersion)
+            {
+                c.ConfigVersion = LatestVersion;
                 c.Save();
+            }
 
             return c;
         }
