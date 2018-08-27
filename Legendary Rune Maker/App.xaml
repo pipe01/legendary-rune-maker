@@ -296,5 +296,7 @@
                 </Setter.Value>
             </Setter>
         </Style>
+
+        <BitmapImage x:Key="Upload" UriSource="Images/upload-button.png" />
     </Application.Resources>
 </Application>

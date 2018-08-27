@@ -284,5 +284,8 @@
   <ItemGroup>
     <Resource Include="Images\selector-rune.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\upload-button.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
