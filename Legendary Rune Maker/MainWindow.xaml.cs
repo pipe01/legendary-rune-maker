@@ -249,7 +249,7 @@ namespace Legendary_Rune_Maker
 
         private async Task SetChampionIndex(int index)
         {
-            await SetChampion((await Riot.GetChampions())[index].ID);
+            await SetChampion((await Riot.GetChampions())[index]);
         }
 
         private async Task SetChampion(int id)
@@ -257,13 +257,18 @@ namespace Legendary_Rune_Maker
             var champs = await Riot.GetChampions();
             var champ = champs.SingleOrDefault(o => o.ID == id);
 
+            await SetChampion(champ);
+        }
+
+        private async Task SetChampion(Champion champ)
+        {
             if (champ == null)
             {
                 SelectedChampion = 0;
                 ChampionImage.Source = null;
                 return;
             }
-            
+
             SelectedChampion = champ.ID;
             ChampionImage.Source = await ImageCache.Instance.Get(champ.ImageURL);
 
@@ -402,9 +407,12 @@ namespace Legendary_Rune_Maker
             await ChampSelectDetector.ForceUpdate();
         }
 
-        private void ChampionImage_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private async void ChampionImage_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            //TODO Choose champion with dialog
+            var champ = PickChampionDialog.PickChampion();
+
+            if (champ != null)
+                await SetChampion(champ);
         }
         
         private static async void AttachedChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)

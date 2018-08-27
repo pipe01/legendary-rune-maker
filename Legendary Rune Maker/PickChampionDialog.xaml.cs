@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Legendary_Rune_Maker.Controls;
+using Legendary_Rune_Maker.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,6 +24,34 @@ namespace Legendary_Rune_Maker
         public PickChampionDialog()
         {
             InitializeComponent();
+        }
+
+        public Champion SelectedChampion { get; private set; }
+
+        private async void Window_Initialized(object sender, EventArgs e)
+        {
+            foreach (var item in await Riot.GetChampions())
+            {
+                Champions.Items.Add(item);
+            }
+        }
+
+        private void Champion_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            SelectedChampion = ((ChampionImageControl)sender).Champion;
+
+            this.DialogResult = true;
+            this.Close();
+        }
+
+        public static Champion PickChampion()
+        {
+            var win = new PickChampionDialog();
+
+            if (win.ShowDialog() != true)
+                return null;
+
+            return win.SelectedChampion;
         }
     }
 }
