@@ -12,8 +12,6 @@
     </Window.Background>
 
     <Grid>
-        <!--<Rectangle Fill="White" Width="100" Height="100" />-->
-
-        <Button HorizontalAlignment="Center" VerticalAlignment="Center" Width="100" Height="100" />
+        
     </Grid>
 </Window>
