@@ -22,6 +22,9 @@ namespace Legendary_Rune_Maker.Game
 
         private static void SessionEvent(EventType eventType, LolLoginLoginSession data)
         {
+            if (data == null)
+                return;
+
             if (eventType == EventType.Update && data.state == "SUCCEEDED")
             {
                 GameState.State.Fire(GameTriggers.LogIn);
