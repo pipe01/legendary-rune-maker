@@ -31,6 +31,13 @@ namespace Legendary_Rune_Maker
             set => SetValue(UploadOnLockProperty, value);
         }
         public static readonly DependencyProperty UploadOnLockProperty = DependencyProperty.Register("UploadOnLock", typeof(bool), typeof(MainWindow), new PropertyMetadata(true));
+        
+        public bool Attached
+        {
+            get { return (bool)GetValue(AttachedProperty); }
+            set { SetValue(AttachedProperty, value); }
+        }
+        public static readonly DependencyProperty AttachedProperty = DependencyProperty.Register("Attached", typeof(bool), typeof(MainWindow), new PropertyMetadata(true, AttachedChanged));
 
         private Rune[] SelectedRunes => Tree.SelectedPrimary.Concat(Tree.SelectedSecondary).Where(o => o != null).ToArray();
 
@@ -169,7 +176,7 @@ namespace Legendary_Rune_Maker
         {
             var player = ChampSelectDetector.CurrentSelection;
 
-            if (player == null || player.championId == 0)
+            if (player == null || player.championId == 0 || !Attached)
                 return;
 
             Position p;
@@ -262,8 +269,7 @@ namespace Legendary_Rune_Maker
                 ChampionImage.Source = null;
                 return;
             }
-
-            //ChampionDD.SelectedIndex = Array.IndexOf(champs, champ);
+            
             SelectedChampion = champ.ID;
             ChampionImage.Source = await ImageCache.Instance.Get(champ.ImageURL);
 
@@ -414,6 +420,12 @@ namespace Legendary_Rune_Maker
             ChampionsGrid.Visibility = Visibility.Hidden;
             
             await SetChampion(((ChampionImageControl)sender).Champion.ID);
+        }
+        
+        private static async void AttachedChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if ((bool)e.NewValue)
+                await ChampSelectDetector.ForceUpdate();
         }
     }
 }
