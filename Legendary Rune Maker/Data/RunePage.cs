@@ -14,6 +14,8 @@ namespace Legendary_Rune_Maker.Data
         public int PrimaryTree { get; set; }
         public int SecondaryTree { get; set; }
 
+        public string Name { get; set; }
+
         public int ChampionID { get; set; }
         public Position Position { get; set; }
 
@@ -40,9 +42,19 @@ namespace Legendary_Rune_Maker.Data
             page.primaryStyleId = PrimaryTree;
             page.subStyleId = SecondaryTree;
             page.selectedPerkIds = RuneIDs;
-            page.name = (await Riot.GetChampions()).Single(o => o.ID == ChampionID).Name + " - " + Enum.GetName(typeof(Position), Position);
+            page.name = this.Name ?? (await Riot.GetChampions()).Single(o => o.ID == ChampionID).Name + " - " + Enum.GetName(typeof(Position), Position);
 
             await Perks.PutPageAsync(page.id, page);
+        }
+
+        public static async Task<RunePage> GetActivePageFromClient()
+        {
+            var page = await Perks.GetCurrentPageAsync();
+
+            return new RunePage(page.selectedPerkIds, page.primaryStyleId, page.subStyleId, 0, Position.Fill)
+            {
+                Name = page.name
+            };
         }
     }
 }

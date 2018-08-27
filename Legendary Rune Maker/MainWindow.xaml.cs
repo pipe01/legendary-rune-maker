@@ -36,9 +36,10 @@ namespace Legendary_Rune_Maker
 
         private RunePage Page => new RunePage(SelectedRunes.Select(o => o.ID).ToArray(), Tree.PrimaryTree.ID, Tree.SecondaryTree.ID, SelectedChampion, SelectedPosition);
 
-        private readonly IRuneProvider[] RuneProviders = new[]
+        private readonly IRuneProvider[] RuneProviders = new IRuneProvider[]
         {
-            new RunesLolProvider()
+            new RunesLolProvider(),
+            new ClientProvider()
         };
 
         private bool ValidPage;
@@ -226,12 +227,7 @@ namespace Legendary_Rune_Maker
         {
             SetPosition((Position)PositionDD.SelectedIndex);
         }
-
-        private async void ChampionDD_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            //await SetChampionIndex(ChampionDD.SelectedIndex);
-        }
-
+        
         private void SetPosition(Position position)
         {
             SelectedPosition = position;
@@ -361,7 +357,9 @@ namespace Legendary_Rune_Maker
 
             foreach (var item in availProviders)
             {
-                var menuItem = new MenuItem { Header = item.Provider.Name + " - " + item.Position };
+                string header = item.Provider.Name + (item.Position != Position.Fill ? $" - {item.Position}" : "");
+
+                var menuItem = new MenuItem { Header = header };
                 menuItem.Click += async (a, b) => Tree.SetPage(await item.Provider.GetRunePage(SelectedChampion, item.Position));
 
                 menu.Items.Add(menuItem);

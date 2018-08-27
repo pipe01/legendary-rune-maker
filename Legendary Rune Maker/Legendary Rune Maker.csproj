@@ -94,6 +94,7 @@
     <Compile Include="Controls\FadeImage.xaml.cs">
       <DependentUpon>FadeImage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Data\Rune providers\ClientProvider.cs" />
     <Compile Include="Data\Rune providers\IRuneProvider.cs" />
     <Compile Include="Data\Rune providers\RunesLolProvider.cs" />
     <Compile Include="DebugProxyWindow.xaml.cs">
