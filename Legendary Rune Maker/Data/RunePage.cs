@@ -1,6 +1,5 @@
 ﻿using LCU.NET.Plugins.LoL;
 using Legendary_Rune_Maker.Game;
-using Notifications.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,18 +38,6 @@ namespace Legendary_Rune_Maker.Data
                 return;
 
             var page = await Perks.GetCurrentPageAsync();
-
-            if (!page.isEditable)
-            {
-                MainWindow.NotificationManager.Show(new NotificationContent
-                {
-                    Title = "Couldn't upload rune page",
-                    Message = "Make sure the active rune page can be edited.",
-                    Type = NotificationType.Error
-                });
-
-                return;
-            }
 
             page.primaryStyleId = PrimaryTree;
             page.subStyleId = SecondaryTree;

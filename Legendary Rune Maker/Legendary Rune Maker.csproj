@@ -115,7 +115,6 @@
     <Compile Include="Data\RunePage.cs" />
     <Compile Include="Game\ChampSelectDetector.cs" />
     <Compile Include="Game\LoginDetector.cs" />
-    <Compile Include="Game\ReadyCheckDetector.cs" />
     <Compile Include="GrayscaleImageControl.xaml.cs">
       <DependentUpon>GrayscaleImageControl.xaml</DependentUpon>
     </Compile>

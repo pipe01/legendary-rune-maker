@@ -49,12 +49,11 @@ namespace Legendary_Rune_Maker
             new ClientProvider()
         };
 
-        public static INotificationManager NotificationManager;
-
         private bool ValidPage;
         private int SelectedChampion;
         private Position SelectedPosition;
-        
+        private INotificationManager NotificationManager;
+
         public MainWindow()
         {
             if (!InDesigner)
