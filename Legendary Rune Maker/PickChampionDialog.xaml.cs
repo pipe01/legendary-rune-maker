@@ -44,9 +44,12 @@ namespace Legendary_Rune_Maker
             this.Close();
         }
 
-        public static Champion PickChampion()
+        public static Champion PickChampion(bool ban = false)
         {
             var win = new PickChampionDialog();
+
+            if (ban)
+                win.BackImage.ImageSource = (ImageSource)Application.Current.FindResource("BgRed");
 
             if (win.ShowDialog() != true)
                 return null;

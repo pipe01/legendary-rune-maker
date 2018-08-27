@@ -10,7 +10,7 @@
         WindowStartupLocation="CenterScreen">
     
     <Window.Background>
-        <ImageBrush Stretch="UniformToFill" ImageSource="{StaticResource BgGreen}" />
+        <ImageBrush x:Name="BackImage" Stretch="UniformToFill" ImageSource="{StaticResource BgGreen}" />
     </Window.Background>
 
     <ListView x:Name="Champions" Background="Transparent" BorderThickness="0" Margin="30"

@@ -11,7 +11,13 @@
         <ImageBrush Stretch="UniformToFill" ImageSource="{StaticResource BgBlue}" />
     </Window.Background>
 
-    <Grid>
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
         
+        <CheckBox Content="Auto-accept" />
     </Grid>
 </Window>
