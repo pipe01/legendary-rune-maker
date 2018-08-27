@@ -48,7 +48,7 @@
                 <RichTextBox x:Name="StatusT" Grid.Row="1" FontFamily="{StaticResource BeaufortBold}"
                                      Foreground="{StaticResource Normal}" Background="Transparent" BorderThickness="0" FontSize="25"
                                      VerticalAlignment="Center" Focusable="False" MouseDown="StatusT_MouseDown" Cursor="Hand"
-                                     Width="260" HorizontalAlignment="Left">
+                                     HorizontalAlignment="Left">
                     <FlowDocument>
                         <Paragraph>
                             <Run Text="Status: "/>
@@ -149,10 +149,6 @@
 
                     <local:LoLButton x:Name="Load" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" Margin="5"
                                          Text="Load" ContextMenuService.IsEnabled="False" Click="Load_Click" />
-
-                    <CheckBox Grid.Column="0" Grid.Row="0" IsChecked="{Binding UploadOnLock, Mode=TwoWay}"
-                                      VerticalAlignment="Center" HorizontalAlignment="Center" Content="Upload on champion lock"
-                                      Margin="5 0 0 0"/>
 
                     <CheckBox Grid.Column="1" Grid.Row="0" IsChecked="{Binding Attached, Mode=TwoWay}"
                                       VerticalAlignment="Center" HorizontalAlignment="Center" Content="Attach"

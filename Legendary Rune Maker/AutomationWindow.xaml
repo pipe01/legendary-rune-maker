@@ -21,5 +21,8 @@
         </Grid.RowDefinitions>
 
         <CheckBox Content="Auto-accept" HorizontalAlignment="Left" IsChecked="{Binding Path=AutoAccept, Source={x:Static properties:Settings.Default}}" />
+
+        <CheckBox Grid.Row="1" IsChecked="{Binding Path=UploadOnLock, Source={x:Static properties:Settings.Default}}" VerticalAlignment="Center" HorizontalAlignment="Left"
+                  Content="Upload on champion lock" Margin="0 5 0 0"/>
     </Grid>
 </Window>
