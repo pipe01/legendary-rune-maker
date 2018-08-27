@@ -13,7 +13,7 @@ namespace Legendary_Rune_Maker.Data
         public static Config Default { get; } = Load();
 
         private const string FilePath = "config.json";
-        private const int LatestVersion = 2;
+        private const int LatestVersion = 3;
 
         public int ConfigVersion { get; set; } = LatestVersion;
 
@@ -21,7 +21,15 @@ namespace Legendary_Rune_Maker.Data
         public bool LoadCacheBeforeStartup { get; set; }
         public bool AutoAccept { get; set; }
         public bool UploadOnLock { get; set; } = true;
-        public int[] PickChampions { get; set; } = new int[0];
+        public Dictionary<Position, int> PickChampions { get; set; } = new Dictionary<Position, int>
+        {
+            [Position.Fill] = 0,
+            [Position.Top] = 0,
+            [Position.Jungle] = 0,
+            [Position.Mid] = 0,
+            [Position.Bottom] = 0,
+            [Position.Support] = 0,
+        };
 
         public void Save()
         {
