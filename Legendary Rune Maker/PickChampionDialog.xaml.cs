@@ -36,7 +36,7 @@ namespace Legendary_Rune_Maker
             }
         }
 
-        private void Champion_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void Champion_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             SelectedChampion = ((ChampionImageControl)sender).Champion;
 

@@ -18,7 +18,7 @@
         <ListView.ItemTemplate>
             <ItemContainerTemplate>
                 <controls:ChampionImageControl Champion="{Binding}" Cursor="Hand" Width="50" Height="50" Margin="5"
-                                               MouseLeftButtonDown="Champion_MouseLeftButtonDown" />
+                                               MouseLeftButtonUp="Champion_MouseLeftButtonUp" />
             </ItemContainerTemplate>
         </ListView.ItemTemplate>
         <ListView.ItemsPanel>
