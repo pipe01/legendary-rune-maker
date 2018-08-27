@@ -8,3 +8,4 @@ A rune maker for League of Legends
 * Easily load a rune page from [runes.lol](https://runes.lol/).
 * Separate rune pages of a champion by lanes.
 * Automatically update on startup (can be disabled on config file).
+* Automatically accept ready check.
