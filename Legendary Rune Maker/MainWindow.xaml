@@ -152,11 +152,11 @@
                                          Text="Load" ContextMenuService.IsEnabled="False" Click="Load_Click" />
 
                             <CheckBox Grid.Column="0" Grid.Row="0" IsChecked="{Binding UploadOnLock, Mode=TwoWay}"
-                                      VerticalAlignment="Center" HorizontalAlignment="Left" Content="Upload on champion lock"
+                                      VerticalAlignment="Center" HorizontalAlignment="Center" Content="Upload on champion lock"
                                       Margin="5 0 0 0"/>
 
                             <CheckBox Grid.Column="1" Grid.Row="0" IsChecked="{Binding Attached, Mode=TwoWay}"
-                                      VerticalAlignment="Center" HorizontalAlignment="Left" Content="Attach"
+                                      VerticalAlignment="Center" HorizontalAlignment="Center" Content="Attach"
                                       Margin="5 0 0 0"/>
                         </Grid>
 
