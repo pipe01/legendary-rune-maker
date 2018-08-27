@@ -5,9 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Legendary_Rune_Maker"
         xmlns:data="clr-namespace:Legendary_Rune_Maker.Data"
+        xmlns:controls="clr-namespace:Legendary_Rune_Maker.Controls"
         mc:Ignorable="d"
-        Title="AutomationWindow" Height="424.624" Width="766.165" Style="{StaticResource LoLWindow}"
-        Closing="Window_Closing" WindowStartupLocation="CenterScreen">
+        Title="AutomationWindow" Height="290" Width="497" Style="{StaticResource LoLWindow}"
+        Closing="Window_Closing" WindowStartupLocation="CenterScreen" Initialized="Window_Initialized">
 
     <Window.Background>
         <ImageBrush Stretch="UniformToFill" ImageSource="{StaticResource BgBlue}" />
@@ -15,7 +16,8 @@
 
     <Grid Margin="10">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
+            <RowDefinition Height="16" />
+            <RowDefinition Height="21" />
             <RowDefinition Height="Auto" />
             <RowDefinition />
         </Grid.RowDefinitions>
@@ -24,5 +26,46 @@
 
         <CheckBox Grid.Row="1" IsChecked="{Binding Path=UploadOnLock, Source={x:Static data:Config.Default}}"
                   VerticalAlignment="Center" HorizontalAlignment="Left" Content="Upload on champion lock" Margin="0 5 0 0"/>
+
+        <Grid Grid.Row="2" Margin="0 10 33 0" Grid.ColumnSpan="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="60" />
+                <RowDefinition Height="60" />
+                <RowDefinition Height="60" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="60" />
+                <ColumnDefinition Width="60" />
+                <ColumnDefinition Width="60" />
+                <ColumnDefinition Width="60" />
+                <ColumnDefinition Width="60" />
+                <ColumnDefinition Width="60" />
+            </Grid.ColumnDefinitions>
+
+            <Image Grid.Column="1" Grid.Row="0" Source="{StaticResource Fill}" Width="50" Height="50" Margin="5" />
+            <Image Grid.Column="2" Grid.Row="0" Source="{StaticResource Top}" Width="50" Height="50" Margin="5" />
+            <Image Grid.Column="3" Grid.Row="0" Source="{StaticResource Jungle}" Width="50" Height="50" Margin="5" />
+            <Image Grid.Column="4" Grid.Row="0" Source="{StaticResource Mid}" Width="50" Height="50" Margin="5" />
+            <Image Grid.Column="5" Grid.Row="0" Source="{StaticResource Support}" Width="50" Height="50" Margin="5" />
+            <Image Grid.Column="6" Grid.Row="0" Source="{StaticResource Bottom}" Width="50" Height="50" Margin="5" />
+
+            <controls:ChampionPickerControl x:Name="Pick1" Grid.Column="1" Grid.Row="1" Width="50" Height="50" Margin="5" ChampionChanged="PickBan_Changed" />
+            <controls:ChampionPickerControl x:Name="Pick2" Grid.Column="2" Grid.Row="1" Width="50" Height="50" Margin="5" ChampionChanged="PickBan_Changed" />
+            <controls:ChampionPickerControl x:Name="Pick3" Grid.Column="3" Grid.Row="1" Width="50" Height="50" Margin="5" ChampionChanged="PickBan_Changed" />
+            <controls:ChampionPickerControl x:Name="Pick4" Grid.Column="4" Grid.Row="1" Width="50" Height="50" Margin="5" ChampionChanged="PickBan_Changed" />
+            <controls:ChampionPickerControl x:Name="Pick5" Grid.Column="5" Grid.Row="1" Width="50" Height="50" Margin="5" ChampionChanged="PickBan_Changed" />
+            <controls:ChampionPickerControl x:Name="Pick6" Grid.Column="6" Grid.Row="1" Width="50" Height="50" Margin="5" ChampionChanged="PickBan_Changed" />
+
+            <controls:ChampionPickerControl x:Name="Ban1" Grid.Column="1" Grid.Row="2" Width="50" Height="50" Margin="5" Ban="True" ChampionChanged="PickBan_Changed" />
+            <controls:ChampionPickerControl x:Name="Ban2" Grid.Column="2" Grid.Row="2" Width="50" Height="50" Margin="5" Ban="True" ChampionChanged="PickBan_Changed" />
+            <controls:ChampionPickerControl x:Name="Ban3" Grid.Column="3" Grid.Row="2" Width="50" Height="50" Margin="5" Ban="True" ChampionChanged="PickBan_Changed" />
+            <controls:ChampionPickerControl x:Name="Ban4" Grid.Column="4" Grid.Row="2" Width="50" Height="50" Margin="5" Ban="True" ChampionChanged="PickBan_Changed" />
+            <controls:ChampionPickerControl x:Name="Ban5" Grid.Column="5" Grid.Row="2" Width="50" Height="50" Margin="5" Ban="True" ChampionChanged="PickBan_Changed" />
+            <controls:ChampionPickerControl x:Name="Ban6" Grid.Column="6" Grid.Row="2" Width="50" Height="50" Margin="5" Ban="True" ChampionChanged="PickBan_Changed" />
+
+            <CheckBox Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center">Auto-pick</CheckBox>
+            <CheckBox Grid.Column="0" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center">Auto-ban</CheckBox>
+        </Grid>
     </Grid>
 </Window>

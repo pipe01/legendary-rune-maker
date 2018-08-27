@@ -35,6 +35,7 @@
         <BitmapImage x:Key="CheckboxChecked" UriSource="Images/checkbox-checked.png" />
         <BitmapImage x:Key="CheckboxHoverChecked" UriSource="Images/checkbox-hover-checked.png" />
         <BitmapImage x:Key="Upload" UriSource="Images/upload-button.png" />
+        <BitmapImage x:Key="NoChamp" UriSource="Images/-1.png" />
 
         <BitmapImage x:Key="BgBlue" UriSource="Images/default-bg.jpg" />
         <BitmapImage x:Key="BgForest" UriSource="Images/forest-bg.jpg" />

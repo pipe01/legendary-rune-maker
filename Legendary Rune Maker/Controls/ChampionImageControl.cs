@@ -18,15 +18,15 @@ namespace Legendary_Rune_Maker.Controls
 {
     public class ChampionImageControl : Control
     {
+        private static readonly ImageSource NoChamp = Application.Current.FindResource("NoChamp") as ImageSource;
+
         public ImageSource Source
         {
             get { return (ImageSource)GetValue(SourceProperty); }
             set { SetValue(SourceProperty, value); }
         }
-        public static readonly DependencyProperty SourceProperty = DependencyProperty.Register("Source", typeof(ImageSource), typeof(ChampionImageControl));
-
-
-
+        public static readonly DependencyProperty SourceProperty = DependencyProperty.Register("Source", typeof(ImageSource), typeof(ChampionImageControl), new PropertyMetadata(NoChamp));
+        
         public Champion Champion
         {
             get { return (Champion)GetValue(ChampionProperty); }
@@ -46,6 +46,12 @@ namespace Legendary_Rune_Maker.Controls
             DefaultStyleKeyProperty.OverrideMetadata(typeof(ChampionImageControl), new FrameworkPropertyMetadata(typeof(ChampionImageControl)));
         }
 
-        public async Task SetChampion(Champion champ) => Source = await ImageCache.Instance.Get(champ.ImageURL);
+        public async Task SetChampion(Champion champ)
+        {
+            if (champ == null)
+                Source = NoChamp;
+            else
+                Source = await ImageCache.Instance.Get(champ.ImageURL);
+        }
     }
 }

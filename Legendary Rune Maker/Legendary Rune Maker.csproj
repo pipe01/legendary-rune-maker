@@ -94,6 +94,7 @@
       <DependentUpon>AutomationWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\ChampionImageControl.cs" />
+    <Compile Include="Controls\ChampionPickerControl.cs" />
     <Compile Include="Controls\FadeImage.xaml.cs">
       <DependentUpon>FadeImage.xaml</DependentUpon>
     </Compile>
@@ -309,6 +310,9 @@
     <Resource Include="Images\red-bg.jpg" />
     <Resource Include="Images\red_dark-bg.jpg" />
     <Resource Include="Images\shurima-desert-bg.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\-1.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
