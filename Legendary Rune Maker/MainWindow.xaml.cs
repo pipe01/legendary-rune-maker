@@ -427,5 +427,15 @@ namespace Legendary_Rune_Maker
             if ((bool)e.NewValue)
                 await ChampSelectDetector.ForceUpdate();
         }
+
+        private void LoLButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Automation_Click(object sender, EventArgs e)
+        {
+            new AutomationWindow().Show();
+        }
     }
 }

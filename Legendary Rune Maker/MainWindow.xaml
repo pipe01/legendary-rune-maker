@@ -168,7 +168,7 @@
                             </Grid.ColumnDefinitions>
 
                             <local:LoLButton Grid.Column="0" x:Name="Clear" Text="Clear" Margin="5" Click="Clear_Click" />
-                            <local:LoLButton Grid.Column="2" Text="Automation" Margin="5" />
+                            <local:LoLButton Grid.Column="2" x:Name="Automation" Text="Automation" Margin="5" Click="Automation_Click" />
                             <local:LoLButton Grid.Column="1" x:Name="Upload" Margin="5" Click="Upload_Click" IsEnabled="False"
                                              Width="40" HorizontalAlignment="Right">
                                 <Viewbox Width="20" Height="20">

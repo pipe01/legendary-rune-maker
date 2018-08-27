@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:Legendary_Rune_Maker"
              xmlns:controls="clr-namespace:Legendary_Rune_Maker.Controls"
+             xmlns:utils="clr-namespace:Legendary_Rune_Maker.Utils"
              StartupUri="LoadingWindow.xaml">
     <Application.Resources>
         <SolidColorBrush x:Key="Normal" Color="#D6C8A5" />
@@ -33,6 +34,46 @@
         <BitmapImage x:Key="CheckboxHover" UriSource="Images/checkbox-hover.png" />
         <BitmapImage x:Key="CheckboxChecked" UriSource="Images/checkbox-checked.png" />
         <BitmapImage x:Key="CheckboxHoverChecked" UriSource="Images/checkbox-hover-checked.png" />
+        <BitmapImage x:Key="Upload" UriSource="Images/upload-button.png" />
+
+        <DrawingImage x:Key="Close">
+            <DrawingImage.Drawing>
+                <DrawingGroup>
+                    <GeometryDrawing>
+                        <GeometryDrawing.Pen>
+                            <Pen Brush="#A09B8C" Thickness="10" />
+                        </GeometryDrawing.Pen>
+                        <GeometryDrawing.Geometry>
+                            <GeometryGroup>
+                                <LineGeometry StartPoint="0,0" EndPoint="1,1" />
+                                <LineGeometry StartPoint="1,0" EndPoint="0,1" />
+                            </GeometryGroup>
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                </DrawingGroup>
+            </DrawingImage.Drawing>
+        </DrawingImage>
+
+        <DrawingImage x:Key="Minimize">
+            <DrawingImage.Drawing>
+                <DrawingGroup>
+                    <GeometryDrawing Brush="Transparent">
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry RadiusX="0" RadiusY="0" Rect="0,0,10,10" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+
+                    <GeometryDrawing>
+                        <GeometryDrawing.Pen>
+                            <Pen x:Name="ClosePen" Brush="#A09B8C" Thickness="2" StartLineCap="Flat" />
+                        </GeometryDrawing.Pen>
+                        <GeometryDrawing.Geometry>
+                            <PathGeometry Figures="M0,10 L10,10" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                </DrawingGroup>
+            </DrawingImage.Drawing>
+        </DrawingImage>
 
         <BitmapImage x:Key="Fill" UriSource="Images/Fill_icon.png" />
         <BitmapImage x:Key="Top" UriSource="Images/Top_icon.png" />
@@ -40,7 +81,7 @@
         <BitmapImage x:Key="Mid" UriSource="Images/Middle_icon.png" />
         <BitmapImage x:Key="Bottom" UriSource="Images/Bottom_icon.png" />
         <BitmapImage x:Key="Support" UriSource="Images/Support_icon.png" />
-
+        
         <BitmapImage x:Key="Selector" UriSource="Images/selector.png" />
         <DrawingImage x:Key="SelectorRune">
             <DrawingImage.Drawing>
@@ -297,6 +338,52 @@
             </Setter>
         </Style>
 
-        <BitmapImage x:Key="Upload" UriSource="Images/upload-button.png" />
+        <Style x:Key="LoLWindow" TargetType="Window">
+            <Setter Property="WindowChrome.WindowChrome">
+                <Setter.Value>
+                    <WindowChrome GlassFrameThickness="0" CaptionHeight="0" UseAeroCaptionButtons="False" ResizeBorderThickness="7"
+                                  CornerRadius="0" />
+                </Setter.Value>
+            </Setter>
+
+            <EventSetter Event="MouseLeftButtonDown" Handler="Window_MouseLeftButtonDown" />
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Window">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="#785A28" BorderThickness="0 2 0 0">
+                            <Grid>
+                                <ContentPresenter Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" />
+
+                                <Grid VerticalAlignment="Top" Margin="3" HorizontalAlignment="Right">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="20" />
+                                        <ColumnDefinition Width="20" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <Button Grid.Column="0" Width="20" Height="20" Cursor="Hand"
+                                            Command="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={utils:WindowCommandConverter}, ConverterParameter='Minimize'}">
+                                        <Button.Template>
+                                            <ControlTemplate>
+                                                <Image Width="10" Height="10" Source="{StaticResource Minimize}" />
+                                            </ControlTemplate>
+                                        </Button.Template>
+                                    </Button>
+
+                                    <Button Grid.Column="1" Width="20" Height="20" Cursor="Hand"
+                                            Command="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={utils:WindowCommandConverter}, ConverterParameter='Close'}">
+                                        <Button.Template>
+                                            <ControlTemplate>
+                                                <Image Width="10" Height="10" Source="{StaticResource Close}" />
+                                            </ControlTemplate>
+                                        </Button.Template>
+                                    </Button>
+                                </Grid>
+                            </Grid>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Application.Resources>
 </Application>

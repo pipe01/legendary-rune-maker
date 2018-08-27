@@ -5,13 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Legendary_Rune_Maker"
         mc:Ignorable="d"
-        Title="AutomationWindow" Height="424.624" Width="766.165">
+        Title="AutomationWindow" Height="424.624" Width="766.165" Style="{StaticResource LoLWindow}">
 
     <Window.Background>
         <ImageBrush Stretch="UniformToFill"  ImageSource="Images/default-bg.jpg" />
     </Window.Background>
 
     <Grid>
+        <!--<Rectangle Fill="White" Width="100" Height="100" />-->
 
+        <Button HorizontalAlignment="Center" VerticalAlignment="Center" Width="100" Height="100" />
     </Grid>
 </Window>
