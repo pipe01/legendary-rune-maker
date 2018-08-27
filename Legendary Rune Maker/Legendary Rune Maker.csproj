@@ -90,6 +90,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AutomationWindow.xaml.cs">
+      <DependentUpon>AutomationWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ChampionImageControl.cs" />
     <Compile Include="Controls\FadeImage.xaml.cs">
       <DependentUpon>FadeImage.xaml</DependentUpon>
@@ -126,6 +129,10 @@
     </Compile>
     <Compile Include="Utils\BitmapUtils.cs" />
     <Compile Include="Utils\VisualHierarchyHelper.cs" />
+    <Page Include="AutomationWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\FadeImage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -286,6 +293,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\upload-button.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\default-bg.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
