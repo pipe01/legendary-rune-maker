@@ -44,6 +44,20 @@ namespace Legendary_Rune_Maker.Game
                 Session = data;
                 
                 SessionUpdated?.Invoke(data);
+
+                var myAction = data.actions.LastOrDefault(o => o[0].actorCellId == data.localPlayerCellId)?.First();
+
+                if (myAction?.completed == false)
+                {
+                    if (myAction.type == "pick")
+                    {
+                        //Pick
+                    }
+                    else if (myAction.type == "ban")
+                    {
+                        //Ban
+                    }
+                }
             }
 
             if (eventType == EventType.Create)
