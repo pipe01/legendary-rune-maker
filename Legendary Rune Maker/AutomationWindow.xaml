@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Legendary_Rune_Maker"
-        xmlns:properties="clr-namespace:Legendary_Rune_Maker.Properties"
+        xmlns:data="clr-namespace:Legendary_Rune_Maker.Data"
         mc:Ignorable="d"
         Title="AutomationWindow" Height="424.624" Width="766.165" Style="{StaticResource LoLWindow}"
         Closing="Window_Closing" WindowStartupLocation="CenterScreen">
@@ -20,9 +20,9 @@
             <RowDefinition />
         </Grid.RowDefinitions>
 
-        <CheckBox Content="Auto-accept" HorizontalAlignment="Left" IsChecked="{Binding Path=AutoAccept, Source={x:Static properties:Settings.Default}}" />
+        <CheckBox Content="Auto-accept" HorizontalAlignment="Left" IsChecked="{Binding Path=AutoAccept, Source={x:Static data:Config.Default}}" />
 
-        <CheckBox Grid.Row="1" IsChecked="{Binding Path=UploadOnLock, Source={x:Static properties:Settings.Default}}"
+        <CheckBox Grid.Row="1" IsChecked="{Binding Path=UploadOnLock, Source={x:Static data:Config.Default}}"
                   VerticalAlignment="Center" HorizontalAlignment="Left" Content="Upload on champion lock" Margin="0 5 0 0"/>
     </Grid>
 </Window>

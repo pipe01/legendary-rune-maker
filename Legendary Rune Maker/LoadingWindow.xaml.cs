@@ -49,10 +49,10 @@ namespace Legendary_Rune_Maker
 
         private async void Window_Initialized(object sender, EventArgs e)
         {
-            if (Settings.Default.CheckUpdatesBeforeStartup)
+            if (Config.Default.CheckUpdatesBeforeStartup)
                 await CheckUpdates();
 
-            if (Settings.Default.LoadCacheBeforeStartup)
+            if (Config.Default.LoadCacheBeforeStartup)
                 await LoadCache();
             
             ShowMainWindow();

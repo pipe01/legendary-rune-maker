@@ -1,5 +1,6 @@
 ﻿using LCU.NET;
 using LCU.NET.Plugins.LoL;
+using Legendary_Rune_Maker.Data;
 using Notifications.Wpf;
 using System;
 using System.Collections.Generic;
@@ -18,7 +19,7 @@ namespace Legendary_Rune_Maker.Game
 
         private static async void ReadyCheckChanged(EventType eventType, LolMatchmakingMatchmakingReadyCheckResource data)
         {
-            if (eventType == EventType.Update && data.state == "InProgress" && data.playerResponse == "None" && Properties.Settings.Default.AutoAccept)
+            if (eventType == EventType.Update && data.state == "InProgress" && data.playerResponse == "None" && Config.Default.AutoAccept)
             {
                 await Matchmaking.PostReadyCheckAccept();
 

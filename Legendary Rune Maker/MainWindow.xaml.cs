@@ -149,7 +149,7 @@ namespace Legendary_Rune_Maker
                         Status.Foreground = new SolidColorBrush(Colors.YellowGreen);
                         Status.Text = "locked in";
 
-                        if (UploadOnLock && ValidPage && GameState.CanUpload && Properties.Settings.Default.UploadOnLock)
+                        if (UploadOnLock && ValidPage && GameState.CanUpload && Config.Default.UploadOnLock)
                         {
                             string champion = (await Riot.GetChampions()).Single(o => o.ID == SelectedChampion).Name;
 
