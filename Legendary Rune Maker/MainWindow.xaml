@@ -131,8 +131,6 @@
                                 <ColumnDefinition Width="100" />
                             </Grid.ColumnDefinitions>
 
-                            <!--<ComboBox x:Name="ChampionDD" Grid.Row="0" IsEditable="False" Height="32" Margin="5"
-                                  SelectionChanged="ChampionDD_SelectionChanged" />-->
                             <ComboBox x:Name="PositionDD" Grid.Row="1" IsEditable="False" Height="32" Margin="5"
                                   SelectionChanged="PositionDD_SelectionChanged" />
 
