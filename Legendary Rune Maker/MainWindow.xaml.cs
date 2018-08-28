@@ -414,6 +414,7 @@ namespace Legendary_Rune_Maker
 
         private void Window_Closed(object sender, EventArgs e)
         {
+            Taskbar.Dispose();
             Environment.Exit(0);
         }
     }

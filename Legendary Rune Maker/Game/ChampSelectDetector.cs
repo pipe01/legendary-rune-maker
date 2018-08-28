@@ -16,6 +16,8 @@ namespace Legendary_Rune_Maker.Game
     {
         private static LolChampSelectChampSelectSession Session;
 
+        private static bool Picked, Banned;
+
         public static LolChampSelectChampSelectPlayerSelection CurrentSelection => Session?.myTeam?.SingleOrDefault(o => o.cellId == Session.localPlayerCellId);
 
         public static event Action<LolChampSelectChampSelectSession> SessionUpdated;
@@ -53,12 +55,13 @@ namespace Legendary_Rune_Maker.Game
                 {
                     if (myAction.type == "pick")
                     {
-                        if (Config.Default.AutoPickChampion)
+                        if (Config.Default.AutoPickChampion && !Picked)
                             await Pick(myAction);
                     }
                     else if (myAction.type == "ban")
                     {
-                        //Ban
+                        if (Config.Default.AutoBanChampion && !Banned)
+                            await Ban();
                     }
                 }
             }
@@ -70,11 +73,15 @@ namespace Legendary_Rune_Maker.Game
             else if (eventType == EventType.Delete)
             {
                 GameState.State.Fire(GameTriggers.ExitChampSelect);
+
+                Picked = Banned = false;
             }
         }
 
         private static async Task Pick(LolChampSelectChampSelectAction myAction)
         {
+            Picked = true;
+
             Dictionary<Position, int> picks = Config.Default.PickChampions;
             var pickable = await ChampSelect.GetPickableChampions();
 
@@ -82,21 +89,13 @@ namespace Legendary_Rune_Maker.Game
 
             var pos = CurrentSelection.assignedPosition.ToPosition();
 
-            int preferredPick = picks[pos]; //Try to pick the wanted champion for the lane
+            List<int> possiblePicks = new List<int>();
+            possiblePicks.Add(picks[pos]);
+            possiblePicks.Add(picks[Position.Fill]);
+            possiblePicks.AddRange(Enumerable.Range(0, (int)Position.UNSELECTED - 1).Select(o => picks[(Position)o]));
 
-            if (!isValidChamp(preferredPick)) //If there is no champ for that lane, get the champ for the "Fill" lane
-            {
-                preferredPick = picks[Position.Fill];
-            }
-
-            if (!isValidChamp(preferredPick)) //If there is no champ for fill, pick any lane's champion
-            {
-                for (int i = 0; i < (int)Position.UNSELECTED && !isValidChamp(preferredPick); i++)
-                {
-                    preferredPick = picks[(Position)i];
-                }
-            }
-
+            int preferredPick = GetChampion(isValidChamp, possiblePicks);
+            
             if (!isValidChamp(preferredPick))
             {
                 MainWindow.NotificationManager.Show(new NotificationContent
@@ -118,6 +117,23 @@ namespace Legendary_Rune_Maker.Game
             catch (APIErrorException)
             {
             }
+        }
+
+        private static async Task Ban()
+        {
+            Dictionary<Position, int> bans = Config.Default.BanChampions;
+            var bannable = await ChampSelect.GetBannableChampions();
+
+            Func<int, bool> isValidChamp = o => bannable.championIds.Contains(o);
+
+            var pos = CurrentSelection.assignedPosition.ToPosition();
+
+
+        }
+
+        private static int GetChampion(Func<int, bool> isValid, IEnumerable<int> champs)
+        {
+            return champs.FirstOrDefault(isValid);
         }
 
         public static async Task ForceUpdate()
