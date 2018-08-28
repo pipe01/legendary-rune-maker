@@ -2,6 +2,8 @@
 using LCU.NET.API_Models;
 using LCU.NET.Plugins.LoL;
 using Legendary_Rune_Maker.Data;
+using Legendary_Rune_Maker.Utils;
+using Notifications.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,7 +36,7 @@ namespace Legendary_Rune_Maker.Game
             }
         }
 
-        private static void ChampSelectUpdate(EventType eventType, LolChampSelectChampSelectSession data)
+        private static async void ChampSelectUpdate(EventType eventType, LolChampSelectChampSelectSession data)
         {
             if (data == null)
                 return;
@@ -51,7 +53,7 @@ namespace Legendary_Rune_Maker.Game
                 {
                     if (myAction.type == "pick")
                     {
-                        //Pick
+                        await Pick(myAction);
                     }
                     else if (myAction.type == "ban")
                     {
@@ -68,6 +70,47 @@ namespace Legendary_Rune_Maker.Game
             {
                 GameState.State.Fire(GameTriggers.ExitChampSelect);
             }
+        }
+
+        private static async Task Pick(LolChampSelectChampSelectAction myAction)
+        {
+            Dictionary<Position, int> picks = Config.Default.PickChampions;
+            var pickable = await ChampSelect.GetPickableChampions();
+
+            Func<int, bool> isValidChamp = o => pickable.championIds.Contains(o);
+
+            var pos = CurrentSelection.assignedPosition.ToPosition();
+
+            int preferredPick = picks[pos]; //Try to pick the wanted champion for the lane
+
+            if (!isValidChamp(preferredPick)) //If there is no champ for that lane, get the champ for the "Fill" lane
+            {
+                preferredPick = picks[Position.Fill];
+            }
+
+            if (!isValidChamp(preferredPick)) //If there is no champ for fill, pick any lane's champion
+            {
+                for (int i = 0; i < (int)Position.UNSELECTED && !isValidChamp(preferredPick); i++)
+                {
+                    preferredPick = picks[(Position)i];
+                }
+            }
+
+            if (!isValidChamp(preferredPick))
+            {
+                MainWindow.NotificationManager.Show(new NotificationContent
+                {
+                    Title = "Couldn't pick any champion",
+                    Message = "Maybe all of your selected champions were banned",
+                    Type = NotificationType.Error
+                });
+                return;
+            }
+
+            myAction.championId = preferredPick;
+            myAction.completed = true;
+
+            await ChampSelect.PatchActionById(myAction, myAction.id);
         }
 
         public static async Task ForceUpdate()
