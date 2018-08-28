@@ -16,7 +16,7 @@ namespace Legendary_Rune_Maker.Game
     {
         private static LolChampSelectChampSelectSession Session;
 
-        private static bool Picked, Banned;
+        private static bool Picked;
 
         public static LolChampSelectChampSelectPlayerSelection CurrentSelection => Session?.myTeam?.SingleOrDefault(o => o.cellId == Session.localPlayerCellId);
 
@@ -60,7 +60,7 @@ namespace Legendary_Rune_Maker.Game
                     }
                     else if (myAction.type == "ban")
                     {
-                        if (Config.Default.AutoBanChampion && !Banned)
+                        if (Config.Default.AutoBanChampion)
                             await Ban(myAction);
                     }
                 }
