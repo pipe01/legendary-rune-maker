@@ -1,6 +1,5 @@
 ﻿using LCU.NET;
 using LCU.NET.API_Models;
-using Legendary_Rune_Maker.Controls;
 using Legendary_Rune_Maker.Data;
 using Legendary_Rune_Maker.Data.Rune_providers;
 using Legendary_Rune_Maker.Game;
@@ -31,11 +30,11 @@ namespace Legendary_Rune_Maker
             set => SetValue(UploadOnLockProperty, value);
         }
         public static readonly DependencyProperty UploadOnLockProperty = DependencyProperty.Register("UploadOnLock", typeof(bool), typeof(MainWindow), new PropertyMetadata(true));
-        
+
         public bool Attached
         {
-            get { return (bool)GetValue(AttachedProperty); }
-            set { SetValue(AttachedProperty, value); }
+            get => (bool)GetValue(AttachedProperty);
+            set => SetValue(AttachedProperty, value);
         }
         public static readonly DependencyProperty AttachedProperty = DependencyProperty.Register("Attached", typeof(bool), typeof(MainWindow), new PropertyMetadata(true, AttachedChanged));
 
@@ -86,7 +85,7 @@ namespace Legendary_Rune_Maker
             {
                 LeagueClient.BeginTryInit();
             }
-            
+
             await LoginDetector.Init();
             await ChampSelectDetector.Init();
             ReadyCheckDetector.Init();
@@ -230,7 +229,7 @@ namespace Legendary_Rune_Maker
         {
             SetPosition((Position)PositionDD.SelectedIndex);
         }
-        
+
         private void SetPosition(Position position)
         {
             SelectedPosition = position;
@@ -404,7 +403,7 @@ namespace Legendary_Rune_Maker
                 new DebugProxyWindow().Show();
             }
         }
-        
+
         private async void StatusT_MouseDown(object sender, MouseButtonEventArgs e)
         {
             await LoginDetector.ForceUpdate();
@@ -418,21 +417,21 @@ namespace Legendary_Rune_Maker
             if (champ.Success)
                 await SetChampion(champ.Selected);
         }
-        
+
         private static async void AttachedChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if ((bool)e.NewValue)
                 await ChampSelectDetector.ForceUpdate();
         }
 
-        private void LoLButton_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void Automation_Click(object sender, EventArgs e)
         {
             new AutomationWindow().Show();
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            Environment.Exit(0);
         }
     }
 }

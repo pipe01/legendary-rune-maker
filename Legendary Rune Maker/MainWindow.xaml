@@ -10,7 +10,7 @@
         mc:Ignorable="d" ResizeMode="CanMinimize"
         Title="pipe01's Legendary Rune Maker" Height="310" Width="810" Initialized="Window_Initialized" WindowStartupLocation="CenterScreen"
         DataContext="{Binding RelativeSource={RelativeSource Self}}" MouseDown="Window_MouseDown" Style="{StaticResource Borderless}"
-        Icon="{StaticResource Icon}" StateChanged="Window_StateChanged" PreviewKeyDown="Window_PreviewKeyDown">
+        Icon="{StaticResource Icon}" StateChanged="Window_StateChanged" PreviewKeyDown="Window_PreviewKeyDown" Closed="Window_Closed">
 
     <Window.Background>
         <VisualBrush Stretch="UniformToFill">
