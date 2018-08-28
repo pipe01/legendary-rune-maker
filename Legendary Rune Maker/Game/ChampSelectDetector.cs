@@ -53,7 +53,8 @@ namespace Legendary_Rune_Maker.Game
                 {
                     if (myAction.type == "pick")
                     {
-                        await Pick(myAction);
+                        if (Config.Default.AutoPickChampion)
+                            await Pick(myAction);
                     }
                     else if (myAction.type == "ban")
                     {
@@ -110,7 +111,13 @@ namespace Legendary_Rune_Maker.Game
             myAction.championId = preferredPick;
             myAction.completed = true;
 
-            await ChampSelect.PatchActionById(myAction, myAction.id);
+            try
+            {
+                await ChampSelect.PatchActionById(myAction, myAction.id);
+            }
+            catch (APIErrorException)
+            {
+            }
         }
 
         public static async Task ForceUpdate()

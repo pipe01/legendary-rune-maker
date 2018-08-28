@@ -5,6 +5,7 @@ using Legendary_Rune_Maker.Data.Rune_providers;
 using Legendary_Rune_Maker.Game;
 using Legendary_Rune_Maker.Utils;
 using Notifications.Wpf;
+using RestSharp.Extensions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -168,20 +169,23 @@ namespace Legendary_Rune_Maker
             });
         }
 
-        private void ChampSelectDetector_SessionUpdated(LolChampSelectChampSelectSession obj)
+        private async void ChampSelectDetector_SessionUpdated(LolChampSelectChampSelectSession obj)
         {
+            if (!Dispatcher.CheckAccess())
+            {
+                Dispatcher.Invoke(() => ChampSelectDetector_SessionUpdated(obj));
+                return;
+            }
+
             var player = ChampSelectDetector.CurrentSelection;
 
             if (player == null || player.championId == 0 || !Attached)
                 return;
 
-            Position p = player.assignedPosition.ToPosition();
+            var p = player.assignedPosition.ToPosition();
             
-            Dispatcher.Invoke(async () =>
-            {
-                SetPosition(p);
-                await SetChampion(player.championId);
-            });
+            SetPosition(p);
+            await SetChampion(player.championId);
         }
 
         private async void Upload_Click(object sender, EventArgs e)
