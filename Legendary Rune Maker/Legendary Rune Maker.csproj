@@ -134,6 +134,7 @@
       <DependentUpon>TreePickerControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Utils\BitmapUtils.cs" />
+    <Compile Include="Utils\Extensions.cs" />
     <Compile Include="Utils\RelayCommand.cs" />
     <Compile Include="Utils\VisualHierarchyHelper.cs" />
     <Compile Include="Utils\WindowCommandConverter.cs" />

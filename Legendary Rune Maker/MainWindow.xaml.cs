@@ -3,6 +3,7 @@ using LCU.NET.API_Models;
 using Legendary_Rune_Maker.Data;
 using Legendary_Rune_Maker.Data.Rune_providers;
 using Legendary_Rune_Maker.Game;
+using Legendary_Rune_Maker.Utils;
 using Notifications.Wpf;
 using System;
 using System.Collections.Generic;
@@ -174,30 +175,8 @@ namespace Legendary_Rune_Maker
             if (player == null || player.championId == 0 || !Attached)
                 return;
 
-            Position p;
-
-            switch (player.assignedPosition)
-            {
-                case "TOP":
-                    p = Position.Top;
-                    break;
-                case "JUNGLE":
-                    p = Position.Jungle;
-                    break;
-                case "MIDDLE":
-                    p = Position.Mid;
-                    break;
-                case "UTILITY":
-                    p = Position.Support;
-                    break;
-                case "BOTTOM":
-                    p = Position.Bottom;
-                    break;
-                default:
-                    p = Position.Fill;
-                    break;
-            }
-
+            Position p = player.assignedPosition.ToPosition();
+            
             Dispatcher.Invoke(async () =>
             {
                 SetPosition(p);
