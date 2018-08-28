@@ -26,10 +26,15 @@ namespace Legendary_Rune_Maker
             InitializeComponent();
         }
 
+        public bool ShowNoChampion { get; set; } = true;
+
         public Champion SelectedChampion { get; private set; }
 
         private async void Window_Initialized(object sender, EventArgs e)
         {
+            if (ShowNoChampion)
+                Champions.Items.Add(null);
+
             foreach (var item in await Riot.GetChampions())
             {
                 Champions.Items.Add(item);
@@ -44,7 +49,7 @@ namespace Legendary_Rune_Maker
             this.Close();
         }
 
-        public static Champion PickChampion(bool ban = false)
+        public static (bool Success, Champion Selected) PickChampion(bool ban = false)
         {
             var win = new PickChampionDialog();
 
@@ -52,9 +57,9 @@ namespace Legendary_Rune_Maker
                 win.BackImage.ImageSource = (ImageSource)Application.Current.FindResource("BgRed");
 
             if (win.ShowDialog() != true)
-                return null;
+                return (false, null);
 
-            return win.SelectedChampion;
+            return (true, win.SelectedChampion);
         }
     }
 }

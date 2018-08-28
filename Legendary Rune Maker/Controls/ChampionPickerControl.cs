@@ -37,9 +37,9 @@ namespace Legendary_Rune_Maker.Controls
         {
             var champ = PickChampionDialog.PickChampion(Ban);
 
-            if (champ != null)
+            if (champ.Success)
             {
-                this.Champion = champ;
+                this.Champion = champ.Selected;
                 ChampionChanged?.Invoke(this, EventArgs.Empty);
             }
         }

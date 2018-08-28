@@ -43,7 +43,7 @@ namespace Legendary_Rune_Maker
             var dic = ban ? Config.Default.BanChampions : Config.Default.PickChampions;
             var key = dic.Keys.ElementAt(n);
 
-            dic[key] = picker.Champion.ID;
+            dic[key] = picker.Champion?.ID ?? 0;
         }
         
         private async void Window_Initialized(object sender, EventArgs e)

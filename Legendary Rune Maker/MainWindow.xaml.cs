@@ -413,8 +413,8 @@ namespace Legendary_Rune_Maker
         {
             var champ = PickChampionDialog.PickChampion();
 
-            if (champ != null)
-                await SetChampion(champ);
+            if (champ.Success)
+                await SetChampion(champ.Selected);
         }
         
         private static async void AttachedChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
