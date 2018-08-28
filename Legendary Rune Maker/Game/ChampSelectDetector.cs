@@ -61,7 +61,7 @@ namespace Legendary_Rune_Maker.Game
                     else if (myAction.type == "ban")
                     {
                         if (Config.Default.AutoBanChampion && !Banned)
-                            await Ban();
+                            await Ban(myAction);
                     }
                 }
             }
@@ -89,7 +89,7 @@ namespace Legendary_Rune_Maker.Game
 
             var pos = CurrentSelection.assignedPosition.ToPosition();
 
-            List<int> possiblePicks = new List<int>();
+            var possiblePicks = new List<int>();
             possiblePicks.Add(picks[pos]);
             possiblePicks.Add(picks[Position.Fill]);
             possiblePicks.AddRange(Enumerable.Range(0, (int)Position.UNSELECTED - 1).Select(o => picks[(Position)o]));
@@ -119,7 +119,7 @@ namespace Legendary_Rune_Maker.Game
             }
         }
 
-        private static async Task Ban()
+        private static async Task Ban(LolChampSelectChampSelectAction myAction)
         {
             Dictionary<Position, int> bans = Config.Default.BanChampions;
             var bannable = await ChampSelect.GetBannableChampions();
@@ -128,7 +128,34 @@ namespace Legendary_Rune_Maker.Game
 
             var pos = CurrentSelection.assignedPosition.ToPosition();
 
+            var possibleBans = new List<int>();
+            possibleBans.Add(bans[pos]);
+            possibleBans.Add(bans[Position.Fill]);
+            possibleBans.AddRange(Enumerable.Range(0, (int)Position.UNSELECTED - 1).Select(o => bans[(Position)o]));
 
+            int preferredBan = GetChampion(isValidChamp, possibleBans);
+
+            if (!isValidChamp(preferredBan))
+            {
+                MainWindow.NotificationManager.Show(new NotificationContent
+                {
+                    Title = "Couldn't ban any champion",
+                    Message = "Maybe all of your selected champions were banned",
+                    Type = NotificationType.Error
+                });
+                return;
+            }
+
+            myAction.championId = preferredBan;
+            myAction.completed = true;
+
+            try
+            {
+                await ChampSelect.PatchActionById(myAction, myAction.id);
+            }
+            catch (APIErrorException)
+            {
+            }
         }
 
         private static int GetChampion(Func<int, bool> isValid, IEnumerable<int> champs)
