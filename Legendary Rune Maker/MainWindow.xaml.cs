@@ -94,7 +94,7 @@ namespace Legendary_Rune_Maker
 
         private async Task InitControls()
         {
-            await SetChampionIndex(0);
+            await SetChampion(null);
 
             foreach (var item in new[] { "Any", "Top", "Jungle", "Mid", "Bottom", "Support" })
             {
@@ -267,7 +267,9 @@ namespace Legendary_Rune_Maker
             if (champ == null)
             {
                 SelectedChampion = 0;
-                ChampionImage.Source = null;
+                ChampionImage.Source = (ImageSource)Application.Current.FindResource("NoChamp");
+
+                Tree.Clear();
                 return;
             }
 
