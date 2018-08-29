@@ -26,13 +26,23 @@
         </Setter>
     </Style>
 
-    <Style TargetType="{x:Type local:SummonerSpellControl}">
+    <Style TargetType="{x:Type local:SummonerSpellControl}">        
+        <Setter Property="Cursor" Value="Hand" />
+
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:SummonerSpellControl}">
-                    <Border Background="{TemplateBinding Background}"
-                            BorderBrush="{TemplateBinding BorderBrush}"
+                    <ControlTemplate.Resources>
+                        <SolidColorBrush x:Key="Normal" Color="#3C3C41" />
+                        <LinearGradientBrush x:Key="Selected" StartPoint="0,0" EndPoint="0,1">
+                            <GradientStop Offset="0" Color="#60481F" />
+                            <GradientStop Offset="1" Color="#9F8757" />
+                        </LinearGradientBrush>
+                    </ControlTemplate.Resources>
+                    
+                    <Border Background="Black" BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}">
+                        <Image Source="{TemplateBinding SpellImage}" />
                     </Border>
                 </ControlTemplate>
             </Setter.Value>

@@ -4,12 +4,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Legendary_Rune_Maker"
+        xmlns:controls="clr-namespace:Legendary_Rune_Maker.Controls"
         mc:Ignorable="d"
         Title="PickSummonerSpellPopup" Height="220" Width="274" WindowStyle="None">
 
     <Border BorderBrush="#463714" BorderThickness="2" Background="#010A13">
         <Grid>
-
+            <controls:SummonerSpellControl x:Name="SpellControl" Width="51" Height="51" />
         </Grid>
     </Border>
 </Window>
