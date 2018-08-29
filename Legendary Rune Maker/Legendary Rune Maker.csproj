@@ -102,6 +102,7 @@
     <Compile Include="Data\Rune providers\ClientProvider.cs" />
     <Compile Include="Data\Rune providers\IRuneProvider.cs" />
     <Compile Include="Data\Rune providers\RunesLolProvider.cs" />
+    <Compile Include="Data\SummonerSpell.cs" />
     <Compile Include="DebugProxyWindow.xaml.cs">
       <DependentUpon>DebugProxyWindow.xaml</DependentUpon>
     </Compile>

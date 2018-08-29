@@ -64,6 +64,36 @@ namespace Legendary_Rune_Maker.Data
             return Champions;
         }
 
+        private static SummonerSpell[] Spells;
+        public static async Task<SummonerSpell[]> GetSummonerSpells()
+        {
+            if (Spells == null)
+            {
+                string json = await new WebClient().DownloadStringTaskAsync($"{CdnEndpoint}{await GetLatestVersionAsync()}/data/{Locale}/summoner.json");
+
+                var jobj = JObject.Parse(json);
+                var data = jobj["data"];
+
+                Spells = data.Children().Select(o =>
+                {
+                    var p = o as JProperty;
+                    return new SummonerSpell
+                    {
+                        ID = p["key"].ToObject<int>(),
+                        Key = p["id"].ToObject<string>(),
+                        Name = p["name"].ToObject<string>(),
+                        SummonerLevel = p["summonerLevel"].ToObject<int>(),
+                        Image = $"{CdnEndpoint}{LatestVersion}/img/spell/" + p.Value["image"]["full"].ToObject<string>()
+                    };
+                })
+                .OrderBy(o => o.SummonerLevel)
+                .ThenBy(o => o.Name)
+                .ToArray();
+            }
+
+            return Spells;
+        }
+
         private static string LatestVersion;
         public static async Task<string> GetLatestVersionAsync()
             => LatestVersion ?? (LatestVersion = JsonConvert.DeserializeObject<string[]>(await new WebClient().DownloadStringTaskAsync("https://ddragon.leagueoflegends.com/api/versions.json"))[0]);
