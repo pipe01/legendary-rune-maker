@@ -24,6 +24,7 @@ namespace Legendary_Rune_Maker.Data
         public bool LoadOnLock { get; set; }
         public bool AutoPickChampion { get; set; }
         public bool AutoBanChampion { get; set; }
+        public bool AutoDisablePickBan { get; set; }
         public Dictionary<Position, int> PickChampions { get; set; } = new Dictionary<Position, int>
         {
             [Position.Fill] = 0,
