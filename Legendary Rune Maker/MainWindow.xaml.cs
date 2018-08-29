@@ -150,10 +150,27 @@ namespace Legendary_Rune_Maker
                         Status.Foreground = new SolidColorBrush(Colors.YellowGreen);
                         Status.Text = "locked in";
 
-                        if (UploadOnLock && ValidPage && GameState.CanUpload && Config.Default.UploadOnLock)
+                        if (UploadOnLock && GameState.CanUpload && Config.Default.UploadOnLock)
                         {
                             string champion = (await Riot.GetChampions()).Single(o => o.ID == SelectedChampion).Name;
 
+                            if (!ValidPage)
+                            {
+                                if (Config.Default.LoadOnLock)
+                                {
+                                    await LoadPageFromFirstProvider();
+                                }
+                                else
+                                {
+                                    NotificationManager.Show(new NotificationContent
+                                    {
+                                        Title = $"Page rune for {champion} not set",
+                                        Type = NotificationType.Error
+                                    });
+                                    break;
+                                }
+                            }
+                            
                             NotificationManager.Show(new NotificationContent
                             {
                                 Title = "Locked in",
@@ -166,6 +183,27 @@ namespace Legendary_Rune_Maker
 
                         break;
                 }
+            });
+        }
+
+        private async Task LoadPageFromFirstProvider()
+        {
+            var provider = RuneProviders.First();
+            var positions = await provider.GetPossibleRoles(SelectedChampion);
+
+            var position = positions.Contains(SelectedPosition) ? SelectedPosition : Position.Fill;
+
+            var page = await provider.GetRunePage(SelectedChampion, position);
+
+            Tree.SetPage(page);
+
+            var champName = (await Riot.GetChampions()).Single(o => o.ID == SelectedChampion).Name;
+
+            NotificationManager.Show(new NotificationContent
+            {
+                Title = $"Page for {champName} in {SelectedPosition} not set",
+                Message = $"Downloaded from {provider.Name}",
+                Type = NotificationType.Information
             });
         }
 
