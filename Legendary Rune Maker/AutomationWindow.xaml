@@ -16,19 +16,32 @@
 
     <Grid Margin="10">
         <Grid.RowDefinitions>
-            <RowDefinition Height="16" />
-            <RowDefinition Height="21" />
-            <RowDefinition Height="Auto" />
+            <RowDefinition Height="42" />
             <RowDefinition />
         </Grid.RowDefinitions>
 
-        <CheckBox Content="Auto-accept" HorizontalAlignment="Left"
-                  IsChecked="{Binding Path=AutoAccept, Source={x:Static data:Config.Default}}" />
+        <Grid Margin="0 0 0 5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="17" />
+                <RowDefinition Height="17" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="160" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
 
-        <CheckBox Grid.Row="1" IsChecked="{Binding Path=UploadOnLock, Source={x:Static data:Config.Default}}"
-                  VerticalAlignment="Center" HorizontalAlignment="Left" Content="Upload on champion lock" Margin="0 5 0 0"/>
+            <CheckBox Grid.Row="0" Content="Auto-accept" HorizontalAlignment="Left"
+                      IsChecked="{Binding Path=AutoAccept, Source={x:Static data:Config.Default}}" Width="81" />
 
-        <Grid Grid.Row="2" Margin="0 10 0 0" Grid.ColumnSpan="2">
+            <CheckBox Grid.Row="1" Content="Upload on champion lock" HorizontalAlignment="Left"
+                      IsChecked="{Binding Path=UploadOnLock, Source={x:Static data:Config.Default}}" Width="152" />
+
+            <CheckBox Grid.Row="1" Grid.Column="1" Content="Load page from first provider on lock"
+                      IsEnabled="{Binding Path=UploadOnLock, Source={x:Static data:Config.Default}}"
+                      IsChecked="{Binding Path=LoadOnLock, Source={x:Static data:Config.Default}}" />
+        </Grid>
+
+        <Grid Grid.Row="1" Margin="0 10 0 0" Grid.ColumnSpan="2">
             <Grid.RowDefinitions>
                 <RowDefinition Height="60" />
                 <RowDefinition Height="60" />
