@@ -49,6 +49,6 @@
 
     <Grid>
         <controls:FadeImage x:Name="View" ToolTipService.ShowDuration="12000" />
-        <Image x:Name="Selector" Source="{StaticResource SelectorRune}" Opacity="0" />
+        <Image x:Name="Selector" Source="{StaticResource SelectorRune}" Opacity="0" IsHitTestVisible="False" />
     </Grid>
 </UserControl>
