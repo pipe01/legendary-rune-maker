@@ -64,16 +64,15 @@ namespace Legendary_Rune_Maker
             NotificationManager = new NotificationManager(Dispatcher);
 
             InitializeComponent();
+
+            this.Activate();
         }
 
         private async void Window_Initialized(object sender, EventArgs e)
         {
             await InitDetectors();
             await InitControls();
-
-            //if (LeagueClient.Connected)
-            //    new DebugProxyWindow().Show();
-
+            
             this.Show();
         }
 
@@ -414,6 +413,7 @@ namespace Legendary_Rune_Maker
             {
                 this.Show();
                 this.WindowState = WindowState.Normal;
+                this.Activate();
             }
         }
 
