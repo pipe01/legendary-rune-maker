@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Legendary_Rune_Maker"
         xmlns:controls="clr-namespace:Legendary_Rune_Maker.Controls"
         mc:Ignorable="d"
-        Title="PickChampionDialog" Height="450" Width="800" Style="{StaticResource LoLWindow}" Initialized="Window_Initialized"
+        Title="Pick a champion" Height="450" Width="800" Style="{StaticResource LoLWindow}" Initialized="Window_Initialized"
         WindowStartupLocation="CenterScreen">
     
     <Window.Background>

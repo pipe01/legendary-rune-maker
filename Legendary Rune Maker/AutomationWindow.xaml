@@ -7,7 +7,7 @@
         xmlns:data="clr-namespace:Legendary_Rune_Maker.Data"
         xmlns:controls="clr-namespace:Legendary_Rune_Maker.Controls"
         mc:Ignorable="d"
-        Title="AutomationWindow" Height="273" Width="464" Style="{StaticResource LoLWindow}"
+        Title="Automation" Height="273" Width="464" Style="{StaticResource LoLWindow}"
         Closing="Window_Closing" WindowStartupLocation="CenterScreen" Initialized="Window_Initialized" ResizeMode="NoResize">
 
     <Window.Background>

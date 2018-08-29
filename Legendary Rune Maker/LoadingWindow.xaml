@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Legendary_Rune_Maker"
         mc:Ignorable="d"
-        Title="" Height="172.556" Width="309.398" ResizeMode="NoResize" Initialized="Window_Initialized"
+        Title="Legendary Rune Maker" Height="172.556" Width="309.398" ResizeMode="NoResize" Initialized="Window_Initialized"
         Background="#010A13" WindowStartupLocation="CenterScreen" Style="{StaticResource Borderless}">
 
     <Grid>
