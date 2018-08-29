@@ -46,8 +46,13 @@ namespace Legendary_Rune_Maker
 
         private void Window_Deactivated(object sender, EventArgs e)
         {
-            this.DialogResult = false;
-            this.Close();
+            try
+            {
+                this.Close();
+            }
+            catch
+            {
+            }
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -60,8 +65,7 @@ namespace Legendary_Rune_Maker
 
         private void SummonerSpellControl_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            this.SelectedSpell = (SummonerSpell)List.SelectedItem;
-            this.DialogResult = true;
+            this.SelectedSpell = ((IHateWpf)List.SelectedItem).Spell;
             this.Close();
         }
 
@@ -75,12 +79,9 @@ namespace Legendary_Rune_Maker
             if (selectedSpell != null)
                 win.SelectedSpell = selectedSpell;
 
-            if (win.ShowDialog() == true)
-            {
-                return win.SelectedSpell;
-            }
-
-            return null;
+            win.Show();
+            
+            return win.SelectedSpell;
         }
     }
 }

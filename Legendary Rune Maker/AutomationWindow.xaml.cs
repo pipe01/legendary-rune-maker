@@ -48,7 +48,7 @@ namespace Legendary_Rune_Maker
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            new PickSummonerSpellPopup().Show();
+            PickSummonerSpellPopup.SelectSpell();
         }
 
         private async void Window_Initialized(object sender, EventArgs e)
