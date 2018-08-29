@@ -7,7 +7,7 @@
         xmlns:data="clr-namespace:Legendary_Rune_Maker.Data"
         xmlns:controls="clr-namespace:Legendary_Rune_Maker.Controls"
         mc:Ignorable="d"
-        Title="Automation" Height="413" Width="464" Style="{StaticResource LoLWindow}"
+        Title="Automation" Height="310" Width="464" Style="{StaticResource LoLWindow}"
         Closing="Window_Closing" WindowStartupLocation="CenterScreen" Initialized="Window_Initialized" ResizeMode="NoResize">
 
     <Window.Background>
@@ -17,8 +17,8 @@
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="37" />
-            <RowDefinition />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="61" />
         </Grid.RowDefinitions>
 
         <Grid Margin="0 0.5 0 0">
@@ -47,11 +47,7 @@
                       IsChecked="{Binding Path=AutoDisablePickBan, Source={x:Static data:Config.Default}}" />
         </Grid>
 
-        <Button Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="72" Height="32" Click="Button_Click">
-            Spells
-        </Button>
-
-        <Grid Grid.Row="2" Margin="0 10 0 0" Grid.ColumnSpan="2" Height="180">
+        <Grid Grid.Row="1" Margin="0 10 0 0" Grid.ColumnSpan="2" Height="180">
             <Grid.RowDefinitions>
                 <RowDefinition Height="60" />
                 <RowDefinition Height="60" />
@@ -92,6 +88,19 @@
                        IsChecked="{Binding Path=AutoPickChampion, Source={x:Static data:Config.Default}}">Auto-pick</CheckBox>
             <CheckBox Grid.Column="0" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center"
                        IsChecked="{Binding Path=AutoBanChampion, Source={x:Static data:Config.Default}}">Auto-ban</CheckBox>
+        </Grid>
+
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <CheckBox Grid.Column="0" VerticalAlignment="Center" Margin="0 5 5 5">Auto-pick spells</CheckBox>
+
+            <controls:SummonerSpellControl Grid.Column="1" Width="51" Height="51" Margin="5" SnapsToDevicePixels="True" />
+            <controls:SummonerSpellControl Grid.Column="2" Width="51" Height="51" Margin="5" SnapsToDevicePixels="True" />
         </Grid>
     </Grid>
 </Window>
