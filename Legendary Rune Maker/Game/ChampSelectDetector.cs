@@ -74,7 +74,7 @@ namespace Legendary_Rune_Maker.Game
             {
                 GameState.State.Fire(GameTriggers.ExitChampSelect);
 
-                Picked = Banned = false;
+                Picked = false;
             }
         }
 

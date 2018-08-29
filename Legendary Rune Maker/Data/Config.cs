@@ -18,7 +18,7 @@ namespace Legendary_Rune_Maker.Data
         public int ConfigVersion { get; set; } = LatestVersion;
 
         public bool CheckUpdatesBeforeStartup { get; set; } = true;
-        public bool LoadCacheBeforeStartup { get; set; }
+        public bool LoadCacheBeforeStartup { get; set; } = true;
         public bool AutoAccept { get; set; }
         public bool UploadOnLock { get; set; } = true;
         public bool AutoPickChampion { get; set; }

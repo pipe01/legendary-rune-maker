@@ -60,6 +60,12 @@ namespace Legendary_Rune_Maker
 
         private async Task LoadCache()
         {
+            if (ImageCache.Instance.LocalCache)
+            {
+                Config.Default.LoadCacheBeforeStartup = false;
+                Config.Default.Save();
+            }
+
             Progress.IsIndeterminate = false;
             Progress.Value = 0;
             Status.Text = "Loading...";
