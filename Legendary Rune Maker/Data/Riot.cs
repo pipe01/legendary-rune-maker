@@ -83,7 +83,7 @@ namespace Legendary_Rune_Maker.Data
                         Key = p["id"].ToObject<string>(),
                         Name = p["name"].ToObject<string>(),
                         SummonerLevel = p["summonerLevel"].ToObject<int>(),
-                        Image = $"{CdnEndpoint}{LatestVersion}/img/spell/" + p.Value["image"]["full"].ToObject<string>()
+                        ImageURL = $"{CdnEndpoint}{LatestVersion}/img/spell/" + p.Value["image"]["full"].ToObject<string>()
                     };
                 })
                 .OrderBy(o => o.SummonerLevel)
@@ -111,12 +111,15 @@ namespace Legendary_Rune_Maker.Data
         {
             await GetLatestVersionAsync();
 
-            int p = 0;
             var runes = (await GetRuneTrees()).SelectMany(o => o.Slots).SelectMany(o => o.Runes).Select(o => ImageEndpoint + o.IconURL);
             var champions = (await GetChampions()).Select(o => o.ImageURL);
-            var total = runes.Concat(champions).Concat((await GetRuneTrees()).Select(o => ImageEndpoint + o.IconURL));
+            var spells = (await GetSummonerSpells()).Select(o => o.ImageURL);
+            var trees = (await GetRuneTrees()).Select(o => ImageEndpoint + o.IconURL);
+
+            var total = runes.Concat(champions).Concat(spells).Concat(trees);
             int count = total.Count();
 
+            int p = 0;
             await Task.WhenAll(total.Select(async o =>
             {
                 await ImageCache.Instance.Get(o);
