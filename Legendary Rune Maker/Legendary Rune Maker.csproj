@@ -98,6 +98,7 @@
     <Compile Include="Controls\FadeImage.xaml.cs">
       <DependentUpon>FadeImage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\SummonerSpellControl.cs" />
     <Compile Include="Data\Config.cs" />
     <Compile Include="Data\Rune providers\ClientProvider.cs" />
     <Compile Include="Data\Rune providers\IRuneProvider.cs" />
@@ -130,6 +131,9 @@
     </Compile>
     <Compile Include="PickChampionDialog.xaml.cs">
       <DependentUpon>PickChampionDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PickSummonerSpellPopup.xaml.cs">
+      <DependentUpon>PickSummonerSpellPopup.xaml</DependentUpon>
     </Compile>
     <Compile Include="TreePickerControl.xaml.cs">
       <DependentUpon>TreePickerControl.xaml</DependentUpon>
@@ -183,6 +187,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="PickChampionDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PickSummonerSpellPopup.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

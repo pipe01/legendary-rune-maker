@@ -70,6 +70,8 @@ namespace Legendary_Rune_Maker
 
         private async void Window_Initialized(object sender, EventArgs e)
         {
+            var s = await Riot.GetSummonerSpells();
+
             await InitDetectors();
             await InitControls();
             

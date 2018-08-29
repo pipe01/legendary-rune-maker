@@ -79,10 +79,10 @@ namespace Legendary_Rune_Maker.Data
                     var p = o as JProperty;
                     return new SummonerSpell
                     {
-                        ID = p["key"].ToObject<int>(),
-                        Key = p["id"].ToObject<string>(),
-                        Name = p["name"].ToObject<string>(),
-                        SummonerLevel = p["summonerLevel"].ToObject<int>(),
+                        ID = p.Value["key"].ToObject<int>(),
+                        Key = p.Value["id"].ToObject<string>(),
+                        Name = p.Value["name"].ToObject<string>(),
+                        SummonerLevel = p.Value["summonerLevel"].ToObject<int>(),
                         ImageURL = $"{CdnEndpoint}{LatestVersion}/img/spell/" + p.Value["image"]["full"].ToObject<string>()
                     };
                 })
