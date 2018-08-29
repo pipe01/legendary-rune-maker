@@ -39,20 +39,19 @@ namespace Legendary_Rune_Maker.Controls
         }
         public static readonly DependencyProperty SelectedProperty = DependencyProperty.Register("Selected", typeof(bool), typeof(SummonerSpellControl), new PropertyMetadata(false, SelectedChanged));
 
+        public double ImageMargin
+        {
+            get { return (double)GetValue(ImageMarginProperty); }
+            set { SetValue(ImageMarginProperty, value); }
+        }
+        public static readonly DependencyProperty ImageMarginProperty = DependencyProperty.Register("ImageMargin", typeof(double), typeof(SummonerSpellControl));
+        
         private static void SelectedChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var c = d as SummonerSpellControl;
 
-            if ((bool)e.NewValue)
-            {
-                c.BorderBrush = (LinearGradientBrush)c.Template.Resources["Selected"];
-                c.BorderThickness = new Thickness(2);
-            }
-            else
-            {
-                c.BorderBrush = (LinearGradientBrush)c.Template.Resources["Normal"];
-                c.BorderThickness = new Thickness(1);
-            }
+            if (c.Template != null)
+                c.SetSelected();
         }
 
         private static async void SpellChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -65,10 +64,36 @@ namespace Legendary_Rune_Maker.Controls
             else
                 c.SpellImage = await ImageCache.Instance.Get(spell.ImageURL);
         }
-
+        
         static SummonerSpellControl()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(SummonerSpellControl), new FrameworkPropertyMetadata(typeof(SummonerSpellControl)));
+        }
+
+        private void SetSelected()
+        {
+            if (Selected)
+            {
+                this.BorderBrush = (Brush)this.Template.Resources["Selected"];
+                this.BorderThickness = new Thickness(2);
+                this.ImageMargin = 4;
+            }
+            else
+            {
+                this.BorderBrush = (Brush)this.Template.Resources["Normal"];
+                this.BorderThickness = new Thickness(1);
+                this.ImageMargin = 2;
+            }
+        }
+
+        public SummonerSpellControl()
+        {
+            this.Initialized += SummonerSpellControl_Initialized;
+        }
+
+        private void SummonerSpellControl_Initialized(object sender, EventArgs e)
+        {
+            SetSelected();
         }
     }
 }

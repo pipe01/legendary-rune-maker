@@ -5,12 +5,25 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Legendary_Rune_Maker"
         xmlns:controls="clr-namespace:Legendary_Rune_Maker.Controls"
+        xmlns:data="clr-namespace:Legendary_Rune_Maker.Data"
         mc:Ignorable="d"
-        Title="PickSummonerSpellPopup" Height="220" Width="274" WindowStyle="None">
+        Title="PickSummonerSpellPopup" Height="233" Width="319" Style="{StaticResource Borderless}" Initialized="Window_Initialized"
+        Topmost="True">
 
     <Border BorderBrush="#463714" BorderThickness="2" Background="#010A13">
-        <Grid>
-            <controls:SummonerSpellControl x:Name="SpellControl" Width="51" Height="51" />
-        </Grid>
+        <ListView x:Name="List" Margin="14 16 15 16" Background="Transparent" BorderThickness="0"
+                  ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+            <ListView.ItemTemplate>
+                <ItemContainerTemplate>
+                    <controls:SummonerSpellControl Spell="{Binding}" Width="51" Height="51" Margin="5" Selected="False" />
+                </ItemContainerTemplate>
+            </ListView.ItemTemplate>
+            
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel Orientation="Horizontal" IsItemsHost="True" />
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+        </ListView>
     </Border>
 </Window>

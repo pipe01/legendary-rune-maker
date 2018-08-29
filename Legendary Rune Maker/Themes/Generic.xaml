@@ -39,10 +39,13 @@
                             <GradientStop Offset="1" Color="#9F8757" />
                         </LinearGradientBrush>
                     </ControlTemplate.Resources>
-                    
+
                     <Border Background="Black" BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}">
-                        <Image Source="{TemplateBinding SpellImage}" />
+                        <Grid Margin="{TemplateBinding ImageMargin}">
+                            <Image Source="{TemplateBinding SpellImage}" />
+                            <Rectangle Fill="#28000000" />
+                        </Grid>
                     </Border>
                 </ControlTemplate>
             </Setter.Value>

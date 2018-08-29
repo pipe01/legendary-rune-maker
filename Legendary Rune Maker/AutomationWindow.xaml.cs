@@ -45,7 +45,12 @@ namespace Legendary_Rune_Maker
 
             dic[key] = picker.Champion?.ID ?? 0;
         }
-        
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            new PickSummonerSpellPopup().Show();
+        }
+
         private async void Window_Initialized(object sender, EventArgs e)
         {
             Picks = new[] { Pick1, Pick2, Pick3, Pick4, Pick5, Pick6 };
