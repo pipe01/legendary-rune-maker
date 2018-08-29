@@ -10,8 +10,6 @@ namespace Legendary_Rune_Maker.Controls
 {
     public class ChampionPickerControl : Control
     {
-        private static readonly ImageSource NoChamp = Application.Current.FindResource("NoChamp") as ImageSource;
-
         public Champion Champion
         {
             get => (Champion)GetValue(ChampionProperty);
@@ -31,8 +29,15 @@ namespace Legendary_Rune_Maker.Controls
         public ChampionPickerControl()
         {
             this.MouseLeftButtonUp += ChampionPickerControl_MouseLeftButtonUp;
+            this.MouseRightButtonUp += ChampionPickerControl_MouseRightButtonUp;
         }
-        
+
+        private void ChampionPickerControl_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            this.Champion = null;
+            ChampionChanged?.Invoke(this, EventArgs.Empty);
+        }
+
         private void ChampionPickerControl_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             var champ = PickChampionDialog.PickChampion(Ban);
