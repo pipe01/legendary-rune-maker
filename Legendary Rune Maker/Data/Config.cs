@@ -13,7 +13,7 @@ namespace Legendary_Rune_Maker.Data
         public static Config Default { get; } = Load();
 
         private const string FilePath = "config.json";
-        private const int LatestVersion = 6;
+        private const int LatestVersion = 7;
 
         public int ConfigVersion { get; set; } = LatestVersion;
 
@@ -24,24 +24,34 @@ namespace Legendary_Rune_Maker.Data
         public bool LoadOnLock { get; set; }
         public bool AutoPickChampion { get; set; }
         public bool AutoBanChampion { get; set; }
+        public bool AutoPickSumms { get; set; }
         public bool AutoDisablePickBan { get; set; }
-        public Dictionary<Position, int> PickChampions { get; set; } = new Dictionary<Position, int>
+        public Dictionary<Position, int> ChampionsToPick { get; set; } = new Dictionary<Position, int>
         {
             [Position.Fill] = 0,
             [Position.Top] = 0,
             [Position.Jungle] = 0,
             [Position.Mid] = 0,
             [Position.Bottom] = 0,
-            [Position.Support] = 0,
+            [Position.Support] = 0
         };
-        public Dictionary<Position, int> BanChampions { get; set; } = new Dictionary<Position, int>
+        public Dictionary<Position, int> ChampionsToBan { get; set; } = new Dictionary<Position, int>
         {
             [Position.Fill] = 0,
             [Position.Top] = 0,
             [Position.Jungle] = 0,
             [Position.Mid] = 0,
             [Position.Bottom] = 0,
-            [Position.Support] = 0,
+            [Position.Support] = 0
+        };
+        public Dictionary<Position, SummonerSpell[]> SpellsToPick { get; set; } = new Dictionary<Position, SummonerSpell[]>
+        {
+            [Position.Fill] = new SummonerSpell[2],
+            [Position.Top] = new SummonerSpell[2],
+            [Position.Jungle] = new SummonerSpell[2],
+            [Position.Mid] = new SummonerSpell[2],
+            [Position.Bottom] = new SummonerSpell[2],
+            [Position.Support] = new SummonerSpell[2]
         };
 
         public void Save()

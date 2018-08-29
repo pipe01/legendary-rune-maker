@@ -40,7 +40,7 @@ namespace Legendary_Rune_Maker
             bool ban = picker.Name.StartsWith("Ban");
             int n = int.Parse(picker.Name.Substring(picker.Name.Length - 1)) - 1;
 
-            var dic = ban ? Config.Default.BanChampions : Config.Default.PickChampions;
+            var dic = ban ? Config.Default.ChampionsToBan : Config.Default.ChampionsToPick;
             var key = dic.Keys.ElementAt(n);
 
             dic[key] = picker.Champion?.ID ?? 0;
@@ -51,6 +51,11 @@ namespace Legendary_Rune_Maker
             PickSummonerSpellPopup.SelectSpell();
         }
 
+        private void SummonerSpellControl_SpellSelected(object sender, EventArgs e)
+        {
+
+        }
+
         private async void Window_Initialized(object sender, EventArgs e)
         {
             Picks = new[] { Pick1, Pick2, Pick3, Pick4, Pick5, Pick6 };
@@ -59,13 +64,13 @@ namespace Legendary_Rune_Maker
             var champs = await Riot.GetChampions();
 
             int i = 0;
-            foreach (var item in Config.Default.PickChampions)
+            foreach (var item in Config.Default.ChampionsToPick)
             {
                 Picks[i++].Champion = champs.SingleOrDefault(o => o.ID == item.Value);
             }
 
             i = 0;
-            foreach (var item in Config.Default.BanChampions)
+            foreach (var item in Config.Default.ChampionsToBan)
             {
                 Bans[i++].Champion = champs.SingleOrDefault(o => o.ID == item.Value);
             }
