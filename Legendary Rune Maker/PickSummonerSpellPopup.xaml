@@ -7,21 +7,36 @@
         xmlns:controls="clr-namespace:Legendary_Rune_Maker.Controls"
         xmlns:data="clr-namespace:Legendary_Rune_Maker.Data"
         mc:Ignorable="d"
-        Title="PickSummonerSpellPopup" Height="233" Width="319" Style="{StaticResource Borderless}" Initialized="Window_Initialized"
-        Topmost="True">
+        Title="PickSummonerSpellPopup" Height="233" Width="295" Style="{StaticResource Borderless}" Initialized="Window_Initialized"
+        Topmost="True" ResizeMode="NoResize" WindowStartupLocation="Manual" Deactivated="Window_Deactivated" Loaded="Window_Loaded">
 
     <Border BorderBrush="#463714" BorderThickness="2" Background="#010A13">
         <ListView x:Name="List" Margin="14 16 15 16" Background="Transparent" BorderThickness="0"
                   ScrollViewer.HorizontalScrollBarVisibility="Disabled">
             <ListView.ItemTemplate>
                 <ItemContainerTemplate>
-                    <controls:SummonerSpellControl Spell="{Binding}" Width="51" Height="51" Margin="5" Selected="False" />
+                    <controls:SummonerSpellControl Spell="{Binding Spell}" Selected="{Binding Selected}"
+                                                   Width="51" Height="51" Margin="7"
+                                                   MouseLeftButtonUp="SummonerSpellControl_MouseLeftButtonUp" />
                 </ItemContainerTemplate>
             </ListView.ItemTemplate>
-            
+
+            <ListView.ItemContainerStyle>
+                <Style TargetType="{x:Type ListViewItem}">
+                    <Setter Property="Background" Value="Transparent" />
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                <ContentPresenter />
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </ListView.ItemContainerStyle>
+
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <WrapPanel Orientation="Horizontal" IsItemsHost="True" />
+                    <WrapPanel x:Name="PanelHost" Orientation="Horizontal" IsItemsHost="True" />
                 </ItemsPanelTemplate>
             </ListView.ItemsPanel>
         </ListView>
