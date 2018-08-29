@@ -48,8 +48,8 @@ namespace Legendary_Rune_Maker.Game
                 Session = data;
                 
                 SessionUpdated?.Invoke(data);
-
-                var myAction = data.actions.LastOrDefault(o => o[0].actorCellId == data.localPlayerCellId)?.First();
+                
+                var myAction = data.actions.SelectMany(o => o).LastOrDefault(o => o.actorCellId == data.localPlayerCellId);
 
                 if (myAction?.completed == false)
                 {
