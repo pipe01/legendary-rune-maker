@@ -49,8 +49,10 @@ namespace Legendary_Rune_Maker
 
         private async void Window_Initialized(object sender, EventArgs e)
         {
+#if !DEBUG
             if (Config.Default.CheckUpdatesBeforeStartup)
                 await CheckUpdates();
+#endif
 
             if (Config.Default.LoadCacheBeforeStartup)
                 await LoadCache();
@@ -74,7 +76,7 @@ namespace Legendary_Rune_Maker
 
             await Riot.CacheAll(o => Dispatcher.Invoke(() => Progress.Value = o));
         }
-
+        
         private async Task CheckUpdates()
         {
             Status.Text = "Checking for updates...";
