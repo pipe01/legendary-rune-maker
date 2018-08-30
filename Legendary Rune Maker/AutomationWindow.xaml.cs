@@ -57,7 +57,7 @@ namespace Legendary_Rune_Maker
             var picker = (SummonerSpellControl)sender;
             int n = (int)picker.Tag;
 
-            Config.Default.SpellsToPick[Config.Default.SpellsToPick.Keys.ElementAt(n / 2)][n % 2] = picker.Spell.ID;
+            Config.Default.SpellsToPick[Config.Default.SpellsToPick.Keys.ElementAt(n / 2)][n % 2] = picker.Spell?.ID ?? 0;
         }
 
         private async void Window_Initialized(object sender, EventArgs e)

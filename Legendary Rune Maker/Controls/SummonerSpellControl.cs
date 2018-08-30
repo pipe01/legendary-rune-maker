@@ -99,6 +99,16 @@ namespace Legendary_Rune_Maker.Controls
         {
             this.Initialized += SummonerSpellControl_Initialized;
             this.MouseLeftButtonUp += SummonerSpellControl_MouseLeftButtonUp;
+            this.MouseRightButtonUp += SummonerSpellControl_MouseRightButtonUp;
+        }
+
+        private void SummonerSpellControl_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if (Picker)
+            {
+                this.Spell = null;
+                SpellSelected?.Invoke(this, EventArgs.Empty);
+            }
         }
 
         private async void SummonerSpellControl_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
