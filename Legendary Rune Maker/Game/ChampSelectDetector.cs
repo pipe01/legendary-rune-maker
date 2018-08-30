@@ -82,7 +82,7 @@ namespace Legendary_Rune_Maker.Game
         {
             Picked = true;
 
-            Dictionary<Position, int> picks = Config.Default.PickChampions;
+            Dictionary<Position, int> picks = Config.Default.ChampionsToPick;
             var pickable = await ChampSelect.GetPickableChampions();
 
             Func<int, bool> isValidChamp = o => pickable.championIds.Contains(o);
@@ -127,7 +127,7 @@ namespace Legendary_Rune_Maker.Game
 
         private static async Task Ban(LolChampSelectChampSelectAction myAction)
         {
-            Dictionary<Position, int> bans = Config.Default.BanChampions;
+            Dictionary<Position, int> bans = Config.Default.ChampionsToBan;
             var bannable = await ChampSelect.GetBannableChampions();
 
             Func<int, bool> isValidChamp = o => bannable.championIds.Contains(o);

@@ -27,7 +27,9 @@ namespace Legendary_Rune_Maker
             InitializeComponent();
         }
 
-        private ChampionPickerControl[] Picks, Bans;
+        private IList<ChampionPickerControl> Picks = new List<ChampionPickerControl>(),
+                                             Bans = new List<ChampionPickerControl>();
+        private IList<SummonerSpellControl> Spells = new List<SummonerSpellControl>();
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
@@ -37,29 +39,30 @@ namespace Legendary_Rune_Maker
         private void PickBan_Changed(object sender, EventArgs e)
         {
             var picker = (ChampionPickerControl)sender;
-            bool ban = picker.Name.StartsWith("Ban");
-            int n = int.Parse(picker.Name.Substring(picker.Name.Length - 1)) - 1;
+            int n = (int)picker.Tag;
 
-            var dic = ban ? Config.Default.ChampionsToBan : Config.Default.ChampionsToPick;
+            var dic = picker.Ban ? Config.Default.ChampionsToBan : Config.Default.ChampionsToPick;
             var key = dic.Keys.ElementAt(n);
 
             dic[key] = picker.Champion?.ID ?? 0;
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private async void Button_Click(object sender, RoutedEventArgs e)
         {
-            PickSummonerSpellPopup.SelectSpell();
+            await PickSummonerSpellPopup.SelectSpell();
         }
 
-        private void SummonerSpellControl_SpellSelected(object sender, EventArgs e)
+        private void Spell_SpellSelected(object sender, EventArgs e)
         {
+            var picker = (SummonerSpellControl)sender;
+            int n = (int)picker.Tag;
 
+            Config.Default.SpellsToPick[Config.Default.SpellsToPick.Keys.ElementAt(n / 2)][n % 2] = picker.Spell.ID;
         }
 
         private async void Window_Initialized(object sender, EventArgs e)
         {
-            Picks = new[] { Pick1, Pick2, Pick3, Pick4, Pick5, Pick6 };
-            Bans = new[] { Ban1, Ban2, Ban3, Ban4, Ban5, Ban6 };
+            GenerateControls();
 
             var champs = await Riot.GetChampions();
 
@@ -73,6 +76,56 @@ namespace Legendary_Rune_Maker
             foreach (var item in Config.Default.ChampionsToBan)
             {
                 Bans[i++].Champion = champs.SingleOrDefault(o => o.ID == item.Value);
+            }
+
+            var spells = await Riot.GetSummonerSpells();
+
+            i = 0;
+            foreach (var item in Config.Default.SpellsToPick)
+            {
+                Spells[i++].Spell = spells.SingleOrDefault(o => o.ID == item.Value[0]);
+                Spells[i++].Spell = spells.SingleOrDefault(o => o.ID == item.Value[1]);
+            }
+        }
+
+        private void GenerateControls()
+        {
+            GenerateChamps(1, 1, 6, Picks);
+            GenerateChamps(2, 1, 6, Bans);
+            GenerateSpells(3, 1, 6);
+
+            void GenerateChamps(int row, int startCol, int count, IList<ChampionPickerControl> l)
+            {
+                for (int col = 0; col < count; col++)
+                {
+                    var c = new ChampionPickerControl();
+                    c.ChampionChanged += PickBan_Changed;
+                    c.Ban = l == Bans;
+                    c.Tag = col;
+
+                    Table.Children.Add(c);
+                    l.Add(c);
+
+                    Grid.SetRow(c, row);
+                    Grid.SetColumn(c, startCol + col);
+                }
+            }
+
+            void GenerateSpells(int row, int startCol, int count)
+            {
+                for (int col = 0; col < count * 2; col++)
+                {
+                    var c = new SummonerSpellControl();
+                    c.SpellSelected += Spell_SpellSelected;
+                    c.Tag = col;
+                    c.VerticalAlignment = col % 2 == 0 ? VerticalAlignment.Top : VerticalAlignment.Bottom;
+
+                    Table.Children.Add(c);
+                    Spells.Add(c);
+
+                    Grid.SetRow(c, row);
+                    Grid.SetColumn(c, startCol + col / 2);
+                }
             }
         }
     }

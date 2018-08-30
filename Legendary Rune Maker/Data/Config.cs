@@ -44,14 +44,14 @@ namespace Legendary_Rune_Maker.Data
             [Position.Bottom] = 0,
             [Position.Support] = 0
         };
-        public Dictionary<Position, SummonerSpell[]> SpellsToPick { get; set; } = new Dictionary<Position, SummonerSpell[]>
+        public Dictionary<Position, int[]> SpellsToPick { get; set; } = new Dictionary<Position, int[]>
         {
-            [Position.Fill] = new SummonerSpell[2],
-            [Position.Top] = new SummonerSpell[2],
-            [Position.Jungle] = new SummonerSpell[2],
-            [Position.Mid] = new SummonerSpell[2],
-            [Position.Bottom] = new SummonerSpell[2],
-            [Position.Support] = new SummonerSpell[2]
+            [Position.Fill] = new int[2],
+            [Position.Top] = new int[2],
+            [Position.Jungle] = new int[2],
+            [Position.Mid] = new int[2],
+            [Position.Bottom] = new int[2],
+            [Position.Support] = new int[2]
         };
 
         public void Save()

@@ -2,6 +2,8 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -69,7 +71,7 @@ namespace Legendary_Rune_Maker
             this.Close();
         }
 
-        public static SummonerSpell SelectSpell(SummonerSpell selectedSpell = null, int[] allowedSpells = null)
+        public static async Task<SummonerSpell> SelectSpell(SummonerSpell selectedSpell = null, int[] allowedSpells = null)
         {
             var win = new PickSummonerSpellPopup();
 
@@ -79,8 +81,12 @@ namespace Legendary_Rune_Maker
             if (selectedSpell != null)
                 win.SelectedSpell = selectedSpell;
 
+            var ev = new TaskCompletionSource<bool>();
+
+            win.Closed += (_, __) => ev.SetResult(true);
             win.Show();
-            
+
+            await ev.Task;
             return win.SelectedSpell;
         }
     }

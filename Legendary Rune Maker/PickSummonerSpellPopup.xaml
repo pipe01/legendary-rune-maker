@@ -8,7 +8,8 @@
         xmlns:data="clr-namespace:Legendary_Rune_Maker.Data"
         mc:Ignorable="d"
         Title="PickSummonerSpellPopup" Height="233" Width="295" Style="{StaticResource Borderless}" Initialized="Window_Initialized"
-        Topmost="True" ResizeMode="NoResize" WindowStartupLocation="Manual" Deactivated="Window_Deactivated" Loaded="Window_Loaded">
+        Topmost="True" ResizeMode="NoResize" WindowStartupLocation="Manual" Deactivated="Window_Deactivated" Loaded="Window_Loaded"
+        ShowInTaskbar="False">
 
     <Border BorderBrush="#463714" BorderThickness="2" Background="#010A13">
         <ListView x:Name="List" Margin="14 16 15 16" Background="Transparent" BorderThickness="0"

@@ -7,9 +7,31 @@
         xmlns:data="clr-namespace:Legendary_Rune_Maker.Data"
         xmlns:controls="clr-namespace:Legendary_Rune_Maker.Controls"
         mc:Ignorable="d"
-        Title="Automation" Height="310" Width="464" Style="{StaticResource LoLWindow}"
+        Title="Automation" Height="394" Width="464" Style="{StaticResource LoLWindow}"
         Closing="Window_Closing" WindowStartupLocation="CenterScreen" Initialized="Window_Initialized" ResizeMode="NoResize">
 
+    <Window.Resources>
+        <ControlTemplate x:Key="SpellPanel">
+            <StackPanel Grid.Column="1" Grid.Row="3">
+                <controls:SummonerSpellControl Width="50" Height="50" Margin="5 5 5 0" Picker="True" SpellSelected="Spell_SpellSelected" />
+                <controls:SummonerSpellControl Width="50" Height="50" Margin="5 5 5 5" Picker="True" SpellSelected="Spell_SpellSelected" />
+            </StackPanel>
+        </ControlTemplate>
+
+        <Style TargetType="controls:ChampionPickerControl">
+            <Setter Property="Width" Value="50" />
+            <Setter Property="Height" Value="50" />
+            <Setter Property="Margin" Value="5" />
+        </Style>
+
+        <Style TargetType="controls:SummonerSpellControl">
+            <Setter Property="Width" Value="50" />
+            <Setter Property="Height" Value="50" />
+            <Setter Property="Margin" Value="5" />
+            <Setter Property="Picker" Value="True" />
+        </Style>
+    </Window.Resources>
+    
     <Window.Background>
         <ImageBrush Stretch="UniformToFill" ImageSource="{StaticResource BgBlue}" />
     </Window.Background>
@@ -18,7 +40,6 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="37" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="61" />
         </Grid.RowDefinitions>
 
         <Grid Margin="0 0.5 0 0">
@@ -47,11 +68,12 @@
                       IsChecked="{Binding Path=AutoDisablePickBan, Source={x:Static data:Config.Default}}" />
         </Grid>
 
-        <Grid Grid.Row="1" Margin="0 10 0 0" Grid.ColumnSpan="2" Height="180">
+        <Grid x:Name="Table" Grid.Row="1" Margin="0 10 0 0" Grid.ColumnSpan="2">
             <Grid.RowDefinitions>
                 <RowDefinition Height="60" />
                 <RowDefinition Height="60" />
                 <RowDefinition Height="60" />
+                <RowDefinition Height="116" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
@@ -69,28 +91,20 @@
             <Image Grid.Column="4" Grid.Row="0" Source="{StaticResource Mid}" Width="50" Height="50" Margin="5" />
             <Image Grid.Column="5" Grid.Row="0" Source="{StaticResource Support}" Width="50" Height="50" Margin="5" />
             <Image Grid.Column="6" Grid.Row="0" Source="{StaticResource Bottom}" Width="50" Height="50" Margin="5" />
-
-            <controls:ChampionPickerControl x:Name="Pick1" Grid.Column="1" Grid.Row="1" Width="50" Height="50" Margin="5" ChampionChanged="PickBan_Changed" />
-            <controls:ChampionPickerControl x:Name="Pick2" Grid.Column="2" Grid.Row="1" Width="50" Height="50" Margin="5" ChampionChanged="PickBan_Changed" />
-            <controls:ChampionPickerControl x:Name="Pick3" Grid.Column="3" Grid.Row="1" Width="50" Height="50" Margin="5" ChampionChanged="PickBan_Changed" />
-            <controls:ChampionPickerControl x:Name="Pick4" Grid.Column="4" Grid.Row="1" Width="50" Height="50" Margin="5" ChampionChanged="PickBan_Changed" />
-            <controls:ChampionPickerControl x:Name="Pick5" Grid.Column="5" Grid.Row="1" Width="50" Height="50" Margin="5" ChampionChanged="PickBan_Changed" />
-            <controls:ChampionPickerControl x:Name="Pick6" Grid.Column="6" Grid.Row="1" Width="50" Height="50" Margin="5" ChampionChanged="PickBan_Changed" />
-
-            <controls:ChampionPickerControl x:Name="Ban1" Grid.Column="1" Grid.Row="2" Width="50" Height="50" Margin="5" Ban="True" ChampionChanged="PickBan_Changed" />
-            <controls:ChampionPickerControl x:Name="Ban2" Grid.Column="2" Grid.Row="2" Width="50" Height="50" Margin="5" Ban="True" ChampionChanged="PickBan_Changed" />
-            <controls:ChampionPickerControl x:Name="Ban3" Grid.Column="3" Grid.Row="2" Width="50" Height="50" Margin="5" Ban="True" ChampionChanged="PickBan_Changed" />
-            <controls:ChampionPickerControl x:Name="Ban4" Grid.Column="4" Grid.Row="2" Width="50" Height="50" Margin="5" Ban="True" ChampionChanged="PickBan_Changed" />
-            <controls:ChampionPickerControl x:Name="Ban5" Grid.Column="5" Grid.Row="2" Width="50" Height="50" Margin="5" Ban="True" ChampionChanged="PickBan_Changed" />
-            <controls:ChampionPickerControl x:Name="Ban6" Grid.Column="6" Grid.Row="2" Width="50" Height="50" Margin="5" Ban="True" ChampionChanged="PickBan_Changed" />
-
+            
             <CheckBox Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center"
                        IsChecked="{Binding Path=AutoPickChampion, Source={x:Static data:Config.Default}}">Auto-pick</CheckBox>
             <CheckBox Grid.Column="0" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center"
                        IsChecked="{Binding Path=AutoBanChampion, Source={x:Static data:Config.Default}}">Auto-ban</CheckBox>
+            <CheckBox Grid.Column="0" Grid.Row="3" VerticalAlignment="Center"
+                       IsChecked="{Binding Path=AutoPickSumms, Source={x:Static data:Config.Default}}">
+                <TextBlock>
+                    Auto-pick <LineBreak/> summoners
+                </TextBlock>
+            </CheckBox>
         </Grid>
 
-        <Grid Grid.Row="2">
+        <!--<Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
@@ -99,8 +113,10 @@
 
             <CheckBox Grid.Column="0" VerticalAlignment="Center" Margin="0 5 5 5">Auto-pick spells</CheckBox>
 
-            <controls:SummonerSpellControl Grid.Column="1" Width="51" Height="51" Margin="5" SnapsToDevicePixels="True" />
-            <controls:SummonerSpellControl Grid.Column="2" Width="51" Height="51" Margin="5" SnapsToDevicePixels="True" />
-        </Grid>
+            <controls:SummonerSpellControl Grid.Column="1" Width="51" Height="51" Margin="5" Picker="True"
+                                           SpellSelected="SummonerSpellControl_SpellSelected" SnapsToDevicePixels="True" />
+            <controls:SummonerSpellControl Grid.Column="2" Width="51" Height="51" Margin="5" Picker="True"
+                                           SpellSelected="SummonerSpellControl_SpellSelected" SnapsToDevicePixels="True" />
+        </Grid>-->
     </Grid>
 </Window>

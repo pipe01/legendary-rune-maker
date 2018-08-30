@@ -46,6 +46,15 @@ namespace Legendary_Rune_Maker.Controls
         }
         public static readonly DependencyProperty ImageMarginProperty = DependencyProperty.Register("ImageMargin", typeof(double), typeof(SummonerSpellControl));
         
+        public bool Picker
+        {
+            get { return (bool)GetValue(PickerProperty); }
+            set { SetValue(PickerProperty, value); }
+        }
+        public static readonly DependencyProperty PickerProperty = DependencyProperty.Register("Picker", typeof(bool), typeof(SummonerSpellControl));
+        
+        public event EventHandler SpellSelected;
+
         private static void SelectedChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var c = d as SummonerSpellControl;
@@ -89,6 +98,16 @@ namespace Legendary_Rune_Maker.Controls
         public SummonerSpellControl()
         {
             this.Initialized += SummonerSpellControl_Initialized;
+            this.MouseLeftButtonUp += SummonerSpellControl_MouseLeftButtonUp;
+        }
+
+        private async void SummonerSpellControl_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if (Picker)
+            {
+                this.Spell = await PickSummonerSpellPopup.SelectSpell(this.Spell);
+                SpellSelected?.Invoke(this, EventArgs.Empty);
+            }
         }
 
         private void SummonerSpellControl_Initialized(object sender, EventArgs e)
