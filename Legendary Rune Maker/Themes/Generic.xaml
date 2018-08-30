@@ -40,8 +40,12 @@
                         </LinearGradientBrush>
                     </ControlTemplate.Resources>
 
-                    <Border Background="#010A13" BorderBrush="{TemplateBinding BorderBrush}"
+                    <Border BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}">
+                        <Border.Background>
+                            <ImageBrush ImageSource="Images/no_spell.png" />
+                        </Border.Background>
+                        
                         <Grid Margin="{TemplateBinding ImageMargin}">
                             <Image Source="{TemplateBinding SpellImage}" />
                             <Rectangle Fill="#28000000" />

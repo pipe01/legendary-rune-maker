@@ -67,6 +67,9 @@ namespace Legendary_Rune_Maker
 
         private void SummonerSpellControl_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
+            if (List.SelectedItems.Count == 0)
+                return;
+
             this.SelectedSpell = ((IHateWpf)List.SelectedItem).Spell;
             this.Close();
         }

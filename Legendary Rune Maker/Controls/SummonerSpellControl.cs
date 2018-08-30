@@ -69,9 +69,15 @@ namespace Legendary_Rune_Maker.Controls
             var c = d as SummonerSpellControl;
 
             if (spell == null)
+            {
                 c.SpellImage = null;
+                c.BorderThickness = new Thickness(0);
+            }
             else
+            {
                 c.SpellImage = await ImageCache.Instance.Get(spell.ImageURL);
+                c.BorderThickness = c.Selected ? new Thickness(2) : new Thickness(1);
+            }
         }
         
         static SummonerSpellControl()
@@ -84,13 +90,13 @@ namespace Legendary_Rune_Maker.Controls
             if (Selected)
             {
                 this.BorderBrush = (Brush)this.Template.Resources["Selected"];
-                this.BorderThickness = new Thickness(2);
+                this.BorderThickness = Spell == null ? new Thickness(0) : new Thickness(2);
                 this.ImageMargin = 4;
             }
             else
             {
                 this.BorderBrush = (Brush)this.Template.Resources["Normal"];
-                this.BorderThickness = new Thickness(1);
+                this.BorderThickness = Spell == null ? new Thickness(0) : new Thickness(1);
                 this.ImageMargin = 2;
             }
         }
