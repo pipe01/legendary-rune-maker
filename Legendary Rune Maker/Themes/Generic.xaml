@@ -40,7 +40,7 @@
                         </LinearGradientBrush>
                     </ControlTemplate.Resources>
 
-                    <Border Background="Black" BorderBrush="{TemplateBinding BorderBrush}"
+                    <Border Background="#010A13" BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}">
                         <Grid Margin="{TemplateBinding ImageMargin}">
                             <Image Source="{TemplateBinding SpellImage}" />
