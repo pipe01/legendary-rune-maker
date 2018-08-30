@@ -55,8 +55,16 @@ namespace Legendary_Rune_Maker.Game
                 {
                     if (myAction.type == "pick")
                     {
-                        if (Config.Default.AutoPickChampion && !Picked)
-                            await Pick(myAction);
+                        if (!Picked)
+                        {
+                            if (Config.Default.AutoPickSumms)
+                                await PickSumms();
+
+                            if (Config.Default.AutoPickChampion)
+                                await Pick(myAction);
+
+                            Picked = true;
+                        }
                     }
                     else if (myAction.type == "ban")
                     {
@@ -78,10 +86,35 @@ namespace Legendary_Rune_Maker.Game
             }
         }
 
+        private static async Task PickSumms()
+        {
+            var pos = CurrentSelection.assignedPosition.ToPosition();
+
+            var summs = Config.Default.SpellsToPick[pos];
+
+            if (summs.All(o => o == 0))
+                summs = Config.Default.SpellsToPick[Position.Fill];
+
+            if (summs.All(o => o == 0))
+                return;
+
+            try
+            {
+                await ChampSelect.PatchMySelectionAsync(new LolChampSelectChampSelectMySelection
+                {
+                    selectedSkinId = CurrentSelection.selectedSkinId,
+                    spell1Id = summs[0],
+                    spell2Id = summs[1],
+                    wardSkinId = CurrentSelection.wardSkinId
+                });
+            }
+            catch (APIErrorException)
+            {
+            }
+        }
+
         private static async Task Pick(LolChampSelectChampSelectAction myAction)
         {
-            Picked = true;
-
             Dictionary<Position, int> picks = Config.Default.ChampionsToPick;
             var pickable = await ChampSelect.GetPickableChampions();
 
