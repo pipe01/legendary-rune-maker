@@ -67,10 +67,6 @@
                       ToolTip="If a rune page isn't found for a champion when locking in, it will be downloaded from the first option in the providers list."
                       IsEnabled="{Binding Path=UploadOnLock, Source={x:Static data:Config.Default}}"
                       IsChecked="{Binding Path=LoadOnLock, Source={x:Static data:Config.Default}}" />
-
-            <CheckBox Grid.Row="0" Grid.Column="1" Content="Automatically disable auto-pick and ban"
-                      ToolTip="Disable pick and ban (if enabled) after picking."
-                      IsChecked="{Binding Path=AutoDisablePickBan, Source={x:Static data:Config.Default}}" />
         </Grid>
 
         <Grid x:Name="Table" Grid.Row="1" Margin="0 10 0 0" Grid.ColumnSpan="2">
