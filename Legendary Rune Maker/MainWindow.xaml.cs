@@ -469,8 +469,10 @@ namespace Legendary_Rune_Maker
             Environment.Exit(0);
         }
 
-        private void Taskbar_Exit(object sender, RoutedEventArgs e)
+        private async void Taskbar_Exit(object sender, RoutedEventArgs e)
         {
+            await Task.Delay(100);
+
             this.Close();
         }
     }
