@@ -9,7 +9,7 @@
         xmlns:tb="clr-namespace:Hardcodet.Wpf.TaskbarNotification;assembly=Hardcodet.Wpf.TaskbarNotification"
         mc:Ignorable="d" ResizeMode="NoResize"
         Title="pipe01's Legendary Rune Maker" Height="310" Width="810" Initialized="Window_Initialized" WindowStartupLocation="CenterScreen"
-        DataContext="{Binding RelativeSource={RelativeSource Self}}" MouseDown="Window_MouseDown" Style="{StaticResource Borderless}"
+        DataContext="{Binding RelativeSource={RelativeSource Self}}" MouseDown="Window_MouseDown" Style="{StaticResource LoLWindow}"
         Icon="{StaticResource Icon}" StateChanged="Window_StateChanged" PreviewKeyDown="Window_PreviewKeyDown" Closed="Window_Closed">
 
     <Window.Background>
@@ -34,8 +34,6 @@
                 </ContextMenu>
             </tb:TaskbarIcon.ContextMenu>
         </tb:TaskbarIcon>
-
-        <Line X1="0" Y1="0" X2="100000" Y2="0" Stroke="#785A28" StrokeThickness="4" SnapsToDevicePixels="True" />
 
         <Grid Margin="5">
             <Grid.ColumnDefinitions>
@@ -67,70 +65,12 @@
 
             <Grid Grid.Column="1">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="20" />
                     <RowDefinition />
-                    <RowDefinition Height="84" />
+                    <RowDefinition Height="64" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
-                <Grid Grid.Row="0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition />
-                        <ColumnDefinition Width="20" />
-                        <ColumnDefinition Width="20" />
-                    </Grid.ColumnDefinitions>
-
-                    <Grid x:Name="Close" Grid.Column="2" Width="20" Height="20" Cursor="Hand" MouseUp="Close_MouseUp"
-                          Background="Transparent">
-                        <Image Width="10" Height="10">
-                            <Image.Source>
-                                <DrawingImage>
-                                    <DrawingImage.Drawing>
-                                        <DrawingGroup>
-                                            <GeometryDrawing>
-                                                <GeometryDrawing.Pen>
-                                                    <Pen Brush="#A09B8C" Thickness="10" />
-                                                </GeometryDrawing.Pen>
-                                                <GeometryDrawing.Geometry>
-                                                    <GeometryGroup>
-                                                        <LineGeometry StartPoint="0,0" EndPoint="1,1" />
-                                                        <LineGeometry StartPoint="1,0" EndPoint="0,1" />
-                                                    </GeometryGroup>
-                                                </GeometryDrawing.Geometry>
-                                            </GeometryDrawing>
-                                        </DrawingGroup>
-                                    </DrawingImage.Drawing>
-                                </DrawingImage>
-                            </Image.Source>
-                        </Image>
-                    </Grid>
-
-                    <Grid x:Name="Minimize" Grid.Column="1" Width="20" Height="20" Cursor="Hand" MouseUp="Minimize_MouseUp"
-                          Background="Transparent">
-                        <Image Width="10" Height="10" VerticalAlignment="Bottom" Margin="5">
-                            <Image.Source>
-                                <DrawingImage>
-                                    <DrawingImage.Drawing>
-                                        <DrawingGroup>
-                                            <GeometryDrawing>
-                                                <GeometryDrawing.Pen>
-                                                    <Pen x:Name="ClosePen" Brush="#A09B8C" Thickness="3" />
-                                                </GeometryDrawing.Pen>
-                                                <GeometryDrawing.Geometry>
-                                                    <GeometryGroup>
-                                                        <LineGeometry StartPoint="0,0" EndPoint="0,1" />
-                                                    </GeometryGroup>
-                                                </GeometryDrawing.Geometry>
-                                            </GeometryDrawing>
-                                        </DrawingGroup>
-                                    </DrawingImage.Drawing>
-                                </DrawingImage>
-                            </Image.Source>
-                        </Image>
-                    </Grid>
-                </Grid>
-
-                <Grid Grid.Row="1">
+                <Grid Margin="0 20 0 0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />
                         <ColumnDefinition />
@@ -141,9 +81,9 @@
                     <controls:FadeImage x:Name="PositionImage" Grid.Column="1" />
                 </Grid>
 
-                <Grid Grid.Row="2">
+                <Grid Grid.Row="1">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="42" />
+                        <RowDefinition Height="24" />
                         <RowDefinition Height="42" />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
@@ -170,7 +110,7 @@
                     </local:LoLButton>
                 </Grid>
 
-                <Grid Grid.Row="4">
+                <Grid Grid.Row="3">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />
                         <ColumnDefinition />
