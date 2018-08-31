@@ -37,6 +37,7 @@
         <BitmapImage x:Key="NoChamp" UriSource="Images/-1.png" />
         <BitmapImage x:Key="NoSpell" UriSource="Images/no_spell.png" />
 
+        <!--Thanks to Google @ https://www.flaticon.com/packs/material-design-->
         <DrawingImage x:Key="Upload">
             <DrawingImage.Drawing>
                 <DrawingGroup>
