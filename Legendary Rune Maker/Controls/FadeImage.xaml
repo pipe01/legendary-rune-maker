@@ -17,7 +17,7 @@
     </UserControl.Resources>
     
     <Grid>
-        <Image x:Name="ImageA" Panel.ZIndex="1" />
-        <Image x:Name="ImageB" Panel.ZIndex="0" Opacity="0" />
+        <Image x:Name="ImageA" Panel.ZIndex="1" Stretch="{Binding Stretch}" />
+        <Image x:Name="ImageB" Panel.ZIndex="0" Stretch="{Binding Stretch}" Opacity="0" />
     </Grid>
 </UserControl>

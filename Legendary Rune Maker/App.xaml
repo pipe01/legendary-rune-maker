@@ -310,7 +310,7 @@
                     <ControlTemplate TargetType="{x:Type CheckBox}">
                         <StackPanel Orientation="Horizontal">
                             <controls:FadeImage x:Name="checkboxImage" Source="{StaticResource Checkbox}" Width="12" Margin="1 0 3 0"
-                                   SnapsToDevicePixels="True" RenderOptions.BitmapScalingMode="NearestNeighbor" />
+                                   SnapsToDevicePixels="True" RenderOptions.BitmapScalingMode="NearestNeighbor" Stretch="None"/>
                             <ContentPresenter/>
                         </StackPanel>
                         <ControlTemplate.Triggers>

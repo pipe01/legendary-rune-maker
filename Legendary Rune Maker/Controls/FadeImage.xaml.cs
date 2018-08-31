@@ -31,10 +31,17 @@ namespace Legendary_Rune_Maker.Controls
         public Stretch Stretch
         {
             get { return (Stretch)GetValue(StretchProperty); }
-            set { SetValue(StretchProperty, value); ImageA.Stretch = value; ImageB.Stretch = value; }
+            set { SetValue(StretchProperty, value); }
         }
-        public static readonly DependencyProperty StretchProperty = DependencyProperty.Register("Stretch", typeof(Stretch), typeof(FadeImage));
-        
+        public static readonly DependencyProperty StretchProperty = DependencyProperty.Register("Stretch", typeof(Stretch), typeof(FadeImage), new PropertyMetadata(StretchChanged));
+
+        private static void StretchChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var c = d as FadeImage;
+
+            c.ImageA.Stretch = c.ImageB.Stretch = (Stretch)e.NewValue;
+        }
+
         public double SpeedRatio
         {
             get { return (double)GetValue(SpeedRatioProperty); }
