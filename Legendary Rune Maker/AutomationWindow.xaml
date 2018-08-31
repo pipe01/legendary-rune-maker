@@ -30,6 +30,11 @@
             <Setter Property="Margin" Value="5" />
             <Setter Property="Picker" Value="True" />
         </Style>
+
+        <Style x:Key="AutoDisable" TargetType="CheckBox" BasedOn="{StaticResource {x:Type CheckBox}}">
+            <Setter Property="Content" Value="Auto-disable" />
+            <Setter Property="ToolTip" Value="Automatically disable the action after performing it." />
+        </Style>
     </Window.Resources>
     
     <Window.Background>
@@ -94,12 +99,14 @@
 
             <StackPanel Grid.Column="0" Grid.Row="1" VerticalAlignment="Center">
                 <CheckBox IsChecked="{Binding Path=AutoPickChampion, Source={x:Static data:Config.Default}}">Auto-pick</CheckBox>
-                <CheckBox IsChecked="{Binding Path=DisablePickChampion, Source={x:Static data:Config.Default}}">Auto-disable</CheckBox>
+                <CheckBox IsChecked="{Binding Path=DisablePickChampion, Source={x:Static data:Config.Default}}"
+                          Style="{StaticResource AutoDisable}" />
             </StackPanel>
 
             <StackPanel Grid.Column="0" Grid.Row="2" VerticalAlignment="Center">
                 <CheckBox IsChecked="{Binding Path=AutoBanChampion, Source={x:Static data:Config.Default}}">Auto-pick</CheckBox>
-                <CheckBox IsChecked="{Binding Path=DisableBanChampion, Source={x:Static data:Config.Default}}">Auto-disable</CheckBox>
+                <CheckBox IsChecked="{Binding Path=DisableBanChampion, Source={x:Static data:Config.Default}}"
+                          Style="{StaticResource AutoDisable}" />
             </StackPanel>
 
             <StackPanel Grid.Column="0" Grid.Row="3" VerticalAlignment="Center">
@@ -107,7 +114,7 @@
                     <TextBlock>Auto-pick <LineBreak/> summoners</TextBlock>
                 </CheckBox>
                 <CheckBox IsChecked="{Binding Path=DisablePickSumms, Source={x:Static data:Config.Default}}"
-                          Margin="0 0.1 0 0">Auto-disable</CheckBox>
+                          Margin="0 0.1 0 0" Style="{StaticResource AutoDisable}" />
             </StackPanel>
         </Grid>
     </Grid>
