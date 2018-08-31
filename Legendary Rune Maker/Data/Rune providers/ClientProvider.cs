@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace Legendary_Rune_Maker.Data.Rune_providers
 {
-    internal class ClientProvider : IRuneProvider
+    internal class ClientProvider : RuneProvider
     {
-        public string Name => "Client";
+        public override string Name => "Client";
 
-        public Task<IEnumerable<Position>> GetPossibleRoles(int championId)
+        protected override Task<IEnumerable<Position>> GetPossibleRolesInner(int championId)
         {
             if (GameState.CanUpload)
                 return Task.FromResult((IEnumerable<Position>)new[] { Position.Fill });
@@ -20,6 +20,6 @@ namespace Legendary_Rune_Maker.Data.Rune_providers
             return Task.FromResult((IEnumerable<Position>)new Position[0]);
         }
 
-        public Task<RunePage> GetRunePage(int championId, Position position) => RunePage.GetActivePageFromClient();
+        protected override Task<RunePage> GetRunePageInner(int championId, Position position) => RunePage.GetActivePageFromClient();
     }
 }

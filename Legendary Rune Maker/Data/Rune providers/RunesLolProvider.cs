@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Legendary_Rune_Maker.Data.Rune_providers
 {
-    internal class RunesLolProvider : IRuneProvider
+    internal class RunesLolProvider : RuneProvider
     {
         private static readonly IDictionary<Position, string> PositionToName = new Dictionary<Position, string>
         {
@@ -21,7 +21,7 @@ namespace Legendary_Rune_Maker.Data.Rune_providers
             [Position.Fill] = ""
         };
 
-        public string Name => "Runes.lol";
+        public override string Name => "Runes.lol";
 
         private static async Task<string> GetChampionKey(int championId)
             => (await Riot.GetChampions()).Single(o => o.ID == championId).Key;
@@ -29,7 +29,7 @@ namespace Legendary_Rune_Maker.Data.Rune_providers
         private static async Task<string> GetRoleUrl(int championId, Position position)
             => $"https://runes.lol/ranked/gold/champion/win/{await GetChampionKey(championId)}/{PositionToName[position]}";
 
-        public async Task<IEnumerable<Position>> GetPossibleRoles(int championId)
+        protected override async Task<IEnumerable<Position>> GetPossibleRolesInner(int championId)
         {
             var doc = new HtmlDocument();
             doc.LoadHtml(await new WebClient().DownloadStringTaskAsync(await GetRoleUrl(championId, Position.Fill)));
@@ -55,7 +55,7 @@ namespace Legendary_Rune_Maker.Data.Rune_providers
             return ret;
         }
 
-        public async Task<RunePage> GetRunePage(int championId, Position position)
+        protected override async Task<RunePage> GetRunePageInner(int championId, Position position)
         {
             var doc = new HtmlDocument();
             doc.LoadHtml(await new WebClient().DownloadStringTaskAsync(await GetRoleUrl(championId, position)));

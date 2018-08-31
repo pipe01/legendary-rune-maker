@@ -44,7 +44,7 @@ namespace Legendary_Rune_Maker
 
         private RunePage Page => new RunePage(SelectedRunes.Select(o => o.ID).ToArray(), Tree.PrimaryTree.ID, Tree.SecondaryTree.ID, SelectedChampion, SelectedPosition);
 
-        private readonly IRuneProvider[] RuneProviders = new IRuneProvider[]
+        private readonly RuneProvider[] RuneProviders = new RuneProvider[]
         {
             new RunesLolProvider(),
             new ClientProvider()
@@ -361,7 +361,7 @@ namespace Legendary_Rune_Maker
             Load.IsEnabled = false;
 
             var menu = new ContextMenu();
-            var availProviders = new List<(IRuneProvider Provider, Position Position)>();
+            var availProviders = new List<(RuneProvider Provider, Position Position)>();
 
             foreach (var provider in RuneProviders)
             {

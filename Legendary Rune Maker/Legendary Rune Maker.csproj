@@ -101,7 +101,7 @@
     <Compile Include="Controls\SummonerSpellControl.cs" />
     <Compile Include="Data\Config.cs" />
     <Compile Include="Data\Rune providers\ClientProvider.cs" />
-    <Compile Include="Data\Rune providers\IRuneProvider.cs" />
+    <Compile Include="Data\Rune providers\RuneProvider.cs" />
     <Compile Include="Data\Rune providers\RunesLolProvider.cs" />
     <Compile Include="Data\SummonerSpell.cs" />
     <Compile Include="DebugProxyWindow.xaml.cs">
