@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Legendary_Rune_Maker.Utils
 {
@@ -26,6 +27,18 @@ namespace Legendary_Rune_Maker.Utils
                 default:
                     return Position.Fill;
             }
+        }
+
+        public static bool? ShowDialog(this Window window, Window owner)
+        {
+            window.Owner = owner;
+            return window.ShowDialog();
+        }
+
+        public static void Show(this Window window, Window owner)
+        {
+            window.Owner = owner;
+            window.Show();
         }
     }
 }

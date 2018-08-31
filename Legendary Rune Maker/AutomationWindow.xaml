@@ -8,7 +8,7 @@
         xmlns:controls="clr-namespace:Legendary_Rune_Maker.Controls"
         mc:Ignorable="d"
         Title="Automation" Height="365" Width="473" Style="{StaticResource LoLWindow}"
-        Closing="Window_Closing" WindowStartupLocation="CenterScreen" Initialized="Window_Initialized" ResizeMode="NoResize">
+        Closing="Window_Closing" WindowStartupLocation="CenterOwner" Initialized="Window_Initialized" ResizeMode="NoResize">
 
     <Window.Resources>
         <ControlTemplate x:Key="SpellPanel">

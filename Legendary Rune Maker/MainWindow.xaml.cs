@@ -449,7 +449,7 @@ namespace Legendary_Rune_Maker
 
         private void Automation_Click(object sender, EventArgs e)
         {
-            new AutomationWindow().Show();
+            new AutomationWindow().Show(this);
         }
 
         private void Window_Closed(object sender, EventArgs e)
