@@ -63,7 +63,7 @@
             <CheckBox Grid.Row="1" Content="Upload on champion lock" ToolTip="Automatically uploads the appropiate rune page once you lock in a champion."
                       IsChecked="{Binding Path=UploadOnLock, Source={x:Static data:Config.Default}}" />
 
-            <CheckBox Grid.Row="1" Grid.Column="1" Content="Load page from first provider on lock"
+            <CheckBox Grid.Row="1" Grid.Column="1" Content="Load page from first provider"
                       ToolTip="If a rune page isn't found for a champion when locking in, it will be downloaded from the first option in the providers list."
                       IsEnabled="{Binding Path=UploadOnLock, Source={x:Static data:Config.Default}}"
                       IsChecked="{Binding Path=LoadOnLock, Source={x:Static data:Config.Default}}" />
@@ -86,12 +86,12 @@
                 <ColumnDefinition Width="60" />
             </Grid.ColumnDefinitions>
 
-            <Image Grid.Column="1" Grid.Row="0" Source="{StaticResource Fill}" Width="50" Height="50" Margin="5" />
-            <Image Grid.Column="2" Grid.Row="0" Source="{StaticResource Top}" Width="50" Height="50" Margin="5" />
-            <Image Grid.Column="3" Grid.Row="0" Source="{StaticResource Jungle}" Width="50" Height="50" Margin="5" />
-            <Image Grid.Column="4" Grid.Row="0" Source="{StaticResource Mid}" Width="50" Height="50" Margin="5" />
-            <Image Grid.Column="5" Grid.Row="0" Source="{StaticResource Support}" Width="50" Height="50" Margin="5" />
-            <Image Grid.Column="6" Grid.Row="0" Source="{StaticResource Bottom}" Width="50" Height="50" Margin="5" />
+            <Image Grid.Column="1" Grid.Row="0" Source="{StaticResource Fill}" Width="50" Height="50" Margin="5" ToolTip="Any" />
+            <Image Grid.Column="2" Grid.Row="0" Source="{StaticResource Top}" Width="50" Height="50" Margin="5" ToolTip="Top" />
+            <Image Grid.Column="3" Grid.Row="0" Source="{StaticResource Jungle}" Width="50" Height="50" Margin="5" ToolTip="Jungle" />
+            <Image Grid.Column="4" Grid.Row="0" Source="{StaticResource Mid}" Width="50" Height="50" Margin="5" ToolTip="Mid" />
+            <Image Grid.Column="5" Grid.Row="0" Source="{StaticResource Support}" Width="50" Height="50" Margin="5" ToolTip="Support" />
+            <Image Grid.Column="6" Grid.Row="0" Source="{StaticResource Bottom}" Width="50" Height="50" Margin="5" ToolTip="Bottom" />
 
             <StackPanel Grid.Column="0" Grid.Row="1" VerticalAlignment="Center">
                 <CheckBox IsChecked="{Binding Path=AutoPickChampion, Source={x:Static data:Config.Default}}">Auto-pick</CheckBox>
