@@ -12,12 +12,12 @@ namespace Legendary_Rune_Maker.Data.Rune_providers
     {
         public override string Name => "Client";
 
-        protected override Task<IEnumerable<Position>> GetPossibleRolesInner(int championId)
+        protected override Task<Position[]> GetPossibleRolesInner(int championId)
         {
             if (GameState.CanUpload)
-                return Task.FromResult((IEnumerable<Position>)new[] { Position.Fill });
+                return Task.FromResult(new[] { Position.Fill });
             
-            return Task.FromResult((IEnumerable<Position>)new Position[0]);
+            return Task.FromResult(new Position[0]);
         }
 
         protected override Task<RunePage> GetRunePageInner(int championId, Position position) => RunePage.GetActivePageFromClient();

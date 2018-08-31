@@ -29,7 +29,7 @@ namespace Legendary_Rune_Maker.Data.Rune_providers
         private static async Task<string> GetRoleUrl(int championId, Position position)
             => $"https://runes.lol/ranked/gold/champion/win/{await GetChampionKey(championId)}/{PositionToName[position]}";
 
-        protected override async Task<IEnumerable<Position>> GetPossibleRolesInner(int championId)
+        protected override async Task<Position[]> GetPossibleRolesInner(int championId)
         {
             var doc = new HtmlDocument();
             doc.LoadHtml(await new WebClient().DownloadStringTaskAsync(await GetRoleUrl(championId, Position.Fill)));
@@ -52,7 +52,7 @@ namespace Legendary_Rune_Maker.Data.Rune_providers
                 }
             }
 
-            return ret;
+            return ret.ToArray();
         }
 
         protected override async Task<RunePage> GetRunePageInner(int championId, Position position)
