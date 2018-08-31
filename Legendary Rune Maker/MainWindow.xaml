@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:Legendary_Rune_Maker"
         xmlns:controls="clr-namespace:Legendary_Rune_Maker.Controls"
         xmlns:data="clr-namespace:Legendary_Rune_Maker.Data"
+        xmlns:loc="clr-namespace:Legendary_Rune_Maker.Locale"
         xmlns:tb="clr-namespace:Hardcodet.Wpf.TaskbarNotification;assembly=Hardcodet.Wpf.TaskbarNotification"
         mc:Ignorable="d" ResizeMode="NoResize"
         Title="pipe01's Legendary Rune Maker" Height="310" Width="810" Initialized="Window_Initialized" WindowStartupLocation="CenterScreen"
