@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -75,6 +76,12 @@ namespace Legendary_Rune_Maker
             NotificationManager = new NotificationManager(Dispatcher);
 
             InitializeComponent();
+
+            Version.Text = "Version " + Assembly.GetExecutingAssembly().GetName().Version.ToString(3);
+
+#if DEBUG
+            Version.Text += "-debug";
+#endif
 
             this.Activate();
         }

@@ -70,6 +70,10 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
+                <TextBlock x:Name="Version" Text="Version 1.0.0" Style="{StaticResource LoLText}" VerticalAlignment="Top"
+                           HorizontalAlignment="Stretch" TextAlignment="Right" Margin="0 0 40 0" Foreground="{StaticResource Pressed}"
+                           IsHitTestVisible="False"/>
+
                 <Grid Margin="0 20 0 0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />
