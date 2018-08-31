@@ -7,7 +7,7 @@
         xmlns:data="clr-namespace:Legendary_Rune_Maker.Data"
         xmlns:controls="clr-namespace:Legendary_Rune_Maker.Controls"
         mc:Ignorable="d"
-        Title="Automation" Height="365" Width="464" Style="{StaticResource LoLWindow}"
+        Title="Automation" Height="365" Width="473" Style="{StaticResource LoLWindow}"
         Closing="Window_Closing" WindowStartupLocation="CenterScreen" Initialized="Window_Initialized" ResizeMode="NoResize">
 
     <Window.Resources>
@@ -92,16 +92,22 @@
             <Image Grid.Column="5" Grid.Row="0" Source="{StaticResource Support}" Width="50" Height="50" Margin="5" />
             <Image Grid.Column="6" Grid.Row="0" Source="{StaticResource Bottom}" Width="50" Height="50" Margin="5" />
 
-            <CheckBox Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center"
-                       IsChecked="{Binding Path=AutoPickChampion, Source={x:Static data:Config.Default}}">Auto-pick</CheckBox>
-            <CheckBox Grid.Column="0" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center"
-                       IsChecked="{Binding Path=AutoBanChampion, Source={x:Static data:Config.Default}}">Auto-ban</CheckBox>
-            <CheckBox Grid.Column="0" Grid.Row="3" VerticalAlignment="Center"
-                       IsChecked="{Binding Path=AutoPickSumms, Source={x:Static data:Config.Default}}">
-                <TextBlock>
-                    Auto-pick <LineBreak/> summoners
-                </TextBlock>
-            </CheckBox>
+            <StackPanel Grid.Column="0" Grid.Row="1" VerticalAlignment="Center">
+                <CheckBox IsChecked="{Binding Path=AutoPickChampion, Source={x:Static data:Config.Default}}">Auto-pick</CheckBox>
+                <CheckBox IsChecked="{Binding Path=DisablePickChampion, Source={x:Static data:Config.Default}}">Auto-disable</CheckBox>
+            </StackPanel>
+
+            <StackPanel Grid.Column="0" Grid.Row="2" VerticalAlignment="Center">
+                <CheckBox IsChecked="{Binding Path=AutoBanChampion, Source={x:Static data:Config.Default}}">Auto-pick</CheckBox>
+                <CheckBox IsChecked="{Binding Path=DisableBanChampion, Source={x:Static data:Config.Default}}">Auto-disable</CheckBox>
+            </StackPanel>
+
+            <StackPanel Grid.Column="0" Grid.Row="3" VerticalAlignment="Center">
+                <CheckBox IsChecked="{Binding Path=AutoPickSumms, Source={x:Static data:Config.Default}}">
+                    <TextBlock>Auto-pick <LineBreak/> summoners</TextBlock>
+                </CheckBox>
+                <CheckBox IsChecked="{Binding Path=DisablePickSumms, Source={x:Static data:Config.Default}}">Auto-disable</CheckBox>
+            </StackPanel>
         </Grid>
     </Grid>
 </Window>

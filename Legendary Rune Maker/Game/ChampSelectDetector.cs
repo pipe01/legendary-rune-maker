@@ -111,6 +111,12 @@ namespace Legendary_Rune_Maker.Game
             catch (APIErrorException)
             {
             }
+
+            if (Config.Default.DisablePickSumms)
+            {
+                Config.Default.AutoPickSumms = false;
+                Config.Default.Save();
+            }
         }
 
         private static async Task Pick(LolChampSelectChampSelectAction myAction)
@@ -151,7 +157,7 @@ namespace Legendary_Rune_Maker.Game
             {
             }
 
-            if (Config.Default.AutoDisablePickBan)
+            if (Config.Default.DisablePickChampion)
             {
                 Config.Default.AutoPickChampion = false;
                 Config.Default.Save();
@@ -196,7 +202,7 @@ namespace Legendary_Rune_Maker.Game
             {
             }
 
-            if (Config.Default.AutoDisablePickBan)
+            if (Config.Default.DisableBanChampion)
             {
                 Config.Default.AutoBanChampion = false;
                 Config.Default.Save();
