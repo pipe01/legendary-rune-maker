@@ -62,17 +62,17 @@ namespace Legendary_Rune_Maker
 
         private async Task LoadCache()
         {
-            if (ImageCache.Instance.LocalCache)
-            {
-                Config.Default.LoadCacheBeforeStartup = false;
-                Config.Default.Save();
-            }
-
             Progress.IsIndeterminate = false;
             Progress.Value = 0;
             Status.Text = "Loading...";
             Cancel.Visibility = Visibility.Hidden;
-            Hint.Visibility = ImageCache.Instance.LocalCache ? Visibility.Hidden : Visibility.Visible;
+            Hint.Visibility = Visibility.Visible;
+
+            //If the cache is already downloaded, hide the window
+            if (ImageCache.Instance.LocalCache)
+            {
+                this.Visibility = Visibility.Hidden;
+            }
 
             await Riot.CacheAll(o => Dispatcher.Invoke(() => Progress.Value = o));
         }
