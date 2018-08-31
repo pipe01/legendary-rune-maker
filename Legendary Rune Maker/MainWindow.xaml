@@ -27,7 +27,13 @@
 
     <Grid>
         <tb:TaskbarIcon x:Name="Taskbar" IconSource="{StaticResource Icon}" ToolTipText="Legendary Rune Maker"
-                        TrayLeftMouseDown="TaskbarIcon_TrayLeftMouseDown" />
+                        TrayLeftMouseDown="TaskbarIcon_TrayLeftMouseDown">
+            <tb:TaskbarIcon.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Exit" Click="Taskbar_Exit" />
+                </ContextMenu>
+            </tb:TaskbarIcon.ContextMenu>
+        </tb:TaskbarIcon>
 
         <Line X1="0" Y1="0" X2="100000" Y2="0" Stroke="#785A28" StrokeThickness="4" SnapsToDevicePixels="True" />
 

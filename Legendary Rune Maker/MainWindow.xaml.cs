@@ -457,5 +457,10 @@ namespace Legendary_Rune_Maker
             Taskbar.Dispose();
             Environment.Exit(0);
         }
+
+        private void Taskbar_Exit(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }
