@@ -17,7 +17,7 @@
             <VisualBrush.Visual>
                 <Viewbox>
                     <Grid>
-                        <Image Source="Images/background.png" />
+                        <Image Source="{StaticResource BgVoid}" />
                         <Rectangle Fill="#B0000000" />
                     </Grid>
                 </Viewbox>
