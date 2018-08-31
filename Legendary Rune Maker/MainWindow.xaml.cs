@@ -52,8 +52,19 @@ namespace Legendary_Rune_Maker
 
         public static INotificationManager NotificationManager;
 
+        private int _SelectedChampion;
+        private int SelectedChampion
+        {
+            get => _SelectedChampion;
+            set
+            {
+                _SelectedChampion = value;
+
+                Load.IsEnabled = value > 0;
+            }
+        }
+
         private bool ValidPage;
-        private int SelectedChampion;
         private Position SelectedPosition;
 
         public MainWindow()

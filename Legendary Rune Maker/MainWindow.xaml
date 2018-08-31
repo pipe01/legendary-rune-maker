@@ -159,7 +159,7 @@
                               VerticalAlignment="Center" HorizontalAlignment="Center" Content="Attach"
                               Margin="5 0 0 0" Grid.ColumnSpan="2"/>
 
-                    <local:LoLButton x:Name="Load" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" Margin="5"
+                    <local:LoLButton x:Name="Load" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" Margin="5" IsEnabled="False"
                                      ContextMenuService.IsEnabled="False" Click="Load_Click" Width="40" ToolTip="Download">
                         <Image Width="20" Height="20" Source="{StaticResource Download}" />
                     </local:LoLButton>
