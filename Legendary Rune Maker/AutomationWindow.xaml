@@ -91,7 +91,7 @@
             <Image Grid.Column="4" Grid.Row="0" Source="{StaticResource Mid}" Width="50" Height="50" Margin="5" />
             <Image Grid.Column="5" Grid.Row="0" Source="{StaticResource Support}" Width="50" Height="50" Margin="5" />
             <Image Grid.Column="6" Grid.Row="0" Source="{StaticResource Bottom}" Width="50" Height="50" Margin="5" />
-            
+
             <CheckBox Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center"
                        IsChecked="{Binding Path=AutoPickChampion, Source={x:Static data:Config.Default}}">Auto-pick</CheckBox>
             <CheckBox Grid.Column="0" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center"
@@ -103,20 +103,5 @@
                 </TextBlock>
             </CheckBox>
         </Grid>
-
-        <!--<Grid Grid.Row="2">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
-
-            <CheckBox Grid.Column="0" VerticalAlignment="Center" Margin="0 5 5 5">Auto-pick spells</CheckBox>
-
-            <controls:SummonerSpellControl Grid.Column="1" Width="51" Height="51" Margin="5" Picker="True"
-                                           SpellSelected="SummonerSpellControl_SpellSelected" SnapsToDevicePixels="True" />
-            <controls:SummonerSpellControl Grid.Column="2" Width="51" Height="51" Margin="5" Picker="True"
-                                           SpellSelected="SummonerSpellControl_SpellSelected" SnapsToDevicePixels="True" />
-        </Grid>-->
     </Grid>
 </Window>
