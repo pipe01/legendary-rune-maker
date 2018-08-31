@@ -38,22 +38,19 @@ namespace Legendary_Rune_Maker.Controls
         private static async void ChampionChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var c = d as ChampionImageControl;
-            await c.SetChampion(e.NewValue as Champion);
+            var champ = e.NewValue as Champion;
+
+            if (champ == null)
+                c.Source = NoChamp;
+            else
+                c.Source = await ImageCache.Instance.Get(champ.ImageURL);
+
+            c.ToolTip = champ?.Name;
         }
 
         static ChampionImageControl()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(ChampionImageControl), new FrameworkPropertyMetadata(typeof(ChampionImageControl)));
-        }
-
-        public async Task SetChampion(Champion champ)
-        {
-            if (champ == null)
-                Source = NoChamp;
-            else
-                Source = await ImageCache.Instance.Get(champ.ImageURL);
-
-            this.ToolTip = champ?.Name;
         }
     }
 }
