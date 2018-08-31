@@ -100,7 +100,7 @@
             </StackPanel>
 
             <StackPanel Grid.Column="0" Grid.Row="2" VerticalAlignment="Center">
-                <CheckBox IsChecked="{Binding Path=AutoBanChampion, Source={x:Static data:Config.Default}}">Auto-pick</CheckBox>
+                <CheckBox IsChecked="{Binding Path=AutoBanChampion, Source={x:Static data:Config.Default}}">Auto-ban</CheckBox>
                 <CheckBox IsChecked="{Binding Path=DisableBanChampion, Source={x:Static data:Config.Default}}"
                           Style="{StaticResource AutoDisable}" />
             </StackPanel>
