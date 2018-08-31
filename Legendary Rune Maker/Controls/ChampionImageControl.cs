@@ -52,6 +52,8 @@ namespace Legendary_Rune_Maker.Controls
                 Source = NoChamp;
             else
                 Source = await ImageCache.Instance.Get(champ.ImageURL);
+
+            this.ToolTip = champ?.Name;
         }
     }
 }
