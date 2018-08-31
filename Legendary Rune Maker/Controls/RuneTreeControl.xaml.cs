@@ -217,6 +217,9 @@ namespace Legendary_Rune_Maker.Controls
 
         private async void UserControl_Initialized(object sender, EventArgs e)
         {
+            if (MainWindow.InDesigner)
+                return;
+
             RuneTree[] trees = await Riot.GetRuneTrees();
 
             PrimaryTree = trees[0];
