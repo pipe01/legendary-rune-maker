@@ -14,13 +14,14 @@
     </Window.Background>
 
     <ListView x:Name="Champions" Background="Transparent" BorderThickness="0" Margin="30"
-                          ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+              ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemContainerStyle="{StaticResource NoBackgroundItem}">
         <ListView.ItemTemplate>
             <ItemContainerTemplate>
-                <controls:ChampionImageControl Champion="{Binding}" Cursor="Hand" Width="50" Height="50" Margin="5"
+                <controls:ChampionImageControl Champion="{Binding}" Cursor="Hand" Width="50" Height="50" Margin="7"
                                                MouseLeftButtonUp="Champion_MouseLeftButtonUp" />
             </ItemContainerTemplate>
         </ListView.ItemTemplate>
+        
         <ListView.ItemsPanel>
             <ItemsPanelTemplate>
                 <WrapPanel IsItemsHost="True" Orientation="Horizontal" />
