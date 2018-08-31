@@ -1,5 +1,5 @@
 # Legendary Rune Maker
-A rune maker for League of Legends
+A rune maker for League of Legends that also offers a bunch of automation options.
 
 # Features
 * Copy and create rune pages without the sluggishness of the LoL client.
