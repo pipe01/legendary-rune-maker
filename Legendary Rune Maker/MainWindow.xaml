@@ -148,35 +148,36 @@
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />
-                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition Width="50" />
+                        <ColumnDefinition Width="50" />
                     </Grid.ColumnDefinitions>
 
                     <ComboBox x:Name="PositionDD" Grid.Row="1" IsEditable="False" Height="32" Margin="5"
                                   SelectionChanged="PositionDD_SelectionChanged" />
 
-                    <local:LoLButton x:Name="Load" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" Margin="5"
-                                         Text="Load" ContextMenuService.IsEnabled="False" Click="Load_Click" />
-
                     <CheckBox Grid.Column="1" Grid.Row="0" IsChecked="{Binding Attached, Mode=TwoWay}"
-                                      VerticalAlignment="Center" HorizontalAlignment="Center" Content="Attach"
-                                      Margin="5 0 0 0"/>
+                              VerticalAlignment="Center" HorizontalAlignment="Center" Content="Attach"
+                              Margin="5 0 0 0" Grid.ColumnSpan="2"/>
+
+                    <local:LoLButton x:Name="Load" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" Margin="5"
+                                     ContextMenuService.IsEnabled="False" Click="Load_Click" Width="40" ToolTip="Download">
+                        <Image Width="20" Height="20" Source="{StaticResource Download}" />
+                    </local:LoLButton>
+
+                    <local:LoLButton x:Name="Upload" Margin="5" Click="Upload_Click" IsEnabled="False"
+                                     Width="40" HorizontalAlignment="Right" Grid.Column="2" Grid.Row="1" ToolTip="Upload to client">
+                        <Image Width="20" Height="20" Source="{StaticResource Upload}" />
+                    </local:LoLButton>
                 </Grid>
 
                 <Grid Grid.Row="4">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />
-                        <ColumnDefinition Width="50" />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
 
                     <local:LoLButton Grid.Column="0" x:Name="Clear" Text="Clear" Margin="5" Click="Clear_Click" />
-                    <local:LoLButton Grid.Column="2" x:Name="Automation" Text="Automation" Margin="5" Click="Automation_Click" />
-                    <local:LoLButton Grid.Column="1" x:Name="Upload" Margin="5" Click="Upload_Click" IsEnabled="False"
-                                             Width="40" HorizontalAlignment="Right">
-                        <Viewbox Width="20" Height="20">
-                            <Image Source="{StaticResource Upload}" />
-                        </Viewbox>
-                    </local:LoLButton>
+                    <local:LoLButton Grid.Column="1" x:Name="Automation" Text="Automate" Margin="5" Click="Automation_Click" />
                 </Grid>
             </Grid>
         </Grid>

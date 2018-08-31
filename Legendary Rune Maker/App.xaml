@@ -34,9 +34,33 @@
         <BitmapImage x:Key="CheckboxHover" UriSource="Images/checkbox-hover.png" />
         <BitmapImage x:Key="CheckboxChecked" UriSource="Images/checkbox-checked.png" />
         <BitmapImage x:Key="CheckboxHoverChecked" UriSource="Images/checkbox-hover-checked.png" />
-        <BitmapImage x:Key="Upload" UriSource="Images/upload-button.png" />
         <BitmapImage x:Key="NoChamp" UriSource="Images/-1.png" />
         <BitmapImage x:Key="NoSpell" UriSource="Images/no_spell.png" />
+
+        <DrawingImage x:Key="Upload">
+            <DrawingImage.Drawing>
+                <DrawingGroup>
+                    <DrawingGroup>
+                        <GeometryDrawing Brush="{StaticResource Normal}" Geometry="F1 M433.5,433.5z M0,0z M140.25,331.5L140.25,331.5 293.25,331.5 293.25,178.5 395.25,178.5 216.75,0 38.25,178.5 140.25,178.5z" />
+                        <GeometryDrawing Brush="{StaticResource Normal}">
+                            <GeometryDrawing.Geometry>
+                                <RectangleGeometry RadiusX="0" RadiusY="0" Rect="38.25,382.5,357,51" />
+                            </GeometryDrawing.Geometry>
+                        </GeometryDrawing>
+                    </DrawingGroup>
+                </DrawingGroup>
+            </DrawingImage.Drawing>
+        </DrawingImage>
+
+        <DrawingImage x:Key="Download">
+            <DrawingImage.Drawing>
+                <DrawingGroup>
+                    <DrawingGroup>
+                        <GeometryDrawing Brush="{StaticResource Normal}" Geometry="F1 M433.5,433.5z M0,0z M395.25,153L293.25,153 293.25,0 140.25,0 140.25,153 38.25,153 216.75,331.5 395.25,153z M38.25,382.5L38.25,433.5 395.25,433.5 395.25,382.5 38.25,382.5z" />
+                    </DrawingGroup>
+                </DrawingGroup>
+            </DrawingImage.Drawing>
+        </DrawingImage>
 
         <BitmapImage x:Key="BgBlue" UriSource="Images/default-bg.jpg" />
         <BitmapImage x:Key="BgForest" UriSource="Images/forest-bg.jpg" />

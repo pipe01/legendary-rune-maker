@@ -305,9 +305,6 @@
     <Resource Include="Images\selector-rune.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\upload-button.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Images\default-bg.jpg" />
   </ItemGroup>
   <ItemGroup>
