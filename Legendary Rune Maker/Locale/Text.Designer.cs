@@ -151,7 +151,7 @@ namespace Legendary_Rune_Maker.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to disconnected.
+        ///   Looks up a localized string similar to Disconnected.
         /// </summary>
         public static string Disconnected {
             get {
@@ -178,7 +178,7 @@ namespace Legendary_Rune_Maker.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to in champ select.
+        ///   Looks up a localized string similar to In champ select.
         /// </summary>
         public static string InChampSelect {
             get {
@@ -214,7 +214,7 @@ namespace Legendary_Rune_Maker.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to locked in.
+        ///   Looks up a localized string similar to Locked in.
         /// </summary>
         public static string LockedIn {
             get {
@@ -232,7 +232,7 @@ namespace Legendary_Rune_Maker.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to logged in.
+        ///   Looks up a localized string similar to Logged in.
         /// </summary>
         public static string LoggedIn {
             get {
@@ -250,7 +250,7 @@ namespace Legendary_Rune_Maker.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to not logged in.
+        ///   Looks up a localized string similar to Not logged in.
         /// </summary>
         public static string NotLoggedIn {
             get {

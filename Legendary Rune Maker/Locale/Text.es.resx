@@ -148,7 +148,7 @@
     <value>Limpiar</value>
   </data>
   <data name="Disconnected" xml:space="preserve">
-    <value>desconectado</value>
+    <value>Desconectado</value>
   </data>
   <data name="Download" xml:space="preserve">
     <value>Descargar</value>
@@ -157,7 +157,7 @@
     <value>Salir</value>
   </data>
   <data name="InChampSelect" xml:space="preserve">
-    <value>en selección de campeón</value>
+    <value>En selección de campeón</value>
   </data>
   <data name="LoadFrom" xml:space="preserve">
     <value>Cargar de:</value>
@@ -169,7 +169,7 @@
     <value>Si no has creado página de runas para el campeón, se descargará del primer proveedor.</value>
   </data>
   <data name="LockedIn" xml:space="preserve">
-    <value>fijado</value>
+    <value>Fijado</value>
   </data>
   <data name="LockedInMessage" xml:space="preserve">
     <value>Fijado</value>
@@ -178,7 +178,7 @@
     <value>Ninguna disponible</value>
   </data>
   <data name="NotLoggedIn" xml:space="preserve">
-    <value>sesión no iniciada</value>
+    <value>Sesión no iniciada</value>
   </data>
   <data name="PageChampInPosNotSet" xml:space="preserve">
     <value>Página para {0} en {1} no creada</value>
@@ -199,7 +199,7 @@
     <value>Subir al cliente</value>
   </data>
   <data name="LoggedIn" xml:space="preserve">
-    <value>sesión iniciada</value>
+    <value>Sesión iniciada</value>
   </data>
   <data name="OnlyShowOwned" xml:space="preserve">
     <value>Mostrar sólo campeones disponibles</value>

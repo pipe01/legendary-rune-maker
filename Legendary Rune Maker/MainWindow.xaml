@@ -88,7 +88,8 @@
                            Height="18" />
 
                 <TextBlock x:Name="Status" Grid.Row="0" FontFamily="{StaticResource BeaufortBold}" Foreground="Red"
-                           FontSize="20" Text="{x:Static loc:Text.Disconnected}" Margin="10 0 0 0" VerticalAlignment="Bottom" />
+                           FontSize="20" Text="{x:Static loc:Text.Disconnected}" Margin="10 0 0 0" VerticalAlignment="Bottom"
+                           IsHitTestVisible="False" />
 
                 <Grid Grid.Row="0">
                     <Grid.ColumnDefinitions>

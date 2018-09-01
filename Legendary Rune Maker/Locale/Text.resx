@@ -148,7 +148,7 @@
     <value>Clear</value>
   </data>
   <data name="Disconnected" xml:space="preserve">
-    <value>disconnected</value>
+    <value>Disconnected</value>
   </data>
   <data name="Download" xml:space="preserve">
     <value>Download</value>
@@ -157,7 +157,7 @@
     <value>Exit</value>
   </data>
   <data name="InChampSelect" xml:space="preserve">
-    <value>in champ select</value>
+    <value>In champ select</value>
   </data>
   <data name="LoadFrom" xml:space="preserve">
     <value>Load from:</value>
@@ -169,20 +169,20 @@
     <value>If a rune page isn't found for a champion when locking in, it will be downloaded from the first option in the providers list.</value>
   </data>
   <data name="LockedIn" xml:space="preserve">
-    <value>locked in</value>
+    <value>Locked in</value>
   </data>
   <data name="LockedInMessage" xml:space="preserve">
     <value>Locked in</value>
   </data>
   <data name="LoggedIn" xml:space="preserve">
-    <value>logged in</value>
+    <value>Logged in</value>
   </data>
   <data name="NoneAvailable" xml:space="preserve">
     <value>None available</value>
     <comment>No rune pages are available</comment>
   </data>
   <data name="NotLoggedIn" xml:space="preserve">
-    <value>not logged in</value>
+    <value>Not logged in</value>
   </data>
   <data name="PageChampInPosNotSet" xml:space="preserve">
     <value>Page for {0} in {1} not set</value>
