@@ -7,6 +7,7 @@ using Onova.Services;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -73,13 +74,16 @@ namespace Legendary_Rune_Maker
             {
                 this.Visibility = Visibility.Hidden;
             }
-
-            if (WebCache.CacheGameVersion != await Riot.GetLatestVersionAsync())
+            
+            if (WebCache.CacheGameVersion != await Riot.GetLatestVersionAsync()
+                || WebCache.CacheLocale != CultureInfo.CurrentCulture.Name)
             {
                 WebCache.Clear();
-                WebCache.CacheGameVersion = await Riot.GetLatestVersionAsync();
-            }
 
+                WebCache.CacheGameVersion = await Riot.GetLatestVersionAsync();
+                WebCache.CacheLocale = CultureInfo.CurrentCulture.Name;
+            }
+            
             await Riot.SetLanguage(Config.Default.Culture);
             await Riot.CacheAll(o => Dispatcher.Invoke(() => Progress.Value = o));
         }

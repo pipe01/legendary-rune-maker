@@ -15,6 +15,7 @@ namespace Legendary_Rune_Maker.Data
         private class CacheData
         {
             public string GameVersion;
+            public string CultureName;
             public IDictionary<string, string> FileCache = new Dictionary<string, string>();
             public IDictionary<string, object> ObjectCache = new Dictionary<string, object>();
         }
@@ -34,6 +35,12 @@ namespace Legendary_Rune_Maker.Data
         {
             get => Data.GameVersion;
             set => Data.GameVersion = value;
+        }
+        
+        public static string CacheLocale
+        {
+            get => Data.CultureName;
+            set => Data.CultureName = value;
         }
 
         static WebCache()
