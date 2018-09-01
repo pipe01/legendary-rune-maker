@@ -121,8 +121,6 @@
 
                     <CheckBox IsChecked="{Binding Attached, Mode=TwoWay}" Margin="5" VerticalAlignment="Center"
                               HorizontalAlignment="Left" Content="{x:Static loc:Text.Attach}" />
-
-
                 </Grid>
 
                 <Grid Grid.Row="3">

@@ -14,13 +14,111 @@
             <Setter Property="Cursor" Value="Hand" />
             <EventSetter Event="MouseLeftButtonUp" Handler="PositionPicker_MouseLeftButtonUp" />
         </Style>
+
+        <Duration x:Key="AnimDuration">0:0:0.125</Duration>
+        
+        <Style x:Key="A" TargetType="local:FadeImage" BasedOn="{StaticResource {x:Type local:FadeImage}}">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsMouseOver, ElementName=ThisControl}" Value="True">
+                    <DataTrigger.EnterActions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation From="48" To="0" Duration="{StaticResource AnimDuration}" Storyboard.TargetProperty="(Canvas.Left)" />
+                                <DoubleAnimation From="48" To="0" Duration="{StaticResource AnimDuration}" Storyboard.TargetProperty="(Canvas.Top)" />
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </DataTrigger.EnterActions>
+
+                    <DataTrigger.ExitActions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation From="0" To="48" Duration="{StaticResource AnimDuration}" Storyboard.TargetProperty="(Canvas.Left)" />
+                                <DoubleAnimation From="0" To="48" Duration="{StaticResource AnimDuration}" Storyboard.TargetProperty="(Canvas.Top)" />
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </DataTrigger.ExitActions>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        
+        <Style x:Key="B" TargetType="local:FadeImage" BasedOn="{StaticResource {x:Type local:FadeImage}}">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsMouseOver, ElementName=ThisControl}" Value="True">
+                    <DataTrigger.EnterActions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation From="48" To="0" Duration="{StaticResource AnimDuration}" Storyboard.TargetProperty="(Canvas.Right)" />
+                                <DoubleAnimation From="48" To="0" Duration="{StaticResource AnimDuration}" Storyboard.TargetProperty="(Canvas.Top)" />
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </DataTrigger.EnterActions>
+
+                    <DataTrigger.ExitActions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation From="0" To="48" Duration="{StaticResource AnimDuration}" Storyboard.TargetProperty="(Canvas.Right)" />
+                                <DoubleAnimation From="0" To="48" Duration="{StaticResource AnimDuration}" Storyboard.TargetProperty="(Canvas.Top)" />
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </DataTrigger.ExitActions>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="C" TargetType="local:FadeImage" BasedOn="{StaticResource {x:Type local:FadeImage}}">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsMouseOver, ElementName=ThisControl}" Value="True">
+                    <DataTrigger.EnterActions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation From="48" To="0" Duration="{StaticResource AnimDuration}" Storyboard.TargetProperty="(Canvas.Right)" />
+                                <DoubleAnimation From="48" To="0" Duration="{StaticResource AnimDuration}" Storyboard.TargetProperty="(Canvas.Bottom)" />
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </DataTrigger.EnterActions>
+
+                    <DataTrigger.ExitActions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation From="0" To="48" Duration="{StaticResource AnimDuration}" Storyboard.TargetProperty="(Canvas.Right)" />
+                                <DoubleAnimation From="0" To="48" Duration="{StaticResource AnimDuration}" Storyboard.TargetProperty="(Canvas.Bottom)" />
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </DataTrigger.ExitActions>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="D" TargetType="local:FadeImage" BasedOn="{StaticResource {x:Type local:FadeImage}}">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsMouseOver, ElementName=ThisControl}" Value="True">
+                    <DataTrigger.EnterActions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation From="48" To="0" Duration="{StaticResource AnimDuration}" Storyboard.TargetProperty="(Canvas.Left)" />
+                                <DoubleAnimation From="48" To="0" Duration="{StaticResource AnimDuration}" Storyboard.TargetProperty="(Canvas.Bottom)" />
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </DataTrigger.EnterActions>
+
+                    <DataTrigger.ExitActions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation From="0" To="48" Duration="{StaticResource AnimDuration}" Storyboard.TargetProperty="(Canvas.Left)" />
+                                <DoubleAnimation From="0" To="48" Duration="{StaticResource AnimDuration}" Storyboard.TargetProperty="(Canvas.Bottom)" />
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </DataTrigger.ExitActions>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
     </UserControl.Resources>
-    
-    <Grid Background="Transparent">
-        <local:FadeImage x:Name="PosTop" HorizontalAlignment="Left" VerticalAlignment="Top" Source="{StaticResource Top}" />
-        <local:FadeImage x:Name="PosJungle" HorizontalAlignment="Right" VerticalAlignment="Top" Source="{StaticResource Jungle}" />
-        <local:FadeImage x:Name="PosBottom" HorizontalAlignment="Right" VerticalAlignment="Bottom" Source="{StaticResource Bottom}" />
-        <local:FadeImage x:Name="PosSupport" HorizontalAlignment="Left" VerticalAlignment="Bottom" Source="{StaticResource Support}" />
-        <local:FadeImage x:Name="PosMid" HorizontalAlignment="Center" VerticalAlignment="Center" Source="{StaticResource Mid}" />
-    </Grid>
+
+    <Canvas x:Name="ThisControl" Background="Transparent">
+        <local:FadeImage x:Name="PosTop" Style="{StaticResource A}" Canvas.Left="0" Canvas.Top="0" Source="{StaticResource Top}" />
+        <local:FadeImage x:Name="PosJungle" Style="{StaticResource B}" Canvas.Right="0" Canvas.Top="0" Source="{StaticResource Jungle}" />
+        <local:FadeImage x:Name="PosBottom" Style="{StaticResource C}" Canvas.Right="0" Canvas.Bottom="0" Source="{StaticResource Bottom}" />
+        <local:FadeImage x:Name="PosSupport" Style="{StaticResource D}" Canvas.Left="0" Canvas.Bottom="0" Source="{StaticResource Support}" />
+        <local:FadeImage x:Name="PosMid" Canvas.Left="48" Canvas.Top="48" Source="{StaticResource Mid}" />
+    </Canvas>
 </UserControl>
