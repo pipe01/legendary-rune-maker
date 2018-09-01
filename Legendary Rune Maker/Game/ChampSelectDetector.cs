@@ -93,10 +93,10 @@ namespace Legendary_Rune_Maker.Game
 
             var summs = Config.Default.SpellsToPick[pos];
 
-            if (summs.All(o => o == 0))
+            if (summs.Any(o => o == 0))
                 summs = Config.Default.SpellsToPick[Position.Fill];
 
-            if (summs.All(o => o == 0))
+            if (summs.Any(o => o == 0))
                 return;
 
             try
