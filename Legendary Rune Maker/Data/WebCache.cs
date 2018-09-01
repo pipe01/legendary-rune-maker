@@ -2,6 +2,7 @@
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -11,16 +12,64 @@ namespace Legendary_Rune_Maker.Data
 {
     internal static class WebCache
     {
-        private static IDictionary<string, string> FileCache = new Dictionary<string, string>();
-        private static IDictionary<string, object> ObjectCache = new Dictionary<string, object>();
+        private class CacheData
+        {
+            public string GameVersion;
+            public IDictionary<string, string> FileCache = new Dictionary<string, string>();
+            public IDictionary<string, object> ObjectCache = new Dictionary<string, object>();
+        }
+
+        private static CacheData Data = new CacheData();
 
         private static WebClient Client => new WebClient { Encoding = Encoding.UTF8 };
 
+        private const string CachePath = "cache/data.json";
+        
+        private static readonly JsonSerializerSettings JsonSettings = new JsonSerializerSettings
+        {
+            TypeNameHandling = TypeNameHandling.All
+        };
+
+        public static string CacheGameVersion
+        {
+            get => Data.GameVersion;
+            set => Data.GameVersion = value;
+        }
+
+        static WebCache()
+        {
+            if (!File.Exists(CachePath))
+            {
+                Directory.CreateDirectory(Path.GetDirectoryName(CachePath));
+                Save();
+            }
+            else
+            {
+                string text = Encoding.UTF8.GetString(Convert.FromBase64String(File.ReadAllText(CachePath)));
+
+                Data = JsonConvert.DeserializeObject<CacheData>(text, JsonSettings);
+            }
+        }
+
+        private static void Save()
+        {
+            string text = JsonConvert.SerializeObject(Data, JsonSettings);
+
+            File.WriteAllText(CachePath, Convert.ToBase64String(Encoding.UTF8.GetBytes(text)));
+        }
+
+        public static void Clear()
+        {
+            Data = new CacheData();
+            Save();
+        }
+
         public static async Task<string> String(string url, WebClient client = null)
         {
-            if (!FileCache.TryGetValue(url, out var value))
+            if (!Data.FileCache.TryGetValue(url, out var value))
             {
-                FileCache[url] = value = await (client ?? Client).DownloadStringTaskAsync(url);
+                Data.FileCache[url] = value = await (client ?? Client).DownloadStringTaskAsync(url);
+                Save();
             }
 
             return value;
@@ -28,9 +77,10 @@ namespace Legendary_Rune_Maker.Data
 
         public static async Task<T> Json<T>(string url, WebClient client = null)
         {
-            if (!ObjectCache.TryGetValue(url, out var value))
+            if (!Data.ObjectCache.TryGetValue(url, out var value))
             {
-                ObjectCache[url] = value = JsonConvert.DeserializeObject<T>(await String(url, client));
+                Data.ObjectCache[url] = value = JsonConvert.DeserializeObject<T>(await String(url, client));
+                Save();
             }
 
             return (T)value;
@@ -38,11 +88,12 @@ namespace Legendary_Rune_Maker.Data
 
         public static async Task<T> CustomJson<T>(string url, Func<JObject, T> converter, WebClient client = null)
         {
-            if (!ObjectCache.TryGetValue(url, out var value))
+            if (!Data.ObjectCache.TryGetValue(url, out var value))
             {
                 string json = await String(url, client);
-                
-                ObjectCache[url] = value = converter(JObject.Parse(json));
+
+                Data.ObjectCache[url] = value = converter(JObject.Parse(json));
+                Save();
             }
 
             return (T)value;
