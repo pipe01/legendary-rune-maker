@@ -54,7 +54,7 @@
                 <RowDefinition Height="17" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="160" />
+                <ColumnDefinition Width="Auto" />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
@@ -65,7 +65,7 @@
                       IsChecked="{Binding Path=UploadOnLock, Source={x:Static data:Config.Default}}" />
 
             <CheckBox Grid.Row="1" Grid.Column="1" Content="{x:Static loc:Text.LoadFromFirstProvider}"
-                      ToolTip="{x:Static loc:Text.LoadFromFirstProviderTip}"
+                      ToolTip="{x:Static loc:Text.LoadFromFirstProviderTip}" Margin="5 0 0 0" SnapsToDevicePixels="True"
                       IsEnabled="{Binding Path=UploadOnLock, Source={x:Static data:Config.Default}}"
                       IsChecked="{Binding Path=LoadOnLock, Source={x:Static data:Config.Default}}" />
         </Grid>
