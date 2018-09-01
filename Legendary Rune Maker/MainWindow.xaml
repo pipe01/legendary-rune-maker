@@ -68,7 +68,7 @@
             <Grid Grid.Column="1">
                 <Grid.RowDefinitions>
                     <RowDefinition />
-                    <RowDefinition Height="64" />
+                    <RowDefinition Height="40" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
@@ -86,7 +86,7 @@
                                         MouseLeftButtonUp="ChampionImage_MouseLeftButtonUp" Source="{StaticResource NoChamp}" />
 
                     <Image x:Name="PositionImage" Grid.Column="1" Source="{StaticResource Fill}" Width="136" Height="136" Opacity="1" />
-                    
+
                     <controls:PositionPickerControl x:Name="PositionPicker" Grid.Column="1" Width="144" Height="144" Opacity="0"
                                                     SelectedChanged="PositionPicker_SelectedChanged">
                         <controls:PositionPickerControl.Triggers>
@@ -114,27 +114,22 @@
                 </Grid>
 
                 <Grid Grid.Row="1">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="24" />
-                        <RowDefinition Height="42" />
-                    </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />
                         <ColumnDefinition Width="50" />
                         <ColumnDefinition Width="50" />
                     </Grid.ColumnDefinitions>
 
-                    <CheckBox Grid.Column="1" Grid.Row="0" IsChecked="{Binding Attached, Mode=TwoWay}"
-                              VerticalAlignment="Center" HorizontalAlignment="Center" Content="{x:Static loc:Text.Attach}"
-                              Margin="5 0 0 0" Grid.ColumnSpan="2"/>
+                    <CheckBox IsChecked="{Binding Attached, Mode=TwoWay}" Margin="5" VerticalAlignment="Center"
+                              HorizontalAlignment="Left" Content="{x:Static loc:Text.Attach}" />
 
-                    <local:LoLButton x:Name="Load" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" Margin="5"
+                    <local:LoLButton x:Name="Load" Grid.Column="1" HorizontalAlignment="Stretch" Margin="5"
                                      IsEnabled="False" Click="Load_Click" Width="40" ToolTip="{x:Static loc:Text.Download}">
                         <Image Width="20" Height="20" Source="{StaticResource Download}" />
                     </local:LoLButton>
 
                     <local:LoLButton x:Name="Upload" Margin="5" Click="Upload_Click" IsEnabled="False"
-                                     Width="40" HorizontalAlignment="Right" Grid.Column="2" Grid.Row="1" ToolTip="{x:Static loc:Text.UploadToClient}">
+                                     Width="40" HorizontalAlignment="Right" Grid.Column="2" ToolTip="{x:Static loc:Text.UploadToClient}">
                         <Image Width="20" Height="20" Source="{StaticResource Upload}" />
                     </local:LoLButton>
                 </Grid>
