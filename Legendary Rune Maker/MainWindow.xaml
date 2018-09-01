@@ -83,8 +83,8 @@
                     </Grid.ColumnDefinitions>
 
                     <controls:FadeImage x:Name="ChampionImage" Grid.Column="0" Width="120" Height="120" Cursor="Hand"
-                                        MouseLeftButtonUp="ChampionImage_MouseLeftButtonUp" />
-                    <controls:FadeImage x:Name="PositionImage" Grid.Column="1" />
+                                        MouseLeftButtonUp="ChampionImage_MouseLeftButtonUp" Source="{StaticResource NoChamp}" />
+                    <controls:FadeImage x:Name="PositionImage" Grid.Column="1" Source="{StaticResource Fill}" Width="136" Height="136" />
                 </Grid>
 
                 <Grid Grid.Row="1">
