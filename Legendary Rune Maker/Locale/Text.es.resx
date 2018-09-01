@@ -130,7 +130,7 @@
     <value>Auto-bloquear</value>
   </data>
   <data name="AutoDisable" xml:space="preserve">
-    <value>Auto-desactivar</value>
+    <value>Desactivar</value>
   </data>
   <data name="AutoDisableTip" xml:space="preserve">
     <value>Desactiva la acción automáticamente después de realizarla.</value>
