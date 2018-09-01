@@ -120,8 +120,29 @@
   <data name="Attach" xml:space="preserve">
     <value>Attach</value>
   </data>
+  <data name="AutoAccept" xml:space="preserve">
+    <value>Auto-accept</value>
+  </data>
+  <data name="AutoAcceptTip" xml:space="preserve">
+    <value>Automatically accepts the ready check in matchmaking.</value>
+  </data>
+  <data name="AutoBan" xml:space="preserve">
+    <value>Auto-ban</value>
+  </data>
+  <data name="AutoDisable" xml:space="preserve">
+    <value>Auto-disable</value>
+  </data>
+  <data name="AutoDisableTip" xml:space="preserve">
+    <value>Automatically disable the action after performing it.</value>
+  </data>
   <data name="Automate" xml:space="preserve">
     <value>Automate</value>
+  </data>
+  <data name="AutoPick" xml:space="preserve">
+    <value>Auto-pick</value>
+  </data>
+  <data name="AutoPickSumms" xml:space="preserve">
+    <value>Auto-pick summoners</value>
   </data>
   <data name="Clear" xml:space="preserve">
     <value>Clear</value>
@@ -140,6 +161,12 @@
   </data>
   <data name="LoadFrom" xml:space="preserve">
     <value>Load from:</value>
+  </data>
+  <data name="LoadFromFirstProvider" xml:space="preserve">
+    <value>Load page from first provider</value>
+  </data>
+  <data name="LoadFromFirstProviderTip" xml:space="preserve">
+    <value>If a rune page isn't found for a champion when locking in, it will be downloaded from the first option in the providers list.</value>
   </data>
   <data name="LockedIn" xml:space="preserve">
     <value>locked in</value>
@@ -168,6 +195,12 @@
   </data>
   <data name="Status" xml:space="preserve">
     <value>Status</value>
+  </data>
+  <data name="UploadOnLock" xml:space="preserve">
+    <value>Upload on champion lock</value>
+  </data>
+  <data name="UploadOnLockTip" xml:space="preserve">
+    <value>Automatically uploads the appropiate rune page once you lock in a champion.</value>
   </data>
   <data name="UploadToClient" xml:space="preserve">
     <value>Upload to client</value>

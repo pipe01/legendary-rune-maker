@@ -70,11 +70,74 @@ namespace Legendary_Rune_Maker.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Auto-accept.
+        /// </summary>
+        public static string AutoAccept {
+            get {
+                return ResourceManager.GetString("AutoAccept", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Automatically accepts the ready check in matchmaking..
+        /// </summary>
+        public static string AutoAcceptTip {
+            get {
+                return ResourceManager.GetString("AutoAcceptTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Auto-ban.
+        /// </summary>
+        public static string AutoBan {
+            get {
+                return ResourceManager.GetString("AutoBan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Auto-disable.
+        /// </summary>
+        public static string AutoDisable {
+            get {
+                return ResourceManager.GetString("AutoDisable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Automatically disable the action after performing it..
+        /// </summary>
+        public static string AutoDisableTip {
+            get {
+                return ResourceManager.GetString("AutoDisableTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Automate.
         /// </summary>
         public static string Automate {
             get {
                 return ResourceManager.GetString("Automate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Auto-pick.
+        /// </summary>
+        public static string AutoPick {
+            get {
+                return ResourceManager.GetString("AutoPick", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Auto-pick summoners.
+        /// </summary>
+        public static string AutoPickSumms {
+            get {
+                return ResourceManager.GetString("AutoPickSumms", resourceCulture);
             }
         }
         
@@ -129,6 +192,24 @@ namespace Legendary_Rune_Maker.Locale {
         public static string LoadFrom {
             get {
                 return ResourceManager.GetString("LoadFrom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Load page from first provider.
+        /// </summary>
+        public static string LoadFromFirstProvider {
+            get {
+                return ResourceManager.GetString("LoadFromFirstProvider", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to If a rune page isn&apos;t found for a champion when locking in, it will be downloaded from the first option in the providers list..
+        /// </summary>
+        public static string LoadFromFirstProviderTip {
+            get {
+                return ResourceManager.GetString("LoadFromFirstProviderTip", resourceCulture);
             }
         }
         
@@ -210,6 +291,24 @@ namespace Legendary_Rune_Maker.Locale {
         public static string Status {
             get {
                 return ResourceManager.GetString("Status", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upload on champion lock.
+        /// </summary>
+        public static string UploadOnLock {
+            get {
+                return ResourceManager.GetString("UploadOnLock", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Automatically uploads the appropiate rune page once you lock in a champion..
+        /// </summary>
+        public static string UploadOnLockTip {
+            get {
+                return ResourceManager.GetString("UploadOnLockTip", resourceCulture);
             }
         }
         

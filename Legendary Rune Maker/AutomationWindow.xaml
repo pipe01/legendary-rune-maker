@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:Legendary_Rune_Maker"
         xmlns:data="clr-namespace:Legendary_Rune_Maker.Data"
         xmlns:controls="clr-namespace:Legendary_Rune_Maker.Controls"
+        xmlns:loc="clr-namespace:Legendary_Rune_Maker.Locale"
         mc:Ignorable="d"
         Title="Automation" Height="365" Width="473" Style="{StaticResource LoLWindow}"
         Closing="Window_Closing" WindowStartupLocation="CenterOwner" Initialized="Window_Initialized" ResizeMode="NoResize">
@@ -32,8 +33,8 @@
         </Style>
 
         <Style x:Key="AutoDisable" TargetType="CheckBox" BasedOn="{StaticResource {x:Type CheckBox}}">
-            <Setter Property="Content" Value="Auto-disable" />
-            <Setter Property="ToolTip" Value="Automatically disable the action after performing it." />
+            <Setter Property="Content" Value="{x:Static loc:Text.AutoDisable}" />
+            <Setter Property="ToolTip" Value="{x:Static loc:Text.AutoDisableTip}" />
         </Style>
     </Window.Resources>
     
@@ -57,14 +58,14 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
-            <CheckBox Grid.Row="0" Content="Auto-accept" ToolTip="Automatically accepts the ready check in matchmaking."
+            <CheckBox Grid.Row="0" Content="{x:Static loc:Text.AutoAccept}" ToolTip="{x:Static loc:Text.AutoAcceptTip}"
                       IsChecked="{Binding Path=AutoAccept, Source={x:Static data:Config.Default}}" />
 
-            <CheckBox Grid.Row="1" Content="Upload on champion lock" ToolTip="Automatically uploads the appropiate rune page once you lock in a champion."
+            <CheckBox Grid.Row="1" Content="{x:Static loc:Text.UploadOnLock}" ToolTip="{x:Static loc:Text.UploadOnLock}"
                       IsChecked="{Binding Path=UploadOnLock, Source={x:Static data:Config.Default}}" />
 
-            <CheckBox Grid.Row="1" Grid.Column="1" Content="Load page from first provider"
-                      ToolTip="If a rune page isn't found for a champion when locking in, it will be downloaded from the first option in the providers list."
+            <CheckBox Grid.Row="1" Grid.Column="1" Content="{x:Static loc:Text.LoadFromFirstProvider}"
+                      ToolTip="{x:Static loc:Text.LoadFromFirstProviderTip}"
                       IsEnabled="{Binding Path=UploadOnLock, Source={x:Static data:Config.Default}}"
                       IsChecked="{Binding Path=LoadOnLock, Source={x:Static data:Config.Default}}" />
         </Grid>
@@ -94,20 +95,22 @@
             <Image Grid.Column="6" Grid.Row="0" Source="{StaticResource Bottom}" Width="50" Height="50" Margin="5" ToolTip="Bottom" />
 
             <StackPanel Grid.Column="0" Grid.Row="1" VerticalAlignment="Center">
-                <CheckBox IsChecked="{Binding Path=AutoPickChampion, Source={x:Static data:Config.Default}}">Auto-pick</CheckBox>
+                <CheckBox IsChecked="{Binding Path=AutoPickChampion, Source={x:Static data:Config.Default}}"
+                          Content="{x:Static loc:Text.AutoPick}" />
                 <CheckBox IsChecked="{Binding Path=DisablePickChampion, Source={x:Static data:Config.Default}}"
                           Style="{StaticResource AutoDisable}" />
             </StackPanel>
 
             <StackPanel Grid.Column="0" Grid.Row="2" VerticalAlignment="Center">
-                <CheckBox IsChecked="{Binding Path=AutoBanChampion, Source={x:Static data:Config.Default}}">Auto-ban</CheckBox>
+                <CheckBox IsChecked="{Binding Path=AutoBanChampion, Source={x:Static data:Config.Default}}"
+                          Content="{x:Static loc:Text.AutoBan}" />
                 <CheckBox IsChecked="{Binding Path=DisableBanChampion, Source={x:Static data:Config.Default}}"
                           Style="{StaticResource AutoDisable}" />
             </StackPanel>
 
             <StackPanel Grid.Column="0" Grid.Row="3" VerticalAlignment="Center">
                 <CheckBox IsChecked="{Binding Path=AutoPickSumms, Source={x:Static data:Config.Default}}">
-                    <TextBlock>Auto-pick <LineBreak/> summoners</TextBlock>
+                    <TextBlock TextWrapping="Wrap" Width="70" Text="{x:Static loc:Text.AutoPickSumms}" />
                 </CheckBox>
                 <CheckBox IsChecked="{Binding Path=DisablePickSumms, Source={x:Static data:Config.Default}}"
                           Margin="0 0.1 0 0" Style="{StaticResource AutoDisable}" />
