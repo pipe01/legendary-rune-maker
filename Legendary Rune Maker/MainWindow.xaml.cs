@@ -67,7 +67,7 @@ namespace Legendary_Rune_Maker
         }
 
         private bool ValidPage;
-        private Position SelectedPosition;
+        private Position SelectedPosition { get => PositionPicker.Selected; set => PositionPicker.Selected = value; }
 
         public MainWindow()
         {
@@ -125,7 +125,8 @@ namespace Legendary_Rune_Maker
             {
                 PositionDD.Items.Add(item);
             }
-            SetPosition(Position.Fill);
+
+            SelectedPosition = Position.Fill;
         }
 
         private void LeagueClient_ConnectedChanged(bool connected)
@@ -243,10 +244,9 @@ namespace Legendary_Rune_Maker
 
             if (player == null || player.championId == 0 || !Attached)
                 return;
-
-            var p = player.assignedPosition.ToPosition();
             
-            SetPosition(p);
+            SelectedPosition = player.assignedPosition.ToPosition();
+
             await SetChampion(player.championId);
         }
 
@@ -269,30 +269,7 @@ namespace Legendary_Rune_Maker
             if (ValidPage)
                 SaveRunePageToBook();
         }
-
-        private void PositionDD_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            SetPosition((Position)PositionDD.SelectedIndex);
-        }
-
-        private void SetPosition(Position position)
-        {
-            SelectedPosition = position;
-
-            if (position == Position.UNSELECTED)
-            {
-                PositionDD.SelectedIndex = -1;
-                PositionImage.Source = null;
-            }
-            else
-            {
-                PositionDD.SelectedIndex = (int)position;
-                PositionImage.Source = Application.Current.FindResource(position.ToString()) as ImageSource;
-
-                UpdateRunePageFromRuneBook();
-            }
-        }
-
+        
         private async Task SetChampionIndex(int index)
         {
             await SetChampion((await Riot.GetChampions())[index]);
@@ -486,6 +463,15 @@ namespace Legendary_Rune_Maker
             await Task.Delay(100);
 
             this.Close();
+        }
+        
+        private void PositionPicker_SelectedChanged(object sender, EventArgs e)
+        {
+            if (PositionPicker.Selected != Position.UNSELECTED)
+            {
+                PositionImage.Source = (ImageSource)Application.Current.FindResource(PositionPicker.Selected.ToString());
+                UpdateRunePageFromRuneBook();
+            }
         }
     }
 }

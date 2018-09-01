@@ -84,7 +84,33 @@
 
                     <controls:FadeImage x:Name="ChampionImage" Grid.Column="0" Width="120" Height="120" Cursor="Hand"
                                         MouseLeftButtonUp="ChampionImage_MouseLeftButtonUp" Source="{StaticResource NoChamp}" />
-                    <controls:FadeImage x:Name="PositionImage" Grid.Column="1" Source="{StaticResource Fill}" Width="136" Height="136" />
+
+                    <Image x:Name="PositionImage" Grid.Column="1" Source="{StaticResource Fill}" Width="136" Height="136" Opacity="1" />
+                    
+                    <controls:PositionPickerControl x:Name="PositionPicker" Grid.Column="1" Width="144" Height="144" Opacity="0"
+                                                    SelectedChanged="PositionPicker_SelectedChanged">
+                        <controls:PositionPickerControl.Triggers>
+                            <EventTrigger RoutedEvent="MouseEnter">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation From="0" To="1" Duration="0:0:0.125" Storyboard.TargetProperty="Opacity" />
+                                        <DoubleAnimation From="1" To="0" Duration="0:0:0.125" Storyboard.TargetProperty="Opacity"
+                                                         Storyboard.Target="{Binding ElementName=PositionImage}"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+
+                            <EventTrigger RoutedEvent="MouseLeave">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation From="1" To="0" Duration="0:0:0.125" Storyboard.TargetProperty="Opacity" />
+                                        <DoubleAnimation From="0" To="1" Duration="0:0:0.125" Storyboard.TargetProperty="Opacity"
+                                                         Storyboard.Target="{Binding ElementName=PositionImage}"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </controls:PositionPickerControl.Triggers>
+                    </controls:PositionPickerControl>
                 </Grid>
 
                 <Grid Grid.Row="1">
@@ -98,8 +124,7 @@
                         <ColumnDefinition Width="50" />
                     </Grid.ColumnDefinitions>
 
-                    <ComboBox x:Name="PositionDD" Grid.Row="1" IsEditable="False" Height="32" Margin="5"
-                                  SelectionChanged="PositionDD_SelectionChanged" />
+                    <ComboBox x:Name="PositionDD" Grid.Row="1" IsEditable="False" Height="32" Margin="5" />
 
                     <CheckBox Grid.Column="1" Grid.Row="0" IsChecked="{Binding Attached, Mode=TwoWay}"
                               VerticalAlignment="Center" HorizontalAlignment="Center" Content="{x:Static loc:Text.Attach}"

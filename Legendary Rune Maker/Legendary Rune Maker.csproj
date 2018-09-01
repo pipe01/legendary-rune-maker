@@ -98,6 +98,9 @@
     <Compile Include="Controls\FadeImage.xaml.cs">
       <DependentUpon>FadeImage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\PositionPickerControl.xaml.cs">
+      <DependentUpon>PositionPickerControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\SummonerSpellControl.cs" />
     <Compile Include="Data\Config.cs" />
     <Compile Include="Data\Rune providers\ClientProvider.cs" />
@@ -154,6 +157,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\FadeImage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\PositionPickerControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
