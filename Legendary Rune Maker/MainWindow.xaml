@@ -130,7 +130,7 @@
 
                     <controls:LoLButton Grid.Column="5" Width="40" Margin="5" Click="ShowRunes_Click"
                                      ToolTip="{x:Static loc:Text.ShowRunes}">
-                        <Image Source="{StaticResource RightArrow}" Width="20" Height="20" />
+                        <controls:FadeImage x:Name="RunesArrow" Source="{StaticResource RightArrow}" Width="20" Height="20" />
                     </controls:LoLButton>
 
                     <controls:LoLButton Grid.Column="0" Grid.Row="1" x:Name="Clear" Width="40" Margin="5" Click="Clear_Click"

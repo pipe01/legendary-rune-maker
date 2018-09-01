@@ -24,7 +24,7 @@ namespace Legendary_Rune_Maker
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window, INotifyPropertyChanged
+    public partial class MainWindow : Window
     {
         public static bool InDesigner => DesignerProperties.GetIsInDesignMode(new DependencyObject());
 
@@ -65,10 +65,6 @@ namespace Legendary_Rune_Maker
                 Load.IsEnabled = value > 0;
             }
         }
-
-        public ImageSource RunesArrow { get; set; } = (ImageSource)Application.Current.FindResource("RightArrow");
-
-        public event PropertyChangedEventHandler PropertyChanged;
         
         private bool ValidPage, ShowingRunes;
         private Position SelectedPosition { get => PositionPicker.Selected; set => PositionPicker.Selected = value; }
@@ -484,11 +480,9 @@ namespace Legendary_Rune_Maker
             ShowingRunes = !ShowingRunes;
 
             if (ShowingRunes)
-                RunesArrow = (ImageSource)Application.Current.FindResource("LeftArrow");
+                RunesArrow.Source = (ImageSource)Application.Current.FindResource("LeftArrow");
             else
-                RunesArrow = (ImageSource)Application.Current.FindResource("RightArrow");
-
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(RunesArrow)));
+                RunesArrow.Source = (ImageSource)Application.Current.FindResource("RightArrow");
         }
     }
 }
