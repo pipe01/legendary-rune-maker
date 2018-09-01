@@ -124,8 +124,6 @@
                         <ColumnDefinition Width="50" />
                     </Grid.ColumnDefinitions>
 
-                    <ComboBox x:Name="PositionDD" Grid.Row="1" IsEditable="False" Height="32" Margin="5" />
-
                     <CheckBox Grid.Column="1" Grid.Row="0" IsChecked="{Binding Attached, Mode=TwoWay}"
                               VerticalAlignment="Center" HorizontalAlignment="Center" Content="{x:Static loc:Text.Attach}"
                               Margin="5 0 0 0" Grid.ColumnSpan="2"/>

@@ -120,12 +120,7 @@ namespace Legendary_Rune_Maker
         private async Task InitControls()
         {
             await SetChampion(null);
-
-            foreach (var item in new[] { "Any", "Top", "Jungle", "Mid", "Bottom", "Support" })
-            {
-                PositionDD.Items.Add(item);
-            }
-
+            
             SelectedPosition = Position.Fill;
         }
 
