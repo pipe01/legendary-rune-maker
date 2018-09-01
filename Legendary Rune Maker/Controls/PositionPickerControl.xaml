@@ -6,27 +6,21 @@
              xmlns:local="clr-namespace:Legendary_Rune_Maker.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="144" d:DesignWidth="144">
-    <Grid Background="Transparent">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-            <ColumnDefinition />
-            <ColumnDefinition />
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
-        </Grid.RowDefinitions>
 
-        <local:FadeImage x:Name="PosTop" Grid.Column="0" Grid.Row="0" Cursor="Hand"
-               Source="{StaticResource Top}" MouseLeftButtonUp="PositionPicker_MouseLeftButtonUp" />
-        <local:FadeImage x:Name="PosJungle" Grid.Column="2" Grid.Row="0" Cursor="Hand"
-               Source="{StaticResource Jungle}" MouseLeftButtonUp="PositionPicker_MouseLeftButtonUp" />
-        <local:FadeImage x:Name="PosBottom" Grid.Column="2" Grid.Row="2" Cursor="Hand"
-               Source="{StaticResource Bottom}" MouseLeftButtonUp="PositionPicker_MouseLeftButtonUp" />
-        <local:FadeImage x:Name="PosSupport" Grid.Column="0" Grid.Row="2" Cursor="Hand"
-               Source="{StaticResource Support}" MouseLeftButtonUp="PositionPicker_MouseLeftButtonUp" />
-        <local:FadeImage x:Name="PosMid" Grid.Column="1" Grid.Row="1" Cursor="Hand"
-               Source="{StaticResource Mid}" MouseLeftButtonUp="PositionPicker_MouseLeftButtonUp" />
+    <UserControl.Resources>
+        <Style TargetType="local:FadeImage">
+            <Setter Property="Width" Value="48" />
+            <Setter Property="Height" Value="48" />
+            <Setter Property="Cursor" Value="Hand" />
+            <EventSetter Event="MouseLeftButtonUp" Handler="PositionPicker_MouseLeftButtonUp" />
+        </Style>
+    </UserControl.Resources>
+    
+    <Grid Background="Transparent">
+        <local:FadeImage x:Name="PosTop" HorizontalAlignment="Left" VerticalAlignment="Top" Source="{StaticResource Top}" />
+        <local:FadeImage x:Name="PosJungle" HorizontalAlignment="Right" VerticalAlignment="Top" Source="{StaticResource Jungle}" />
+        <local:FadeImage x:Name="PosBottom" HorizontalAlignment="Right" VerticalAlignment="Bottom" Source="{StaticResource Bottom}" />
+        <local:FadeImage x:Name="PosSupport" HorizontalAlignment="Left" VerticalAlignment="Bottom" Source="{StaticResource Support}" />
+        <local:FadeImage x:Name="PosMid" HorizontalAlignment="Center" VerticalAlignment="Center" Source="{StaticResource Mid}" />
     </Grid>
 </UserControl>
