@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -13,12 +14,13 @@ namespace Legendary_Rune_Maker.Data
         public static Config Default { get; } = Load();
 
         private const string FilePath = "config.json";
-        private const int LatestVersion = 8;
+        private const int LatestVersion = 9;
 
         public int ConfigVersion { get; set; } = LatestVersion;
 
         public bool CheckUpdatesBeforeStartup { get; set; } = true;
         public bool LoadCacheBeforeStartup { get; set; } = true;
+        public string CultureName { get; set; } = null;
         public bool AutoAccept { get; set; }
         public bool UploadOnLock { get; set; } = true;
         public bool LoadOnLock { get; set; }
@@ -68,6 +70,12 @@ namespace Legendary_Rune_Maker.Data
                 return new Config();
 
             var c = JsonConvert.DeserializeObject<Config>(File.ReadAllText(FilePath));
+
+            if (c.CultureName == null)
+            {
+                c.CultureName = CultureInfo.CurrentCulture.Name;
+                c.Save();
+            }
 
             if (c.ConfigVersion < LatestVersion)
             {
