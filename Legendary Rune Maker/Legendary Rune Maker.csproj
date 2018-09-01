@@ -98,6 +98,7 @@
     <Compile Include="Controls\FadeImage.xaml.cs">
       <DependentUpon>FadeImage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\LoLButton.cs" />
     <Compile Include="Controls\PositionPickerControl.xaml.cs">
       <DependentUpon>PositionPickerControl.xaml</DependentUpon>
     </Compile>
@@ -135,9 +136,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Text.resx</DependentUpon>
     </Compile>
-    <Compile Include="LoLButton.xaml.cs">
-      <DependentUpon>LoLButton.xaml</DependentUpon>
-    </Compile>
     <Compile Include="PickChampionDialog.xaml.cs">
       <DependentUpon>PickChampionDialog.xaml</DependentUpon>
     </Compile>
@@ -150,6 +148,7 @@
     <Compile Include="Utils\BitmapUtils.cs" />
     <Compile Include="Utils\Extensions.cs" />
     <Compile Include="Utils\RelayCommand.cs" />
+    <Compile Include="Utils\UppercaseConverter.cs" />
     <Compile Include="Utils\VisualHierarchyHelper.cs" />
     <Compile Include="Utils\WindowCommandConverter.cs" />
     <Page Include="AutomationWindow.xaml">
@@ -177,10 +176,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="LoadingWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="LoLButton.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -1,7 +1,8 @@
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="clr-namespace:Legendary_Rune_Maker.Controls">
+    xmlns:local="clr-namespace:Legendary_Rune_Maker.Controls"
+    xmlns:utils="clr-namespace:Legendary_Rune_Maker.Utils">
 
 
     <Style TargetType="{x:Type local:ChampionImageControl}">
@@ -51,6 +52,51 @@
                             <Rectangle Fill="#28000000" />
                         </Grid>
                     </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type local:LoLButton}">
+        <Style.Resources>
+            <Style TargetType="local:FadeImage">
+                <Setter Property="Stretch" Value="None" />
+                <Setter Property="SpeedRatio" Value="1.5" />
+            </Style>
+        </Style.Resources>
+
+        <Setter Property="Cursor" Value="Hand" />
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:LoLButton}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="5" />
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="5" />
+                        </Grid.ColumnDefinitions>
+
+                        <local:FadeImage x:Name="ImgLeft" Grid.Column="0" Source="{TemplateBinding Side}" />
+                        
+                        <Grid Grid.Column="1">
+                            <Grid.Background>
+                                <VisualBrush TileMode="Tile">
+                                    <VisualBrush.Visual>
+                                        <local:FadeImage Source="{TemplateBinding Fill}" />
+                                    </VisualBrush.Visual>
+                                </VisualBrush>
+                            </Grid.Background>
+
+                            <ContentPresenter Content="{TemplateBinding Content}" IsHitTestVisible="False" />
+                        </Grid>
+                        
+                        <local:FadeImage x:Name="ImgRight" Grid.Column="2" Source="{TemplateBinding Right}" />
+
+                        <TextBlock Grid.Column="1" Text="{TemplateBinding Text, Converter={utils:UppercaseConverter}}"
+                                   VerticalAlignment="Center" HorizontalAlignment="Center" Style="{DynamicResource LoLText}"
+                                   Foreground="{TemplateBinding Foreground}" />
+                    </Grid>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

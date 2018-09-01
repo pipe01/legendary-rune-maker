@@ -128,35 +128,35 @@
                     <CheckBox Grid.ColumnSpan="2" IsChecked="{Binding Attached, Mode=TwoWay}" Margin="5" VerticalAlignment="Center"
                               HorizontalAlignment="Left" Content="{x:Static loc:Text.Attach}" />
 
-                    <local:LoLButton Grid.Column="5" Width="40" Margin="5" Click="ShowRunes_Click"
+                    <controls:LoLButton Grid.Column="5" Width="40" Margin="5" Click="ShowRunes_Click"
                                      ToolTip="{x:Static loc:Text.ShowRunes}">
                         <Image Source="{StaticResource RightArrow}" Width="20" Height="20" />
-                    </local:LoLButton>
+                    </controls:LoLButton>
 
-                    <local:LoLButton Grid.Column="0" Grid.Row="1" x:Name="Clear" Width="40" Margin="5" Click="Clear_Click"
+                    <controls:LoLButton Grid.Column="0" Grid.Row="1" x:Name="Clear" Width="40" Margin="5" Click="Clear_Click"
                                      ToolTip="{x:Static loc:Text.Clear}">
                         <Image Source="{StaticResource Delete}" Width="20" Height="20" />
-                    </local:LoLButton>
+                    </controls:LoLButton>
 
-                    <local:LoLButton x:Name="Load" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" Margin="5"
+                    <controls:LoLButton x:Name="Load" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" Margin="5"
                                      IsEnabled="False" Click="Load_Click" Width="40" ToolTip="{x:Static loc:Text.Download}">
                         <Image Width="20" Height="20" Source="{StaticResource Download}" />
-                    </local:LoLButton>
+                    </controls:LoLButton>
 
-                    <local:LoLButton x:Name="Upload" Grid.Column="2" Grid.Row="1" Margin="5" Click="Upload_Click" IsEnabled="False"
+                    <controls:LoLButton x:Name="Upload" Grid.Column="2" Grid.Row="1" Margin="5" Click="Upload_Click" IsEnabled="False"
                                      Width="40" HorizontalAlignment="Right" ToolTip="{x:Static loc:Text.UploadToClient}">
                         <Image Width="20" Height="20" Source="{StaticResource Upload}" />
-                    </local:LoLButton>
+                    </controls:LoLButton>
 
-                    <local:LoLButton x:Name="Automation" Grid.Column="4" Grid.Row="1" Width="40" Margin="5" Click="Automation_Click"
+                    <controls:LoLButton x:Name="Automation" Grid.Column="4" Grid.Row="1" Width="40" Margin="5" Click="Automation_Click"
                                      ToolTip="{x:Static loc:Text.Automate}">
                         <Image Source="{StaticResource Automate}" Width="20" Height="20" />
-                    </local:LoLButton>
+                    </controls:LoLButton>
 
-                    <local:LoLButton x:Name="BugReport" Grid.Column="5" Grid.Row="1" Width="40" Margin="5" Click="BugReport_Click"
+                    <controls:LoLButton x:Name="BugReport" Grid.Column="5" Grid.Row="1" Width="40" Margin="5" Click="BugReport_Click"
                                      ToolTip="{x:Static loc:Text.ReportBug}">
                         <Image Source="{StaticResource Bug}" Width="20" Height="20" />
-                    </local:LoLButton>
+                    </controls:LoLButton>
                 </Grid>
             </Grid>
         </Grid>

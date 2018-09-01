@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Legendary_Rune_Maker"
+        xmlns:controls="clr-namespace:Legendary_Rune_Maker.Controls"
         mc:Ignorable="d"
         Title="Legendary Rune Maker" Height="172.556" Width="309.398" ResizeMode="NoResize" Initialized="Window_Initialized"
         Background="#010A13" WindowStartupLocation="CenterScreen" Style="{StaticResource Borderless}">
@@ -27,7 +28,7 @@
                    TextWrapping="Wrap" HorizontalAlignment="Center" TextAlignment="Center" FontFamily="{StaticResource BeaufortBold}"
                    Foreground="{StaticResource Pressed}" Margin="5" Visibility="Hidden"/>
 
-            <local:LoLButton x:Name="Cancel" Grid.Row="2" Text="Cancel" Width="100" Height="32" Visibility="Hidden" Click="Cancel_Click" />
+            <controls:LoLButton x:Name="Cancel" Grid.Row="2" Text="Cancel" Width="100" Height="32" Visibility="Hidden" Click="Cancel_Click" />
         </Grid>
     </Grid>
 </Window>
