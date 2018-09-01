@@ -31,7 +31,7 @@
                         TrayLeftMouseDown="TaskbarIcon_TrayLeftMouseDown">
             <tb:TaskbarIcon.ContextMenu>
                 <ContextMenu>
-                    <MenuItem Header="Exit" Click="Taskbar_Exit" />
+                    <MenuItem Header="{x:Static loc:Text.Exit}" Click="Taskbar_Exit" />
                 </ContextMenu>
             </tb:TaskbarIcon.ContextMenu>
         </tb:TaskbarIcon>
@@ -57,8 +57,9 @@
                                      HorizontalAlignment="Left">
                     <FlowDocument>
                         <Paragraph>
-                            <Run Text="Status: "/>
-                            <Run x:Name="Status" Foreground="Red" Text="disconnected"/>
+                            <Run Text="{x:Static loc:Text.Status}" />
+                            <Run Text=": "/>
+                            <Run x:Name="Status" Foreground="Red" Text="{x:Static loc:Text.Disconnected}"/>
                         </Paragraph>
                     </FlowDocument>
                 </RichTextBox>
@@ -101,16 +102,16 @@
                                   SelectionChanged="PositionDD_SelectionChanged" />
 
                     <CheckBox Grid.Column="1" Grid.Row="0" IsChecked="{Binding Attached, Mode=TwoWay}"
-                              VerticalAlignment="Center" HorizontalAlignment="Center" Content="Attach"
+                              VerticalAlignment="Center" HorizontalAlignment="Center" Content="{x:Static loc:Text.Attach}"
                               Margin="5 0 0 0" Grid.ColumnSpan="2"/>
 
                     <local:LoLButton x:Name="Load" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" Margin="5"
-                                     IsEnabled="False" Click="Load_Click" Width="40" ToolTip="Download">
+                                     IsEnabled="False" Click="Load_Click" Width="40" ToolTip="{x:Static loc:Text.Download}">
                         <Image Width="20" Height="20" Source="{StaticResource Download}" />
                     </local:LoLButton>
 
                     <local:LoLButton x:Name="Upload" Margin="5" Click="Upload_Click" IsEnabled="False"
-                                     Width="40" HorizontalAlignment="Right" Grid.Column="2" Grid.Row="1" ToolTip="Upload to client">
+                                     Width="40" HorizontalAlignment="Right" Grid.Column="2" Grid.Row="1" ToolTip="{x:Static loc:Text.UploadToClient}">
                         <Image Width="20" Height="20" Source="{StaticResource Upload}" />
                     </local:LoLButton>
                 </Grid>
@@ -121,8 +122,8 @@
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
 
-                    <local:LoLButton Grid.Column="0" x:Name="Clear" Text="Clear" Margin="5" Click="Clear_Click" />
-                    <local:LoLButton Grid.Column="1" x:Name="Automation" Text="Automate" Margin="5" Click="Automation_Click" />
+                    <local:LoLButton Grid.Column="0" x:Name="Clear" Text="{x:Static loc:Text.Clear}" Margin="5" Click="Clear_Click" />
+                    <local:LoLButton Grid.Column="1" x:Name="Automation" Text="{x:Static loc:Text.Automate}" Margin="5" Click="Automation_Click" />
                 </Grid>
             </Grid>
         </Grid>

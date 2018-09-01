@@ -40,5 +40,7 @@ namespace Legendary_Rune_Maker.Utils
             window.Owner = owner;
             window.Show();
         }
+
+        public static string Format(this string str, params object[] args) => string.Format(str, args: args);
     }
 }

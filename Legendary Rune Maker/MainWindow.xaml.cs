@@ -3,6 +3,7 @@ using LCU.NET.API_Models;
 using Legendary_Rune_Maker.Data;
 using Legendary_Rune_Maker.Data.Rune_providers;
 using Legendary_Rune_Maker.Game;
+using Legendary_Rune_Maker.Locale;
 using Legendary_Rune_Maker.Utils;
 using Notifications.Wpf;
 using RestSharp.Extensions;
@@ -145,7 +146,7 @@ namespace Legendary_Rune_Maker
                 {
                     case GameStates.Disconnected:
                         Status.Foreground = new SolidColorBrush(Colors.Red);
-                        Status.Text = "disconnected";
+                        Status.Text = Text.Disconnected;
 
                         await Task.Run(async () =>
                         {
@@ -155,19 +156,19 @@ namespace Legendary_Rune_Maker
                         break;
                     case GameStates.NotLoggedIn:
                         Status.Foreground = new SolidColorBrush(Colors.Orange);
-                        Status.Text = "not logged in";
+                        Status.Text = Text.NotLoggedIn;
                         break;
                     case GameStates.LoggedIn:
                         Status.Foreground = new SolidColorBrush(Colors.Green);
-                        Status.Text = "logged in";
+                        Status.Text = Text.LoggedIn;
                         break;
                     case GameStates.InChampSelect:
                         Status.Foreground = new SolidColorBrush(Colors.SlateBlue);
-                        Status.Text = "in champ select";
+                        Status.Text = Text.InChampSelect;
                         break;
                     case GameStates.LockedIn:
                         Status.Foreground = new SolidColorBrush(Colors.YellowGreen);
-                        Status.Text = "locked in";
+                        Status.Text = Text.LockedIn;
 
                         if (UploadOnLock && GameState.CanUpload && Config.Default.UploadOnLock)
                         {
@@ -183,7 +184,7 @@ namespace Legendary_Rune_Maker
                                 {
                                     NotificationManager.Show(new NotificationContent
                                     {
-                                        Title = $"Page rune for {champion} not set",
+                                        Title = Text.PageChampNotSet.Format(champion),
                                         Type = NotificationType.Error
                                     });
                                     break;
@@ -192,7 +193,7 @@ namespace Legendary_Rune_Maker
                             
                             NotificationManager.Show(new NotificationContent
                             {
-                                Title = "Locked in",
+                                Title = Text.LockedInMessage,
                                 Message = champion + ", " + SelectedPosition.ToString().ToLower(),
                                 Type = NotificationType.Success
                             });
@@ -220,8 +221,8 @@ namespace Legendary_Rune_Maker
 
             NotificationManager.Show(new NotificationContent
             {
-                Title = $"Page for {champName} in {SelectedPosition} not set",
-                Message = $"Downloaded from {provider.Name}",
+                Title = Text.PageChampInPosNotSet.Format(champName, SelectedPosition),
+                Message = Text.PageNotSetDownloaded.Format(provider.Name),
                 Type = NotificationType.Information
             });
         }
@@ -399,9 +400,9 @@ namespace Legendary_Rune_Maker
             }
 
             if (availProviders.Count > 0)
-                menu.Items.Add(new MenuItem { Header = "Load from:", IsEnabled = false });
+                menu.Items.Add(new MenuItem { Header = Text.LoadFrom, IsEnabled = false });
             else
-                menu.Items.Add(new MenuItem { Header = "None available", IsEnabled = false });
+                menu.Items.Add(new MenuItem { Header = Text.NoneAvailable, IsEnabled = false });
 
             foreach (var item in availProviders)
             {

@@ -117,4 +117,59 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Attach" xml:space="preserve">
+    <value>Attach</value>
+  </data>
+  <data name="Automate" xml:space="preserve">
+    <value>Automate</value>
+  </data>
+  <data name="Clear" xml:space="preserve">
+    <value>Clear</value>
+  </data>
+  <data name="Disconnected" xml:space="preserve">
+    <value>disconnected</value>
+  </data>
+  <data name="Download" xml:space="preserve">
+    <value>Download</value>
+  </data>
+  <data name="Exit" xml:space="preserve">
+    <value>Exit</value>
+  </data>
+  <data name="InChampSelect" xml:space="preserve">
+    <value>in champ select</value>
+  </data>
+  <data name="LoadFrom" xml:space="preserve">
+    <value>Load from:</value>
+  </data>
+  <data name="LockedIn" xml:space="preserve">
+    <value>locked in</value>
+  </data>
+  <data name="LockedInMessage" xml:space="preserve">
+    <value>Locked in</value>
+  </data>
+  <data name="LoggedIn" xml:space="preserve">
+    <value>logged in</value>
+  </data>
+  <data name="NoneAvailable" xml:space="preserve">
+    <value>None available</value>
+    <comment>No rune pages are available</comment>
+  </data>
+  <data name="NotLoggedIn" xml:space="preserve">
+    <value>not logged in</value>
+  </data>
+  <data name="PageChampInPosNotSet" xml:space="preserve">
+    <value>Page for {0} in {1} not set</value>
+  </data>
+  <data name="PageChampNotSet" xml:space="preserve">
+    <value>Rune page for champion {0} not set</value>
+  </data>
+  <data name="PageNotSetDownloaded" xml:space="preserve">
+    <value>Downloaded from {0}</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="UploadToClient" xml:space="preserve">
+    <value>Upload to client</value>
+  </data>
 </root>
