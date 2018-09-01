@@ -84,6 +84,8 @@ namespace Legendary_Rune_Maker
             Version.Text += "-debug";
 #endif
 
+            Version.Text += " by pipe01";
+
             this.Activate();
         }
 
