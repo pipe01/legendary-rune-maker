@@ -85,6 +85,11 @@ namespace Legendary_Rune_Maker
                 MainGrid.Children.Add(icon);
                 Grid.SetColumn(icon, col++);
             }
+
+            if (ids.Contains(SelectedTree))
+            {
+                SelectedTree = SelectedTree;
+            }
         }
 
         private void Icon_MouseDown(object sender, MouseButtonEventArgs e)
