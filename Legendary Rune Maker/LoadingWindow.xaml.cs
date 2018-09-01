@@ -74,6 +74,7 @@ namespace Legendary_Rune_Maker
                 this.Visibility = Visibility.Hidden;
             }
 
+            await Riot.SetLanguage(Config.Default.Culture);
             await Riot.CacheAll(o => Dispatcher.Invoke(() => Progress.Value = o));
         }
         

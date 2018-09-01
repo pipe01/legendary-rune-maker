@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -92,6 +93,32 @@ namespace Legendary_Rune_Maker.Data
             }
 
             return Spells;
+        }
+
+        public static async Task SetLanguage(CultureInfo culture)
+        {
+            var availLangs = JsonConvert.DeserializeObject<string[]>(await new WebClient().DownloadStringTaskAsync(CdnEndpoint + "languages.json"));
+
+            string cultureName = culture.Name.Replace('-', '_');
+
+            if (availLangs.Any(o => o.Equals(cultureName)))
+            {
+                Locale = cultureName;
+            }
+            else
+            {
+                //Try to get a locale that matches the region (es_ES -> es)
+                string almostLocale = availLangs.FirstOrDefault(o => o.Split('_')[0].Equals(cultureName.Split('_')[0]));
+
+                if (almostLocale != null)
+                {
+                    Locale = almostLocale;
+                }
+                else
+                {
+                    Locale = "en_US";
+                }
+            }
         }
 
         private static string LatestVersion;

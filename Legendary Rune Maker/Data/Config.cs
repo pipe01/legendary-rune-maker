@@ -59,6 +59,9 @@ namespace Legendary_Rune_Maker.Data
             [Position.Support] = new int[2]
         };
 
+        [JsonIgnore]
+        public CultureInfo Culture => new CultureInfo(this.CultureName);
+
         public void Save()
         {
             File.WriteAllText(FilePath, JsonConvert.SerializeObject(this, Formatting.Indented));
