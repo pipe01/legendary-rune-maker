@@ -61,7 +61,7 @@
             <CheckBox Grid.Row="0" Content="{x:Static loc:Text.AutoAccept}" ToolTip="{x:Static loc:Text.AutoAcceptTip}"
                       IsChecked="{Binding Path=AutoAccept, Source={x:Static data:Config.Default}}" />
 
-            <CheckBox Grid.Row="1" Content="{x:Static loc:Text.UploadOnLock}" ToolTip="{x:Static loc:Text.UploadOnLock}"
+            <CheckBox Grid.Row="1" Content="{x:Static loc:Text.UploadOnLock}" ToolTip="{x:Static loc:Text.UploadOnLockTip}"
                       IsChecked="{Binding Path=UploadOnLock, Source={x:Static data:Config.Default}}" />
 
             <CheckBox Grid.Row="1" Grid.Column="1" Content="{x:Static loc:Text.LoadFromFirstProvider}"
