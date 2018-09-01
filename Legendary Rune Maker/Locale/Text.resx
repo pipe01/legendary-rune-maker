@@ -205,4 +205,7 @@
   <data name="UploadToClient" xml:space="preserve">
     <value>Upload to client</value>
   </data>
+  <data name="OnlyShowOwned" xml:space="preserve">
+    <value>Only show available</value>
+  </data>
 </root>

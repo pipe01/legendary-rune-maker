@@ -259,6 +259,15 @@ namespace Legendary_Rune_Maker.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Only show available.
+        /// </summary>
+        public static string OnlyShowOwned {
+            get {
+                return ResourceManager.GetString("OnlyShowOwned", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Page for {0} in {1} not set.
         /// </summary>
         public static string PageChampInPosNotSet {

@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Legendary_Rune_Maker"
         xmlns:controls="clr-namespace:Legendary_Rune_Maker.Controls"
+        xmlns:loc="clr-namespace:Legendary_Rune_Maker.Locale"
         mc:Ignorable="d"
         Title="Pick a champion" Height="450" Width="800" Style="{StaticResource LoLWindow}" Initialized="Window_Initialized"
         WindowStartupLocation="CenterScreen">
@@ -13,19 +14,25 @@
         <ImageBrush x:Name="BackImage" Stretch="UniformToFill" ImageSource="{StaticResource BgGreen}" />
     </Window.Background>
 
-    <ListView x:Name="Champions" Background="Transparent" BorderThickness="0" Margin="30"
-              ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemContainerStyle="{StaticResource NoBackgroundItem}">
-        <ListView.ItemTemplate>
-            <ItemContainerTemplate>
-                <controls:ChampionImageControl Champion="{Binding}" Cursor="Hand" Width="50" Height="50" Margin="7"
+    <Grid>
+        <CheckBox x:Name="Available" VerticalAlignment="Top" Margin="20 10 0 0" Content="{x:Static loc:Text.OnlyShowOwned}"
+                  Checked="Available_Checked" Unchecked="Available_Unchecked"/>
+
+        <ListView x:Name="Champions" Background="Transparent" BorderThickness="0" Margin="30"
+                  ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemContainerStyle="{StaticResource NoBackgroundItem}"
+                  ItemsSource="{Binding ChampionList}">
+            <ListView.ItemTemplate>
+                <ItemContainerTemplate>
+                    <controls:ChampionImageControl Champion="{Binding}" Cursor="Hand" Width="50" Height="50" Margin="7"
                                                MouseLeftButtonUp="Champion_MouseLeftButtonUp" />
-            </ItemContainerTemplate>
-        </ListView.ItemTemplate>
-        
-        <ListView.ItemsPanel>
-            <ItemsPanelTemplate>
-                <WrapPanel IsItemsHost="True" Orientation="Horizontal" />
-            </ItemsPanelTemplate>
-        </ListView.ItemsPanel>
-    </ListView>
+                </ItemContainerTemplate>
+            </ListView.ItemTemplate>
+
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel IsItemsHost="True" Orientation="Horizontal" />
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+        </ListView>
+    </Grid>
 </Window>

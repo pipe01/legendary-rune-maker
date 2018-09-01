@@ -201,4 +201,7 @@
   <data name="LoggedIn" xml:space="preserve">
     <value>sesión iniciada</value>
   </data>
+  <data name="OnlyShowOwned" xml:space="preserve">
+    <value>Mostrar sólo campeones disponibles</value>
+  </data>
 </root>
