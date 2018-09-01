@@ -95,6 +95,8 @@ namespace Legendary_Rune_Maker
 
             await InitDetectors();
             await InitControls();
+
+            AppDomain.CurrentDomain.UnhandledException += (a, b) => Taskbar.Dispose();
             
             this.Show();
         }
