@@ -208,4 +208,7 @@
   <data name="OnlyShowOwned" xml:space="preserve">
     <value>Only show available</value>
   </data>
+  <data name="ReportBug" xml:space="preserve">
+    <value>Report a bug</value>
+  </data>
 </root>

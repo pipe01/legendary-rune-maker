@@ -204,4 +204,7 @@
   <data name="OnlyShowOwned" xml:space="preserve">
     <value>Mostrar sólo campeones disponibles</value>
   </data>
+  <data name="ReportBug" xml:space="preserve">
+    <value>Reportar un bug</value>
+  </data>
 </root>

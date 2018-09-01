@@ -63,6 +63,36 @@
             </DrawingImage.Drawing>
         </DrawingImage>
 
+        <DrawingImage x:Key="Delete">
+            <DrawingImage.Drawing>
+                <DrawingGroup>
+                    <DrawingGroup>
+                        <GeometryDrawing Brush="{StaticResource Normal}" Geometry="F1 M459,459z M0,0z M76.5,408C76.5,436.05,99.45,459,127.5,459L331.5,459C359.55,459,382.5,436.05,382.5,408L382.5,102 76.5,102 76.5,408z M408,25.5L318.75,25.5 293.25,0 165.75,0 140.25,25.5 51,25.5 51,76.5 408,76.5 408,25.5z" />
+                    </DrawingGroup>
+                </DrawingGroup>
+            </DrawingImage.Drawing>
+        </DrawingImage>
+
+        <DrawingImage x:Key="Automate">
+            <DrawingImage.Drawing>
+                <DrawingGroup>
+                    <DrawingGroup>
+                        <GeometryDrawing Brush="{StaticResource Normal}" Geometry="F1 M459,459z M0,0z M306,153L153,153 153,306 306,306 306,153z M255,255L204,255 204,204 255,204 255,255z M459,204L459,153 408,153 408,102C408,73.95,385.05,51,357,51L306,51 306,0 255,0 255,51 204,51 204,0 153,0 153,51 102,51C73.95,51,51,73.95,51,102L51,153 0,153 0,204 51,204 51,255 0,255 0,306 51,306 51,357C51,385.05,73.95,408,102,408L153,408 153,459 204,459 204,408 255,408 255,459 306,459 306,408 357,408C385.05,408,408,385.05,408,357L408,306 459,306 459,255 408,255 408,204 459,204z M357,357L102,357 102,102 357,102 357,357z" />
+                    </DrawingGroup>
+                </DrawingGroup>
+            </DrawingImage.Drawing>
+        </DrawingImage>
+
+        <DrawingImage x:Key="Bug">
+            <DrawingImage.Drawing>
+                <DrawingGroup>
+                    <DrawingGroup>
+                        <GeometryDrawing Brush="{StaticResource Normal}" Geometry="F1 M459,459z M0,0z M433.5,127.5L362.1,127.5C349.35,107.1,334.05,89.25,316.201,76.5L357,35.7 321.3,0 265.2,56.1C255,53.55 242.25,51 229.5,51 216.75,51 204,53.55 193.8,56.1L137.7,0 102,35.7 142.8,76.5C124.95,89.25,109.65,107.1,96.9,127.5L25.5,127.5 25.5,178.5 79.05,178.5C76.5,186.15,76.5,196.35,76.5,204L76.5,229.5 25.5,229.5 25.5,280.5 76.5,280.5 76.5,306C76.5,313.65,76.5,323.85,79.05,331.5L25.5,331.5 25.5,382.5 96.9,382.5C122.4,428.4 173.4,459 229.5,459 285.6,459 336.6,428.4 362.1,382.5L433.5,382.5 433.5,331.5 379.95,331.5C382.5,323.85,382.5,313.65,382.5,306L382.5,280.5 433.5,280.5 433.5,229.5 382.5,229.5 382.5,204C382.5,196.35,382.5,186.15,379.95,178.5L433.5,178.5 433.5,127.5z M280.5,331.5L178.5,331.5 178.5,280.5 280.5,280.5 280.5,331.5z M280.5,229.5L178.5,229.5 178.5,178.5 280.5,178.5 280.5,229.5z" />
+                    </DrawingGroup>
+                </DrawingGroup>
+            </DrawingImage.Drawing>
+        </DrawingImage>
+
         <BitmapImage x:Key="BgVoid" UriSource="Images/background.png" />
         <BitmapImage x:Key="BgBlue" UriSource="Images/default-bg.jpg" />
         <BitmapImage x:Key="BgForest" UriSource="Images/forest-bg.png" />

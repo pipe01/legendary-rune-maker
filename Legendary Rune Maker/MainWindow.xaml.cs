@@ -468,5 +468,10 @@ namespace Legendary_Rune_Maker
                 UpdateRunePageFromRuneBook();
             }
         }
+
+        private void BugReport_Click(object sender, EventArgs e)
+        {
+            Process.Start("https://github.com/pipe01/legendary-rune-maker/issues/new");
+        }
     }
 }
