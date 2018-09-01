@@ -34,6 +34,7 @@ namespace Legendary_Rune_Maker
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             Config.Default.Save();
+            this.Owner.Activate();
         }
 
         private void PickBan_Changed(object sender, EventArgs e)
