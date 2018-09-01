@@ -26,12 +26,14 @@ namespace Legendary_Rune_Maker.Data
             "https://www.dropbox.com/s/jre9wq13mu1k7bc/cache.zip?dl=1"
         };
 
+        private static WebClient Client => new WebClient { Encoding = Encoding.UTF8 };
+
         private static RuneTree[] Trees;
         public static async Task<RuneTree[]> GetRuneTrees()
         {
             if (Trees == null)
             {
-                Trees = JsonConvert.DeserializeObject<RuneTree[]>(await new WebClient().DownloadStringTaskAsync($"{CdnEndpoint}{await GetLatestVersionAsync()}/data/{Locale}/runesReforged.json")).OrderBy(o => o.ID).ToArray();
+                Trees = JsonConvert.DeserializeObject<RuneTree[]>(await Client.DownloadStringTaskAsync($"{CdnEndpoint}{await GetLatestVersionAsync()}/data/{Locale}/runesReforged.json")).OrderBy(o => o.ID).ToArray();
             }
 
             return Trees;
@@ -42,7 +44,7 @@ namespace Legendary_Rune_Maker.Data
         {
             if (Champions == null)
             {
-                string json = await new WebClient().DownloadStringTaskAsync($"{CdnEndpoint}{await GetLatestVersionAsync()}/data/{Locale}/champion.json");
+                string json = await Client.DownloadStringTaskAsync($"{CdnEndpoint}{await GetLatestVersionAsync()}/data/{Locale}/champion.json");
 
                 var jobj = JObject.Parse(json);
                 var data = jobj["data"];
@@ -70,8 +72,8 @@ namespace Legendary_Rune_Maker.Data
         {
             if (Spells == null)
             {
-                string json = await new WebClient().DownloadStringTaskAsync($"{CdnEndpoint}{await GetLatestVersionAsync()}/data/{Locale}/summoner.json");
-
+                string json = await Client.DownloadStringTaskAsync($"{CdnEndpoint}{await GetLatestVersionAsync()}/data/{Locale}/summoner.json");
+                
                 var jobj = JObject.Parse(json);
                 var data = jobj["data"];
 
@@ -97,7 +99,7 @@ namespace Legendary_Rune_Maker.Data
 
         public static async Task SetLanguage(CultureInfo culture)
         {
-            var availLangs = JsonConvert.DeserializeObject<string[]>(await new WebClient().DownloadStringTaskAsync(CdnEndpoint + "languages.json"));
+            var availLangs = JsonConvert.DeserializeObject<string[]>(await Client.DownloadStringTaskAsync(CdnEndpoint + "languages.json"));
 
             string cultureName = culture.Name.Replace('-', '_');
 
@@ -123,7 +125,7 @@ namespace Legendary_Rune_Maker.Data
 
         private static string LatestVersion;
         public static async Task<string> GetLatestVersionAsync()
-            => LatestVersion ?? (LatestVersion = JsonConvert.DeserializeObject<string[]>(await new WebClient().DownloadStringTaskAsync("https://ddragon.leagueoflegends.com/api/versions.json"))[0]);
+            => LatestVersion ?? (LatestVersion = JsonConvert.DeserializeObject<string[]>(await Client.DownloadStringTaskAsync("https://ddragon.leagueoflegends.com/api/versions.json"))[0]);
 
         public static async Task<IDictionary<int, RuneTree>> GetRuneTreesByIDAsync()
             => (await GetRuneTrees()).ToDictionary(o => o.ID);
@@ -156,12 +158,10 @@ namespace Legendary_Rune_Maker.Data
 
         public static async Task DownloadCacheCompressed(int host = 0)
         {
-            var client = new WebClient();
-
             if (!Directory.Exists(ImageCache.Instance.FullCachePath))
                 Directory.CreateDirectory(ImageCache.Instance.FullCachePath);
 
-            using (Stream file = await client.OpenReadTaskAsync(CacheZipURLs[host]))
+            using (Stream file = await Client.OpenReadTaskAsync(CacheZipURLs[host]))
             {
                 var zip = new ZipInputStream(file);
                 ZipEntry entry;
