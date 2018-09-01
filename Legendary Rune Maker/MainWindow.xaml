@@ -57,7 +57,7 @@
             </Style.Triggers>
         </Style>
     </Window.Style>
-    
+
     <Grid>
         <tb:TaskbarIcon x:Name="Taskbar" IconSource="{StaticResource Icon}" ToolTipText="Legendary Rune Maker"
                         TrayLeftMouseDown="TaskbarIcon_TrayLeftMouseDown">
@@ -74,28 +74,8 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
-            <Grid Grid.Column="1">
-                <Grid.RowDefinitions>
-                    <RowDefinition />
-                    <RowDefinition Height="35" />
-                </Grid.RowDefinitions>
-
-                <controls:RuneTreeControl x:Name="Tree" Grid.Column="0" Width="475" Height="245" HorizontalAlignment="Left"
-                                              VerticalAlignment="Top" Margin="10" SelectionChanged="Tree_SelectedRunesChanged" />
-
-                <RichTextBox x:Name="StatusT" Grid.Row="1" FontFamily="{StaticResource BeaufortBold}"
-                                     Foreground="{StaticResource Normal}" Background="Transparent" BorderThickness="0" FontSize="25"
-                                     VerticalAlignment="Center" Focusable="False" MouseDown="StatusT_MouseDown" Cursor="Hand"
-                                     HorizontalAlignment="Left" Width="400">
-                    <FlowDocument>
-                        <Paragraph>
-                            <Run Text="{x:Static loc:Text.Status}" />
-                            <Run Text=": "/>
-                            <Run x:Name="Status" Foreground="Red" Text="{x:Static loc:Text.Disconnected}"/>
-                        </Paragraph>
-                    </FlowDocument>
-                </RichTextBox>
-            </Grid>
+            <controls:RuneTreeControl x:Name="Tree" Grid.Column="1" Width="475" Height="245" HorizontalAlignment="Left"
+                                      VerticalAlignment="Top" Margin="10" SelectionChanged="Tree_SelectedRunesChanged" />
 
             <Grid>
                 <Grid.RowDefinitions>
@@ -103,10 +83,14 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
-                <TextBlock x:Name="Version" Text="Version 1.0.0" Style="{StaticResource LoLText}" VerticalAlignment="Top"
-                           HorizontalAlignment="Stretch" Margin="7 2 40 0" Foreground="{StaticResource Pressed}" IsHitTestVisible="False"/>
+                <TextBlock x:Name="Version" Grid.Row="0" Text="Version 1.0.0" Style="{StaticResource LoLText}" VerticalAlignment="Top"
+                           HorizontalAlignment="Stretch" Margin="7 2 40 0" Foreground="{StaticResource Pressed}" IsHitTestVisible="False"
+                           Height="18" />
 
-                <Grid Margin="0 20 0 0">
+                <TextBlock x:Name="Status" Grid.Row="0" FontFamily="{StaticResource BeaufortBold}" Foreground="Red"
+                           FontSize="20" Text="{x:Static loc:Text.Disconnected}" Margin="10 0 0 0" VerticalAlignment="Bottom" />
+
+                <Grid Grid.Row="0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />
                         <ColumnDefinition />
@@ -143,7 +127,7 @@
                     </controls:PositionPickerControl>
                 </Grid>
 
-                <Grid Grid.Row="1">
+                <Grid Grid.Row="2">
                     <Grid.RowDefinitions>
                         <RowDefinition />
                         <RowDefinition />
