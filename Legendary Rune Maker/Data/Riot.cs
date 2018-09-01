@@ -33,23 +33,19 @@ namespace Legendary_Rune_Maker.Data
         {
             if (Trees == null)
             {
-                Trees = JsonConvert.DeserializeObject<RuneTree[]>(await Client.DownloadStringTaskAsync($"{CdnEndpoint}{await GetLatestVersionAsync()}/data/{Locale}/runesReforged.json")).OrderBy(o => o.ID).ToArray();
+                Trees = (await WebCache.Json<RuneTree[]>($"{CdnEndpoint}{await GetLatestVersionAsync()}/data/{Locale}/runesReforged.json")).OrderBy(o => o.ID).ToArray();
             }
 
             return Trees;
         }
-
-        private static Champion[] Champions;
+        
         public static async Task<Champion[]> GetChampions()
         {
-            if (Champions == null)
+            string url = $"{CdnEndpoint}{await GetLatestVersionAsync()}/data/{Locale}/champion.json";
+
+            return await WebCache.CustomJson(url, jobj =>
             {
-                string json = await Client.DownloadStringTaskAsync($"{CdnEndpoint}{await GetLatestVersionAsync()}/data/{Locale}/champion.json");
-
-                var jobj = JObject.Parse(json);
-                var data = jobj["data"];
-
-                Champions = data.Children().Select(o =>
+                return jobj["data"].Children().Select(o =>
                 {
                     var p = o as JProperty;
                     return new Champion
@@ -62,22 +58,16 @@ namespace Legendary_Rune_Maker.Data
                 })
                 .OrderBy(o => o.Name)
                 .ToArray();
-            }
-
-            return Champions;
+            });
         }
-
-        private static SummonerSpell[] Spells;
+        
         public static async Task<SummonerSpell[]> GetSummonerSpells()
         {
-            if (Spells == null)
-            {
-                string json = await Client.DownloadStringTaskAsync($"{CdnEndpoint}{await GetLatestVersionAsync()}/data/{Locale}/summoner.json");
-                
-                var jobj = JObject.Parse(json);
-                var data = jobj["data"];
+            string url = $"{CdnEndpoint}{await GetLatestVersionAsync()}/data/{Locale}/summoner.json";
 
-                Spells = data.Children().Select(o =>
+            return await WebCache.CustomJson(url, jobj =>
+            {
+                return jobj["data"].Children().Select(o =>
                 {
                     var p = o as JProperty;
                     return new SummonerSpell
@@ -92,9 +82,7 @@ namespace Legendary_Rune_Maker.Data
                 .OrderBy(o => o.SummonerLevel)
                 .ThenBy(o => o.Name)
                 .ToArray();
-            }
-
-            return Spells;
+            });
         }
 
         public static async Task SetLanguage(CultureInfo culture)
