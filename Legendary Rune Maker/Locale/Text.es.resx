@@ -207,4 +207,7 @@
   <data name="ReportBug" xml:space="preserve">
     <value>Reportar un bug</value>
   </data>
+  <data name="ShowRunes" xml:space="preserve">
+    <value>Ver runas</value>
+  </data>
 </root>

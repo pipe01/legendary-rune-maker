@@ -93,6 +93,26 @@
             </DrawingImage.Drawing>
         </DrawingImage>
 
+        <DrawingImage x:Key="RightArrow">
+            <DrawingImage.Drawing>
+                <DrawingGroup>
+                    <DrawingGroup>
+                        <GeometryDrawing Brush="{StaticResource Normal}" Geometry="F1 M306,306z M0,0z M94.35,0L94.35,0 58.65,35.7 175.95,153 58.65,270.3 94.35,306 247.35,153z" />
+                    </DrawingGroup>
+                </DrawingGroup>
+            </DrawingImage.Drawing>
+        </DrawingImage>
+
+        <DrawingImage x:Key="LeftArrow">
+            <DrawingImage.Drawing>
+                <DrawingGroup>
+                    <DrawingGroup>
+                        <GeometryDrawing Brush="{StaticResource Normal}" Geometry="F1 M306,306z M0,0z M247.35,270.3L247.35,270.3 130.05,153 247.35,35.7 211.65,0 58.65,153 211.65,306z" />
+                    </DrawingGroup>
+                </DrawingGroup>
+            </DrawingImage.Drawing>
+        </DrawingImage>
+
         <BitmapImage x:Key="BgVoid" UriSource="Images/background.png" />
         <BitmapImage x:Key="BgBlue" UriSource="Images/default-bg.jpg" />
         <BitmapImage x:Key="BgForest" UriSource="Images/forest-bg.png" />

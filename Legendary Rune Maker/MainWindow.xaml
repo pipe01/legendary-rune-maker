@@ -9,7 +9,7 @@
         xmlns:loc="clr-namespace:Legendary_Rune_Maker.Locale"
         xmlns:tb="clr-namespace:Hardcodet.Wpf.TaskbarNotification;assembly=Hardcodet.Wpf.TaskbarNotification"
         mc:Ignorable="d" ResizeMode="NoResize"
-        Title="pipe01's Legendary Rune Maker" Height="310" Width="303" Initialized="Window_Initialized" WindowStartupLocation="CenterScreen"
+        Title="pipe01's Legendary Rune Maker" Height="310" Width="810" Initialized="Window_Initialized" WindowStartupLocation="CenterScreen"
         DataContext="{Binding RelativeSource={RelativeSource Self}}" MouseDown="Window_MouseDown" Style="{StaticResource LoLWindow}"
         Icon="{StaticResource Icon}" StateChanged="Window_StateChanged" PreviewKeyDown="Window_PreviewKeyDown" Closed="Window_Closed">
 
@@ -68,7 +68,6 @@
             <Grid Grid.Column="1">
                 <Grid.RowDefinitions>
                     <RowDefinition />
-                    <RowDefinition Height="40" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
@@ -113,47 +112,48 @@
                 </Grid>
 
                 <Grid Grid.Row="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
                         <ColumnDefinition />
-                        <ColumnDefinition Width="50" />
-                        <ColumnDefinition Width="50" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
 
-                    <CheckBox IsChecked="{Binding Attached, Mode=TwoWay}" Margin="5" VerticalAlignment="Center"
+                    <CheckBox Grid.ColumnSpan="2" IsChecked="{Binding Attached, Mode=TwoWay}" Margin="5" VerticalAlignment="Center"
                               HorizontalAlignment="Left" Content="{x:Static loc:Text.Attach}" />
-                </Grid>
 
-                <Grid Grid.Row="3">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
+                    <local:LoLButton Grid.Column="5" Width="40" Margin="5" Click="ShowRunes_Click"
+                                     ToolTip="{x:Static loc:Text.ShowRunes}">
+                        <Image Source="{StaticResource RightArrow}" Width="20" Height="20" />
+                    </local:LoLButton>
 
-                    <local:LoLButton Grid.Column="0" x:Name="Clear" Width="40" Margin="5" Click="Clear_Click"
+                    <local:LoLButton Grid.Column="0" Grid.Row="1" x:Name="Clear" Width="40" Margin="5" Click="Clear_Click"
                                      ToolTip="{x:Static loc:Text.Clear}">
                         <Image Source="{StaticResource Delete}" Width="20" Height="20" />
                     </local:LoLButton>
 
-                    <local:LoLButton x:Name="Load" Grid.Column="1" HorizontalAlignment="Stretch" Margin="5"
+                    <local:LoLButton x:Name="Load" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" Margin="5"
                                      IsEnabled="False" Click="Load_Click" Width="40" ToolTip="{x:Static loc:Text.Download}">
                         <Image Width="20" Height="20" Source="{StaticResource Download}" />
                     </local:LoLButton>
 
-                    <local:LoLButton x:Name="Upload" Grid.Column="2" Margin="5" Click="Upload_Click" IsEnabled="False"
+                    <local:LoLButton x:Name="Upload" Grid.Column="2" Grid.Row="1" Margin="5" Click="Upload_Click" IsEnabled="False"
                                      Width="40" HorizontalAlignment="Right" ToolTip="{x:Static loc:Text.UploadToClient}">
                         <Image Width="20" Height="20" Source="{StaticResource Upload}" />
                     </local:LoLButton>
 
-                    <local:LoLButton Grid.Column="4" x:Name="Automation" Width="40" Margin="5" Click="Automation_Click"
+                    <local:LoLButton x:Name="Automation" Grid.Column="4" Grid.Row="1" Width="40" Margin="5" Click="Automation_Click"
                                      ToolTip="{x:Static loc:Text.Automate}">
                         <Image Source="{StaticResource Automate}" Width="20" Height="20" />
                     </local:LoLButton>
-                    
-                    <local:LoLButton Grid.Column="5" x:Name="BugReport" Width="40" Margin="5" Click="BugReport_Click"
+
+                    <local:LoLButton x:Name="BugReport" Grid.Column="5" Grid.Row="1" Width="40" Margin="5" Click="BugReport_Click"
                                      ToolTip="{x:Static loc:Text.ReportBug}">
                         <Image Source="{StaticResource Bug}" Width="20" Height="20" />
                     </local:LoLButton>

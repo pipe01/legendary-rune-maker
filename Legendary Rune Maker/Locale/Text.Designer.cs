@@ -304,6 +304,15 @@ namespace Legendary_Rune_Maker.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Show runes.
+        /// </summary>
+        public static string ShowRunes {
+            get {
+                return ResourceManager.GetString("ShowRunes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Status.
         /// </summary>
         public static string Status {

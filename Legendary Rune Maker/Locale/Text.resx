@@ -211,4 +211,7 @@
   <data name="ReportBug" xml:space="preserve">
     <value>Report a bug</value>
   </data>
+  <data name="ShowRunes" xml:space="preserve">
+    <value>Show runes</value>
+  </data>
 </root>
