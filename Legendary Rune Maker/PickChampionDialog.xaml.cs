@@ -39,7 +39,7 @@ namespace Legendary_Rune_Maker
 
         private async void Window_Initialized(object sender, EventArgs e)
         {
-            LoadAllChampions();
+            await LoadAllChampions();
         }
 
         private void Champion_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
