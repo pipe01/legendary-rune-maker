@@ -198,4 +198,7 @@
   <data name="UploadToClient" xml:space="preserve">
     <value>Subir al cliente</value>
   </data>
+  <data name="Logged in" xml:space="preserve">
+    <value>sesión iniciada</value>
+  </data>
 </root>
