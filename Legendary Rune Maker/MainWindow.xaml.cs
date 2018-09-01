@@ -184,7 +184,7 @@ namespace Legendary_Rune_Maker
                                 {
                                     NotificationManager.Show(new NotificationContent
                                     {
-                                        Title = Text.PageChampNotSet.Format(champion),
+                                        Title = Text.PageChampNotSet.FormatStr(champion),
                                         Type = NotificationType.Error
                                     });
                                     break;
@@ -221,8 +221,8 @@ namespace Legendary_Rune_Maker
 
             NotificationManager.Show(new NotificationContent
             {
-                Title = Text.PageChampInPosNotSet.Format(champName, SelectedPosition),
-                Message = Text.PageNotSetDownloaded.Format(provider.Name),
+                Title = Text.PageChampInPosNotSet.FormatStr(champName, SelectedPosition),
+                Message = Text.PageNotSetDownloaded.FormatStr(provider.Name),
                 Type = NotificationType.Information
             });
         }
