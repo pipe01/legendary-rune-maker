@@ -4,6 +4,7 @@ using LCU.NET.Plugins.LoL;
 using Legendary_Rune_Maker.Data;
 using Legendary_Rune_Maker.Utils;
 using Notifications.Wpf;
+using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -100,12 +101,10 @@ namespace Legendary_Rune_Maker.Game
 
             try
             {
-                await ChampSelect.PatchMySelectionAsync(new LolChampSelectChampSelectMySelection
+                await LeagueClient.MakeRequestAsync(ChampSelect.Endpoint + "/my-selection", Method.PATCH, new
                 {
-                    selectedSkinId = CurrentSelection.selectedSkinId,
                     spell1Id = summs[0],
-                    spell2Id = summs[1],
-                    wardSkinId = CurrentSelection.wardSkinId
+                    spell2Id = summs[1]
                 });
             }
             catch (APIErrorException)
