@@ -9,7 +9,7 @@
         xmlns:loc="clr-namespace:Legendary_Rune_Maker.Locale"
         xmlns:tb="clr-namespace:Hardcodet.Wpf.TaskbarNotification;assembly=Hardcodet.Wpf.TaskbarNotification"
         mc:Ignorable="d" ResizeMode="NoResize"
-        Title="pipe01's Legendary Rune Maker" Height="310" Width="810" Initialized="Window_Initialized" WindowStartupLocation="CenterScreen"
+        Title="pipe01's Legendary Rune Maker" Height="310" Width="303" Initialized="Window_Initialized" WindowStartupLocation="CenterScreen"
         DataContext="{Binding RelativeSource={RelativeSource Self}}" MouseDown="Window_MouseDown" Style="{StaticResource LoLWindow}"
         Icon="{StaticResource Icon}" StateChanged="Window_StateChanged" PreviewKeyDown="Window_PreviewKeyDown" Closed="Window_Closed">
 
@@ -38,11 +38,11 @@
 
         <Grid Margin="5">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition />
                 <ColumnDefinition Width="294" />
+                <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
-            <Grid Grid.Column="0">
+            <Grid Grid.Column="1">
                 <Grid.RowDefinitions>
                     <RowDefinition />
                     <RowDefinition Height="35" />
@@ -65,7 +65,7 @@
                 </RichTextBox>
             </Grid>
 
-            <Grid Grid.Column="1">
+            <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition />
                     <RowDefinition Height="Auto" />

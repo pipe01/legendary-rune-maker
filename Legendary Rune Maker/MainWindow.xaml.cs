@@ -41,6 +41,14 @@ namespace Legendary_Rune_Maker
             set => SetValue(AttachedProperty, value);
         }
         public static readonly DependencyProperty AttachedProperty = DependencyProperty.Register("Attached", typeof(bool), typeof(MainWindow), new PropertyMetadata(true, AttachedChanged));
+        
+        public bool Expanded
+        {
+            get { return (bool)GetValue(ExpandedProperty); }
+            set { SetValue(ExpandedProperty, value); }
+        }
+        public static readonly DependencyProperty ExpandedProperty = DependencyProperty.Register("Expanded", typeof(bool), typeof(MainWindow));
+
 
         private Rune[] SelectedRunes => Tree.SelectedPrimary.Concat(Tree.SelectedSecondary).Where(o => o != null).ToArray();
 
@@ -66,7 +74,7 @@ namespace Legendary_Rune_Maker
             }
         }
         
-        private bool ValidPage, ShowingRunes;
+        private bool ValidPage;
         private Position SelectedPosition { get => PositionPicker.Selected; set => PositionPicker.Selected = value; }
 
         public MainWindow()
@@ -477,9 +485,9 @@ namespace Legendary_Rune_Maker
 
         private void ShowRunes_Click(object sender, EventArgs e)
         {
-            ShowingRunes = !ShowingRunes;
+            Expanded = !Expanded;
 
-            if (ShowingRunes)
+            if (Expanded)
                 RunesArrow.Source = (ImageSource)Application.Current.FindResource("LeftArrow");
             else
                 RunesArrow.Source = (ImageSource)Application.Current.FindResource("RightArrow");
