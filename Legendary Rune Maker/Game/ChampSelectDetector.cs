@@ -101,11 +101,11 @@ namespace Legendary_Rune_Maker.Game
 
             try
             {
-                await LeagueClient.MakeRequestAsync(ChampSelect.Endpoint + "/my-selection", Method.PATCH, new
+                await LeagueClient.MakeRequestAsync(ChampSelect.Endpoint + "/my-selection", Method.PATCH, new LolChampSelectChampSelectMySelection
                 {
                     spell1Id = summs[0],
                     spell2Id = summs[1]
-                });
+                }, "spell1Id", "spell2Id");
             }
             catch (APIErrorException)
             {
