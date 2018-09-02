@@ -38,13 +38,13 @@ namespace Legendary_Rune_Maker.Controls
                 
                 if (PreviousSelected != null)
                 {
-                    PreviousSelected.Source = PositionImage(Positions[PreviousSelected]);
+                    SetImage(PreviousSelected, Positions[PreviousSelected]);
                 }
 
                 if (Selected != Position.Fill)
                 {
                     var img = Positions.Keys.ElementAt(Positions.Values.ToList().IndexOf(value));
-                    img.Source = PositionImage(Position.Fill);
+                    SetImage(img, Position.Fill);
 
                     PreviousSelected = img;
                 }
@@ -54,7 +54,7 @@ namespace Legendary_Rune_Maker.Controls
                 }
             }
         }
-
+        
         public event EventHandler SelectedChanged;
 
         public PositionPickerControl()
@@ -80,6 +80,11 @@ namespace Legendary_Rune_Maker.Controls
             {
                 Selected = Positions[image];
             }
+        }
+
+        private void SetImage(FadeImage image, Position pos)
+        {
+            image.Source = PositionImage(pos);
         }
 
         private ImageSource PositionImage(Position pos)

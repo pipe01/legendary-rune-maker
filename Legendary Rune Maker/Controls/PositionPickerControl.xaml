@@ -112,6 +112,23 @@
                 </DataTrigger>
             </Style.Triggers>
         </Style>
+
+        <DrawingImage x:Key="Highlight">
+            <DrawingImage.Drawing>
+                <GeometryDrawing>
+                    <GeometryDrawing.Brush>
+                        <RadialGradientBrush>
+                            <GradientStop Color="#40F0" Offset="0" />
+                            <GradientStop Color="#00F0" Offset="1" />
+                        </RadialGradientBrush>
+                    </GeometryDrawing.Brush>
+
+                    <GeometryDrawing.Geometry>
+                        <EllipseGeometry Center="24,24" RadiusX="24" RadiusY="24" />
+                    </GeometryDrawing.Geometry>
+                </GeometryDrawing>
+            </DrawingImage.Drawing>
+        </DrawingImage>
     </UserControl.Resources>
 
     <Canvas x:Name="ThisControl" Background="Transparent">
