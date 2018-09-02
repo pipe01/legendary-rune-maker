@@ -23,7 +23,7 @@ namespace Legendary_Rune_Maker.Data.Rune_providers
         };
 
         private static string GetChampionURL(int championId, Position? pos = null)
-            => $"https://champion.gg/champion/{Riot.GetChampion(championId).Name}/"
+            => $"https://champion.gg/champion/{Riot.GetChampion(championId).Key}/"
                + (pos != null ? PositionToName[pos.Value] : "");
 
         protected override async Task<Position[]> GetPossibleRolesInner(int championId)
