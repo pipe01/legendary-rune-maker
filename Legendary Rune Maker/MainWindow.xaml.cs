@@ -366,43 +366,48 @@ namespace Legendary_Rune_Maker
             Load.ContextMenu = menu;
             menu.IsOpen = true;
 
+            menu.Cursor = Cursors.AppStarting;
+
             bool addedFirstHeader = false;
 
             foreach (var provider in RuneProviders)
             {
                 var available = await provider.GetPossibleRoles(SelectedChampion);
-                (RuneProvider Provider, Position Position) data = default;
+                IList<(RuneProvider Provider, Position Position)> data = new List<(RuneProvider Provider, Position Position)>();
 
                 if (SelectedPosition == Position.Fill)
                 {
                     foreach (var avail in available)
                     {
-                        data = (provider, avail);
+                        data.Add((provider, avail));
                     }
                 }
                 else if (available.Contains(SelectedPosition))
                 {
-                    data = (provider, SelectedPosition);
+                    data.Add((provider, SelectedPosition));
                 }
 
-                if (data == default)
+                if (data.Count == 0)
                     continue;
 
-                string header = data.Provider.Name + (data.Position != Position.Fill ? $" - {data.Position}" : "");
-
-                var menuItem = new MenuItem { Header = header };
-                menuItem.Click += async (a, b) =>
-                                    Tree.SetPage(await data.Provider.GetRunePage(SelectedChampion, data.Position));
-
-                if (!addedFirstHeader)
+                foreach (var dataItem in data)
                 {
-                    addedFirstHeader = true;
+                    string header = dataItem.Provider.Name + (dataItem.Position != Position.Fill ? $" - {dataItem.Position}" : "");
 
-                    menu.Items.Clear();
-                    menu.Items.Add(new MenuItem { Header = Text.LoadFrom, IsEnabled = false });
+                    var menuItem = new MenuItem { Header = header };
+                    menuItem.Click += async (a, b) =>
+                                        Tree.SetPage(await dataItem.Provider.GetRunePage(SelectedChampion, dataItem.Position));
+
+                    if (!addedFirstHeader)
+                    {
+                        addedFirstHeader = true;
+
+                        menu.Items.Clear();
+                        menu.Items.Add(new MenuItem { Header = Text.LoadFrom, IsEnabled = false });
+                    }
+
+                    menu.Items.Add(menuItem);
                 }
-
-                menu.Items.Add(menuItem);
             }
             
             if (!addedFirstHeader)
@@ -410,6 +415,8 @@ namespace Legendary_Rune_Maker
                 menu.Items.Clear();
                 menu.Items.Add(new MenuItem { Header = Text.NoneAvailable, IsEnabled = false });
             }
+
+            menu.Cursor = Cursors.Arrow;
         }
 
         private async void Window_StateChanged(object sender, EventArgs e)
