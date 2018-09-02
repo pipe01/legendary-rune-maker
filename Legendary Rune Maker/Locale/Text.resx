@@ -214,4 +214,7 @@
   <data name="ShowRunes" xml:space="preserve">
     <value>Show runes</value>
   </data>
+  <data name="Loading" xml:space="preserve">
+    <value>Loading...</value>
+  </data>
 </root>

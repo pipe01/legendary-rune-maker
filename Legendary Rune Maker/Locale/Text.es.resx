@@ -210,4 +210,7 @@
   <data name="ShowRunes" xml:space="preserve">
     <value>Ver runas</value>
   </data>
+  <data name="Loading" xml:space="preserve">
+    <value>Cargando...</value>
+  </data>
 </root>

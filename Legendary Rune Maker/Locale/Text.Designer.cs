@@ -214,6 +214,15 @@ namespace Legendary_Rune_Maker.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Loading....
+        /// </summary>
+        public static string Loading {
+            get {
+                return ResourceManager.GetString("Loading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Locked in.
         /// </summary>
         public static string LockedIn {

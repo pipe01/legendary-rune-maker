@@ -363,47 +363,53 @@ namespace Legendary_Rune_Maker
         {
             if (SelectedChampion == 0)
                 return;
-
-            Load.IsEnabled = false;
-
+            
             var menu = new ContextMenu();
+            menu.Items.Add(new MenuItem { Header = Text.Loading, IsEnabled = false });
+
             var availProviders = new List<(RuneProvider Provider, Position Position)>();
+            
+            Load.ContextMenu = menu;
+            menu.IsOpen = true;
+
+            bool addedFirstHeader = false;
 
             foreach (var provider in RuneProviders)
             {
                 var available = await provider.GetPossibleRoles(SelectedChampion);
+                (RuneProvider Provider, Position Position) data = default;
 
                 if (SelectedPosition == Position.Fill)
                 {
                     foreach (var avail in available)
                     {
-                        availProviders.Add((provider, avail));
+                        data = (provider, avail);
                     }
                 }
                 else if (available.Contains(SelectedPosition))
                 {
-                    availProviders.Add((provider, SelectedPosition));
+                    data = (provider, SelectedPosition);
                 }
-            }
 
-            if (availProviders.Count > 0)
-                menu.Items.Add(new MenuItem { Header = Text.LoadFrom, IsEnabled = false });
-            else
-                menu.Items.Add(new MenuItem { Header = Text.NoneAvailable, IsEnabled = false });
-
-            foreach (var item in availProviders)
-            {
-                string header = item.Provider.Name + (item.Position != Position.Fill ? $" - {item.Position}" : "");
+                string header = data.Provider.Name + (data.Position != Position.Fill ? $" - {data.Position}" : "");
 
                 var menuItem = new MenuItem { Header = header };
-                menuItem.Click += async (a, b) => Tree.SetPage(await item.Provider.GetRunePage(SelectedChampion, item.Position));
+                menuItem.Click += async (a, b) =>
+                                    Tree.SetPage(await data.Provider.GetRunePage(SelectedChampion, data.Position));
+
+                if (!addedFirstHeader)
+                {
+                    addedFirstHeader = true;
+
+                    menu.Items.Clear();
+                    menu.Items.Add(new MenuItem { Header = Text.LoadFrom, IsEnabled = false });
+                }
 
                 menu.Items.Add(menuItem);
             }
-
-            Load.IsEnabled = true;
-            Load.ContextMenu = menu;
-            menu.IsOpen = true;
+            
+            if (!addedFirstHeader)
+                menu.Items.Insert(0, new MenuItem { Header = Text.NoneAvailable, IsEnabled = false });
         }
 
         private async void Window_StateChanged(object sender, EventArgs e)
