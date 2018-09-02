@@ -163,7 +163,7 @@
     <value>Cargar de:</value>
   </data>
   <data name="LoadFromFirstProvider" xml:space="preserve">
-    <value>Cargar página del primer proveedor</value>
+    <value>Cargar página de proveedor</value>
   </data>
   <data name="LoadFromFirstProviderTip" xml:space="preserve">
     <value>Si no has creado página de runas para el campeón, se descargará del primer proveedor.</value>

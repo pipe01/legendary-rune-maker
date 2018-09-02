@@ -54,7 +54,7 @@ namespace Legendary_Rune_Maker
 
         private RunePage Page => new RunePage(SelectedRunes.Select(o => o.ID).ToArray(), Tree.PrimaryTree.ID, Tree.SecondaryTree.ID, SelectedChampion, SelectedPosition);
 
-        private readonly RuneProvider[] RuneProviders = new RuneProvider[]
+        internal static readonly RuneProvider[] RuneProviders = new RuneProvider[]
         {
             new RunesLolProvider(),
             new ChampionGGProvider(),
@@ -221,7 +221,8 @@ namespace Legendary_Rune_Maker
 
         private async Task LoadPageFromFirstProvider()
         {
-            var provider = RuneProviders.First();
+            var provider = RuneProviders.FirstOrDefault(o => o.Name == Config.Default.LockLoadProvider)
+                            ?? RuneProviders.First();
             var positions = await provider.GetPossibleRoles(SelectedChampion);
 
             var position = positions.Contains(SelectedPosition) ? SelectedPosition : Position.Fill;

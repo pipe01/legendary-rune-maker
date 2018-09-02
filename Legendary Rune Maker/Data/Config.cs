@@ -14,7 +14,7 @@ namespace Legendary_Rune_Maker.Data
         public static Config Default { get; } = Load();
 
         private const string FilePath = "config.json";
-        private const int LatestVersion = 9;
+        private const int LatestVersion = 10;
 
         public int ConfigVersion { get; set; } = LatestVersion;
 
@@ -24,6 +24,7 @@ namespace Legendary_Rune_Maker.Data
         public bool AutoAccept { get; set; }
         public bool UploadOnLock { get; set; } = true;
         public bool LoadOnLock { get; set; }
+        public string LockLoadProvider { get; set; }
         public bool AutoPickChampion { get; set; }
         public bool DisablePickChampion { get; set; }
         public bool AutoBanChampion { get; set; }

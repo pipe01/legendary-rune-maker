@@ -163,7 +163,7 @@
     <value>Load from:</value>
   </data>
   <data name="LoadFromFirstProvider" xml:space="preserve">
-    <value>Load page from first provider</value>
+    <value>Load page from provider</value>
   </data>
   <data name="LoadFromFirstProviderTip" xml:space="preserve">
     <value>If a rune page isn't found for a champion when locking in, it will be downloaded from the first option in the providers list.</value>

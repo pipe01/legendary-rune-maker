@@ -5,10 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Legendary_Rune_Maker"
         xmlns:data="clr-namespace:Legendary_Rune_Maker.Data"
+        xmlns:p="clr-namespace:Legendary_Rune_Maker.Data.Rune_providers"
         xmlns:controls="clr-namespace:Legendary_Rune_Maker.Controls"
         xmlns:loc="clr-namespace:Legendary_Rune_Maker.Locale"
         mc:Ignorable="d"
-        Title="Automation" Height="365" Width="473" Style="{StaticResource LoLWindow}"
+        Title="Automation" Height="370" Width="473" Style="{StaticResource LoLWindow}"
         Closing="Window_Closing" WindowStartupLocation="CenterOwner" Initialized="Window_Initialized" ResizeMode="NoResize">
 
     <Window.Resources>
@@ -37,21 +38,21 @@
             <Setter Property="ToolTip" Value="{x:Static loc:Text.AutoDisableTip}" />
         </Style>
     </Window.Resources>
-    
+
     <Window.Background>
         <ImageBrush Stretch="UniformToFill" ImageSource="{StaticResource BgBlue}" />
     </Window.Background>
 
     <Grid Margin="10">
         <Grid.RowDefinitions>
-            <RowDefinition Height="37" />
+            <RowDefinition Height="44" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <Grid Margin="0 0.5 0 0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="17" />
-                <RowDefinition Height="17" />
+                <RowDefinition Height="27" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
@@ -62,12 +63,26 @@
                       IsChecked="{Binding Path=AutoAccept, Source={x:Static data:Config.Default}}" />
 
             <CheckBox Grid.Row="1" Content="{x:Static loc:Text.UploadOnLock}" ToolTip="{x:Static loc:Text.UploadOnLockTip}"
-                      IsChecked="{Binding Path=UploadOnLock, Source={x:Static data:Config.Default}}" />
+                      IsChecked="{Binding Path=UploadOnLock, Source={x:Static data:Config.Default}}"
+                      VerticalAlignment="Center"/>
 
-            <CheckBox Grid.Row="1" Grid.Column="1" Content="{x:Static loc:Text.LoadFromFirstProvider}"
-                      ToolTip="{x:Static loc:Text.LoadFromFirstProviderTip}" Margin="5 0 0 0" SnapsToDevicePixels="True"
-                      IsEnabled="{Binding Path=UploadOnLock, Source={x:Static data:Config.Default}}"
-                      IsChecked="{Binding Path=LoadOnLock, Source={x:Static data:Config.Default}}" />
+            <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal"
+                        IsEnabled="{Binding Path=UploadOnLock, Source={x:Static data:Config.Default}}">
+                <CheckBox HorizontalAlignment="Left" VerticalAlignment="Center"
+                          Margin="5 1 0 0" SnapsToDevicePixels="True"
+                          Content="{x:Static loc:Text.LoadFromFirstProvider}"
+                          ToolTip="{x:Static loc:Text.LoadFromFirstProviderTip}"
+                          IsChecked="{Binding Path=LoadOnLock, Source={x:Static data:Config.Default}}" />
+
+                <ComboBox x:Name="Providers" Margin="5,1,0,1" HorizontalAlignment="Stretch"
+                          Height="25" Width="115" FontSize="12" SelectionChanged="Providers_SelectionChanged">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Name}" />
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </StackPanel>
         </Grid>
 
         <Grid x:Name="Table" Grid.Row="1" Margin="0 10 0 0" Grid.ColumnSpan="2">

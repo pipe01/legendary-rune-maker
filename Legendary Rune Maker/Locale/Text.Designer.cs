@@ -196,7 +196,7 @@ namespace Legendary_Rune_Maker.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Load page from first provider.
+        ///   Looks up a localized string similar to Load page from provider.
         /// </summary>
         public static string LoadFromFirstProvider {
             get {

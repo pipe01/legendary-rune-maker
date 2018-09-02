@@ -1,5 +1,6 @@
 ﻿using Legendary_Rune_Maker.Controls;
 using Legendary_Rune_Maker.Data;
+using Legendary_Rune_Maker.Data.Rune_providers;
 using Legendary_Rune_Maker.Properties;
 using System;
 using System.Collections.Generic;
@@ -64,7 +65,18 @@ namespace Legendary_Rune_Maker
         private async void Window_Initialized(object sender, EventArgs e)
         {
             GenerateControls();
-            
+
+            foreach (var item in MainWindow.RuneProviders)
+            {
+                if (!(item is ClientProvider))
+                {
+                    Providers.Items.Add(item);
+
+                    if (item.Name == Config.Default.LockLoadProvider)
+                        Providers.SelectedItem = item;
+                }
+            }
+
             int i = 0;
             foreach (var item in Config.Default.ChampionsToPick)
             {
@@ -85,6 +97,11 @@ namespace Legendary_Rune_Maker
                 Spells[i++].Spell = spells.SingleOrDefault(o => o.ID == item.Value[0]);
                 Spells[i++].Spell = spells.SingleOrDefault(o => o.ID == item.Value[1]);
             }
+        }
+
+        private void Providers_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Config.Default.LockLoadProvider = ((RuneProvider)Providers.SelectedItem).Name;
         }
 
         private void GenerateControls()
