@@ -9,7 +9,7 @@
         xmlns:loc="clr-namespace:Legendary_Rune_Maker.Locale"
         xmlns:tb="clr-namespace:Hardcodet.Wpf.TaskbarNotification;assembly=Hardcodet.Wpf.TaskbarNotification"
         mc:Ignorable="d" ResizeMode="NoResize"
-        Title="pipe01's Legendary Rune Maker" Height="310" Width="303" Initialized="Window_Initialized" WindowStartupLocation="CenterScreen"
+        Title="pipe01's Legendary Rune Maker" Height="310" Width="810" Initialized="Window_Initialized" WindowStartupLocation="CenterScreen"
         DataContext="{Binding RelativeSource={RelativeSource Self}}" MouseDown="Window_MouseDown"
         Icon="{StaticResource Icon}" StateChanged="Window_StateChanged" PreviewKeyDown="Window_PreviewKeyDown" Closed="Window_Closed">
 
@@ -73,9 +73,6 @@
                 <ColumnDefinition Width="294" />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-
-            <controls:RuneTreeControl x:Name="Tree" Grid.Column="1" Width="475" Height="245" HorizontalAlignment="Left"
-                                      VerticalAlignment="Top" Margin="10" SelectionChanged="Tree_SelectedRunesChanged" />
 
             <Grid>
                 <Grid.RowDefinitions>
@@ -150,21 +147,6 @@
                         <controls:FadeImage x:Name="RunesArrow" Source="{StaticResource RightArrow}" Width="20" Height="20" />
                     </controls:LoLButton>
 
-                    <controls:LoLButton Grid.Column="0" Grid.Row="1" x:Name="Clear" Width="40" Margin="5" Click="Clear_Click"
-                                     ToolTip="{x:Static loc:Text.Clear}">
-                        <Image Source="{StaticResource Delete}" Width="20" Height="20" />
-                    </controls:LoLButton>
-
-                    <controls:LoLButton x:Name="Load" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" Margin="5"
-                                     IsEnabled="False" Click="Load_Click" Width="40" ToolTip="{x:Static loc:Text.Download}">
-                        <Image Width="20" Height="20" Source="{StaticResource Download}" />
-                    </controls:LoLButton>
-
-                    <controls:LoLButton x:Name="Upload" Grid.Column="2" Grid.Row="1" Margin="5" Click="Upload_Click" IsEnabled="False"
-                                     Width="40" HorizontalAlignment="Right" ToolTip="{x:Static loc:Text.UploadToClient}">
-                        <Image Width="20" Height="20" Source="{StaticResource Upload}" />
-                    </controls:LoLButton>
-
                     <controls:LoLButton x:Name="Automation" Grid.Column="4" Grid.Row="1" Width="40" Margin="5" Click="Automation_Click"
                                      ToolTip="{x:Static loc:Text.Automate}">
                         <Image Source="{StaticResource Automate}" Width="20" Height="20" />
@@ -175,6 +157,33 @@
                         <Image Source="{StaticResource Bug}" Width="20" Height="20" />
                     </controls:LoLButton>
                 </Grid>
+            </Grid>
+
+            <controls:RuneTreeControl x:Name="Tree" Grid.Column="1" Width="475" Height="245" HorizontalAlignment="Left"
+                                      VerticalAlignment="Top" Margin="10" SelectionChanged="Tree_SelectedRunesChanged" />
+
+            <Grid Grid.Column="1" Height="42" VerticalAlignment="Bottom" Width="500">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <controls:LoLButton x:Name="Clear" Grid.Column="1" Width="40" Margin="5" Click="Clear_Click"
+                                    ToolTip="{x:Static loc:Text.Clear}">
+                    <Image Source="{StaticResource Delete}" Width="20" Height="20" />
+                </controls:LoLButton>
+
+                <controls:LoLButton x:Name="Load" Grid.Column="2" HorizontalAlignment="Stretch" Margin="5"
+                                    IsEnabled="False" Click="Load_Click" Width="40" ToolTip="{x:Static loc:Text.Download}">
+                    <Image Width="20" Height="20" Source="{StaticResource Download}" />
+                </controls:LoLButton>
+
+                <controls:LoLButton x:Name="Upload" Grid.Column="3" Margin="5" Click="Upload_Click" IsEnabled="False"
+                                    Width="40" HorizontalAlignment="Right" ToolTip="{x:Static loc:Text.UploadToClient}">
+                    <Image Width="20" Height="20" Source="{StaticResource Upload}" />
+                </controls:LoLButton>
             </Grid>
         </Grid>
     </Grid>
