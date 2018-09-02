@@ -124,6 +124,8 @@ namespace Legendary_Rune_Maker.Data
         public static IDictionary<int, Rune> GetAllRunes()
             => Trees.SelectMany(o => o.Slots).SelectMany(o => o.Runes).ToDictionary(o => o.ID);
 
+        public static Champion GetChampion(int id) => GetChampions().Result.SingleOrDefault(o => o.ID == id);
+
         public static async Task CacheAll(Action<double> progress)
         {
             await GetLatestVersionAsync();

@@ -54,7 +54,7 @@ namespace Legendary_Rune_Maker.Data
             page.primaryStyleId = PrimaryTree;
             page.subStyleId = SecondaryTree;
             page.selectedPerkIds = RuneIDs;
-            page.name = this.Name ?? (await Riot.GetChampions()).Single(o => o.ID == ChampionID).Name + " - " + Enum.GetName(typeof(Position), Position);
+            page.name = this.Name ?? Riot.GetChampion(ChampionID).Name + " - " + Enum.GetName(typeof(Position), Position);
 
             await Perks.PutPageAsync(page.id, page);
         }

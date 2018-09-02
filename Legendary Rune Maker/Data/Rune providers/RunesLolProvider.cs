@@ -23,16 +23,15 @@ namespace Legendary_Rune_Maker.Data.Rune_providers
 
         public override string Name => "Runes.lol";
 
-        private static async Task<string> GetChampionKey(int championId)
-            => (await Riot.GetChampions()).Single(o => o.ID == championId).Key;
+        private static string GetChampionKey(int championId) => Riot.GetChampion(championId).Key;
 
-        private static async Task<string> GetRoleUrl(int championId, Position position)
-            => $"https://runes.lol/ranked/gold/champion/win/{await GetChampionKey(championId)}/{PositionToName[position]}";
+        private static string GetRoleUrl(int championId, Position position)
+            => $"https://runes.lol/ranked/gold/champion/win/{GetChampionKey(championId)}/{PositionToName[position]}";
 
         protected override async Task<Position[]> GetPossibleRolesInner(int championId)
         {
             var doc = new HtmlDocument();
-            doc.LoadHtml(await new WebClient().DownloadStringTaskAsync(await GetRoleUrl(championId, Position.Fill)));
+            doc.LoadHtml(await new WebClient().DownloadStringTaskAsync(GetRoleUrl(championId, Position.Fill)));
 
             var n = doc.DocumentNode.SelectNodes("//a[contains(@class, 'lanefilter')]");
 

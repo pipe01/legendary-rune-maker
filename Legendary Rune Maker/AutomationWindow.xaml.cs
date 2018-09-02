@@ -64,19 +64,17 @@ namespace Legendary_Rune_Maker
         private async void Window_Initialized(object sender, EventArgs e)
         {
             GenerateControls();
-
-            var champs = await Riot.GetChampions();
-
+            
             int i = 0;
             foreach (var item in Config.Default.ChampionsToPick)
             {
-                Picks[i++].Champion = champs.SingleOrDefault(o => o.ID == item.Value);
+                Picks[i++].Champion = Riot.GetChampion(item.Value);
             }
 
             i = 0;
             foreach (var item in Config.Default.ChampionsToBan)
             {
-                Bans[i++].Champion = champs.SingleOrDefault(o => o.ID == item.Value);
+                Bans[i++].Champion = Riot.GetChampion(item.Value);
             }
 
             var spells = await Riot.GetSummonerSpells();

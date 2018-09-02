@@ -183,7 +183,7 @@ namespace Legendary_Rune_Maker
 
                         if (UploadOnLock && GameState.CanUpload && Config.Default.UploadOnLock)
                         {
-                            string champion = (await Riot.GetChampions()).Single(o => o.ID == SelectedChampion).Name;
+                            string champion = Riot.GetChampion(SelectedChampion).Name;
 
                             if (!ValidPage)
                             {
@@ -228,7 +228,7 @@ namespace Legendary_Rune_Maker
 
             Tree.SetPage(page);
 
-            var champName = (await Riot.GetChampions()).Single(o => o.ID == SelectedChampion).Name;
+            var champName = Riot.GetChampion(SelectedChampion).Name;
 
             NotificationManager.Show(new NotificationContent
             {
@@ -281,13 +281,7 @@ namespace Legendary_Rune_Maker
             await SetChampion((await Riot.GetChampions())[index]);
         }
 
-        private async Task SetChampion(int id)
-        {
-            var champs = await Riot.GetChampions();
-            var champ = champs.SingleOrDefault(o => o.ID == id);
-
-            await SetChampion(champ);
-        }
+        private Task SetChampion(int id) => SetChampion(Riot.GetChampion(id));
 
         private async Task SetChampion(Champion champ)
         {
