@@ -58,6 +58,7 @@ namespace Legendary_Rune_Maker
         {
             new RunesLolProvider(),
             new ChampionGGProvider(),
+            new OpGGProvider(),
             new ClientProvider()
         };
 

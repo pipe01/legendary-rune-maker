@@ -106,6 +106,7 @@
     <Compile Include="Data\Config.cs" />
     <Compile Include="Data\Rune providers\ChampionGGProvider.cs" />
     <Compile Include="Data\Rune providers\ClientProvider.cs" />
+    <Compile Include="Data\Rune providers\OpGGProvider.cs" />
     <Compile Include="Data\Rune providers\RuneProvider.cs" />
     <Compile Include="Data\Rune providers\RunesLolProvider.cs" />
     <Compile Include="Data\SummonerSpell.cs" />
