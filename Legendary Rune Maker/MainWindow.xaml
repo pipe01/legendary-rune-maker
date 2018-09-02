@@ -18,8 +18,7 @@
             <VisualBrush.Visual>
                 <Viewbox>
                     <Grid>
-                        <Image Source="{StaticResource BgVoid}" />
-                        <Rectangle Fill="#B0000000" />
+                        <Image Source="{StaticResource BgForest}" />
                     </Grid>
                 </Viewbox>
             </VisualBrush.Visual>
