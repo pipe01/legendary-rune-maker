@@ -151,6 +151,8 @@ namespace Legendary_Rune_Maker
         {
             Dispatcher.Invoke(async () =>
             {
+                AttachChk.IsEnabled = GameState.CanUpload;
+
                 switch (state)
                 {
                     case GameStates.Disconnected:

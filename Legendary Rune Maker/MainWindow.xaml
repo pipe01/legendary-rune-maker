@@ -142,8 +142,8 @@
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
 
-                    <CheckBox Grid.ColumnSpan="2" IsChecked="{Binding Attached, Mode=TwoWay}" Margin="5" VerticalAlignment="Center"
-                              HorizontalAlignment="Left" Content="{x:Static loc:Text.Attach}" />
+                    <CheckBox x:Name="AttachChk" Grid.ColumnSpan="2" IsChecked="{Binding Attached, Mode=TwoWay}" Margin="5"
+                              VerticalAlignment="Center" HorizontalAlignment="Left" Content="{x:Static loc:Text.Attach}" />
 
                     <controls:LoLButton Grid.Column="5" Width="40" Margin="5" Click="ShowRunes_Click"
                                      ToolTip="{x:Static loc:Text.ShowRunes}">
