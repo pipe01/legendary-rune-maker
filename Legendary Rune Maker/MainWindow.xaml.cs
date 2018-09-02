@@ -57,6 +57,7 @@ namespace Legendary_Rune_Maker
         private readonly RuneProvider[] RuneProviders = new RuneProvider[]
         {
             new RunesLolProvider(),
+            new ChampionGGProvider(),
             new ClientProvider()
         };
 
