@@ -30,9 +30,11 @@
             <Style.Triggers>
                 <DataTrigger Binding="{Binding Expanded}" Value="True">
                     <DataTrigger.EnterActions>
-                        <BeginStoryboard>
+                        <StopStoryboard BeginStoryboardName="ExitBegin" />
+
+                        <BeginStoryboard x:Name="EnterBegin">
                             <Storyboard>
-                                <DoubleAnimation From="303" To="810" Duration="0:0:0.25" Storyboard.TargetProperty="Width">
+                                <DoubleAnimation To="810" Duration="0:0:0.25" Storyboard.TargetProperty="Width">
                                     <DoubleAnimation.EasingFunction>
                                         <QuadraticEase EasingMode="EaseOut" />
                                     </DoubleAnimation.EasingFunction>
@@ -42,9 +44,11 @@
                     </DataTrigger.EnterActions>
 
                     <DataTrigger.ExitActions>
-                        <BeginStoryboard>
+                        <StopStoryboard BeginStoryboardName="EnterBegin" />
+                        
+                        <BeginStoryboard x:Name="ExitBegin">
                             <Storyboard>
-                                <DoubleAnimation From="810" To="303" Duration="0:0:0.25" Storyboard.TargetProperty="Width">
+                                <DoubleAnimation To="303" Duration="0:0:0.25" Storyboard.TargetProperty="Width">
                                     <DoubleAnimation.EasingFunction>
                                         <QuadraticEase EasingMode="EaseOut" />
                                     </DoubleAnimation.EasingFunction>
