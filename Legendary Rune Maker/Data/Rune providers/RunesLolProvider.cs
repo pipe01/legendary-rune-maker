@@ -57,7 +57,7 @@ namespace Legendary_Rune_Maker.Data.Rune_providers
         protected override async Task<RunePage> GetRunePageInner(int championId, Position position)
         {
             var doc = new HtmlDocument();
-            doc.LoadHtml(await new WebClient().DownloadStringTaskAsync(await GetRoleUrl(championId, position)));
+            doc.LoadHtml(await new WebClient().DownloadStringTaskAsync(GetRoleUrl(championId, position)));
 
             var runeClasses = doc.DocumentNode.SelectNodes("//div[@class='runeclassicon']");
 

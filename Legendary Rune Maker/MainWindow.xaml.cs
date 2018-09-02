@@ -385,6 +385,9 @@ namespace Legendary_Rune_Maker
                     data = (provider, SelectedPosition);
                 }
 
+                if (data == default)
+                    continue;
+
                 string header = data.Provider.Name + (data.Position != Position.Fill ? $" - {data.Position}" : "");
 
                 var menuItem = new MenuItem { Header = header };
@@ -403,7 +406,10 @@ namespace Legendary_Rune_Maker
             }
             
             if (!addedFirstHeader)
-                menu.Items.Insert(0, new MenuItem { Header = Text.NoneAvailable, IsEnabled = false });
+            {
+                menu.Items.Clear();
+                menu.Items.Add(new MenuItem { Header = Text.NoneAvailable, IsEnabled = false });
+            }
         }
 
         private async void Window_StateChanged(object sender, EventArgs e)
