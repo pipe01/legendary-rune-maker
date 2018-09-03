@@ -187,6 +187,13 @@ namespace Legendary_Rune_Maker
                         {
                             string champion = Riot.GetChampion(SelectedChampion).Name;
 
+                            NotificationManager.Show(new NotificationContent
+                            {
+                                Title = Text.LockedInMessage,
+                                Message = champion + ", " + SelectedPosition.ToString().ToLower(),
+                                Type = NotificationType.Success
+                            });
+
                             if (!ValidPage)
                             {
                                 if (Config.Default.LoadOnLock)
@@ -204,13 +211,6 @@ namespace Legendary_Rune_Maker
                                 }
                             }
                             
-                            NotificationManager.Show(new NotificationContent
-                            {
-                                Title = Text.LockedInMessage,
-                                Message = champion + ", " + SelectedPosition.ToString().ToLower(),
-                                Type = NotificationType.Success
-                            });
-
                             await Task.Run(Page.UploadToClient);
                         }
 
@@ -222,7 +222,7 @@ namespace Legendary_Rune_Maker
         private async Task LoadPageFromFirstProvider()
         {
             var provider = RuneProviders.FirstOrDefault(o => o.Name == Config.Default.LockLoadProvider)
-                            ?? RuneProviders.First();
+                            ?? RuneProviders[0];
             var positions = await provider.GetPossibleRoles(SelectedChampion);
 
             var position = positions.Contains(SelectedPosition) ? SelectedPosition : Position.Fill;
@@ -482,7 +482,7 @@ namespace Legendary_Rune_Maker
 
         private async void Taskbar_Exit(object sender, RoutedEventArgs e)
         {
-            await Task.Delay(100);
+            await Task.Delay(150);
 
             this.Close();
         }
