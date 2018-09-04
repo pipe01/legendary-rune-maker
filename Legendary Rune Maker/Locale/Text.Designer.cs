@@ -142,6 +142,24 @@ namespace Legendary_Rune_Maker.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string Cancel {
+            get {
+                return ResourceManager.GetString("Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Checking for updates....
+        /// </summary>
+        public static string CheckingUpdates {
+            get {
+                return ResourceManager.GetString("CheckingUpdates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Check updates at startup.
         /// </summary>
         public static string CheckUpdatesAtStartup {
@@ -183,6 +201,15 @@ namespace Legendary_Rune_Maker.Locale {
         public static string Exit {
             get {
                 return ResourceManager.GetString("Exit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This will take longer the first time you open the application..
+        /// </summary>
+        public static string FirstLonger {
+            get {
+                return ResourceManager.GetString("FirstLonger", resourceCulture);
             }
         }
         
@@ -363,6 +390,15 @@ namespace Legendary_Rune_Maker.Locale {
         public static string Status {
             get {
                 return ResourceManager.GetString("Status", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Updating....
+        /// </summary>
+        public static string Updating {
+            get {
+                return ResourceManager.GetString("Updating", resourceCulture);
             }
         }
         

@@ -1,5 +1,6 @@
 ﻿using LCU.NET;
 using Legendary_Rune_Maker.Data;
+using Legendary_Rune_Maker.Locale;
 using Legendary_Rune_Maker.Properties;
 using Onova;
 using Onova.Models;
@@ -65,7 +66,7 @@ namespace Legendary_Rune_Maker
         {
             Progress.IsIndeterminate = false;
             Progress.Value = 0;
-            Status.Text = "Loading...";
+            Status.Text = Text.Loading;
             Cancel.Visibility = Visibility.Hidden;
             Hint.Visibility = Visibility.Visible;
 
@@ -90,7 +91,7 @@ namespace Legendary_Rune_Maker
         
         private async Task CheckUpdates()
         {
-            Status.Text = "Checking for updates...";
+            Status.Text = Text.CheckingUpdates;
             Progress.IsIndeterminate = true;
 
             var manager = new UpdateManager(
@@ -101,7 +102,7 @@ namespace Legendary_Rune_Maker
 
             if (update?.CanUpdate == true)
             {
-                Status.Text = "Updating...";
+                Status.Text = Text.Updating;
                 Cancel.Visibility = Visibility.Visible;
                 Progress.IsIndeterminate = false;
 

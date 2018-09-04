@@ -225,4 +225,16 @@
   <data name="Language" xml:space="preserve">
     <value>Idioma:</value>
   </data>
+  <data name="FirstLonger" xml:space="preserve">
+    <value>Esto tardará más la primera vez que abras la aplicación.</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancelar</value>
+  </data>
+  <data name="CheckingUpdates" xml:space="preserve">
+    <value>Comprobando actualizaciones...</value>
+  </data>
+  <data name="Updating" xml:space="preserve">
+    <value>Actualizando...</value>
+  </data>
 </root>
