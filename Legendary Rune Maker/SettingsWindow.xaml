@@ -1,0 +1,46 @@
+﻿<Window x:Class="Legendary_Rune_Maker.SettingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Legendary_Rune_Maker"
+        xmlns:data="clr-namespace:Legendary_Rune_Maker.Data"
+        xmlns:controls="clr-namespace:Legendary_Rune_Maker.Controls"
+        xmlns:loc="clr-namespace:Legendary_Rune_Maker.Locale"
+        mc:Ignorable="d" Closing="Window_Closing" WindowStartupLocation="CenterOwner" Tag="NoMinimize"
+        Title="SettingsWindow" Height="174" Width="289" Style="{StaticResource LoLWindow}">
+    <Window.Background>
+        <VisualBrush Stretch="UniformToFill">
+            <VisualBrush.Visual>
+                <Grid>
+                    <Image Source="{StaticResource BgVoid}" />
+                    <Rectangle Fill="Black" Opacity="0.2" />
+                </Grid>
+            </VisualBrush.Visual>
+        </VisualBrush>
+    </Window.Background>
+
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="17.5" />
+            <RowDefinition Height="17" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <CheckBox Grid.Row="0" Content="{x:Static loc:Text.CheckUpdatesAtStartup}" Margin="0 0.5 0 0"
+                  IsChecked="{Binding CheckUpdatesBeforeStartup, Source={x:Static data:Config.Default}}" />
+
+        <CheckBox Grid.Row="1" Content="{x:Static loc:Text.LoadCacheBeforeStartup}"
+                  IsChecked="{Binding LoadCacheBeforeStartup, Source={x:Static data:Config.Default}}" />
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0 5 0 0">
+            <TextBlock Text="{x:Static loc:Text.Language}" Foreground="#A09684" VerticalAlignment="Center" Margin="0 0 5 0" />
+
+            <ComboBox x:Name="LanguageCb" Width="109" FontSize="12" SelectionChanged="LanguageCb_SelectionChanged" />
+
+            <controls:LoLButton Margin="5.5 0 0 0" Width="40" Click="Restart_Click" ToolTip="{x:Static loc:Text.Restart}">
+                <Image Source="{StaticResource Refresh}" Width="17" Height="17" />
+            </controls:LoLButton>
+        </StackPanel>
+    </Grid>
+</Window>

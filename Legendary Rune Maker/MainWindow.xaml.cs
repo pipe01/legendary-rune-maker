@@ -513,7 +513,7 @@ namespace Legendary_Rune_Maker
 
         public void Settings()
         {
-            MessageBox.Show("Settings!");
+            new SettingsWindow().ShowDialog(this);
         }
     }
 }

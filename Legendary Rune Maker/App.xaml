@@ -124,6 +124,16 @@
             </DrawingImage.Drawing>
         </DrawingImage>
 
+        <DrawingImage x:Key="Refresh">
+            <DrawingImage.Drawing>
+                <DrawingGroup>
+                    <DrawingGroup>
+                        <GeometryDrawing Brush="{StaticResource Normal}" Geometry="F1 M408,408z M0,0z M346.8,61.2C311.1,22.95 260.1,0 204,0 91.8,0 0,91.8 0,204 0,316.2 91.8,408 204,408 298.35,408 377.4,341.7 400.35,255L346.8,255C326.4,313.65 270.3,357 204,357 119.85,357 51,288.15 51,204 51,119.85 119.85,51 204,51 247.35,51 283.05,68.85 311.1,96.9L229.5,178.5 408,178.5 408,0 346.8,61.2z" />
+                    </DrawingGroup>
+                </DrawingGroup>
+            </DrawingImage.Drawing>
+        </DrawingImage>
+
         <BitmapImage x:Key="BgVoid" UriSource="Images/background.png" />
         <BitmapImage x:Key="BgBlue" UriSource="Images/default-bg.jpg" />
         <BitmapImage x:Key="BgForest" UriSource="Images/forest-bg.png" />

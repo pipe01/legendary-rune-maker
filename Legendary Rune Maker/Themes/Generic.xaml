@@ -77,7 +77,7 @@
                             <ColumnDefinition Width="5" />
                         </Grid.ColumnDefinitions>
 
-                        <local:FadeImage x:Name="ImgLeft" Grid.Column="0" Source="{TemplateBinding Side}" />
+                        <local:FadeImage x:Name="ImgLeft" Grid.Column="0" Source="{TemplateBinding Side}" Stretch="Fill" />
                         
                         <Grid Grid.Column="1">
                             <Grid.Background>
@@ -91,7 +91,7 @@
                             <ContentPresenter Content="{TemplateBinding Content}" IsHitTestVisible="False" />
                         </Grid>
                         
-                        <local:FadeImage x:Name="ImgRight" Grid.Column="2" Source="{TemplateBinding Right}" />
+                        <local:FadeImage x:Name="ImgRight" Grid.Column="2" Source="{TemplateBinding Right}" Stretch="Fill" />
 
                         <TextBlock Grid.Column="1" Text="{TemplateBinding Text, Converter={utils:UppercaseConverter}}"
                                    VerticalAlignment="Center" HorizontalAlignment="Center" Style="{DynamicResource LoLText}"

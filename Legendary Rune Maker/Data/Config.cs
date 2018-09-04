@@ -16,6 +16,12 @@ namespace Legendary_Rune_Maker.Data
         private const string FilePath = "config.json";
         private const int LatestVersion = 10;
 
+        public static readonly string[] AvailableLanguages = new[]
+        {
+            "en-US",
+            "es-ES"
+        };
+
         public int ConfigVersion { get; set; } = LatestVersion;
 
         public bool CheckUpdatesBeforeStartup { get; set; } = true;

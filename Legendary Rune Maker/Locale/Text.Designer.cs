@@ -142,6 +142,15 @@ namespace Legendary_Rune_Maker.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Check updates at startup.
+        /// </summary>
+        public static string CheckUpdatesAtStartup {
+            get {
+                return ResourceManager.GetString("CheckUpdatesAtStartup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Clear.
         /// </summary>
         public static string Clear {
@@ -183,6 +192,24 @@ namespace Legendary_Rune_Maker.Locale {
         public static string InChampSelect {
             get {
                 return ResourceManager.GetString("InChampSelect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Language:.
+        /// </summary>
+        public static string Language {
+            get {
+                return ResourceManager.GetString("Language", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Load cache before startup.
+        /// </summary>
+        public static string LoadCacheBeforeStartup {
+            get {
+                return ResourceManager.GetString("LoadCacheBeforeStartup", resourceCulture);
             }
         }
         
@@ -309,6 +336,15 @@ namespace Legendary_Rune_Maker.Locale {
         public static string ReportBug {
             get {
                 return ResourceManager.GetString("ReportBug", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Restart.
+        /// </summary>
+        public static string Restart {
+            get {
+                return ResourceManager.GetString("Restart", resourceCulture);
             }
         }
         
