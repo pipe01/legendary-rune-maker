@@ -33,7 +33,7 @@ def clean():
     os.remove("Release.zip")
 
 
-versionRegex = re.compile("\\d\\.\\d\\.\\d")
+versionRegex = re.compile("\\d+\\.\\d+\\.\\d+")
 
 with open("./Legendary Rune Maker/Properties/AssemblyInfo.cs", "r") as file:
     for line in file:
@@ -46,7 +46,7 @@ with open("./Legendary Rune Maker/Properties/AssemblyInfo.cs", "r") as file:
 
 print("Packing version %s..." % version)
 
-pack_release.ziprelease(True)
+ziprelease(True)
 
 with open('.env') as f:
     env = [line.rstrip('\n') for line in f]
