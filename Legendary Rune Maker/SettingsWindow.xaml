@@ -7,8 +7,8 @@
         xmlns:data="clr-namespace:Legendary_Rune_Maker.Data"
         xmlns:controls="clr-namespace:Legendary_Rune_Maker.Controls"
         xmlns:loc="clr-namespace:Legendary_Rune_Maker.Locale"
-        mc:Ignorable="d" Closing="Window_Closing" WindowStartupLocation="CenterOwner" Tag="NoMinimize"
-        Title="SettingsWindow" Height="174" Width="289" Style="{StaticResource LoLWindow}">
+        mc:Ignorable="d" Closing="Window_Closing" WindowStartupLocation="CenterOwner" Tag="NoMinimize" ResizeMode="NoResize"
+        Title="SettingsWindow" Height="139" Width="249" Style="{StaticResource LoLWindow}">
     <Window.Background>
         <VisualBrush Stretch="UniformToFill">
             <VisualBrush.Visual>
