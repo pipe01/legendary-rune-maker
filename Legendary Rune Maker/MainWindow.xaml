@@ -101,8 +101,6 @@
                     <controls:FadeImage x:Name="ChampionImage" Grid.Column="0" Width="120" Height="120" Cursor="Hand"
                                         MouseLeftButtonUp="ChampionImage_MouseLeftButtonUp" Source="{StaticResource NoChamp}" />
 
-                    <Button Margin="0,0,27,80" />
-
                     <Image x:Name="PositionImage" Grid.Column="1" Source="{StaticResource Fill}" Width="136" Height="136" Opacity="1" />
 
                     <controls:PositionPickerControl x:Name="PositionPicker" Grid.Column="1" Width="144" Height="144" Opacity="0"
@@ -148,20 +146,20 @@
                     <CheckBox x:Name="AttachChk" Grid.Row="1" Grid.ColumnSpan="2" IsChecked="{Binding Attached, Mode=TwoWay}" Margin="10"
                               VerticalAlignment="Center" HorizontalAlignment="Left" Content="{x:Static loc:Text.Attach}" />
 
-                    <controls:LoLButton Grid.Column="5" Width="40" Margin="5" Click="ShowRunes_Click"
+                    <Button Grid.Column="5" Width="40" Margin="5" Click="ShowRunes_Click"
                                      ToolTip="{x:Static loc:Text.ShowRunes}">
                         <controls:FadeImage x:Name="RunesArrow" Source="{StaticResource RightArrow}" Width="20" Height="20" />
-                    </controls:LoLButton>
+                    </Button>
 
-                    <controls:LoLButton x:Name="Automation" Grid.Column="4" Grid.Row="1" Width="40" Margin="5" Click="Automation_Click"
+                    <Button x:Name="Automation" Grid.Column="4" Grid.Row="1" Width="40" Margin="5" Click="Automation_Click"
                                      ToolTip="{x:Static loc:Text.Automate}">
                         <Image Source="{StaticResource Automate}" Width="20" Height="20" />
-                    </controls:LoLButton>
+                    </Button>
 
-                    <controls:LoLButton x:Name="BugReport" Grid.Column="5" Grid.Row="1" Width="40" Margin="5" Click="BugReport_Click"
+                    <Button x:Name="BugReport" Grid.Column="5" Grid.Row="1" Width="40" Margin="5" Click="BugReport_Click"
                                      ToolTip="{x:Static loc:Text.ReportBug}">
                         <Image Source="{StaticResource Bug}" Width="20" Height="20" />
-                    </controls:LoLButton>
+                    </Button>
                 </Grid>
             </Grid>
 
@@ -176,20 +174,20 @@
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
 
-                <controls:LoLButton x:Name="Clear" Grid.Column="1" Width="40" Margin="5" Click="Clear_Click"
+                <Button x:Name="Clear" Grid.Column="1" Width="40" Margin="5" Click="Clear_Click"
                                     ToolTip="{x:Static loc:Text.Clear}">
                     <Image Source="{StaticResource Delete}" Width="20" Height="20" />
-                </controls:LoLButton>
+                </Button>
 
-                <controls:LoLButton x:Name="Load" Grid.Column="2" HorizontalAlignment="Stretch" Margin="5"
+                <Button x:Name="Load" Grid.Column="2" HorizontalAlignment="Stretch" Margin="5"
                                     IsEnabled="False" Click="Load_Click" Width="40" ToolTip="{x:Static loc:Text.Download}">
                     <Image Width="20" Height="20" Source="{StaticResource Download}" />
-                </controls:LoLButton>
+                </Button>
 
-                <controls:LoLButton x:Name="Upload" Grid.Column="3" Margin="5" Click="Upload_Click" IsEnabled="False"
+                <Button x:Name="Upload" Grid.Column="3" Margin="5" Click="Upload_Click" IsEnabled="False"
                                     Width="40" HorizontalAlignment="Right" ToolTip="{x:Static loc:Text.UploadToClient}">
                     <Image Width="20" Height="20" Source="{StaticResource Upload}" />
-                </controls:LoLButton>
+                </Button>
             </Grid>
         </Grid>
     </Grid>
