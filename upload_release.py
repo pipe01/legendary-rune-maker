@@ -30,8 +30,10 @@ def ziprelease(silent=False):
 
 
 def clean():
-    os.remove("updates.man")
-    os.remove("Release.zip")
+    if (os._exists("updates.man")):
+        os.remove("updates.man")
+    if (os._exists("Release.zip")):
+        os.remove("Release.zip")
 
 
 print("Building release configuration...")
@@ -39,6 +41,7 @@ code = os.system("msbuild /p:Configuration=Release /v:m")
 
 if (code != 0):
     print("Build failed!")
+    input("Press Enter to continue...")
     clean()
     exit()
 
