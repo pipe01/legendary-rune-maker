@@ -116,11 +116,11 @@ namespace Legendary_Rune_Maker
         {
             GameState.State.EnteredState += State_EnteredState;
             ChampSelectDetector.SessionUpdated += ChampSelectDetector_SessionUpdated;
-            LeagueClient.ConnectedChanged += LeagueClient_ConnectedChanged;
+            LeagueClient.Default.ConnectedChanged += LeagueClient_ConnectedChanged;
 
-            if (!LeagueClient.TryInit())
+            if (!LeagueClient.Default.SmartInit())
             {
-                LeagueClient.BeginTryInit();
+                LeagueClient.Default.BeginTryInit();
             }
 
             await LoginDetector.Init();
@@ -164,7 +164,7 @@ namespace Legendary_Rune_Maker
                         await Task.Run(async () =>
                         {
                             await Task.Delay(1000);
-                            LeagueClient.BeginTryInit();
+                            LeagueClient.Default.BeginTryInit();
                         });
                         break;
                     case GameStates.NotLoggedIn:

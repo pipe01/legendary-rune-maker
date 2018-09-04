@@ -70,7 +70,7 @@ namespace Legendary_Rune_Maker
 
         public DebugProxyWindow()
         {
-            LeagueClient.Proxy = new DebugProxy(this);
+            LeagueClient.Default.Proxy = new DebugProxy(this);
             LeagueSocket.DumpToDebug = true;
             Debug.Listeners.Add(new TextWriterTraceListener("log.txt"));
 
