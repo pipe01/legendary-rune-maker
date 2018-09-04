@@ -466,8 +466,7 @@
                     
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding Tag, RelativeSource={RelativeSource Mode=TemplatedParent},
-                                                Converter={utils:StringContainsConverter}, ConverterParameter='Settings',
-                                                diag:PresentationTraceSources.TraceLevel=High}"
+                                                Converter={utils:StringContainsConverter}, ConverterParameter='Settings'}"
                                      Value="False">
                             <Setter Property="Visibility" Value="Collapsed" />
                         </DataTrigger>
