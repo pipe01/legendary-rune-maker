@@ -76,23 +76,28 @@ namespace Legendary_Rune_Maker.Data
 
         private static Config Load()
         {
-            if (!File.Exists(FilePath))
-                return new Config();
+            Config c;
 
-            var c = JsonConvert.DeserializeObject<Config>(File.ReadAllText(FilePath));
+            if (!File.Exists(FilePath))
+            {
+                c = new Config();
+            }
+            else
+            {
+                c = JsonConvert.DeserializeObject<Config>(File.ReadAllText(FilePath));
+            }
 
             if (c.CultureName == null)
             {
                 c.CultureName = CultureInfo.CurrentCulture.Name;
-                c.Save();
             }
 
             if (c.ConfigVersion < LatestVersion)
             {
                 c.ConfigVersion = LatestVersion;
-                c.Save();
             }
 
+            c.Save();
             return c;
         }
     }
