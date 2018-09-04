@@ -66,27 +66,30 @@ namespace Legendary_Rune_Maker.Game
             }
             else if (state == GameStates.LockedIn)
             {
-                if (Main.UploadOnLock && GameState.CanUpload && Config.Default.UploadOnLock)
+                await Main.SafeInvoke(async () =>
                 {
-                    string champion = Riot.GetChampion(Main.SelectedChampion).Name;
-
-                    Main.ShowNotification(Text.LockedInMessage, champion + ", " + Main.SelectedPosition.ToString().ToLower(), NotificationType.Success);
-
-                    if (!Main.ValidPage)
+                    if (Main.UploadOnLock && GameState.CanUpload && Config.Default.UploadOnLock)
                     {
-                        if (Config.Default.LoadOnLock)
-                        {
-                            await Main.LoadPageFromDefaultProvider();
-                        }
-                        else
-                        {
-                            Main.ShowNotification(Text.PageChampNotSet.FormatStr(champion), null, NotificationType.Error);
-                            return;
-                        }
-                    }
+                        string champion = Riot.GetChampion(Main.SelectedChampion).Name;
 
-                    await Task.Run(Main.Page.UploadToClient);
-                }
+                        Main.ShowNotification(Text.LockedInMessage, champion + ", " + Main.SelectedPosition.ToString().ToLower(), NotificationType.Success);
+
+                        if (!Main.ValidPage)
+                        {
+                            if (Config.Default.LoadOnLock)
+                            {
+                                await Main.LoadPageFromDefaultProvider();
+                            }
+                            else
+                            {
+                                Main.ShowNotification(Text.PageChampNotSet.FormatStr(champion), null, NotificationType.Error);
+                                return;
+                            }
+                        }
+
+                        await Task.Run(Main.Page.UploadToClient);
+                    }
+                });
             }
         }
 
@@ -94,11 +97,11 @@ namespace Legendary_Rune_Maker.Game
         {
             var player = ChampSelectDetector.CurrentSelection;
 
-            if (player == null || player.championId == 0 || !Main.Attached)
-                return;
-
             Main.SafeInvoke(async () =>
             {
+                if (player == null || player.championId == 0 || !Main.Attached)
+                    return;
+
                 Main.SelectedPosition = player.assignedPosition.ToPosition();
 
                 await Main.SetChampion(player.championId);

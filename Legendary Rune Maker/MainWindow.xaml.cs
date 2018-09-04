@@ -80,15 +80,18 @@ namespace Legendary_Rune_Maker
 
         public bool ValidPage => SelectedRunes?.Length == 6 && SelectedChampion != 0;
 
+        private Actuator Actuator;
+
         public MainWindow()
         {
             if (!InDesigner)
                 Application.Current.MainWindow = this;
 
             NotificationManager = new NotificationManager(Dispatcher);
+            this.Actuator = new Actuator(this);
 
             InitializeComponent();
-
+            
             Version.Text = "Version " + Assembly.GetExecutingAssembly().GetName().Version.ToString(3);
 
 #if DEBUG
@@ -103,6 +106,7 @@ namespace Legendary_Rune_Maker
 
         private async void Window_Initialized(object sender, EventArgs e)
         {
+            await Actuator.Init();
             await InitControls();
 
             AppDomain.CurrentDomain.UnhandledException += (a, b) => Taskbar.Dispose();
@@ -116,6 +120,14 @@ namespace Legendary_Rune_Maker
                 Dispatcher.Invoke(act);
             else
                 act();
+        }
+
+        public T SafeInvoke<T>(Func<T> act)
+        {
+            if (!Dispatcher.CheckAccess())
+                return Dispatcher.Invoke(act);
+            else
+                return act();
         }
 
         public void SetState(GameStates state)

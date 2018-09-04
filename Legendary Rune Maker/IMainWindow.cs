@@ -19,6 +19,7 @@ namespace Legendary_Rune_Maker
         bool Attached { get; }
 
         void SafeInvoke(Action act);
+        T SafeInvoke<T>(Func<T> act);
         void SetState(GameStates state);
         void ShowNotification(string title, string message = null, NotificationType type = NotificationType.Information);
         Task LoadPageFromDefaultProvider();
