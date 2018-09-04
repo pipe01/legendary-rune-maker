@@ -113,6 +113,7 @@
     <Compile Include="DebugProxyWindow.xaml.cs">
       <DependentUpon>DebugProxyWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Game\Actuator.cs" />
     <Compile Include="Game\GameState.cs" />
     <Compile Include="Controls\RuneTreeControl.xaml.cs">
       <DependentUpon>RuneTreeControl.xaml</DependentUpon>
@@ -129,6 +130,7 @@
     <Compile Include="GrayscaleImageControl.xaml.cs">
       <DependentUpon>GrayscaleImageControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="IMainWindow.cs" />
     <Compile Include="LoadingWindow.xaml.cs">
       <DependentUpon>LoadingWindow.xaml</DependentUpon>
     </Compile>
@@ -348,5 +350,6 @@
   <ItemGroup>
     <Resource Include="Images\no_spell.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

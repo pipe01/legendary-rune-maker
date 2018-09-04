@@ -24,7 +24,7 @@ namespace Legendary_Rune_Maker
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : Window, IMainWindow
     {
         public static bool InDesigner => DesignerProperties.GetIsInDesignMode(new DependencyObject());
 
@@ -50,10 +50,6 @@ namespace Legendary_Rune_Maker
         public static readonly DependencyProperty ExpandedProperty = DependencyProperty.Register("Expanded", typeof(bool), typeof(MainWindow));
 
 
-        private Rune[] SelectedRunes => Tree.SelectedPrimary.Concat(Tree.SelectedSecondary).Where(o => o != null).ToArray();
-
-        private RunePage Page => new RunePage(SelectedRunes.Select(o => o.ID).ToArray(), Tree.PrimaryTree.ID, Tree.SecondaryTree.ID, SelectedChampion, SelectedPosition);
-
         internal static readonly RuneProvider[] RuneProviders = new RuneProvider[]
         {
             new RunesLolProvider(),
@@ -62,22 +58,27 @@ namespace Legendary_Rune_Maker
             new ClientProvider()
         };
 
+        private Rune[] SelectedRunes => Tree.SelectedPrimary.Concat(Tree.SelectedSecondary).Where(o => o != null).ToArray();
+
+        public RunePage Page => new RunePage(SelectedRunes.Select(o => o.ID).ToArray(), Tree.PrimaryTree.ID, Tree.SecondaryTree.ID, SelectedChampion, SelectedPosition);
+
         public static INotificationManager NotificationManager;
 
         private int _SelectedChampion;
-        private int SelectedChampion
+        public int SelectedChampion
         {
             get => _SelectedChampion;
-            set
+            private set
             {
                 _SelectedChampion = value;
 
                 Load.IsEnabled = value > 0;
             }
         }
-        
-        private bool ValidPage;
-        private Position SelectedPosition { get => PositionPicker.Selected; set => PositionPicker.Selected = value; }
+
+        public Position SelectedPosition { get => PositionPicker.Selected; set => PositionPicker.Selected = value; }
+
+        public bool ValidPage => SelectedRunes?.Length == 6 && SelectedChampion != 0;
 
         public MainWindow()
         {
@@ -102,9 +103,6 @@ namespace Legendary_Rune_Maker
 
         private async void Window_Initialized(object sender, EventArgs e)
         {
-            var s = await Riot.GetSummonerSpells();
-
-            await InitDetectors();
             await InitControls();
 
             AppDomain.CurrentDomain.UnhandledException += (a, b) => Taskbar.Dispose();
@@ -112,20 +110,51 @@ namespace Legendary_Rune_Maker
             this.Show();
         }
 
-        private async Task InitDetectors()
+        public void SafeInvoke(Action act)
         {
-            GameState.State.EnteredState += State_EnteredState;
-            ChampSelectDetector.SessionUpdated += ChampSelectDetector_SessionUpdated;
-            LeagueClient.Default.ConnectedChanged += LeagueClient_ConnectedChanged;
+            if (!Dispatcher.CheckAccess())
+                Dispatcher.Invoke(act);
+            else
+                act();
+        }
 
-            if (!LeagueClient.Default.SmartInit())
+        public void SetState(GameStates state)
+        {
+            AttachChk.IsEnabled = GameState.CanUpload;
+
+            switch (state)
             {
-                LeagueClient.Default.BeginTryInit();
+                case GameStates.Disconnected:
+                    Status.Foreground = new SolidColorBrush(Colors.Red);
+                    Status.Text = Text.Disconnected;
+                    break;
+                case GameStates.NotLoggedIn:
+                    Status.Foreground = new SolidColorBrush(Colors.Orange);
+                    Status.Text = Text.NotLoggedIn;
+                    break;
+                case GameStates.LoggedIn:
+                    Status.Foreground = new SolidColorBrush(Colors.Green);
+                    Status.Text = Text.LoggedIn;
+                    break;
+                case GameStates.InChampSelect:
+                    Status.Foreground = new SolidColorBrush(Colors.SlateBlue);
+                    Status.Text = Text.InChampSelect;
+                    break;
+                case GameStates.LockedIn:
+                    Status.Foreground = new SolidColorBrush(Colors.YellowGreen);
+                    Status.Text = Text.LockedIn;
+                    break;
             }
+        }
 
-            await LoginDetector.Init();
-            await ChampSelectDetector.Init();
-            ReadyCheckDetector.Init();
+        public void ShowNotification(string title, string message = null, NotificationType type = NotificationType.Information)
+        {
+            NotificationManager.Show(new NotificationContent
+            {
+                Title = title,
+                Message = message,
+                Type = type
+            });
         }
 
         private async Task InitControls()
@@ -135,91 +164,7 @@ namespace Legendary_Rune_Maker
             SelectedPosition = Position.Fill;
         }
 
-        private void LeagueClient_ConnectedChanged(bool connected)
-        {
-            Debug.WriteLine("Connected: " + connected);
-
-            if (connected)
-            {
-                GameState.State.Fire(GameTriggers.OpenGame);
-            }
-            else
-            {
-                GameState.State.Fire(GameTriggers.CloseGame);
-            }
-        }
-
-        private void State_EnteredState(GameStates state)
-        {
-            Dispatcher.Invoke(async () =>
-            {
-                AttachChk.IsEnabled = GameState.CanUpload;
-
-                switch (state)
-                {
-                    case GameStates.Disconnected:
-                        Status.Foreground = new SolidColorBrush(Colors.Red);
-                        Status.Text = Text.Disconnected;
-
-                        await Task.Run(async () =>
-                        {
-                            await Task.Delay(1000);
-                            LeagueClient.Default.BeginTryInit();
-                        });
-                        break;
-                    case GameStates.NotLoggedIn:
-                        Status.Foreground = new SolidColorBrush(Colors.Orange);
-                        Status.Text = Text.NotLoggedIn;
-                        break;
-                    case GameStates.LoggedIn:
-                        Status.Foreground = new SolidColorBrush(Colors.Green);
-                        Status.Text = Text.LoggedIn;
-                        break;
-                    case GameStates.InChampSelect:
-                        Status.Foreground = new SolidColorBrush(Colors.SlateBlue);
-                        Status.Text = Text.InChampSelect;
-                        break;
-                    case GameStates.LockedIn:
-                        Status.Foreground = new SolidColorBrush(Colors.YellowGreen);
-                        Status.Text = Text.LockedIn;
-
-                        if (UploadOnLock && GameState.CanUpload && Config.Default.UploadOnLock)
-                        {
-                            string champion = Riot.GetChampion(SelectedChampion).Name;
-
-                            NotificationManager.Show(new NotificationContent
-                            {
-                                Title = Text.LockedInMessage,
-                                Message = champion + ", " + SelectedPosition.ToString().ToLower(),
-                                Type = NotificationType.Success
-                            });
-
-                            if (!ValidPage)
-                            {
-                                if (Config.Default.LoadOnLock)
-                                {
-                                    await LoadPageFromFirstProvider();
-                                }
-                                else
-                                {
-                                    NotificationManager.Show(new NotificationContent
-                                    {
-                                        Title = Text.PageChampNotSet.FormatStr(champion),
-                                        Type = NotificationType.Error
-                                    });
-                                    break;
-                                }
-                            }
-                            
-                            await Task.Run(Page.UploadToClient);
-                        }
-
-                        break;
-                }
-            });
-        }
-
-        private async Task LoadPageFromFirstProvider()
+        public async Task LoadPageFromDefaultProvider()
         {
             var provider = RuneProviders.FirstOrDefault(o => o.Name == Config.Default.LockLoadProvider)
                             ?? RuneProviders[0];
@@ -233,32 +178,12 @@ namespace Legendary_Rune_Maker
 
             var champName = Riot.GetChampion(SelectedChampion).Name;
 
-            NotificationManager.Show(new NotificationContent
-            {
-                Title = Text.PageChampInPosNotSet.FormatStr(champName, SelectedPosition.ToString().ToLower()),
-                Message = Text.PageNotSetDownloaded.FormatStr(provider.Name),
-                Type = NotificationType.Information
-            });
+            ShowNotification(
+                Text.PageChampInPosNotSet.FormatStr(champName, SelectedPosition.ToString().ToLower()), 
+                Text.PageNotSetDownloaded.FormatStr(provider.Name),
+                NotificationType.Information);
         }
-
-        private async void ChampSelectDetector_SessionUpdated(LolChampSelectChampSelectSession obj)
-        {
-            if (!Dispatcher.CheckAccess())
-            {
-                Dispatcher.Invoke(() => ChampSelectDetector_SessionUpdated(obj));
-                return;
-            }
-
-            var player = ChampSelectDetector.CurrentSelection;
-
-            if (player == null || player.championId == 0 || !Attached)
-                return;
-            
-            SelectedPosition = player.assignedPosition.ToPosition();
-
-            await SetChampion(player.championId);
-        }
-
+        
         private async void Upload_Click(object sender, EventArgs e)
         {
             await Page.UploadToClient();
@@ -266,13 +191,6 @@ namespace Legendary_Rune_Maker
 
         private void Tree_SelectedRunesChanged(object sender, EventArgs e)
         {
-            RefreshAndSave();
-        }
-
-        private void RefreshAndSave()
-        {
-            ValidPage = SelectedRunes.Length == 6 && SelectedChampion != 0;
-
             Upload.IsEnabled = ValidPage && GameState.CanUpload;
 
             if (ValidPage)
@@ -284,9 +202,9 @@ namespace Legendary_Rune_Maker
             await SetChampion((await Riot.GetChampions())[index]);
         }
 
-        private Task SetChampion(int id) => SetChampion(Riot.GetChampion(id));
+        public Task SetChampion(int championId) => SetChampion(Riot.GetChampion(championId));
 
-        private async Task SetChampion(Champion champ)
+        public async Task SetChampion(Champion champ)
         {
             if (champ == null)
             {
