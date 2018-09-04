@@ -1,8 +1,9 @@
 #!/usr/bin/env python
+from __future__ import with_statement
 import ftplib
 import re
 import os
-from __future__ import with_statement
+import sys
 from contextlib import closing
 from zipfile import ZipFile, ZIP_DEFLATED
 
@@ -33,6 +34,14 @@ def clean():
     os.remove("Release.zip")
 
 
+print("Building release configuration...")
+code = os.system("msbuild /p:Configuration=Release /v:m")
+
+if (code != 0):
+    print("Build failed!")
+    clean()
+    exit()
+
 versionRegex = re.compile("\\d+\\.\\d+\\.\\d+")
 
 with open("./Legendary Rune Maker/Properties/AssemblyInfo.cs", "r") as file:
@@ -62,39 +71,36 @@ ftp = ftplib.FTP(env[0])
 ftp.login(env[1], env[2])
 
 print("Downloading update manifest...")
+with open("updates.man", "wb+") as file:
+    ftp.retrbinary("RETR updates.man", file.write)
 
-updateManifest = open("updates.man", "wb+")
-
-ftp.retrbinary("RETR updates.man", updateManifest.write)
-
-updateManifest.close()
+appendToFile = True
 
 with open("updates.man", "r") as file:
     for line in file:
         if (line.startswith(version)):
-            print("Version already uploaded!")
-            file.close()
-            clean()
-            exit()
+            force = len(sys.argv) > 0 and "-force" in sys.argv
+            appendToFile = False
 
-updateManifest = open("updates.man", "a+")
+            if (not force):
+                print("Version already uploaded!")
+                file.close()
+                clean()
+                exit()
 
-updateManifest.write(version + " ./" + version + ".zip\n")
+if (appendToFile):
+    with open("updates.man", "a+") as file:
+        file = open("updates.man", "a+")
+        file.write("%s ./%s.zip" % (version, version))
+        file.close()
 
-updateManifest.close()
-updateManifest = open("updates.man", "rb")
-
-print("Uploading update manifest...")
-ftp.storbinary("STOR updates.man", updateManifest)
-
-updateManifest.close()
-
-myfile = open(filename, 'rb')
+    print("Uploading update manifest...")
+    with open("updates.man", "rb") as file:
+        ftp.storbinary("STOR updates.man", file)
 
 print("Uploading update archive...")
-ftp.storbinary("STOR %s.zip" % version, myfile)
-
-myfile.close()
+with open("Release.zip", "rb") as file:
+    ftp.storbinary("STOR %s.zip" % version, file)
 
 ftp.close()
 
