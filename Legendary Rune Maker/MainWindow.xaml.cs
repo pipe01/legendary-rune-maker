@@ -510,5 +510,10 @@ namespace Legendary_Rune_Maker
             else
                 RunesArrow.Source = (ImageSource)Application.Current.FindResource("RightArrow");
         }
+
+        public void Settings()
+        {
+            MessageBox.Show("Settings!");
+        }
     }
 }

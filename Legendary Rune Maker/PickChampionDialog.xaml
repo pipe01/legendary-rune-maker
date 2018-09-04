@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Legendary_Rune_Maker"
         xmlns:controls="clr-namespace:Legendary_Rune_Maker.Controls"
         xmlns:loc="clr-namespace:Legendary_Rune_Maker.Locale"
-        mc:Ignorable="d"
+        mc:Ignorable="d" Tag="NoMinimize"
         Title="Pick a champion" Height="450" Width="800" Style="{StaticResource LoLWindow}" Initialized="Window_Initialized"
         WindowStartupLocation="CenterScreen">
     

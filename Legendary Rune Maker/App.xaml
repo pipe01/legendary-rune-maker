@@ -4,6 +4,7 @@
              xmlns:local="clr-namespace:Legendary_Rune_Maker"
              xmlns:controls="clr-namespace:Legendary_Rune_Maker.Controls"
              xmlns:utils="clr-namespace:Legendary_Rune_Maker.Utils"
+             xmlns:diag="clr-namespace:System.Diagnostics;assembly=WindowsBase"
              StartupUri="LoadingWindow.xaml">
     <Application.Resources>
         <SolidColorBrush x:Key="Normal" Color="#D6C8A5" />
@@ -108,6 +109,16 @@
                 <DrawingGroup>
                     <DrawingGroup>
                         <GeometryDrawing Brush="{StaticResource Normal}" Geometry="F1 M306,306z M0,0z M247.35,270.3L247.35,270.3 130.05,153 247.35,35.7 211.65,0 58.65,153 211.65,306z" />
+                    </DrawingGroup>
+                </DrawingGroup>
+            </DrawingImage.Drawing>
+        </DrawingImage>
+
+        <DrawingImage x:Key="Settings">
+            <DrawingImage.Drawing>
+                <DrawingGroup>
+                    <DrawingGroup>
+                        <GeometryDrawing Brush="#9e9b94" Geometry="F1 M507.451,507.45z M0,0z M440.813,280.5C440.813,272.85 443.363,265.2 443.363,255 443.363,244.8 443.363,237.15 440.813,229.5L494.363,186.15C499.463,181.05,499.463,175.95,496.913,170.85L445.913,81.6C443.363,79.05,438.264,76.5,430.613,79.05L366.863,104.55C354.113,94.35,338.813,86.7,323.513,79.05L313.313,12.75C315.863,5.1,308.212,0,303.113,0L201.113,0C196.012,0,188.363,5.1,188.363,10.2L178.163,79.05C162.863,84.15,150.113,94.35,134.813,104.55L73.613,79.05C65.963,76.5,60.863,79.05,55.762,84.15L4.76200000000001,173.4C2.21200000000001,175.95,4.76200000000001,183.6,9.86200000000001,188.7L63.412,229.5C63.412,237.15 60.862,244.8 60.862,255 60.862,265.2 60.862,272.85 63.412,280.5L9.86200000000002,323.85C4.76200000000002,328.951,4.76200000000002,334.05,7.31200000000002,339.151L58.312,428.401C60.862,430.951,65.961,433.501,73.612,430.951L137.362,405.451C150.112,415.651,165.412,423.301,180.712,430.951L190.912,497.251C190.912,502.351,196.012,507.451,203.662,507.451L305.662,507.451C310.763,507.451,318.412,502.35,318.412,497.251L328.612,430.951C343.912,423.301,359.212,415.651,371.962,405.451L435.712,430.951C440.813,433.501,448.462,430.951,451.013,425.85L502.013,336.6C504.563,331.5,504.563,323.85,499.462,321.3L440.813,280.5z M252.113,344.25C203.663,344.25 162.863,303.45 162.863,255 162.863,206.55 203.663,165.75 252.113,165.75 300.563,165.75 341.363,206.55 341.363,255 341.363,303.45 300.563,344.25 252.113,344.25z" />
                     </DrawingGroup>
                 </DrawingGroup>
             </DrawingImage.Drawing>
@@ -429,13 +440,38 @@
         </Style>
 
         <Style x:Key="LoLWindow" TargetType="Window">
+            <Style.Resources>
+                <Style x:Key="MinimizeButton" TargetType="Button">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Tag, RelativeSource={RelativeSource Mode=TemplatedParent},
+                                                Converter={utils:StringContainsConverter}, ConverterParameter='NoMinimize'}"
+                                     Value="True">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+
+                <Style x:Key="SettingsButton" TargetType="Button">
+                    <Setter Property="Visibility" Value="Visible" />
+                    
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Tag, RelativeSource={RelativeSource Mode=TemplatedParent},
+                                                Converter={utils:StringContainsConverter}, ConverterParameter='Settings',
+                                                diag:PresentationTraceSources.TraceLevel=High}"
+                                     Value="False">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Style.Resources>
+
             <Setter Property="WindowChrome.WindowChrome">
                 <Setter.Value>
                     <WindowChrome GlassFrameThickness="0" CaptionHeight="0" UseAeroCaptionButtons="False" ResizeBorderThickness="7"
                                   CornerRadius="0" />
                 </Setter.Value>
             </Setter>
-
+            
             <EventSetter Event="MouseLeftButtonDown" Handler="Window_MouseLeftButtonDown" />
 
             <Setter Property="Template">
@@ -448,11 +484,14 @@
                                 <Grid VerticalAlignment="Top" Margin="3" HorizontalAlignment="Right">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="20" />
+                                        <ColumnDefinition Width="Auto" />
                                         <ColumnDefinition Width="20" />
                                     </Grid.ColumnDefinitions>
 
                                     <Button Grid.Column="0" Width="20" Height="20" Cursor="Hand"
-                                            Command="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={utils:WindowCommandConverter}, ConverterParameter='Minimize'}">
+                                            Style="{StaticResource MinimizeButton}"
+                                            Command="{Binding RelativeSource={RelativeSource Mode=TemplatedParent},
+                                                Converter={utils:WindowCommandConverter}, ConverterParameter='Minimize'}">
                                         <Button.Template>
                                             <ControlTemplate>
                                                 <Image Width="10" Height="10" Source="{StaticResource Minimize}" />
@@ -461,7 +500,19 @@
                                     </Button>
 
                                     <Button Grid.Column="1" Width="20" Height="20" Cursor="Hand"
-                                            Command="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={utils:WindowCommandConverter}, ConverterParameter='Close'}">
+                                            Style="{StaticResource SettingsButton}"
+                                            Command="{Binding RelativeSource={RelativeSource Mode=TemplatedParent},
+                                                Converter={utils:WindowCommandConverter}, ConverterParameter='Settings'}">
+                                        <Button.Template>
+                                            <ControlTemplate>
+                                                <Image Width="10" Height="10" Source="{StaticResource Settings}" />
+                                            </ControlTemplate>
+                                        </Button.Template>
+                                    </Button>
+
+                                    <Button Grid.Column="2" Width="20" Height="20" Cursor="Hand"
+                                            Command="{Binding RelativeSource={RelativeSource Mode=TemplatedParent},
+                                                Converter={utils:WindowCommandConverter}, ConverterParameter='Close'}">
                                         <Button.Template>
                                             <ControlTemplate>
                                                 <Image Width="10" Height="10" Source="{StaticResource Close}" />
