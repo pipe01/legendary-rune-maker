@@ -30,9 +30,9 @@ def ziprelease(silent=False):
 
 
 def clean():
-    if (os._exists("updates.man")):
+    if (os.path.isfile("updates.man")):
         os.remove("updates.man")
-    if (os._exists("Release.zip")):
+    if (os.path.isfile("Release.zip")):
         os.remove("Release.zip")
 
 

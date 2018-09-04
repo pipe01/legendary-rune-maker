@@ -222,4 +222,7 @@
   <data name="Restart" xml:space="preserve">
     <value>Reiniciar</value>
   </data>
+  <data name="Language" xml:space="preserve">
+    <value>Idioma:</value>
+  </data>
 </root>
