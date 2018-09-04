@@ -2,7 +2,30 @@
 import ftplib
 import re
 import os
-import pack_release
+from __future__ import with_statement
+from contextlib import closing
+from zipfile import ZipFile, ZIP_DEFLATED
+
+
+def ziprelease(silent=False):
+    basedir = "./Legendary Rune Maker/bin/Release"
+
+    assert os.path.isdir(basedir)
+    with closing(ZipFile("Release.zip", "w", ZIP_DEFLATED)) as z:
+        for root, dirs, files in os.walk(basedir):
+            # NOTE: ignore empty directories
+            for fn in files:
+                absfn = os.path.join(root, fn)
+                zfn = absfn[len(basedir) + len(os.sep):]  # relative path
+
+                if (zfn.startswith("cache") or zfn.endswith(".json") or
+                        zfn.endswith(".xml") or zfn.endswith(".pdb")):
+                    continue
+
+                if (not silent):
+                    print(zfn)
+
+                z.write(absfn, zfn)
 
 
 def clean():
