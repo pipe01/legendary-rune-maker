@@ -39,9 +39,9 @@
 
             <ComboBox x:Name="LanguageCb" Width="109" FontSize="12" SelectionChanged="LanguageCb_SelectionChanged" />
 
-            <controls:LoLButton Margin="5.5 0 0 0" Width="40" Click="Restart_Click" ToolTip="{x:Static loc:Text.Restart}">
+            <Button Margin="5.5 0 0 0" Width="40" Click="Restart_Click" ToolTip="{x:Static loc:Text.Restart}">
                 <Image Source="{StaticResource Refresh}" Width="17" Height="17" />
-            </controls:LoLButton>
+            </Button>
         </StackPanel>
     </Grid>
 </Window>

@@ -27,7 +27,7 @@
         </Setter>
     </Style>
 
-    <Style TargetType="{x:Type local:SummonerSpellControl}">        
+    <Style TargetType="{x:Type local:SummonerSpellControl}">
         <Setter Property="Cursor" Value="Hand" />
 
         <Setter Property="Template">
@@ -46,57 +46,12 @@
                         <Border.Background>
                             <ImageBrush ImageSource="Images/no_spell.png" />
                         </Border.Background>
-                        
+
                         <Grid Margin="{TemplateBinding ImageMargin}">
                             <Image Source="{TemplateBinding SpellImage}" />
                             <Rectangle Fill="#28000000" />
                         </Grid>
                     </Border>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-    <Style TargetType="{x:Type local:LoLButton}">
-        <Style.Resources>
-            <Style TargetType="local:FadeImage">
-                <Setter Property="Stretch" Value="None" />
-                <Setter Property="SpeedRatio" Value="1.5" />
-            </Style>
-        </Style.Resources>
-
-        <Setter Property="Cursor" Value="Hand" />
-
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type local:LoLButton}">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="5" />
-                            <ColumnDefinition />
-                            <ColumnDefinition Width="5" />
-                        </Grid.ColumnDefinitions>
-
-                        <local:FadeImage x:Name="ImgLeft" Grid.Column="0" Source="{TemplateBinding Side}" Stretch="Fill" />
-                        
-                        <Grid Grid.Column="1">
-                            <Grid.Background>
-                                <VisualBrush TileMode="Tile">
-                                    <VisualBrush.Visual>
-                                        <local:FadeImage Source="{TemplateBinding Fill}" />
-                                    </VisualBrush.Visual>
-                                </VisualBrush>
-                            </Grid.Background>
-
-                            <ContentPresenter Content="{TemplateBinding Content}" IsHitTestVisible="False" />
-                        </Grid>
-                        
-                        <local:FadeImage x:Name="ImgRight" Grid.Column="2" Source="{TemplateBinding Right}" Stretch="Fill" />
-
-                        <TextBlock Grid.Column="1" Text="{TemplateBinding Text, Converter={utils:UppercaseConverter}}"
-                                   VerticalAlignment="Center" HorizontalAlignment="Center" Style="{DynamicResource LoLText}"
-                                   Foreground="{TemplateBinding Foreground}" />
-                    </Grid>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

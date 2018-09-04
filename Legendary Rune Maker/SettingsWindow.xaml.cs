@@ -59,5 +59,25 @@ namespace Legendary_Rune_Maker
         {
             Config.Default.CultureName = Config.AvailableLanguages[LanguageCb.SelectedIndex];
         }
+
+        private void Button_MouseEnter(object sender, MouseEventArgs e)
+        {
+            Debug.WriteLine("MouseEnter");
+        }
+
+        private void Button_MouseLeave(object sender, MouseEventArgs e)
+        {
+            Debug.WriteLine("MouseLeave");
+        }
+
+        private void Button_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            Debug.WriteLine("MouseDown");
+        }
+
+        private void Button_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            Debug.WriteLine("MouseUp");
+        }
     }
 }

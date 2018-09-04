@@ -98,7 +98,6 @@
     <Compile Include="Controls\FadeImage.xaml.cs">
       <DependentUpon>FadeImage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\LoLButton.cs" />
     <Compile Include="Controls\PositionPickerControl.xaml.cs">
       <DependentUpon>PositionPickerControl.xaml</DependentUpon>
     </Compile>
@@ -152,8 +151,10 @@
     </Compile>
     <Compile Include="Utils\BitmapUtils.cs" />
     <Compile Include="Utils\Extensions.cs" />
+    <Compile Include="Utils\ObjectToTypeConverter.cs" />
     <Compile Include="Utils\RelayCommand.cs" />
     <Compile Include="Utils\StringContainsConverter.cs" />
+    <Compile Include="Utils\TriggerTracing.cs" />
     <Compile Include="Utils\UppercaseConverter.cs" />
     <Compile Include="Utils\VisualHierarchyHelper.cs" />
     <Compile Include="Utils\WindowCommandConverter.cs" />

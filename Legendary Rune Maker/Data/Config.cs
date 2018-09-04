@@ -78,7 +78,7 @@ namespace Legendary_Rune_Maker.Data
         {
             Config c;
 
-            if (!File.Exists(FilePath))
+            if (!File.Exists(FilePath) || MainWindow.InDesigner)
             {
                 c = new Config();
             }

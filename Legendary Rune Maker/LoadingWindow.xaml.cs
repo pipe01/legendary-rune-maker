@@ -74,7 +74,7 @@ namespace Legendary_Rune_Maker
             {
                 this.Visibility = Visibility.Hidden;
             }
-            
+
             if (WebCache.CacheGameVersion != await Riot.GetLatestVersionAsync()
                 || WebCache.CacheLocale != CultureInfo.CurrentCulture.Name)
             {

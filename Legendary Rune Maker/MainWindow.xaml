@@ -101,6 +101,8 @@
                     <controls:FadeImage x:Name="ChampionImage" Grid.Column="0" Width="120" Height="120" Cursor="Hand"
                                         MouseLeftButtonUp="ChampionImage_MouseLeftButtonUp" Source="{StaticResource NoChamp}" />
 
+                    <Button Margin="0,0,27,80" />
+
                     <Image x:Name="PositionImage" Grid.Column="1" Source="{StaticResource Fill}" Width="136" Height="136" Opacity="1" />
 
                     <controls:PositionPickerControl x:Name="PositionPicker" Grid.Column="1" Width="144" Height="144" Opacity="0"
