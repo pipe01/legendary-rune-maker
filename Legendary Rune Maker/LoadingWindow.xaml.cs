@@ -97,7 +97,7 @@ namespace Legendary_Rune_Maker
             var manager = new UpdateManager(
                 new WebPackageResolver("https://pipe0481.heliohost.org/plrm/updates.man"),
                 new ZipPackageExtractor());
-
+            await Task.Delay(5000);
             var update = await await Task.WhenAny(Task.Delay(3000).ContinueWith<CheckForUpdatesResult>(_ => null), manager.CheckForUpdatesAsync());
 
             if (update?.CanUpdate == true)
