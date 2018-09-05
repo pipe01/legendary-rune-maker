@@ -133,7 +133,9 @@
         </Grid>
 
         <Grid Grid.Row="2">
-            <Button Width="70" Height="34" HorizontalAlignment="Right" Click="Button_Click_1">Back</Button>
+            <Button Width="40" Height="34" HorizontalAlignment="Right" Click="Button_Click_1">
+                <Image Source="{StaticResource Back}" Width="20" Height="20" />
+            </Button>
         </Grid>
     </Grid>
 </Page>
