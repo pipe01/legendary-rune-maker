@@ -151,6 +151,24 @@ namespace Legendary_Rune_Maker.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to There is no room for more pages..
+        /// </summary>
+        public static string CantUploadPageMessage {
+            get {
+                return ResourceManager.GetString("CantUploadPageMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Couldn&apos;t upload rune page.
+        /// </summary>
+        public static string CantUploadPageTitle {
+            get {
+                return ResourceManager.GetString("CantUploadPageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Checking for updates....
         /// </summary>
         public static string CheckingUpdates {

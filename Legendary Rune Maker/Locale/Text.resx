@@ -241,4 +241,10 @@
   <data name="Updating" xml:space="preserve">
     <value>Updating...</value>
   </data>
+  <data name="CantUploadPageMessage" xml:space="preserve">
+    <value>There is no room for more pages.</value>
+  </data>
+  <data name="CantUploadPageTitle" xml:space="preserve">
+    <value>Couldn't upload rune page</value>
+  </data>
 </root>

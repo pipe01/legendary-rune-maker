@@ -237,4 +237,10 @@
   <data name="Updating" xml:space="preserve">
     <value>Actualizando...</value>
   </data>
+  <data name="CantUploadPageMessage" xml:space="preserve">
+    <value>No hay espacio para más páginas.</value>
+  </data>
+  <data name="CantUploadPageTitle" xml:space="preserve">
+    <value>No se ha podido cargar la página de runas</value>
+  </data>
 </root>

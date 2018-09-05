@@ -1,5 +1,8 @@
-﻿using LCU.NET.Plugins.LoL;
+﻿using LCU.NET;
+using LCU.NET.API_Models;
+using LCU.NET.Plugins.LoL;
 using Legendary_Rune_Maker.Game;
+using Legendary_Rune_Maker.Locale;
 using Notifications.Wpf;
 using System;
 using System.Collections.Generic;
@@ -38,25 +41,35 @@ namespace Legendary_Rune_Maker.Data
             if (!GameState.CanUpload)
                 return;
 
-            var page = await Perks.GetCurrentPageAsync();
-
-            if (!page.isEditable)
+            var page = new LolPerksPerkPageResource
             {
-                MainWindow.NotificationManager.Show(new NotificationContent
-                {
-                    Title = "Couldn't upload rune page",
-                    Message = "Make sure the active rune page is editable.",
-                    Type = NotificationType.Error
-                });
-                return;
+                primaryStyleId = PrimaryTree,
+                subStyleId = SecondaryTree,
+                selectedPerkIds = RuneIDs,
+                name = this.Name ?? Riot.GetChampion(ChampionID).Name + " - " + Enum.GetName(typeof(Position), Position)
+            };
+
+            try
+            {
+                await Perks.PostPageAsync(page);
             }
+            catch (APIErrorException ex) when (ex.Message == "Max pages reached")
+            {
+                //The maximum number of pages has been reached, try to delete current page and upload again
 
-            page.primaryStyleId = PrimaryTree;
-            page.subStyleId = SecondaryTree;
-            page.selectedPerkIds = RuneIDs;
-            page.name = this.Name ?? Riot.GetChampion(ChampionID).Name + " - " + Enum.GetName(typeof(Position), Position);
+                var currentPage = await Perks.GetCurrentPageAsync();
 
-            await Perks.PutPageAsync(page.id, page);
+                if (currentPage.isDeletable)
+                {
+                    await Perks.DeletePageAsync(currentPage.id);
+                    await UploadToClient();
+                }
+                else
+                {
+                    MainWindow.ShowNotification(Text.CantUploadPageTitle, "");
+                    return;
+                }
+            }
         }
 
         public static async Task<RunePage> GetActivePageFromClient()
