@@ -38,6 +38,7 @@ namespace Legendary_Rune_Maker.Data
         public bool AutoPickSumms { get; set; }
         public bool DisablePickSumms { get; set; } = true;
         public bool SetItemSet { get; set; } = true;
+        public bool MinimizeToTaskbar { get; set; } = true;
 
         public Dictionary<Position, int> ChampionsToPick { get; set; } = new Dictionary<Position, int>
         {

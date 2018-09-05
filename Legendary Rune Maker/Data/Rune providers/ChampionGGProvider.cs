@@ -80,6 +80,10 @@ namespace Legendary_Rune_Maker.Data.Rune_providers
             {
                 string title = wrapper.PreviousSibling.PreviousSibling.InnerText;
                 var items = new List<int>();
+                string[] stats = wrapper.Descendants()
+                    .Where(o => o.Name == "strong" && o.ParentNode.HasClass("build-text"))
+                    .Select(o => o.InnerText)
+                    .ToArray();
 
                 foreach (var item in wrapper.Descendants().Where(o => o.Name == "img"))
                 {
@@ -89,7 +93,7 @@ namespace Legendary_Rune_Maker.Data.Rune_providers
                 blocks.Add(new ItemSet.SetBlock
                 {
                     Items = items.ToArray(),
-                    Name = title
+                    Name = $"{title} ({stats[0]} win rate | {stats[1]} games)"
                 });
             }
 
@@ -97,7 +101,8 @@ namespace Legendary_Rune_Maker.Data.Rune_providers
             {
                 Champion = championId,
                 Position = position,
-                Blocks = blocks.ToArray()
+                Blocks = blocks.ToArray(),
+                Name = position.ToString()
             };
 
             int ParseItem(HtmlNode aNode)

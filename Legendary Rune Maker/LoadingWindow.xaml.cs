@@ -60,8 +60,6 @@ namespace Legendary_Rune_Maker
             if (Config.Default.LoadCacheBeforeStartup)
                 await LoadCache();
 
-            var a = await new ChampionGGProvider().GetItemSet(84, Position.Fill);
-
             ShowMainWindow();
         }
 
