@@ -66,7 +66,7 @@ namespace Legendary_Rune_Maker.Data
                 }
                 else
                 {
-                    MainWindow.ShowNotification(Text.CantUploadPageTitle, "");
+                    MainWindow.ShowNotification(Text.CantUploadPageTitle, Text.CantUploadPageMessage);
                     return;
                 }
             }
