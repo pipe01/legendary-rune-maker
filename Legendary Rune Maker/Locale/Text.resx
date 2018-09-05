@@ -247,4 +247,10 @@
   <data name="CantUploadPageTitle" xml:space="preserve">
     <value>Couldn't upload rune page</value>
   </data>
+  <data name="SetItemSet" xml:space="preserve">
+    <value>Load item set for champion</value>
+  </data>
+  <data name="SetItemSetTip" xml:space="preserve">
+    <value>Automatically load an appropiate item set for the selected champion and position.</value>
+  </data>
 </root>

@@ -243,4 +243,10 @@
   <data name="CantUploadPageTitle" xml:space="preserve">
     <value>No se ha podido cargar la página de runas</value>
   </data>
+  <data name="SetItemSet" xml:space="preserve">
+    <value>Cargar conjunto de objetos</value>
+  </data>
+  <data name="SetItemSetTip" xml:space="preserve">
+    <value>Cargar automáticamente un conjunto de objetos apropiado para el campeón y la posición seleccionada.</value>
+  </data>
 </root>

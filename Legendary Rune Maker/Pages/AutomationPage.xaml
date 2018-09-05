@@ -66,6 +66,10 @@
                       IsChecked="{Binding Path=UploadOnLock, Source={x:Static data:Config.Default}}"
                       VerticalAlignment="Center"/>
 
+            <CheckBox Grid.Row="0" Grid.Column="1" Content="{x:Static loc:Text.SetItemSet}" ToolTip="{x:Static loc:Text.SetItemSetTip}"
+                      IsChecked="{Binding Path=SetItemSet, Source={x:Static data:Config.Default}}"
+                      VerticalAlignment="Center" Margin="5 1 0 0" />
+
             <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal"
                         IsEnabled="{Binding Path=UploadOnLock, Source={x:Static data:Config.Default}}">
                 <CheckBox HorizontalAlignment="Left" VerticalAlignment="Center"

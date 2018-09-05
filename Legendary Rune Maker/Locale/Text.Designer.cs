@@ -394,6 +394,24 @@ namespace Legendary_Rune_Maker.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Load item set for champion.
+        /// </summary>
+        public static string SetItemSet {
+            get {
+                return ResourceManager.GetString("SetItemSet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Automatically load an appropiate item set for the selected champion and position..
+        /// </summary>
+        public static string SetItemSetTip {
+            get {
+                return ResourceManager.GetString("SetItemSetTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Show runes.
         /// </summary>
         public static string ShowRunes {
