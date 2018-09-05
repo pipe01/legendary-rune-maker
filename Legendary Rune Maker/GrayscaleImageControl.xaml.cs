@@ -103,6 +103,7 @@ namespace Legendary_Rune_Maker
         
         private void UserControl_MouseDown(object sender, MouseButtonEventArgs e)
         {
+            e.Handled = true;
             Selected = true;
         }
 

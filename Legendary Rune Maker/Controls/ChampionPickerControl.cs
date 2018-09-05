@@ -28,6 +28,7 @@ namespace Legendary_Rune_Maker.Controls
 
         public ChampionPickerControl()
         {
+            this.MouseLeftButtonDown += (_, e) => e.Handled = true;
             this.MouseLeftButtonUp += ChampionPickerControl_MouseLeftButtonUp;
             this.MouseRightButtonUp += ChampionPickerControl_MouseRightButtonUp;
         }

@@ -15,12 +15,15 @@ using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
+using System.Windows.Navigation;
+using System.Windows.Threading;
 
 namespace Legendary_Rune_Maker
 {
@@ -32,6 +35,10 @@ namespace Legendary_Rune_Maker
         public static bool InDesigner => DesignerProperties.GetIsInDesignMode(new DependencyObject());
 
         public static INotificationManager NotificationManager;
+
+        private bool AllowDirectNavigation;
+
+        private readonly TimeSpan TransitionDuration = TimeSpan.FromSeconds(0.18);
 
         public MainWindow()
         {
@@ -53,6 +60,60 @@ namespace Legendary_Rune_Maker
             AppDomain.CurrentDomain.UnhandledException += (a, b) => Taskbar.Dispose();
         }
 
+        private void Current_Navigating(object sender, NavigatingCancelEventArgs e)
+        {
+            if (e.Content != null && !AllowDirectNavigation)
+            {
+                e.Cancel = true;
+                AllowDirectNavigation = true;
+
+                if (e.Content is IPage page)
+                {
+                    var size = page.GetSize();
+                    SetSize(size.Width, size.Height);
+                }
+
+                var anim = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(TransitionDuration.TotalSeconds * .5));
+                anim.Completed += (_, __) => SlideCompleted(e);
+                Frame.BeginAnimation(OpacityProperty, anim);
+            }
+            else
+            {
+                AllowDirectNavigation = false;
+            }
+        }
+
+        private void SlideCompleted(NavigatingCancelEventArgs navArgs)
+        {
+            AllowDirectNavigation = true;
+
+            switch (navArgs.NavigationMode)
+            {
+                case NavigationMode.New:
+                    if (navArgs.Uri == null)
+                        Frame.Navigate(navArgs.Content);
+                    else
+                        Frame.Navigate(navArgs.Uri);
+                    break;
+                case NavigationMode.Back:
+                    Frame.GoBack();
+                    break;
+                case NavigationMode.Forward:
+                    Frame.GoForward();
+                    break;
+                case NavigationMode.Refresh:
+                    Frame.Refresh();
+                    break;
+            }
+
+            Dispatcher.BeginInvoke(DispatcherPriority.Loaded,
+                (ThreadStart)(() =>
+                {
+                    var anim = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(TransitionDuration.TotalSeconds * .5));
+                    Frame.BeginAnimation(OpacityProperty, anim);
+                }));
+        }
+
         public static void ShowNotification(string title, string message = null, NotificationType type = NotificationType.Information)
         {
             NotificationManager.Show(new NotificationContent
@@ -65,7 +126,7 @@ namespace Legendary_Rune_Maker
 
         public void SetSize(double width, double height, TimeSpan? duration = null)
         {
-            var animDuration = duration ?? TimeSpan.FromSeconds(0.25);
+            var animDuration = duration ?? TransitionDuration;
 
             if (double.IsNaN(MainGrid.Width))
                 MainGrid.Width = 0;
@@ -134,6 +195,11 @@ namespace Legendary_Rune_Maker
         public void Settings()
         {
             new SettingsWindow().ShowDialog(this);
+        }
+
+        private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            DragMove();
         }
     }
 }

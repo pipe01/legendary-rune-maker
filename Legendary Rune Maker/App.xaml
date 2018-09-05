@@ -484,7 +484,7 @@
                 </Setter.Value>
             </Setter>
             
-            <EventSetter Event="MouseLeftButtonDown" Handler="Window_MouseLeftButtonDown" />
+            <!--<EventSetter Event="MouseLeftButtonDown" Handler="Window_MouseLeftButtonDown" />-->
 
             <Setter Property="Template">
                 <Setter.Value>

@@ -13,6 +13,7 @@
             <Setter Property="Height" Value="48" />
             <Setter Property="Cursor" Value="Hand" />
             <EventSetter Event="MouseLeftButtonUp" Handler="PositionPicker_MouseLeftButtonUp" />
+            <EventSetter Event="MouseLeftButtonDown" Handler="FadeImage_MouseLeftButtonDown" />
         </Style>
 
         <Duration x:Key="AnimDuration">0:0:0.125</Duration>

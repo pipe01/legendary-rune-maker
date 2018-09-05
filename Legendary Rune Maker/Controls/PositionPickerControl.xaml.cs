@@ -91,5 +91,10 @@ namespace Legendary_Rune_Maker.Controls
         {
             return (ImageSource)Application.Current.FindResource(pos.ToString());
         }
+
+        private void FadeImage_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            e.Handled = true;
+        }
     }
 }

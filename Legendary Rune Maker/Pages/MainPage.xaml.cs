@@ -29,7 +29,7 @@ namespace Legendary_Rune_Maker.Pages
     /// <summary>
     /// Interaction logic for MainPage.xaml
     /// </summary>
-    public partial class MainPage : Page, IMainWindow
+    public partial class MainPage : Page, IMainWindow, IPage
     {
         public bool UploadOnLock
         {
@@ -109,6 +109,8 @@ namespace Legendary_Rune_Maker.Pages
             this.Width = 810;
             this.DataContext = this;
         }
+
+        public Size GetSize() => new Size(Expanded ? 810 : 303, this.Height);
         
         public void SafeInvoke(Action act)
         {
@@ -317,7 +319,7 @@ namespace Legendary_Rune_Maker.Pages
 
         private void Automation_Click(object sender, EventArgs e)
         {
-            new AutomationWindow().Show(Owner);
+            NavigationService.Navigate(new AutomationPage(this.Owner));
         }
 
         private void PositionPicker_SelectedChanged(object sender, EventArgs e)
@@ -358,5 +360,10 @@ namespace Legendary_Rune_Maker.Pages
 
         public void ShowNotification(string title, string message = null, NotificationType type = NotificationType.Information)
             => MainWindow.ShowNotification(title, message, type);
+
+        private void ChampionImage_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            e.Handled = true;
+        }
     }
 }

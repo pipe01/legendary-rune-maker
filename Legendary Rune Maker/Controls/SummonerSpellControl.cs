@@ -104,6 +104,7 @@ namespace Legendary_Rune_Maker.Controls
         public SummonerSpellControl()
         {
             this.Initialized += SummonerSpellControl_Initialized;
+            this.MouseLeftButtonDown += (_, e) => e.Handled = true;
             this.MouseLeftButtonUp += SummonerSpellControl_MouseLeftButtonUp;
             this.MouseRightButtonUp += SummonerSpellControl_MouseRightButtonUp;
         }
