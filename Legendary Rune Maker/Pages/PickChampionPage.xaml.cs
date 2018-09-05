@@ -14,59 +14,76 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Legendary_Rune_Maker
+namespace Legendary_Rune_Maker.Pages
 {
     /// <summary>
-    /// Interaction logic for PickChampionDialog.xaml
+    /// Interaction logic for PickChampionPage.xaml
     /// </summary>
-    public partial class PickChampionDialog : Window
+    public partial class PickChampionPage : Page, IPage
     {
-        public PickChampionDialog()
-        {
-            InitializeComponent();
-
-            Available.IsEnabled = GameState.CanUpload;
-            this.DataContext = this;
-        }
-
         public bool ShowNoChampion { get; set; } = true;
 
         public Champion SelectedChampion { get; private set; }
 
         public ObservableCollection<Champion> ChampionList { get; set; } = new ObservableCollection<Champion>();
 
-        private async void Window_Initialized(object sender, EventArgs e)
+        private TaskCompletionSource<Champion> Completion;
+
+        public PickChampionPage(TaskCompletionSource<Champion> completion)
+        {
+            InitializeComponent();
+
+            Available.IsEnabled = GameState.CanUpload;
+            this.Completion = completion;
+            this.DataContext = this;
+        }
+
+        private async void Page_Initialized(object sender, EventArgs e)
         {
             await LoadAllChampions();
+
+            this.Focus();
         }
 
         private void Champion_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             SelectedChampion = ((ChampionImageControl)sender).Champion;
 
-            this.DialogResult = true;
-            this.Close();
+            Completion.SetResult(SelectedChampion);
+            NavigationService.GoBack();
         }
 
-        public static (bool Success, Champion Selected) PickChampion(bool ban = false)
+        public static async Task<(bool Success, Champion Selected)> PickChampion(NavigationService navigator, bool ban = false)
         {
-            var win = new PickChampionDialog();
+            var tcs = new TaskCompletionSource<Champion>();
+            var win = new PickChampionPage(tcs);
 
             if (ban)
                 win.BackImage.ImageSource = (ImageSource)Application.Current.FindResource("BgRed");
+            
+            navigator.Navigate(win);
 
-            if (win.ShowDialog() != true)
+            Champion selChampion;
+
+            try
+            {
+                selChampion = await tcs.Task;
+            }
+            catch (TaskCanceledException)
+            {
                 return (false, null);
+            }
 
-            return (true, win.SelectedChampion);
+            return (true, selChampion);
         }
 
         private async void Available_Checked(object sender, RoutedEventArgs e)
         {
             var availableIds = (await LCU.NET.Plugins.LoL.Champions.GetOwnedChampionsMinimal()).Select(o => o.id);
-            
+
             foreach (var item in ChampionList.Where(o => o != null && !availableIds.Contains(o.ID)).ToArray())
             {
                 ChampionList.Remove(item);
@@ -88,6 +105,17 @@ namespace Legendary_Rune_Maker
             foreach (var item in await Riot.GetChampions())
             {
                 ChampionList.Add(item);
+            }
+        }
+
+        public Size GetSize() => new Size(this.Width, this.Height);
+        
+        private void Page_PreviewKeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Escape)
+            {
+                NavigationService.GoBack();
+                Completion.SetCanceled();
             }
         }
     }

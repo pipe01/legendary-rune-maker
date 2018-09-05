@@ -90,9 +90,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="AutomationWindow.xaml.cs">
-      <DependentUpon>AutomationWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Controls\ChampionImageControl.cs" />
     <Compile Include="Controls\ChampionPickerControl.cs" />
     <Compile Include="Controls\FadeImage.xaml.cs">
@@ -146,8 +143,8 @@
     <Compile Include="Pages\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="PickChampionDialog.xaml.cs">
-      <DependentUpon>PickChampionDialog.xaml</DependentUpon>
+    <Compile Include="Pages\PickChampionPage.xaml.cs">
+      <DependentUpon>PickChampionPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="PickSummonerSpellPopup.xaml.cs">
       <DependentUpon>PickSummonerSpellPopup.xaml</DependentUpon>
@@ -167,10 +164,6 @@
     <Compile Include="Utils\UppercaseConverter.cs" />
     <Compile Include="Utils\VisualHierarchyHelper.cs" />
     <Compile Include="Utils\WindowCommandConverter.cs" />
-    <Page Include="AutomationWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Controls\FadeImage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -218,7 +211,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="PickChampionDialog.xaml">
+    <Page Include="Pages\PickChampionPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

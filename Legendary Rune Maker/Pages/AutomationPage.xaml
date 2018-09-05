@@ -8,7 +8,7 @@
       xmlns:controls="clr-namespace:Legendary_Rune_Maker.Controls"
       xmlns:loc="clr-namespace:Legendary_Rune_Maker.Locale"
       mc:Ignorable="d" 
-      Height="405" Width="473" Initialized="Page_Initialized" 
+      Height="405" Width="473" Loaded="Page_Loaded"
       Title="AutomationPage">
 
     <Page.Resources>

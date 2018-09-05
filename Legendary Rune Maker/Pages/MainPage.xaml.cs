@@ -311,7 +311,7 @@ namespace Legendary_Rune_Maker.Pages
 
         private async void ChampionImage_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            var champ = PickChampionDialog.PickChampion();
+            var champ = await PickChampionPage.PickChampion(NavigationService);
 
             if (champ.Success)
                 await SetChampion(champ.Selected);

@@ -55,8 +55,61 @@ namespace Legendary_Rune_Maker.Pages
 
             Config.Default.SpellsToPick[Config.Default.SpellsToPick.Keys.ElementAt(n / 2)][n % 2] = picker.Spell?.ID ?? 0;
         }
+        
+        private void Providers_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Config.Default.LockLoadProvider = ((RuneProvider)Providers.SelectedItem).Name;
+        }
 
-        private async void Page_Initialized(object sender, EventArgs e)
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            NavigationService.GoBack();
+        }
+
+        private void GenerateControls()
+        {
+            GenerateChamps(1, 1, 6, Picks);
+            GenerateChamps(2, 1, 6, Bans);
+            GenerateSpells(3, 1, 6);
+
+            void GenerateChamps(int row, int startCol, int count, IList<ChampionPickerControl> l)
+            {
+                for (int col = 0; col < count; col++)
+                {
+                    var c = new ChampionPickerControl(NavigationService);
+                    c.ChampionChanged += PickBan_Changed;
+                    c.Ban = l == Bans;
+                    c.Tag = col;
+                    c.Focusable = true;
+
+                    Table.Children.Add(c);
+                    l.Add(c);
+
+                    Grid.SetRow(c, row);
+                    Grid.SetColumn(c, startCol + col);
+                }
+            }
+
+            void GenerateSpells(int row, int startCol, int count)
+            {
+                for (int col = 0; col < count * 2; col++)
+                {
+                    var c = new SummonerSpellControl();
+                    c.SpellSelected += Spell_SpellSelected;
+                    c.Tag = col;
+                    c.VerticalAlignment = col % 2 == 0 ? VerticalAlignment.Top : VerticalAlignment.Bottom;
+                    c.Focusable = true;
+
+                    Table.Children.Add(c);
+                    Spells.Add(c);
+
+                    Grid.SetRow(c, row);
+                    Grid.SetColumn(c, startCol + col / 2);
+                }
+            }
+        }
+
+        private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
             GenerateControls();
 
@@ -90,59 +143,6 @@ namespace Legendary_Rune_Maker.Pages
             {
                 Spells[i++].Spell = spells.SingleOrDefault(o => o.ID == item.Value[0]);
                 Spells[i++].Spell = spells.SingleOrDefault(o => o.ID == item.Value[1]);
-            }
-        }
-
-        private void Providers_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            Config.Default.LockLoadProvider = ((RuneProvider)Providers.SelectedItem).Name;
-        }
-
-        private void Button_Click_1(object sender, RoutedEventArgs e)
-        {
-            NavigationService.GoBack();
-        }
-
-        private void GenerateControls()
-        {
-            GenerateChamps(1, 1, 6, Picks);
-            GenerateChamps(2, 1, 6, Bans);
-            GenerateSpells(3, 1, 6);
-
-            void GenerateChamps(int row, int startCol, int count, IList<ChampionPickerControl> l)
-            {
-                for (int col = 0; col < count; col++)
-                {
-                    var c = new ChampionPickerControl();
-                    c.ChampionChanged += PickBan_Changed;
-                    c.Ban = l == Bans;
-                    c.Tag = col;
-                    c.Focusable = true;
-
-                    Table.Children.Add(c);
-                    l.Add(c);
-
-                    Grid.SetRow(c, row);
-                    Grid.SetColumn(c, startCol + col);
-                }
-            }
-
-            void GenerateSpells(int row, int startCol, int count)
-            {
-                for (int col = 0; col < count * 2; col++)
-                {
-                    var c = new SummonerSpellControl();
-                    c.SpellSelected += Spell_SpellSelected;
-                    c.Tag = col;
-                    c.VerticalAlignment = col % 2 == 0 ? VerticalAlignment.Top : VerticalAlignment.Bottom;
-                    c.Focusable = true;
-
-                    Table.Children.Add(c);
-                    Spells.Add(c);
-
-                    Grid.SetRow(c, row);
-                    Grid.SetColumn(c, startCol + col / 2);
-                }
             }
         }
 

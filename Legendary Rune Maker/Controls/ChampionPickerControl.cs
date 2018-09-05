@@ -1,10 +1,12 @@
 ﻿using Legendary_Rune_Maker.Data;
+using Legendary_Rune_Maker.Pages;
 using System;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Navigation;
 
 namespace Legendary_Rune_Maker.Controls
 {
@@ -21,13 +23,17 @@ namespace Legendary_Rune_Maker.Controls
         
         public event EventHandler ChampionChanged;
 
+        private NavigationService NavigationService;
+
         static ChampionPickerControl()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(ChampionPickerControl), new FrameworkPropertyMetadata(typeof(ChampionPickerControl)));
         }
 
-        public ChampionPickerControl()
+        public ChampionPickerControl(NavigationService navService)
         {
+            this.NavigationService = navService;
+
             this.MouseLeftButtonDown += (_, e) => e.Handled = true;
             this.MouseLeftButtonUp += ChampionPickerControl_MouseLeftButtonUp;
             this.MouseRightButtonUp += ChampionPickerControl_MouseRightButtonUp;
@@ -39,9 +45,9 @@ namespace Legendary_Rune_Maker.Controls
             ChampionChanged?.Invoke(this, EventArgs.Empty);
         }
 
-        private void ChampionPickerControl_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        private async void ChampionPickerControl_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            var champ = PickChampionDialog.PickChampion(Ban);
+            var champ = await PickChampionPage.PickChampion(NavigationService, Ban);
 
             if (champ.Success)
             {
