@@ -46,6 +46,10 @@ namespace Legendary_Rune_Maker
 
             InitializeComponent();
 
+            Rect workArea = SystemParameters.WorkArea;
+            this.Left = (workArea.Width - this.Width) / 2 + workArea.Left;
+            this.Top = (workArea.Height - this.Height) / 2 + workArea.Top;
+
             Frame.Navigate(new MainPage(this));
 
             this.Show();
@@ -135,20 +139,34 @@ namespace Legendary_Rune_Maker
 
             if (width != MainGrid.Width)
             {
-                var anim = new DoubleAnimation(MainGrid.Width, width, animDuration)
+                double difference = MainGrid.Width - width;
+                
+                MainGrid.BeginAnimation(WidthProperty, new DoubleAnimation(MainGrid.Width, width, animDuration)
                 {
                     EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseOut }
-                };
-                MainGrid.BeginAnimation(WidthProperty, anim);
+                });
+                
+                this.BeginAnimation(LeftProperty, new DoubleAnimation(this.Left, this.Left + difference / 2, animDuration)
+                {
+                    EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseOut },
+                    FillBehavior = FillBehavior.Stop
+                });
             }
 
             if (height != MainGrid.Height)
             {
-                var anim = new DoubleAnimation(MainGrid.Height, height, animDuration)
+                double difference = MainGrid.Height - height;
+                
+                MainGrid.BeginAnimation(HeightProperty, new DoubleAnimation(MainGrid.Height, height, animDuration)
                 {
                     EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseOut }
-                };
-                MainGrid.BeginAnimation(HeightProperty, anim);
+                });
+
+                this.BeginAnimation(TopProperty, new DoubleAnimation(this.Top, this.Top + difference / 2, animDuration)
+                {
+                    EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseOut },
+                    FillBehavior = FillBehavior.Stop
+                });
             }
         }
 
