@@ -1,6 +1,7 @@
 ﻿using Legendary_Rune_Maker.Controls;
 using Legendary_Rune_Maker.Data;
 using Legendary_Rune_Maker.Data.Rune_providers;
+using Legendary_Rune_Maker.Pages;
 using Legendary_Rune_Maker.Properties;
 using System;
 using System.Collections.Generic;
@@ -66,7 +67,7 @@ namespace Legendary_Rune_Maker
         {
             GenerateControls();
 
-            foreach (var item in MainWindow.RuneProviders)
+            foreach (var item in MainPage.RuneProviders)
             {
                 if (!(item is ClientProvider))
                 {

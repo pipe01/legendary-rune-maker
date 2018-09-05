@@ -4,15 +4,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Legendary_Rune_Maker"
-        xmlns:controls="clr-namespace:Legendary_Rune_Maker.Controls"
-        xmlns:data="clr-namespace:Legendary_Rune_Maker.Data"
-        xmlns:loc="clr-namespace:Legendary_Rune_Maker.Locale"
         xmlns:tb="clr-namespace:Hardcodet.Wpf.TaskbarNotification;assembly=Hardcodet.Wpf.TaskbarNotification"
+        xmlns:loc="clr-namespace:Legendary_Rune_Maker.Locale"
         mc:Ignorable="d" Tag="Settings"
         Title="pipe01's Legendary Rune Maker" Height="310" Width="303" Initialized="Window_Initialized"
         DataContext="{Binding RelativeSource={RelativeSource Self}}"  WindowStartupLocation="CenterScreen"
         Icon="{StaticResource Icon}" StateChanged="Window_StateChanged" PreviewKeyDown="Window_PreviewKeyDown"
-        Closed="Window_Closed">
+        Closed="Window_Closed" Style="{StaticResource LoLWindow}" ResizeMode="CanMinimize" SizeToContent="WidthAndHeight">
 
     <Window.Background>
         <VisualBrush Stretch="UniformToFill">
@@ -26,43 +24,18 @@
         </VisualBrush>
     </Window.Background>
 
-    <Window.Style>
-        <Style TargetType="Window" BasedOn="{StaticResource LoLWindow}">
-            <Style.Triggers>
-                <DataTrigger Binding="{Binding Expanded}" Value="True">
-                    <DataTrigger.EnterActions>
-                        <StopStoryboard BeginStoryboardName="ExitBegin" />
+    <Grid x:Name="MainGrid">
+        <Frame x:Name="Frame" HorizontalContentAlignment="Left">
+            <Frame.Template>
+                <ControlTemplate TargetType="{x:Type Frame}">
+                    <AdornerDecorator>
+                        <ContentPresenter Name="PART_NavWinCP" 
+                              ClipToBounds="true"/>
+                    </AdornerDecorator>
+                </ControlTemplate>
+            </Frame.Template>
+        </Frame>
 
-                        <BeginStoryboard x:Name="EnterBegin">
-                            <Storyboard>
-                                <DoubleAnimation To="810" Duration="0:0:0.25" Storyboard.TargetProperty="Width">
-                                    <DoubleAnimation.EasingFunction>
-                                        <QuadraticEase EasingMode="EaseOut" />
-                                    </DoubleAnimation.EasingFunction>
-                                </DoubleAnimation>
-                            </Storyboard>
-                        </BeginStoryboard>
-                    </DataTrigger.EnterActions>
-
-                    <DataTrigger.ExitActions>
-                        <StopStoryboard BeginStoryboardName="EnterBegin" />
-                        
-                        <BeginStoryboard x:Name="ExitBegin">
-                            <Storyboard>
-                                <DoubleAnimation To="303" Duration="0:0:0.25" Storyboard.TargetProperty="Width">
-                                    <DoubleAnimation.EasingFunction>
-                                        <QuadraticEase EasingMode="EaseOut" />
-                                    </DoubleAnimation.EasingFunction>
-                                </DoubleAnimation>
-                            </Storyboard>
-                        </BeginStoryboard>
-                    </DataTrigger.ExitActions>
-                </DataTrigger>
-            </Style.Triggers>
-        </Style>
-    </Window.Style>
-
-    <Grid>
         <tb:TaskbarIcon x:Name="Taskbar" IconSource="{StaticResource Icon}" ToolTipText="Legendary Rune Maker"
                         TrayLeftMouseDown="TaskbarIcon_TrayLeftMouseDown">
             <tb:TaskbarIcon.ContextMenu>
@@ -71,124 +44,5 @@
                 </ContextMenu>
             </tb:TaskbarIcon.ContextMenu>
         </tb:TaskbarIcon>
-
-        <Grid Margin="5">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="294" />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-
-                <TextBlock x:Name="Version" Grid.Row="0" Text="Version 1.0.0" Style="{StaticResource LoLText}" VerticalAlignment="Top"
-                           HorizontalAlignment="Stretch" Margin="7 2 40 0" Foreground="{StaticResource Pressed}" IsHitTestVisible="False"
-                           Height="18" />
-
-                <TextBlock x:Name="Status" Grid.Row="1" FontFamily="{StaticResource BeaufortBold}" Foreground="Red"
-                           FontSize="20" Text="{x:Static loc:Text.Disconnected}" Margin="10 8 0 0" VerticalAlignment="Top"
-                           IsHitTestVisible="False" />
-
-                <Grid Grid.Row="0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition />
-                        <ColumnDefinition />
-                    </Grid.ColumnDefinitions>
-
-                    <controls:FadeImage x:Name="ChampionImage" Grid.Column="0" Width="120" Height="120" Cursor="Hand"
-                                        MouseLeftButtonUp="ChampionImage_MouseLeftButtonUp" Source="{StaticResource NoChamp}" />
-
-                    <Image x:Name="PositionImage" Grid.Column="1" Source="{StaticResource Fill}" Width="136" Height="136" Opacity="1" />
-
-                    <controls:PositionPickerControl x:Name="PositionPicker" Grid.Column="1" Width="144" Height="144" Opacity="0"
-                                                    SelectedChanged="PositionPicker_SelectedChanged">
-                        <controls:PositionPickerControl.Triggers>
-                            <EventTrigger RoutedEvent="MouseEnter">
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <DoubleAnimation From="0" To="1" Duration="0:0:0.125" Storyboard.TargetProperty="Opacity" />
-                                        <DoubleAnimation From="1" To="0" Duration="0:0:0.125" Storyboard.TargetProperty="Opacity"
-                                                         Storyboard.Target="{Binding ElementName=PositionImage}"/>
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </EventTrigger>
-
-                            <EventTrigger RoutedEvent="MouseLeave">
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <DoubleAnimation From="1" To="0" Duration="0:0:0.125" Storyboard.TargetProperty="Opacity" />
-                                        <DoubleAnimation From="0" To="1" Duration="0:0:0.125" Storyboard.TargetProperty="Opacity"
-                                                         Storyboard.Target="{Binding ElementName=PositionImage}"/>
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </EventTrigger>
-                        </controls:PositionPickerControl.Triggers>
-                    </controls:PositionPickerControl>
-                </Grid>
-
-                <Grid Grid.Row="2">
-                    <Grid.RowDefinitions>
-                        <RowDefinition />
-                        <RowDefinition />
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-
-                    <CheckBox x:Name="AttachChk" Grid.Row="1" Grid.ColumnSpan="2" IsChecked="{Binding Attached, Mode=TwoWay}" Margin="10"
-                              VerticalAlignment="Center" HorizontalAlignment="Left" Content="{x:Static loc:Text.Attach}" />
-
-                    <Button Grid.Column="5" Width="40" Margin="5" Click="ShowRunes_Click"
-                                     ToolTip="{x:Static loc:Text.ShowRunes}">
-                        <controls:FadeImage x:Name="RunesArrow" Source="{StaticResource RightArrow}" Width="20" Height="20" />
-                    </Button>
-
-                    <Button x:Name="Automation" Grid.Column="4" Grid.Row="1" Width="40" Margin="5" Click="Automation_Click"
-                                     ToolTip="{x:Static loc:Text.Automate}">
-                        <Image Source="{StaticResource Automate}" Width="20" Height="20" />
-                    </Button>
-
-                    <Button x:Name="BugReport" Grid.Column="5" Grid.Row="1" Width="40" Margin="5" Click="BugReport_Click"
-                                     ToolTip="{x:Static loc:Text.ReportBug}">
-                        <Image Source="{StaticResource Bug}" Width="20" Height="20" />
-                    </Button>
-                </Grid>
-            </Grid>
-
-            <controls:RuneTreeControl x:Name="Tree" Grid.Column="1" Width="475" Height="245" HorizontalAlignment="Left"
-                                      VerticalAlignment="Top" Margin="10 25 10 10" SelectionChanged="Tree_SelectedRunesChanged" />
-
-            <Grid Grid.Column="1" Height="42" VerticalAlignment="Bottom" Width="500">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-
-                <Button x:Name="Clear" Grid.Column="1" Width="40" Margin="5" Click="Clear_Click"
-                                    ToolTip="{x:Static loc:Text.Clear}">
-                    <Image Source="{StaticResource Delete}" Width="20" Height="20" />
-                </Button>
-
-                <Button x:Name="Load" Grid.Column="2" HorizontalAlignment="Stretch" Margin="5"
-                                    IsEnabled="False" Click="Load_Click" Width="40" ToolTip="{x:Static loc:Text.Download}">
-                    <Image Width="20" Height="20" Source="{StaticResource Download}" />
-                </Button>
-
-                <Button x:Name="Upload" Grid.Column="3" Margin="5" Click="Upload_Click" IsEnabled="False"
-                                    Width="40" HorizontalAlignment="Right" ToolTip="{x:Static loc:Text.UploadToClient}">
-                    <Image Width="20" Height="20" Source="{StaticResource Upload}" />
-                </Button>
-            </Grid>
-        </Grid>
     </Grid>
 </Window>
