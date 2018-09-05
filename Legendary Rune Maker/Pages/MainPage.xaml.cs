@@ -31,13 +31,6 @@ namespace Legendary_Rune_Maker.Pages
     /// </summary>
     public partial class MainPage : Page, IMainWindow, IPage
     {
-        public bool UploadOnLock
-        {
-            get => (bool)GetValue(UploadOnLockProperty);
-            set => SetValue(UploadOnLockProperty, value);
-        }
-        public static readonly DependencyProperty UploadOnLockProperty = DependencyProperty.Register("UploadOnLock", typeof(bool), typeof(MainWindow), new PropertyMetadata(true));
-
         public bool Attached
         {
             get => (bool)GetValue(AttachedProperty);
@@ -59,14 +52,6 @@ namespace Legendary_Rune_Maker.Pages
         }
         public static readonly DependencyProperty ExpandedProperty = DependencyProperty.Register("Expanded", typeof(bool), typeof(MainWindow));
 
-
-        internal static readonly RuneProvider[] RuneProviders = new RuneProvider[]
-        {
-            new RunesLolProvider(),
-            new ChampionGGProvider(),
-            new OpGGProvider(),
-            new ClientProvider()
-        };
 
         private Rune[] SelectedRunes => Tree.SelectedPrimary.Concat(Tree.SelectedSecondary).Where(o => o != null).ToArray();
 
@@ -153,8 +138,8 @@ namespace Legendary_Rune_Maker.Pages
 
         public async Task LoadPageFromDefaultProvider()
         {
-            var provider = RuneProviders.FirstOrDefault(o => o.Name == Config.Default.LockLoadProvider)
-                            ?? RuneProviders[0];
+            var provider = Actuator.RuneProviders.FirstOrDefault(o => o.Name == Config.Default.LockLoadProvider)
+                            ?? Actuator.RuneProviders[0];
             var positions = await provider.GetPossibleRoles(SelectedChampion);
 
             var position = positions.Contains(SelectedPosition) ? SelectedPosition : Position.Fill;
@@ -260,7 +245,7 @@ namespace Legendary_Rune_Maker.Pages
 
             bool addedFirstHeader = false;
 
-            foreach (var provider in RuneProviders)
+            foreach (var provider in Actuator.RuneProviders)
             {
                 var available = await provider.GetPossibleRoles(SelectedChampion);
                 IList<(RuneProvider Provider, Position Position)> data = new List<(RuneProvider Provider, Position Position)>();

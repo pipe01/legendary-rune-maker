@@ -11,7 +11,6 @@ namespace Legendary_Rune_Maker
 {
     public interface IMainWindow
     {
-        bool UploadOnLock { get; }
         int SelectedChampion { get; }
         Position SelectedPosition { get; set; }
         RunePage Page { get; }
