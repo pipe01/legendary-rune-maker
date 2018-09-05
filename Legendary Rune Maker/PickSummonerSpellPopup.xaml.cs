@@ -1,4 +1,5 @@
-﻿using Legendary_Rune_Maker.Data;
+﻿using Legendary_Rune_Maker.Controls;
+using Legendary_Rune_Maker.Data;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -70,10 +71,10 @@ namespace Legendary_Rune_Maker
 
         private void SummonerSpellControl_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            if (List.SelectedItems.Count == 0)
+            if (!(sender is SummonerSpellControl spell))
                 return;
 
-            this.SelectedSpell = ((IHateWpf)List.SelectedItem).Spell;
+            this.SelectedSpell = spell.Spell;
             this.Close();
         }
 
