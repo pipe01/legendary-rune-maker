@@ -111,6 +111,10 @@ namespace Legendary_Rune_Maker.Pages
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
+            //Don't regenerate controls if coming back from another page
+            if (Picks.Count > 0)
+                return;
+
             GenerateControls();
 
             foreach (var item in MainPage.RuneProviders)
