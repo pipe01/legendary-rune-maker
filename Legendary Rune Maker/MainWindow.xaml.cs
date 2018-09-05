@@ -66,6 +66,10 @@ namespace Legendary_Rune_Maker
 
         private void Current_Navigating(object sender, NavigatingCancelEventArgs e)
         {
+            //Don't animate the first time the window is opened
+            if (Frame.Content == null)
+                return;
+
             if (e.Content != null && !AllowDirectNavigation)
             {
                 e.Cancel = true;
