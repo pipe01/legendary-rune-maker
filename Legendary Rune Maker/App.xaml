@@ -630,6 +630,7 @@
                 <Color x:Key="BorderHighlightB">#C89C3D</Color>
                 <Color x:Key="BorderPressedA">#C8AA6E</Color>
                 <Color x:Key="BorderPressedB">#795C28</Color>
+                <Color x:Key="BorderDisabled">#5C5B57</Color>
 
                 <Color x:Key="BackNormal">#1E2328</Color>
                 <Color x:Key="BackHighlightA">#1E232A</Color>
@@ -787,7 +788,7 @@
 
                             <EventTrigger RoutedEvent="MouseLeave">
                                 <BeginStoryboard x:Name="LeaveStory">
-                                    <Storyboard>
+                                    <Storyboard FillBehavior="Stop">
                                         <DoubleAnimation To="1" Duration="{StaticResource TransitionDuration}"
                                                          Storyboard.TargetName="BlackFade" Storyboard.TargetProperty="Opacity" />
 
@@ -802,6 +803,43 @@
                                     </Storyboard>
                                 </BeginStoryboard>
                             </EventTrigger>
+
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <ColorAnimation To="{StaticResource PressedColor}" Duration="{StaticResource TransitionDuration}"
+                                                        Storyboard.TargetName="Text" Storyboard.TargetProperty="Foreground.Color" />
+
+                                            <ColorAnimation To="{StaticResource BorderDisabled}" Duration="{StaticResource TransitionDuration}"
+                                                        Storyboard.TargetName="BorderA" Storyboard.TargetProperty="Color" />
+                                            <ColorAnimation To="{StaticResource BorderDisabled}" Duration="{StaticResource TransitionDuration}"
+                                                        Storyboard.TargetName="BorderB" Storyboard.TargetProperty="Color" />
+                                            <ColorAnimation To="{StaticResource BackNormal}" Duration="{StaticResource TransitionDuration}"
+                                                        Storyboard.TargetName="BackA" Storyboard.TargetProperty="Color" />
+                                            <ColorAnimation To="{StaticResource BackNormal}" Duration="{StaticResource TransitionDuration}"
+                                                        Storyboard.TargetName="BackB" Storyboard.TargetProperty="Color" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.EnterActions>
+                                <Trigger.ExitActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <ColorAnimation To="{StaticResource NormalColor}" Duration="{StaticResource TransitionDuration}"
+                                                        Storyboard.TargetName="Text" Storyboard.TargetProperty="Foreground.Color" />
+
+                                            <ColorAnimation To="{StaticResource BorderNormalA}" Duration="{StaticResource TransitionDuration}"
+                                                        Storyboard.TargetName="BorderA" Storyboard.TargetProperty="Color" />
+                                            <ColorAnimation To="{StaticResource BorderNormalB}" Duration="{StaticResource TransitionDuration}"
+                                                        Storyboard.TargetName="BorderB" Storyboard.TargetProperty="Color" />
+                                            <ColorAnimation To="{StaticResource BackNormal}" Duration="{StaticResource TransitionDuration}"
+                                                        Storyboard.TargetName="BackA" Storyboard.TargetProperty="Color" />
+                                            <ColorAnimation To="{StaticResource BackNormal}" Duration="{StaticResource TransitionDuration}"
+                                                        Storyboard.TargetName="BackB" Storyboard.TargetProperty="Color" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.ExitActions>
+                            </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
