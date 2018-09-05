@@ -319,7 +319,7 @@ namespace Legendary_Rune_Maker.Pages
 
         private void Automation_Click(object sender, EventArgs e)
         {
-            NavigationService.Navigate(new AutomationPage(this.Owner));
+            NavigationService.Navigate(new AutomationPage());
         }
 
         private void PositionPicker_SelectedChanged(object sender, EventArgs e)

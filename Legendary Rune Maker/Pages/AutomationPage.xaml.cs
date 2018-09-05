@@ -3,6 +3,7 @@ using Legendary_Rune_Maker.Data;
 using Legendary_Rune_Maker.Data.Rune_providers;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,7 +28,7 @@ namespace Legendary_Rune_Maker.Pages
                                              Bans = new List<ChampionPickerControl>();
         private IList<SummonerSpellControl> Spells = new List<SummonerSpellControl>();
 
-        public AutomationPage(MainWindow owner)
+        public AutomationPage()
         {
             InitializeComponent();
         }
@@ -148,6 +149,11 @@ namespace Legendary_Rune_Maker.Pages
                 Spells[i++].Spell = spells.SingleOrDefault(o => o.ID == item.Value[0]);
                 Spells[i++].Spell = spells.SingleOrDefault(o => o.ID == item.Value[1]);
             }
+        }
+
+        private void Page_Unloaded(object sender, RoutedEventArgs e)
+        {
+            Config.Default.Save();
         }
 
         public Size GetSize() => new Size(this.Width, this.Height);
