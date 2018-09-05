@@ -40,7 +40,14 @@ namespace Legendary_Rune_Maker
             get => (bool)GetValue(AttachedProperty);
             set => SetValue(AttachedProperty, value);
         }
-        public static readonly DependencyProperty AttachedProperty = DependencyProperty.Register("Attached", typeof(bool), typeof(MainWindow), new PropertyMetadata(true, AttachedChanged));
+        public static readonly DependencyProperty AttachedProperty = DependencyProperty.Register("Attached", typeof(bool), typeof(MainWindow), new PropertyMetadata(true, async (_, e) =>
+        {
+            if ((bool)e.NewValue)
+            {
+                await ChampSelectDetector.ForceUpdate();
+                await LoginDetector.ForceUpdate();
+            }
+        }));
         
         public bool Expanded
         {
@@ -80,7 +87,7 @@ namespace Legendary_Rune_Maker
 
         public bool ValidPage => SelectedRunes?.Length == 6 && SelectedChampion != 0;
 
-        private Actuator Actuator;
+        private readonly Actuator Actuator;
 
         public MainWindow()
         {
@@ -93,11 +100,9 @@ namespace Legendary_Rune_Maker
             InitializeComponent();
             
             Version.Text = "Version " + Assembly.GetExecutingAssembly().GetName().Version.ToString(3);
-
 #if DEBUG
             Version.Text += "-debug";
 #endif
-
             Version.Text += " by pipe01";
 
             this.DataContext = this;
@@ -107,7 +112,7 @@ namespace Legendary_Rune_Maker
         private async void Window_Initialized(object sender, EventArgs e)
         {
             await Actuator.Init();
-            await InitControls();
+            await SetChampion(null);
 
             AppDomain.CurrentDomain.UnhandledException += (a, b) => Taskbar.Dispose();
             
@@ -122,13 +127,7 @@ namespace Legendary_Rune_Maker
                 act();
         }
 
-        public T SafeInvoke<T>(Func<T> act)
-        {
-            if (!Dispatcher.CheckAccess())
-                return Dispatcher.Invoke(act);
-            else
-                return act();
-        }
+        public T SafeInvoke<T>(Func<T> act) => !Dispatcher.CheckAccess() ? Dispatcher.Invoke(act) : act();
 
         public void SetState(GameStates state)
         {
@@ -168,14 +167,7 @@ namespace Legendary_Rune_Maker
                 Type = type
             });
         }
-
-        private async Task InitControls()
-        {
-            await SetChampion(null);
-            
-            SelectedPosition = Position.Fill;
-        }
-
+        
         public async Task LoadPageFromDefaultProvider()
         {
             var provider = RuneProviders.FirstOrDefault(o => o.Name == Config.Default.LockLoadProvider)
@@ -267,25 +259,7 @@ namespace Legendary_Rune_Maker
             if (SelectedChampion != 0)
                 RuneBook.Instance.Add(this.Page);
         }
-
-        private void Close_MouseUp(object sender, MouseButtonEventArgs e)
-        {
-            this.Close();
-        }
-
-        private void Minimize_MouseUp(object sender, MouseButtonEventArgs e)
-        {
-            this.WindowState = WindowState.Minimized;
-        }
-
-        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            if (e.LeftButton == MouseButtonState.Pressed && e.Source == this)
-            {
-                DragMove();
-            }
-        }
-
+        
         private async void Load_Click(object sender, EventArgs e)
         {
             if (SelectedChampion == 0)
@@ -378,13 +352,7 @@ namespace Legendary_Rune_Maker
                 new DebugProxyWindow().Show();
             }
         }
-
-        private async void StatusT_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            await LoginDetector.ForceUpdate();
-            await ChampSelectDetector.ForceUpdate();
-        }
-
+        
         private async void ChampionImage_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             var champ = PickChampionDialog.PickChampion();
@@ -392,13 +360,7 @@ namespace Legendary_Rune_Maker
             if (champ.Success)
                 await SetChampion(champ.Selected);
         }
-
-        private static async void AttachedChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            if ((bool)e.NewValue)
-                await ChampSelectDetector.ForceUpdate();
-        }
-
+        
         private void Automation_Click(object sender, EventArgs e)
         {
             new AutomationWindow().Show(this);

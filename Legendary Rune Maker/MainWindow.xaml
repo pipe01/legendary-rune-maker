@@ -9,8 +9,8 @@
         xmlns:loc="clr-namespace:Legendary_Rune_Maker.Locale"
         xmlns:tb="clr-namespace:Hardcodet.Wpf.TaskbarNotification;assembly=Hardcodet.Wpf.TaskbarNotification"
         mc:Ignorable="d" Tag="Settings"
-        Title="pipe01's Legendary Rune Maker" Height="310" Width="303" Initialized="Window_Initialized" WindowStartupLocation="CenterScreen"
-        DataContext="{Binding RelativeSource={RelativeSource Self}}" MouseDown="Window_MouseDown"
+        Title="pipe01's Legendary Rune Maker" Height="310" Width="303" Initialized="Window_Initialized"
+        DataContext="{Binding RelativeSource={RelativeSource Self}}"  WindowStartupLocation="CenterScreen"
         Icon="{StaticResource Icon}" StateChanged="Window_StateChanged" PreviewKeyDown="Window_PreviewKeyDown"
         Closed="Window_Closed">
 
