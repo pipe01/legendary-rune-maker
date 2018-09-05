@@ -1,5 +1,6 @@
 ﻿using LCU.NET;
 using Legendary_Rune_Maker.Data;
+using Legendary_Rune_Maker.Data.Rune_providers;
 using Legendary_Rune_Maker.Locale;
 using Legendary_Rune_Maker.Properties;
 using Onova;
@@ -58,7 +59,9 @@ namespace Legendary_Rune_Maker
 
             if (Config.Default.LoadCacheBeforeStartup)
                 await LoadCache();
-            
+
+            var a = await new ChampionGGProvider().GetItemSet(84, Position.Fill);
+
             ShowMainWindow();
         }
 
