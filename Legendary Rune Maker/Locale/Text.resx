@@ -253,4 +253,7 @@
   <data name="SetItemSetTip" xml:space="preserve">
     <value>Automatically load an appropiate item set for the selected champion and position.</value>
   </data>
+  <data name="MinimizeToTaskbar" xml:space="preserve">
+    <value>Minimize to taskbar</value>
+  </data>
 </root>

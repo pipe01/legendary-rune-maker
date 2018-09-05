@@ -249,4 +249,7 @@
   <data name="SetItemSetTip" xml:space="preserve">
     <value>Cargar automáticamente un conjunto de objetos apropiado para el campeón y la posición seleccionada.</value>
   </data>
+  <data name="MinimizeToTaskbar" xml:space="preserve">
+    <value>Minimizar a la barra de tareas</value>
+  </data>
 </root>

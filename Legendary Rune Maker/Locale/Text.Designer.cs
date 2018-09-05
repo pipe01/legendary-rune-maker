@@ -322,6 +322,15 @@ namespace Legendary_Rune_Maker.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Minimize to taskbar.
+        /// </summary>
+        public static string MinimizeToTaskbar {
+            get {
+                return ResourceManager.GetString("MinimizeToTaskbar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to None available.
         /// </summary>
         public static string NoneAvailable {
