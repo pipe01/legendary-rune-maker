@@ -219,6 +219,14 @@ namespace Legendary_Rune_Maker
             new SettingsWindow().ShowDialog(this);
         }
 
+        public void CloseCustom()
+        {
+            if (Frame.CanGoBack)
+                Frame.GoBack();
+            else
+                this.Close();
+        }
+
         private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             DragMove();
