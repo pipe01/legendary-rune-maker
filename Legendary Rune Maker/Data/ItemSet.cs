@@ -22,6 +22,20 @@ namespace Legendary_Rune_Maker.Data
 
         public async Task UploadToClient()
         {
+            var session = await Login.GetSessionAsync();
+            bool saveToConfig = !Config.Default.KeepItemSets;
+
+            if (saveToConfig && Config.Default.LastItemSetUid != null)
+            {
+                //Delete last item set
+
+                var itemSets = await ItemSets.GetItemSets(session.summonerId);
+
+                itemSets.itemSets = itemSets.itemSets.Where(o => !o.uid.Equals(Config.Default.LastItemSetUid)).ToArray();
+
+                await ItemSets.PutItemSets(session.summonerId, itemSets);
+            }
+
             var itemSet = new LolItemSetsItemSet
             {
                 associatedChampions = new[] { Champion },
@@ -32,12 +46,16 @@ namespace Legendary_Rune_Maker.Data
                     type = o.Name
                 }).ToArray()
             };
-
-            var session = await Login.GetSessionAsync();
-
+            
             await LeagueClient.Default.MakeRequestAsync($"/lol-item-sets/v1/item-sets/{session.summonerId}/sets",
                 Method.POST, itemSet, "associatedChampions", "title", "blocks");
-            //await ItemSets.PostItemSet(session.summonerId, itemSet);
+
+            if (saveToConfig)
+            {
+                var itemSets = await ItemSets.GetItemSets(session.summonerId);
+
+                Config.Default.LastItemSetUid = itemSets.itemSets.Last().uid;
+            }
         }
     }
 }
