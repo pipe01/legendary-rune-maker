@@ -31,6 +31,7 @@ namespace Legendary_Rune_Maker.Data.Providers
         };
 
         public override string Name => "MetaLol";
+        public override Options ProviderOptions => Options.RunePages;
 
         private static string GetChampionURL(int championId, Position? pos = null)
             => $"https://www.metalol.net/champions/lol-build-guide/solo-queue/{Riot.GetChampion(championId, "en_US").Name}"
