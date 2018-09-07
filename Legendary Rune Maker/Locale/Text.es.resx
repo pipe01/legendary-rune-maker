@@ -252,4 +252,10 @@
   <data name="MinimizeToTaskbar" xml:space="preserve">
     <value>Minimizar a la barra de tareas</value>
   </data>
+  <data name="UploadedItemSet" xml:space="preserve">
+    <value>Subido conjunto de objetos</value>
+  </data>
+  <data name="UploadedItemSetFrom" xml:space="preserve">
+    <value>Dr {0}</value>
+  </data>
 </root>

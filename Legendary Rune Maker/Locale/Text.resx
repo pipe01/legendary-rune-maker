@@ -256,4 +256,10 @@
   <data name="MinimizeToTaskbar" xml:space="preserve">
     <value>Minimize to taskbar</value>
   </data>
+  <data name="UploadedItemSet" xml:space="preserve">
+    <value>Upload item set</value>
+  </data>
+  <data name="UploadedItemSetFrom" xml:space="preserve">
+    <value>From {0}</value>
+  </data>
 </root>

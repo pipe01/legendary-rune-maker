@@ -97,7 +97,8 @@ namespace Legendary_Rune_Maker.Game
 
             await set.UploadToClient();
 
-            Main.ShowNotification("Uploaded item set");
+            Main.ShowNotification(Text.UploadedItemSet,
+                Text.UploadedItemSetFrom.FormatStr(provider.Name), NotificationType.Success);
         }
 
         private async Task UploadPage()

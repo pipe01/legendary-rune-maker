@@ -448,6 +448,24 @@ namespace Legendary_Rune_Maker.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Upload item set.
+        /// </summary>
+        public static string UploadedItemSet {
+            get {
+                return ResourceManager.GetString("UploadedItemSet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to From {0}.
+        /// </summary>
+        public static string UploadedItemSetFrom {
+            get {
+                return ResourceManager.GetString("UploadedItemSetFrom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Upload on champion lock.
         /// </summary>
         public static string UploadOnLock {
