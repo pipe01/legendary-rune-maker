@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 15.0.28010.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Legendary Rune Maker", "Legendary Rune Maker\Legendary Rune Maker.csproj", "{F9A8635F-EB66-4F88-8581-CF779CF3AA59}"
+	ProjectSection(ProjectDependencies) = postProject
+		{5F02DE11-7D21-4A98-B00B-54C2A5D62544} = {5F02DE11-7D21-4A98-B00B-54C2A5D62544}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PiMachine", "pimachine\PiMachine.csproj", "{F4A1E544-6DE4-493B-9BD0-F0D5FCA3F836}"
 EndProject
