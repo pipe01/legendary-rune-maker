@@ -31,7 +31,6 @@ namespace Legendary_Rune_Maker.Data.Providers
         };
 
         public override string Name => "MetaLol";
-        public override Options ProviderOptions => Options.RunePages;
 
         private static string GetChampionURL(int championId, Position? pos = null)
             => $"https://www.metalol.net/champions/lol-build-guide/solo-queue/{Riot.GetChampion(championId, "en_US").Name}"
@@ -101,6 +100,50 @@ namespace Legendary_Rune_Maker.Data.Providers
             ret.RuneIDs = perks.ToArray();
 
             return ret;
+        }
+
+        protected override async Task<ItemSet> GetItemSetInner(int championId, Position position)
+        {
+            var doc = new HtmlDocument();
+            doc.LoadHtml(await new WebClient().DownloadStringTaskAsync(GetChampionURL(championId, position)));
+
+            var containers = doc.DocumentNode.Descendants()
+                .Where(o => o.HasClass("champ-content-container") && !o.HasClass("description"))
+                .Take(6)
+                .ToArray();
+
+            var blocks = new List<ItemSet.SetBlock>();
+
+            for (int i = 0; i < 5; i += 2)
+            {
+                blocks.Add(ParseContainerBlock(containers[i], containers[i + 1]));
+            }
+
+            return new ItemSet
+            {
+                Name = this.Name + ": " + position,
+                Champion = championId,
+                Position = position,
+                Blocks = blocks.ToArray()
+            };
+        }
+
+        private static ItemSet.SetBlock ParseContainerBlock(params HtmlNode[] containers)
+        {
+            if (containers.Length != 2)
+                return null;
+
+            string name = containers[0].ChildNodes.First(o => o.Name == "h3").FirstChild.InnerText;
+            int[] items = containers[1].Descendants()
+                .Where(o => o.HasClass("champ-item") && o.ParentNode.GetAttributeValue("style", null) == null)
+                .Select(o => o.GetAttributeValue("item", 0))
+                .ToArray();
+            
+            return new ItemSet.SetBlock
+            {
+                Items = items,
+                Name = name
+            };
         }
     }
 }
