@@ -39,9 +39,11 @@ namespace Legendary_Rune_Maker.Data
             return Trees;
         }
         
-        public static async Task<Champion[]> GetChampions()
+        public static async Task<Champion[]> GetChampions(string locale = null)
         {
-            string url = $"{CdnEndpoint}{await GetLatestVersionAsync()}/data/{Locale}/champion.json";
+            locale = locale ?? Locale;
+
+            string url = $"{CdnEndpoint}{await GetLatestVersionAsync()}/data/{locale}/champion.json";
 
             return await WebCache.CustomJson(url, jobj =>
             {
@@ -144,8 +146,12 @@ namespace Legendary_Rune_Maker.Data
         public static IDictionary<int, Rune> GetAllRunes()
             => Trees.SelectMany(o => o.Slots).SelectMany(o => o.Runes).ToDictionary(o => o.ID);
 
-        public static Champion GetChampion(int id) => GetChampions().Result.SingleOrDefault(o => o.ID == id);
-
+        public static Champion GetChampion(int id, string locale = null)
+        {
+            var task = GetChampions(locale);
+            task.Wait();
+            return task.Result.SingleOrDefault(o => o.ID == id);
+        }
 
         public static async Task CacheAll(Action<double> progress)
         {

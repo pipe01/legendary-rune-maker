@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -22,7 +23,7 @@ namespace Legendary_Rune_Maker.Data
 
         private static CacheData Data = new CacheData();
 
-        private static WebClient Client => new WebClient { Encoding = Encoding.UTF8 };
+        private static HttpClient Client => new HttpClient();
 
         private const string CachePath = "cache/data.json";
         
@@ -71,18 +72,18 @@ namespace Legendary_Rune_Maker.Data
             Save();
         }
 
-        public static async Task<string> String(string url, WebClient client = null)
+        public static async Task<string> String(string url, HttpClient client = null)
         {
             if (!Data.FileCache.TryGetValue(url, out var value))
             {
-                Data.FileCache[url] = value = await (client ?? Client).DownloadStringTaskAsync(url);
+                Data.FileCache[url] = value = await (client ?? Client).GetStringAsync(url).ConfigureAwait(false);
                 Save();
             }
 
             return value;
         }
 
-        public static async Task<T> Json<T>(string url, WebClient client = null)
+        public static async Task<T> Json<T>(string url, HttpClient client = null)
         {
             if (!Data.ObjectCache.TryGetValue(url, out var value))
             {
@@ -93,7 +94,7 @@ namespace Legendary_Rune_Maker.Data
             return (T)value;
         }
 
-        public static async Task<T> CustomJson<T>(string url, Func<JObject, T> converter, WebClient client = null)
+        public static async Task<T> CustomJson<T>(string url, Func<JObject, T> converter, HttpClient client = null)
         {
             if (!Data.ObjectCache.TryGetValue(url, out var value))
             {
