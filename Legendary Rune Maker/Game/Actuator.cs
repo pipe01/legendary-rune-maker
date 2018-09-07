@@ -96,6 +96,8 @@ namespace Legendary_Rune_Maker.Game
             var set = await provider.GetItemSet(Main.SelectedChampion, Main.SelectedPosition);
 
             await set.UploadToClient();
+
+            Main.ShowNotification("Uploaded item set");
         }
 
         private async Task UploadPage()
