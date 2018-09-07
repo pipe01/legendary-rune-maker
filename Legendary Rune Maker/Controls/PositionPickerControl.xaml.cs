@@ -29,29 +29,8 @@ namespace Legendary_Rune_Maker.Controls
                     Selected = Position.Fill;
                     return;
                 }
-                else
-                {
-                    _Selected = value;
 
-                    SelectedChanged?.Invoke(this, EventArgs.Empty);
-                }
-                
-                if (PreviousSelected != null)
-                {
-                    SetImage(PreviousSelected, Positions[PreviousSelected]);
-                }
-
-                if (Selected != Position.Fill)
-                {
-                    var img = Positions.Keys.ElementAt(Positions.Values.ToList().IndexOf(value));
-                    SetImage(img, Position.Fill);
-
-                    PreviousSelected = img;
-                }
-                else
-                {
-                    PreviousSelected = null;
-                }
+                SetSelectedRaw(value);
             }
         }
         
@@ -66,6 +45,33 @@ namespace Legendary_Rune_Maker.Controls
             Positions[PosMid] = Position.Mid;
             Positions[PosSupport] = Position.Support;
             Positions[PosBottom] = Position.Bottom;
+        }
+
+        public void SetSelectedRaw(Position position)
+        {
+            bool changed = _Selected != position;
+
+            _Selected = position;
+
+            if (changed)
+                SelectedChanged?.Invoke(this, EventArgs.Empty);
+
+            if (PreviousSelected != null)
+            {
+                SetImage(PreviousSelected, Positions[PreviousSelected]);
+            }
+
+            if (Selected != Position.Fill)
+            {
+                var img = Positions.Keys.ElementAt(Positions.Values.ToList().IndexOf(position));
+                SetImage(img, Position.Fill);
+
+                PreviousSelected = img;
+            }
+            else
+            {
+                PreviousSelected = null;
+            }
         }
 
         private void PositionPicker_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)

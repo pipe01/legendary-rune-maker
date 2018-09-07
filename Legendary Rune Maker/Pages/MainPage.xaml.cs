@@ -84,7 +84,7 @@ namespace Legendary_Rune_Maker.Pages
             }
         }
 
-        public Position SelectedPosition { get => PositionPicker.Selected; set => PositionPicker.Selected = value; }
+        public Position SelectedPosition { get => PositionPicker.Selected; set => PositionPicker.SetSelectedRaw(value); }
 
         public bool ValidPage => SelectedRunes?.Length == 6 && SelectedChampion != 0;
 

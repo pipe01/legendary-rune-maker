@@ -99,12 +99,13 @@ namespace Legendary_Rune_Maker.Game
 
             Main.SafeInvoke(async () =>
             {
-                if (player == null || player.championId == 0 || !Main.Attached)
-                    return;
+                if (player != null && Main.Attached)
+                {
+                    Main.SelectedPosition = player.assignedPosition.ToPosition();
 
-                Main.SelectedPosition = player.assignedPosition.ToPosition();
-
-                await Main.SetChampion(player.championId);
+                    if (player.championId != 0)
+                        await Main.SetChampion(player.championId);
+                }
             });
         }
     }

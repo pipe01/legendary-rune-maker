@@ -16,12 +16,14 @@
 
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="70" />
                 <ColumnDefinition />
                 <ColumnDefinition Width="70" />
             </Grid.ColumnDefinitions>
-            
-            <TextBox x:Name="Input" Grid.Column="0" />
-            <Button Grid.Column="1" Click="Button_Click">Submit</Button>
+
+            <Button Grid.Column="0" Click="Play_Click" Style="{x:Null}">Playback</Button>
+            <TextBox x:Name="Input" Grid.Column="1" />
+            <Button Grid.Column="2" Click="Button_Click" Style="{x:Null}">Submit</Button>
         </Grid>
     </Grid>
 </Window>

@@ -1,6 +1,7 @@
 ﻿using LCU.NET;
 using LCU.NET.API_Models;
 using LCU.NET.WAMP;
+using Microsoft.Win32;
 using Newtonsoft.Json;
 using RestSharp;
 using RestSharp.Extensions;
@@ -8,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -71,7 +73,7 @@ namespace Legendary_Rune_Maker
         public DebugProxyWindow()
         {
             LeagueClient.Default.Proxy = new DebugProxy(this);
-            LeagueSocket.DumpToDebug = true;
+            //LeagueSocket.DumpToDebug = true;
             Debug.Listeners.Add(new TextWriterTraceListener("log.txt"));
 
             InitializeComponent();
@@ -108,6 +110,18 @@ namespace Legendary_Rune_Maker
         private void List_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             Clipboard.SetText(Events[List.SelectedIndex].Json);
+        }
+
+        private void Play_Click(object sender, RoutedEventArgs e)
+        {
+            var diag = new OpenFileDialog();
+
+            if (diag.ShowDialog(this) == true)
+            {
+                var events = JsonConvert.DeserializeObject<EventData[]>(File.ReadAllText(diag.FileName));
+
+                LeagueSocket.Playback(events, 2);
+            }
         }
     }
 }
