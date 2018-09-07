@@ -8,7 +8,7 @@
       xmlns:controls="clr-namespace:Legendary_Rune_Maker.Controls"
       xmlns:loc="clr-namespace:Legendary_Rune_Maker.Locale"
       mc:Ignorable="d" 
-      Height="405" Width="473" Loaded="Page_Loaded" Unloaded="Page_Unloaded"
+      Height="437" Width="473" Loaded="Page_Loaded" Unloaded="Page_Unloaded"
       Title="AutomationPage">
 
     <Page.Resources>
@@ -42,16 +42,17 @@
         <ImageBrush Stretch="UniformToFill" ImageSource="{StaticResource BgBlue}" />
     </Page.Background>
 
-    <Grid Margin="10">
+    <Grid Margin="10 5 10 10">
         <Grid.RowDefinitions>
-            <RowDefinition Height="44" />
+            <RowDefinition Height="81" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <Grid Margin="0 0.5 0 0">
             <Grid.RowDefinitions>
-                <RowDefinition Height="17" />
+                <RowDefinition Height="27" />
+                <RowDefinition Height="27" />
                 <RowDefinition Height="27" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
@@ -60,15 +61,28 @@
             </Grid.ColumnDefinitions>
 
             <CheckBox Grid.Row="0" Content="{x:Static loc:Text.AutoAccept}" ToolTip="{x:Static loc:Text.AutoAcceptTip}"
-                      IsChecked="{Binding Path=AutoAccept, Source={x:Static data:Config.Default}}" />
+                      IsChecked="{Binding Path=AutoAccept, Source={x:Static data:Config.Default}}" VerticalAlignment="Center" />
 
             <CheckBox Grid.Row="1" Content="{x:Static loc:Text.UploadOnLock}" ToolTip="{x:Static loc:Text.UploadOnLockTip}"
                       IsChecked="{Binding Path=UploadOnLock, Source={x:Static data:Config.Default}}"
                       VerticalAlignment="Center"/>
 
-            <CheckBox Grid.Row="0" Grid.Column="1" Content="{x:Static loc:Text.SetItemSet}" ToolTip="{x:Static loc:Text.SetItemSetTip}"
+            <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal" Grid.ColumnSpan="2"
+                        IsEnabled="{Binding Path=UploadOnLock, Source={x:Static data:Config.Default}}">
+
+                <CheckBox Content="{x:Static loc:Text.SetItemSet}" ToolTip="{x:Static loc:Text.SetItemSetTip}"
                       IsChecked="{Binding Path=SetItemSet, Source={x:Static data:Config.Default}}"
-                      VerticalAlignment="Center" Margin="5 1 0 0" />
+                      VerticalAlignment="Center" />
+
+                <ComboBox x:Name="ItemProviders" Margin="5,1,0,1" HorizontalAlignment="Stretch"
+                          Height="25" Width="115" FontSize="12" SelectionChanged="ItemProviders_SelectionChanged">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Name}" />
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </StackPanel>
 
             <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal"
                         IsEnabled="{Binding Path=UploadOnLock, Source={x:Static data:Config.Default}}">

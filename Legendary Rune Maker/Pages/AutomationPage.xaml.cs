@@ -123,10 +123,18 @@ namespace Legendary_Rune_Maker.Pages
             {
                 if (!(item is ClientProvider))
                 {
-                    Providers.Items.Add(item);
+                    if (item.ProviderOptions.HasFlag(Provider.Options.RunePages))
+                        Providers.Items.Add(item);
+
+                    if (item.ProviderOptions.HasFlag(Provider.Options.ItemSets))
+                        ItemProviders.Items.Add(item);
+
 
                     if (item.Name == Config.Default.LockLoadProvider)
                         Providers.SelectedItem = item;
+
+                    if (item.Name == Config.Default.ItemSetProvider)
+                        ItemProviders.SelectedItem = item;
                 }
             }
 
@@ -155,6 +163,11 @@ namespace Legendary_Rune_Maker.Pages
         private void Page_Unloaded(object sender, RoutedEventArgs e)
         {
             Config.Default.Save();
+        }
+
+        private void ItemProviders_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Config.Default.ItemSetProvider = ((Provider)ItemProviders.SelectedItem).Name;
         }
 
         public Size GetSize() => new Size(this.Width, this.Height);
