@@ -456,7 +456,7 @@
         <Style x:Key="Borderless" TargetType="Window">
             <Setter Property="WindowChrome.WindowChrome">
                 <Setter.Value>
-                    <WindowChrome GlassFrameThickness="0" CaptionHeight="0" UseAeroCaptionButtons="False" ResizeBorderThickness="7"
+                    <WindowChrome GlassFrameThickness="0" CaptionHeight="0" UseAeroCaptionButtons="False" ResizeBorderThickness="2"
                                   CornerRadius="0" />
                 </Setter.Value>
             </Setter>
@@ -489,7 +489,7 @@
 
             <Setter Property="WindowChrome.WindowChrome">
                 <Setter.Value>
-                    <WindowChrome GlassFrameThickness="0" CaptionHeight="0" UseAeroCaptionButtons="False" ResizeBorderThickness="7"
+                    <WindowChrome GlassFrameThickness="0" CaptionHeight="0" UseAeroCaptionButtons="False" ResizeBorderThickness="2"
                                   CornerRadius="0" />
                 </Setter.Value>
             </Setter>
