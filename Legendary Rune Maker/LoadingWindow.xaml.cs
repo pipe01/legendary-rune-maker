@@ -96,7 +96,7 @@ namespace Legendary_Rune_Maker
             Progress.IsIndeterminate = true;
 
             var manager = new UpdateManager(
-                new WebPackageResolver("https://pipe0481.heliohost.org/plrm/updates.man"),
+                new GithubPackageResolver("pipe01", "legendary-rune-maker", "*.*.*"),
                 new ZipPackageExtractor());
 
             var update = await await Task.WhenAny(Task.Delay(3000).ContinueWith<CheckForUpdatesResult>(_ => null), manager.CheckForUpdatesAsync());
