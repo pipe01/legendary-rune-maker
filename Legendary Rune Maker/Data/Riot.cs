@@ -85,6 +85,22 @@ namespace Legendary_Rune_Maker.Data
             });
         }
 
+        public static async Task<Item[]> GetItemsAsync()
+        {
+            string url = $"{CdnEndpoint}{await GetLatestVersionAsync()}/data/{Locale}/item.json";
+
+            return await WebCache.CustomJson(url, jobj =>
+            {
+                return jobj["data"].Children().Select(o =>
+                {
+                    var p = o as JProperty;
+                    return new Item(int.Parse(p.Name));
+                })
+                .ToArray();
+            });
+        }
+
+
         public static async Task SetLanguage(CultureInfo culture)
         {
             var availLangs = JsonConvert.DeserializeObject<string[]>(await Client.DownloadStringTaskAsync(CdnEndpoint + "languages.json"));
@@ -111,9 +127,13 @@ namespace Legendary_Rune_Maker.Data
             }
         }
 
+
+
         private static string LatestVersion;
         public static async Task<string> GetLatestVersionAsync()
             => LatestVersion ?? (LatestVersion = JsonConvert.DeserializeObject<string[]>(await Client.DownloadStringTaskAsync("https://ddragon.leagueoflegends.com/api/versions.json"))[0]);
+
+
 
         public static async Task<IDictionary<int, RuneTree>> GetRuneTreesByIDAsync()
             => (await GetRuneTrees()).ToDictionary(o => o.ID);
@@ -126,9 +146,12 @@ namespace Legendary_Rune_Maker.Data
 
         public static Champion GetChampion(int id) => GetChampions().Result.SingleOrDefault(o => o.ID == id);
 
+
         public static async Task CacheAll(Action<double> progress)
         {
             await GetLatestVersionAsync();
+
+            await GetItemsAsync();
 
             var runes = (await GetRuneTrees()).SelectMany(o => o.Slots).SelectMany(o => o.Runes).Select(o => ImageEndpoint + o.IconURL);
             var champions = (await GetChampions()).Select(o => o.ImageURL);

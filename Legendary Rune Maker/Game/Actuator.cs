@@ -1,6 +1,7 @@
 ﻿using LCU.NET;
 using LCU.NET.API_Models;
 using Legendary_Rune_Maker.Data;
+using Legendary_Rune_Maker.Data.Rune_providers;
 using Legendary_Rune_Maker.Locale;
 using Legendary_Rune_Maker.Utils;
 using Notifications.Wpf;
@@ -16,6 +17,14 @@ namespace Legendary_Rune_Maker.Game
     public class Actuator
     {
         private readonly IMainWindow Main;
+
+        internal static readonly RuneProvider[] RuneProviders = new RuneProvider[]
+        {
+            new RunesLolProvider(),
+            new ChampionGGProvider(),
+            new OpGGProvider(),
+            new ClientProvider()
+        };
 
         public Actuator(IMainWindow main)
         {
@@ -68,29 +77,49 @@ namespace Legendary_Rune_Maker.Game
             {
                 await Main.SafeInvoke(async () =>
                 {
-                    if (Main.UploadOnLock && GameState.CanUpload && Config.Default.UploadOnLock)
+                    if (Config.Default.UploadOnLock)
                     {
-                        string champion = Riot.GetChampion(Main.SelectedChampion).Name;
+                        await UploadPage();
+                    }
 
-                        Main.ShowNotification(Text.LockedInMessage, champion + ", " + Main.SelectedPosition.ToString().ToLower(), NotificationType.Success);
-
-                        if (!Main.ValidPage)
-                        {
-                            if (Config.Default.LoadOnLock)
-                            {
-                                await Main.LoadPageFromDefaultProvider();
-                            }
-                            else
-                            {
-                                Main.ShowNotification(Text.PageChampNotSet.FormatStr(champion), null, NotificationType.Error);
-                                return;
-                            }
-                        }
-
-                        await Task.Run(Main.Page.UploadToClient);
+                    if (Config.Default.SetItemSet)
+                    {
+                        await UploadItemSet();
                     }
                 });
             }
+        }
+
+        private async Task UploadItemSet()
+        {
+            var provider = RuneProviders.First(o => o.HasItemSets);
+            var set = await provider.GetItemSet(Main.SelectedChampion, Main.SelectedPosition);
+
+            await set.UploadToClient();
+
+            Main.ShowNotification("Uploaded item set");
+        }
+
+        private async Task UploadPage()
+        {
+            string champion = Riot.GetChampion(Main.SelectedChampion).Name;
+
+            Main.ShowNotification(Text.LockedInMessage, champion + ", " + Main.SelectedPosition.ToString().ToLower(), NotificationType.Success);
+
+            if (!Main.ValidPage)
+            {
+                if (Config.Default.LoadOnLock)
+                {
+                    await Main.LoadPageFromDefaultProvider();
+                }
+                else
+                {
+                    Main.ShowNotification(Text.PageChampNotSet.FormatStr(champion), null, NotificationType.Error);
+                    return;
+                }
+            }
+
+            await Task.Run(Main.Page.UploadToClient);
         }
 
         private void ChampSelectDetector_SessionUpdated(LolChampSelectChampSelectSession obj)

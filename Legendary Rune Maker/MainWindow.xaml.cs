@@ -176,7 +176,7 @@ namespace Legendary_Rune_Maker
 
         private async void Window_StateChanged(object sender, EventArgs e)
         {
-            if (this.WindowState == WindowState.Minimized)
+            if (this.WindowState == WindowState.Minimized && Config.Default.MinimizeToTaskbar)
             {
                 await Task.Delay(500); //Wait for Windows' window minimize animation to finish, cuz it looks K00L
                 this.Hide();

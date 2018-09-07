@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Legendary_Rune_Maker.Data.Rune_providers
@@ -66,6 +67,50 @@ namespace Legendary_Rune_Maker.Data.Rune_providers
             return new RunePage(perkIds, pathStyles[0], pathStyles[1], championId, position);
         }
 
+        protected override async Task<ItemSet> GetItemSetInner(int championId, Position position)
+        {
+            var doc = new HtmlDocument();
+            doc.LoadHtml(await new WebClient().DownloadStringTaskAsync(GetChampionURL(championId, position)));
+
+            var buildWrappers = doc.DocumentNode.Descendants().Where(o => o.HasClass("build-wrapper")).Reverse();
+
+            var blocks = new List<ItemSet.SetBlock>();
+
+            foreach (var wrapper in buildWrappers)
+            {
+                string title = wrapper.PreviousSibling.PreviousSibling.InnerText;
+                var items = new List<int>();
+                string[] stats = wrapper.Descendants()
+                    .Where(o => o.Name == "strong" && o.ParentNode.HasClass("build-text"))
+                    .Select(o => o.InnerText)
+                    .ToArray();
+
+                foreach (var item in wrapper.Descendants().Where(o => o.Name == "img"))
+                {
+                    items.Add(ParseItem(item));
+                }
+
+                blocks.Add(new ItemSet.SetBlock
+                {
+                    Items = items.ToArray(),
+                    Name = $"{title} ({stats[0]} win rate | {stats[1]} games)"
+                });
+            }
+
+            return new ItemSet
+            {
+                Champion = championId,
+                Position = position,
+                Blocks = blocks.ToArray(),
+                Name = this.Name + ": " + position.ToString()
+            };
+
+            int ParseItem(HtmlNode aNode)
+            {
+                return int.Parse(aNode.GetAttributeValue("data-id", ""));
+            }
+        }
+        
         private static int GetPerkId(HtmlNode node)
         {
             string src = node.GetAttributeValue("src", "");

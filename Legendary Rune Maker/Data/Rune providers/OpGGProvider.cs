@@ -22,6 +22,7 @@ namespace Legendary_Rune_Maker.Data.Rune_providers
         };
 
         public override string Name => "OP.GG";
+        public override bool HasItemSets => false;
 
         private static string GetRoleUrl(int championId, Position position)
             => $"https://op.gg/champion/{Riot.GetChampion(championId).Key}/statistics/{PositionToName[position]}";
@@ -74,6 +75,11 @@ namespace Legendary_Rune_Maker.Data.Rune_providers
 
                 yield return int.Parse(Regex.Match(img.GetAttributeValue("src", ""), @"(?<=\/)\d+(?=\.)").Value);
             }
+        }
+
+        protected override Task<ItemSet> GetItemSetInner(int championId, Position position)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -14,7 +14,7 @@ namespace Legendary_Rune_Maker.Data
         public static Config Default { get; } = Load();
 
         private const string FilePath = "config.json";
-        private const int LatestVersion = 10;
+        private const int LatestVersion = 11;
 
         public static readonly string[] AvailableLanguages = new[]
         {
@@ -26,18 +26,29 @@ namespace Legendary_Rune_Maker.Data
 
         public bool CheckUpdatesBeforeStartup { get; set; } = true;
         public bool LoadCacheBeforeStartup { get; set; } = true;
-        public string CultureName { get; set; } = null;
-        public bool AutoAccept { get; set; }
-        public bool UploadOnLock { get; set; } = true;
-        public bool LoadOnLock { get; set; }
-        public string LockLoadProvider { get; set; }
-        public bool AutoPickChampion { get; set; }
-        public bool DisablePickChampion { get; set; }
-        public bool AutoBanChampion { get; set; }
-        public bool DisableBanChampion { get; set; }
-        public bool AutoPickSumms { get; set; }
-        public bool DisablePickSumms { get; set; }
+        public string CultureName { get; set; }
+        public bool MinimizeToTaskbar { get; set; } = true;
 
+        public bool AutoAccept { get; set; } = true;
+
+        public bool UploadOnLock { get; set; } = true;
+        public bool LoadOnLock { get; set; } = true;
+        public string LockLoadProvider { get; set; }
+
+        public bool AutoPickChampion { get; set; }
+        public bool DisablePickChampion { get; set; } = true;
+
+        public bool AutoBanChampion { get; set; }
+        public bool DisableBanChampion { get; set; } = true;
+
+        public bool AutoPickSumms { get; set; }
+        public bool DisablePickSumms { get; set; } = true;
+
+        public bool SetItemSet { get; set; } = true;
+        public bool KeepItemSets { get; set; } = true;
+        public string LastItemSetUid { get; set; }
+
+        
         public Dictionary<Position, int> ChampionsToPick { get; set; } = new Dictionary<Position, int>
         {
             [Position.Fill] = 0,

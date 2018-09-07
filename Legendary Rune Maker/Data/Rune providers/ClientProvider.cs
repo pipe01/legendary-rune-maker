@@ -11,6 +11,12 @@ namespace Legendary_Rune_Maker.Data.Rune_providers
     internal class ClientProvider : RuneProvider
     {
         public override string Name => "Client";
+        public override bool HasItemSets => false;
+
+        protected override Task<ItemSet> GetItemSetInner(int championId, Position position)
+        {
+            throw new NotImplementedException();
+        }
 
         protected override Task<Position[]> GetPossibleRolesInner(int championId)
         {

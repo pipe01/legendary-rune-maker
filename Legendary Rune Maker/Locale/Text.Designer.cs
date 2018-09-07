@@ -322,6 +322,15 @@ namespace Legendary_Rune_Maker.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Minimize to taskbar.
+        /// </summary>
+        public static string MinimizeToTaskbar {
+            get {
+                return ResourceManager.GetString("MinimizeToTaskbar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to None available.
         /// </summary>
         public static string NoneAvailable {
@@ -390,6 +399,24 @@ namespace Legendary_Rune_Maker.Locale {
         public static string Restart {
             get {
                 return ResourceManager.GetString("Restart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Load item set for champion.
+        /// </summary>
+        public static string SetItemSet {
+            get {
+                return ResourceManager.GetString("SetItemSet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Automatically load an appropiate item set for the selected champion and position..
+        /// </summary>
+        public static string SetItemSetTip {
+            get {
+                return ResourceManager.GetString("SetItemSetTip", resourceCulture);
             }
         }
         

@@ -22,11 +22,17 @@ namespace Legendary_Rune_Maker.Data.Rune_providers
         };
 
         public override string Name => "Runes.lol";
+        public override bool HasItemSets => false;
 
         private static string GetChampionKey(int championId) => Riot.GetChampion(championId).Key;
 
         private static string GetRoleUrl(int championId, Position position)
             => $"https://runes.lol/ranked/gold/champion/win/{GetChampionKey(championId)}/{PositionToName[position]}";
+
+        protected override Task<ItemSet> GetItemSetInner(int championId, Position position)
+        {
+            throw new NotImplementedException();
+        }
 
         protected override async Task<Position[]> GetPossibleRolesInner(int championId)
         {
