@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Legendary_Rune_Maker.Data.Rune_providers
 {
-    internal class ChampionGGProvider : RuneProvider
+    internal class ChampionGGProvider : Provider
     {
         public override string Name => "Champion.GG";
 

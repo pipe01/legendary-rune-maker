@@ -236,7 +236,7 @@ namespace Legendary_Rune_Maker.Pages
             var menu = new ContextMenu();
             menu.Items.Add(new MenuItem { Header = Text.Loading, IsEnabled = false });
 
-            var availProviders = new List<(RuneProvider Provider, Position Position)>();
+            var availProviders = new List<(Provider Provider, Position Position)>();
 
             Load.ContextMenu = menu;
             menu.IsOpen = true;
@@ -248,7 +248,7 @@ namespace Legendary_Rune_Maker.Pages
             foreach (var provider in Actuator.RuneProviders)
             {
                 var available = await provider.GetPossibleRoles(SelectedChampion);
-                IList<(RuneProvider Provider, Position Position)> data = new List<(RuneProvider Provider, Position Position)>();
+                IList<(Provider Provider, Position Position)> data = new List<(Provider Provider, Position Position)>();
 
                 if (SelectedPosition == Position.Fill)
                 {

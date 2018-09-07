@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace Legendary_Rune_Maker.Data.Rune_providers
 {
-    internal class ClientProvider : RuneProvider
+    internal class ClientProvider : Provider
     {
         public override string Name => "Client";
-        public override bool HasItemSets => false;
+        public override Options ProviderOptions => Options.RunePages;
 
         protected override Task<ItemSet> GetItemSetInner(int championId, Position position)
         {

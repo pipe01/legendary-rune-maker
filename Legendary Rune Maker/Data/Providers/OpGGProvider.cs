@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Legendary_Rune_Maker.Data.Rune_providers
 {
-    internal class OpGGProvider : RuneProvider
+    internal class OpGGProvider : Provider
     {
         private static readonly IDictionary<Position, string> PositionToName = new Dictionary<Position, string>
         {
@@ -22,7 +22,7 @@ namespace Legendary_Rune_Maker.Data.Rune_providers
         };
 
         public override string Name => "OP.GG";
-        public override bool HasItemSets => false;
+        public override Options ProviderOptions => Options.RunePages;
 
         private static string GetRoleUrl(int championId, Position position)
             => $"https://op.gg/champion/{Riot.GetChampion(championId).Key}/statistics/{PositionToName[position]}";

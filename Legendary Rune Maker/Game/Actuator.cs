@@ -18,7 +18,7 @@ namespace Legendary_Rune_Maker.Game
     {
         private readonly IMainWindow Main;
 
-        internal static readonly RuneProvider[] RuneProviders = new RuneProvider[]
+        internal static readonly Provider[] RuneProviders = new Provider[]
         {
             new RunesLolProvider(),
             new ChampionGGProvider(),
@@ -92,7 +92,7 @@ namespace Legendary_Rune_Maker.Game
 
         private async Task UploadItemSet()
         {
-            var provider = RuneProviders.First(o => o.HasItemSets);
+            var provider = RuneProviders.First(o => o.ProviderOptions.HasFlag(Provider.Options.ItemSets));
             var set = await provider.GetItemSet(Main.SelectedChampion, Main.SelectedPosition);
 
             await set.UploadToClient();

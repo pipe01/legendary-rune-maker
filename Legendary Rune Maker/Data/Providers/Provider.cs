@@ -6,11 +6,18 @@ using System.Threading.Tasks;
 
 namespace Legendary_Rune_Maker.Data.Rune_providers
 {
-    internal abstract class RuneProvider
+    internal abstract class Provider
     {
+        [Flags]
+        public enum Options
+        {
+            RunePages = 1,
+            ItemSets = 2,
+        }
+
         public abstract string Name { get; }
 
-        public virtual bool HasItemSets => true;
+        public virtual Options ProviderOptions => Options.RunePages | Options.ItemSets;
 
         private IDictionary<int, Position[]> PossibleRolesCache = new Dictionary<int, Position[]>();
         private IDictionary<(int, Position), RunePage> RunePageCache = new Dictionary<(int, Position), RunePage>();
@@ -28,8 +35,12 @@ namespace Legendary_Rune_Maker.Data.Rune_providers
             => ItemSetCache.TryGetValue((championId, position), out var r) ? r :
                ItemSetCache[(championId, position)] = await GetItemSetInner(championId, position);
 
+
         protected abstract Task<Position[]> GetPossibleRolesInner(int championId);
-        protected abstract Task<RunePage> GetRunePageInner(int championId, Position position);
-        protected abstract Task<ItemSet> GetItemSetInner(int championId, Position position);
+
+        protected virtual Task<RunePage> GetRunePageInner(int championId, Position position)
+            => throw new NotImplementedException();
+        protected virtual Task<ItemSet> GetItemSetInner(int championId, Position position)
+            => throw new NotImplementedException();
     }
 }

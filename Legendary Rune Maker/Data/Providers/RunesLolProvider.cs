@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Legendary_Rune_Maker.Data.Rune_providers
 {
-    internal class RunesLolProvider : RuneProvider
+    internal class RunesLolProvider : Provider
     {
         private static readonly IDictionary<Position, string> PositionToName = new Dictionary<Position, string>
         {
@@ -22,7 +22,7 @@ namespace Legendary_Rune_Maker.Data.Rune_providers
         };
 
         public override string Name => "Runes.lol";
-        public override bool HasItemSets => false;
+        public override Options ProviderOptions => Options.RunePages;
 
         private static string GetChampionKey(int championId) => Riot.GetChampion(championId).Key;
 

@@ -60,7 +60,7 @@ namespace Legendary_Rune_Maker.Pages
         
         private void Providers_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Config.Default.LockLoadProvider = ((RuneProvider)Providers.SelectedItem).Name;
+            Config.Default.LockLoadProvider = ((Provider)Providers.SelectedItem).Name;
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
