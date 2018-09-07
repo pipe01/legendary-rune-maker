@@ -114,7 +114,6 @@ namespace Legendary_Rune_Maker.Pages
         {
             if (e.Key == Key.Escape)
             {
-                NavigationService.GoBack();
                 Completion.SetCanceled();
             }
         }

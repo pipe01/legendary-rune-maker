@@ -231,5 +231,11 @@ namespace Legendary_Rune_Maker
         {
             DragMove();
         }
+
+        private void Window_PreviewKeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Escape && Frame.CanGoBack)
+                Frame.GoBack();
+        }
     }
 }

@@ -11,7 +11,7 @@
         DataContext="{Binding RelativeSource={RelativeSource Self}}" WindowStartupLocation="Manual"
         Icon="{StaticResource Icon}" StateChanged="Window_StateChanged" PreviewKeyDown="Window_PreviewKeyDown"
         Closed="Window_Closed" Style="{StaticResource LoLWindow}" ResizeMode="CanMinimize" SizeToContent="WidthAndHeight"
-        MouseLeftButtonDown="Window_MouseLeftButtonDown">
+        MouseLeftButtonDown="Window_MouseLeftButtonDown" PreviewKeyUp="Window_PreviewKeyUp">
 
     <Window.Background>
         <VisualBrush Stretch="UniformToFill">
