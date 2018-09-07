@@ -228,76 +228,40 @@ namespace Legendary_Rune_Maker.Pages
                 RuneBook.Instance.Add(this.Page);
         }
 
-        private async void Load_Click(object sender, EventArgs e)
+        private void Load_Click(object sender, EventArgs e)
         {
             if (SelectedChampion == 0)
                 return;
 
             var menu = new ContextMenu();
-            menu.Items.Add(new MenuItem { Header = Text.Loading, IsEnabled = false });
-
-            var availProviders = new List<(Provider Provider, Position Position)>();
-
             Load.ContextMenu = menu;
             menu.IsOpen = true;
-
-            menu.Cursor = Cursors.AppStarting;
-
-            bool addedFirstHeader = false;
-
-            var tasks = Actuator.RuneProviders.Select(async provider =>
-            {
-                var available = await provider.GetPossibleRoles(SelectedChampion);
-                IList<(Provider Provider, Position Position)> data = new List<(Provider Provider, Position Position)>();
-
-                if (SelectedPosition == Position.Fill)
-                {
-                    foreach (var avail in available)
-                    {
-                        data.Add((provider, avail));
-                    }
-                }
-                else if (available.Contains(SelectedPosition))
-                {
-                    data.Add((provider, SelectedPosition));
-                }
-
-                if (data.Count == 0)
-                    return;
-
-                foreach (var dataItem in data)
-                {
-                    string header = dataItem.Provider.Name + (dataItem.Position != Position.Fill ? $" - {dataItem.Position}" : "");
-
-                    var menuItem = new MenuItem { Header = header };
-                    menuItem.Click += async (a, b) =>
-                            await Dispatcher.Invoke(async () =>
-                            Tree.SetPage(await dataItem.Provider.GetRunePage(SelectedChampion, dataItem.Position)));
-
-                    Dispatcher.Invoke(() =>
-                    {
-                        if (!addedFirstHeader)
-                        {
-                            addedFirstHeader = true;
-
-                            menu.Items.Clear();
-                            menu.Items.Add(new MenuItem { Header = Text.LoadFrom, IsEnabled = false });
-                        }
-
-                        menu.Items.Add(menuItem);
-                    });
-                }
-            });
-
-            await Task.WhenAll(tasks);
             
-            if (!addedFirstHeader)
+            foreach (var provider in Actuator.RuneProviders)
             {
-                menu.Items.Clear();
-                menu.Items.Add(new MenuItem { Header = Text.NoneAvailable, IsEnabled = false });
-            }
+                var header = new MenuItem { Header = provider.Name };
+                menu.Items.Add(header);
 
-            menu.Cursor = Cursors.Arrow;
+                header.SubmenuOpened += async (_, __) =>
+                {
+                    var roles = await provider.GetPossibleRoles(SelectedChampion);
+                    header.Items.Clear();
+
+                    foreach (var role in roles)
+                    {
+                        var roleItem = new MenuItem { Header = role.ToString() };
+                        roleItem.Click += async (___, ____) =>
+                        {
+                            this.Cursor = Cursors.Wait;
+                            Tree.SetPage(await provider.GetRunePage(SelectedChampion, role));
+                            this.Cursor = Cursors.Arrow;
+                        };
+
+                        header.Items.Add(roleItem);
+                    }
+                };
+                header.Items.Add(new MenuItem { Header = Text.Loading, IsEnabled = false });
+            }
         }
 
         private async void ChampionImage_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
