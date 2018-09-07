@@ -104,6 +104,7 @@
     <Compile Include="Data\ItemSet.cs" />
     <Compile Include="Data\Providers\ChampionGGProvider.cs" />
     <Compile Include="Data\Providers\ClientProvider.cs" />
+    <Compile Include="Data\Providers\MetaLolProvider.cs" />
     <Compile Include="Data\Providers\OpGGProvider.cs" />
     <Compile Include="Data\Providers\Provider.cs" />
     <Compile Include="Data\Providers\RunesLolProvider.cs" />
