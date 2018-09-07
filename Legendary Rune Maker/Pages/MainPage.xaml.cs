@@ -245,7 +245,7 @@ namespace Legendary_Rune_Maker.Pages
 
             bool addedFirstHeader = false;
 
-            foreach (var provider in Actuator.RuneProviders)
+            var tasks = Actuator.RuneProviders.Select(async provider =>
             {
                 var available = await provider.GetPossibleRoles(SelectedChampion);
                 IList<(Provider Provider, Position Position)> data = new List<(Provider Provider, Position Position)>();
@@ -263,7 +263,7 @@ namespace Legendary_Rune_Maker.Pages
                 }
 
                 if (data.Count == 0)
-                    continue;
+                    return;
 
                 foreach (var dataItem in data)
                 {
@@ -271,20 +271,26 @@ namespace Legendary_Rune_Maker.Pages
 
                     var menuItem = new MenuItem { Header = header };
                     menuItem.Click += async (a, b) =>
-                                        Tree.SetPage(await dataItem.Provider.GetRunePage(SelectedChampion, dataItem.Position));
+                            await Dispatcher.Invoke(async () =>
+                            Tree.SetPage(await dataItem.Provider.GetRunePage(SelectedChampion, dataItem.Position)));
 
-                    if (!addedFirstHeader)
+                    Dispatcher.Invoke(() =>
                     {
-                        addedFirstHeader = true;
+                        if (!addedFirstHeader)
+                        {
+                            addedFirstHeader = true;
 
-                        menu.Items.Clear();
-                        menu.Items.Add(new MenuItem { Header = Text.LoadFrom, IsEnabled = false });
-                    }
+                            menu.Items.Clear();
+                            menu.Items.Add(new MenuItem { Header = Text.LoadFrom, IsEnabled = false });
+                        }
 
-                    menu.Items.Add(menuItem);
+                        menu.Items.Add(menuItem);
+                    });
                 }
-            }
+            });
 
+            await Task.WhenAll(tasks);
+            
             if (!addedFirstHeader)
             {
                 menu.Items.Clear();
