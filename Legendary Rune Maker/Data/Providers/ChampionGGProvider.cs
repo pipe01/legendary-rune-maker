@@ -7,7 +7,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace Legendary_Rune_Maker.Data.Rune_providers
+namespace Legendary_Rune_Maker.Data.Providers
 {
     internal class ChampionGGProvider : Provider
     {

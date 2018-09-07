@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Legendary_Rune_Maker.Data.Rune_providers
+namespace Legendary_Rune_Maker.Data.Providers
 {
     internal class ClientProvider : Provider
     {

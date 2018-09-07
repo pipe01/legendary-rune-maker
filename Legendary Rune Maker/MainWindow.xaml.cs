@@ -1,7 +1,7 @@
 ﻿using LCU.NET;
 using LCU.NET.API_Models;
 using Legendary_Rune_Maker.Data;
-using Legendary_Rune_Maker.Data.Rune_providers;
+using Legendary_Rune_Maker.Data.Providers;
 using Legendary_Rune_Maker.Game;
 using Legendary_Rune_Maker.Locale;
 using Legendary_Rune_Maker.Pages;

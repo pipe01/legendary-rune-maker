@@ -1,6 +1,6 @@
 ﻿using Legendary_Rune_Maker.Controls;
 using Legendary_Rune_Maker.Data;
-using Legendary_Rune_Maker.Data.Rune_providers;
+using Legendary_Rune_Maker.Data.Providers;
 using Legendary_Rune_Maker.Game;
 using System;
 using System.Collections.Generic;
