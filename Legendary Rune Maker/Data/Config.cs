@@ -45,7 +45,7 @@ namespace Legendary_Rune_Maker.Data
         public bool DisablePickSumms { get; set; } = true;
 
         public bool SetItemSet { get; set; } = true;
-        public bool KeepItemSets { get; set; } = true;
+        public bool KeepItemSets { get; set; }
         public string LastItemSetUid { get; set; }
 
         
