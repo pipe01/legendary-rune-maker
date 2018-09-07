@@ -205,7 +205,7 @@ namespace Legendary_Rune_Maker.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Download.
+        ///   Looks up a localized string similar to Load from internet.
         /// </summary>
         public static string Download {
             get {
