@@ -256,6 +256,6 @@
     <value>Subido conjunto de objetos</value>
   </data>
   <data name="UploadedItemSetFrom" xml:space="preserve">
-    <value>Dr {0}</value>
+    <value>De {0}</value>
   </data>
 </root>
