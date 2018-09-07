@@ -93,7 +93,7 @@ namespace Legendary_Rune_Maker.Game
 
         private async Task UploadItemSet()
         {
-            var provider = RuneProviders.First(o => o.ProviderOptions.HasFlag(Provider.Options.ItemSets));
+            var provider = Array.Find(RuneProviders, o => o.Name == Config.Default.ItemSetProvider) ?? RuneProviders[0];
             var set = await provider.GetItemSet(Main.SelectedChampion, Main.SelectedPosition);
 
             await set.UploadToClient();

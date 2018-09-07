@@ -67,15 +67,14 @@
                       IsChecked="{Binding Path=UploadOnLock, Source={x:Static data:Config.Default}}"
                       VerticalAlignment="Center"/>
 
-            <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal" Grid.ColumnSpan="2"
-                        IsEnabled="{Binding Path=UploadOnLock, Source={x:Static data:Config.Default}}">
-
+            <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal" Grid.ColumnSpan="2">
                 <CheckBox Content="{x:Static loc:Text.SetItemSet}" ToolTip="{x:Static loc:Text.SetItemSetTip}"
                       IsChecked="{Binding Path=SetItemSet, Source={x:Static data:Config.Default}}"
                       VerticalAlignment="Center" />
 
                 <ComboBox x:Name="ItemProviders" Margin="5,1,0,1" HorizontalAlignment="Stretch"
-                          Height="25" Width="115" FontSize="12" SelectionChanged="ItemProviders_SelectionChanged">
+                          Height="25" Width="115" FontSize="12" SelectionChanged="ItemProviders_SelectionChanged"
+                          IsEnabled="{Binding Path=SetItemSet, Source={x:Static data:Config.Default}}">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding Name}" />
