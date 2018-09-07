@@ -269,7 +269,8 @@
                                 <Setter TargetName="Border" Property="Background" Value="#101921" />
                                 <Setter TargetName="Border" Property="BorderBrush" Value="#6D5925" />
                                 <Setter Property="Foreground" Value="{StaticResource Pressed}"/>
-                                <Setter TargetName="Arrow" Property="Fill" Value="Gray" />
+                                <Setter TargetName="Arrow" Property="Fill" Value="#6D5925" />
+                                <Setter TargetName="Arrow" Property="Stroke" Value="#6D5925" />
                             </Trigger>
 
                             <Trigger Property="IsMouseOver" Value="True">
@@ -578,52 +579,6 @@
                     <Setter Property="Points" Value="0,100 100,100 50,50" />
                 </Style>
 
-                <Style x:Key="BorderBackgroundStyle" TargetType="Border">
-                    <!--<Setter Property="Background">
-                        <Setter.Value>
-                            <VisualBrush>
-                                <VisualBrush.Visual>
-                                    <Canvas Width="20" Height="20">
-                                        <Rectangle Fill="Magenta" Width="20" Height="200" />
-                                        <Rectangle Width="20" Height="100" HorizontalAlignment="Left">
-                                            <Rectangle.Fill>
-                                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
-                                                    <GradientStop Color="#060E17" Offset="0" />
-                                                    <GradientStop Color="#0000" Offset="0.5" />
-                                                </LinearGradientBrush>
-                                            </Rectangle.Fill>
-                                        </Rectangle>
-                                        --><!--<Polygon Points="100,0 100,100 45,50">
-                                                <Polygon.Fill>
-                                                    <LinearGradientBrush StartPoint="1,0" EndPoint="0,0">
-                                                        <GradientStop Color="#060E17" Offset="0" />
-                                                        <GradientStop Color="#1E2328" Offset="0.03" />
-                                                    </LinearGradientBrush>
-                                                </Polygon.Fill>
-                                            </Polygon>
-                                            <Polygon Points="0,0 100,0 50,50">
-                                                <Polygon.Fill>
-                                                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                                                        <GradientStop Color="#060E17" Offset="0" />
-                                                        <GradientStop Color="#1E2328" Offset="0.03" />
-                                                    </LinearGradientBrush>
-                                                </Polygon.Fill>
-                                            </Polygon>
-                                            <Polygon Points="0,100 100,100 50,50">
-                                                <Polygon.Fill>
-                                                    <LinearGradientBrush StartPoint="0,1" EndPoint="0,0">
-                                                        <GradientStop Color="#060E17" Offset="0" />
-                                                        <GradientStop Color="#1E2328" Offset="0.03" />
-                                                    </LinearGradientBrush>
-                                                </Polygon.Fill>
-                                            </Polygon>--><!--
-                                    </Canvas>
-                                </VisualBrush.Visual>
-                            </VisualBrush>
-                        </Setter.Value>
-                    </Setter>-->
-                </Style>
-
                 <Color x:Key="BorderNormalA">#C8AA6D</Color>
                 <Color x:Key="BorderNormalB">#795C28</Color>
                 <Color x:Key="BorderHighlightA">#EFE5D6</Color>
@@ -645,8 +600,7 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Border x:Name="BtnBorder" Style="{StaticResource BorderBackgroundStyle}"
-                                BorderThickness="2">
+                        <Border x:Name="BtnBorder" BorderThickness="2">
                             <Grid>
                                 <Grid x:Name="BlackFade">
                                     <Rectangle Width="2" HorizontalAlignment="Left">
