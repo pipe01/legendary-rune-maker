@@ -1,28 +1,19 @@
-﻿using LCU.NET;
-using LCU.NET.API_Models;
-using Legendary_Rune_Maker.Data;
+﻿using Legendary_Rune_Maker.Data;
 using Legendary_Rune_Maker.Data.Providers;
 using Legendary_Rune_Maker.Game;
 using Legendary_Rune_Maker.Locale;
 using Legendary_Rune_Maker.Utils;
 using Notifications.Wpf;
-using RestSharp.Extensions;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Legendary_Rune_Maker.Pages
 {

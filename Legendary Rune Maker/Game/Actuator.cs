@@ -6,10 +6,7 @@ using Legendary_Rune_Maker.Locale;
 using Legendary_Rune_Maker.Utils;
 using Notifications.Wpf;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Legendary_Rune_Maker.Game

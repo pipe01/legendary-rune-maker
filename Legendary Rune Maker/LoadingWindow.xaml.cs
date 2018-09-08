@@ -1,27 +1,14 @@
-﻿using LCU.NET;
-using Legendary_Rune_Maker.Data;
-using Legendary_Rune_Maker.Data.Providers;
+﻿using Legendary_Rune_Maker.Data;
 using Legendary_Rune_Maker.Locale;
-using Legendary_Rune_Maker.Properties;
 using Onova;
 using Onova.Models;
 using Onova.Services;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace Legendary_Rune_Maker
 {
@@ -99,8 +86,10 @@ namespace Legendary_Rune_Maker
                 new GithubPackageResolver("pipe01", "legendary-rune-maker", "*.*.*"),
                 new ZipPackageExtractor());
 
-            var update = await await Task.WhenAny(Task.Delay(3000).ContinueWith<CheckForUpdatesResult>(_ => null), manager.CheckForUpdatesAsync());
-
+            var update = await await Task.WhenAny(
+                    Task.Delay(3000).ContinueWith<CheckForUpdatesResult>(_ => null),
+                    manager.CheckForUpdatesAsync());
+            
             if (update?.CanUpdate == true)
             {
                 Status.Text = Text.Updating;

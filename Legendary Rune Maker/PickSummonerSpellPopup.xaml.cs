@@ -3,10 +3,8 @@ using Legendary_Rune_Maker.Data;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace Legendary_Rune_Maker

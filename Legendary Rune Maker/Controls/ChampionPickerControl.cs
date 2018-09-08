@@ -1,11 +1,9 @@
 ﻿using Legendary_Rune_Maker.Data;
 using Legendary_Rune_Maker.Pages;
 using System;
-using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Navigation;
 
 namespace Legendary_Rune_Maker.Controls

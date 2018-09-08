@@ -2,9 +2,6 @@
 using Legendary_Rune_Maker.Game;
 using Notifications.Wpf;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Legendary_Rune_Maker

@@ -1,7 +1,5 @@
 ﻿using LCU.NET;
-using LCU.NET.API_Models;
 using LCU.NET.Plugins.LoL;
-using RestSharp;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
