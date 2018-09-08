@@ -831,6 +831,7 @@
             <Setter Property="Foreground" Value="#938E82" />
             <Setter Property="CaretBrush" Value="#E8E6D2" />
             <Setter Property="FontFamily" Value="{StaticResource BeaufortBold}" />
+            <Setter Property="Cursor" Value="IBeam" />
 
             <Setter Property="Template">
                 <Setter.Value>
