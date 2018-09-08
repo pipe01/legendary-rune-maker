@@ -4,7 +4,7 @@
              xmlns:local="clr-namespace:Legendary_Rune_Maker"
              xmlns:controls="clr-namespace:Legendary_Rune_Maker.Controls"
              xmlns:utils="clr-namespace:Legendary_Rune_Maker.Utils"
-             xmlns:diag="clr-namespace:System.Diagnostics;assembly=WindowsBase"
+             xmlns:loc="clr-namespace:Legendary_Rune_Maker.Locale"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              StartupUri="LoadingWindow.xaml">
     <Application.Resources>
@@ -841,7 +841,12 @@
                             <StackPanel Orientation="Horizontal">
                                 <Image x:Name="SearchImg" Source="{StaticResource Search}" Margin="2 0 0 0" Width="10" Height="10"
                                        Visibility="Collapsed" />
-                                <ScrollViewer x:Name="PART_ContentHost" Margin="5 0 0 0" />
+
+                                <Grid Margin="5 0 0 0">
+                                    <TextBlock x:Name="Hint" Foreground="#938E82" Text="{x:Static loc:Text.Search}"
+                                               Visibility="Hidden"/>
+                                    <ScrollViewer x:Name="PART_ContentHost" />
+                                </Grid>
                             </StackPanel>
                         </Border>
                         
@@ -869,6 +874,11 @@
                             <Trigger Property="Tag" Value="Search">
                                 <Setter TargetName="SearchImg" Property="Visibility" Value="Visible" />
                             </Trigger>
+
+                            <DataTrigger Binding="{Binding Text, RelativeSource={RelativeSource Self}}"
+                                         Value="{x:Static sys:String.Empty}">
+                                <Setter TargetName="Hint" Property="Visibility" Value="Visible" />
+                            </DataTrigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>

@@ -264,4 +264,7 @@
   <data name="ReportBugDialog" xml:space="preserve">
     <value>¿Abrir el navegador para reportar un bug?</value>
   </data>
+  <data name="Search" xml:space="preserve">
+    <value>Buscar</value>
+  </data>
 </root>
