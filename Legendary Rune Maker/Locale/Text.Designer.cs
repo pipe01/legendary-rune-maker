@@ -394,6 +394,15 @@ namespace Legendary_Rune_Maker.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Open browser to report a bug?.
+        /// </summary>
+        public static string ReportBugDialog {
+            get {
+                return ResourceManager.GetString("ReportBugDialog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Restart.
         /// </summary>
         public static string Restart {

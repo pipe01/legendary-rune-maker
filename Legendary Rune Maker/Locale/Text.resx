@@ -265,4 +265,7 @@
   <data name="Save" xml:space="preserve">
     <value>Save</value>
   </data>
+  <data name="ReportBugDialog" xml:space="preserve">
+    <value>Open browser to report a bug?</value>
+  </data>
 </root>

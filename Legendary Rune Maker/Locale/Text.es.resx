@@ -261,4 +261,7 @@
   <data name="Save" xml:space="preserve">
     <value>Guardar</value>
   </data>
+  <data name="ReportBugDialog" xml:space="preserve">
+    <value>¿Abrir el navegador para reportar un bug?</value>
+  </data>
 </root>

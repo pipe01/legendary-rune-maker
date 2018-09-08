@@ -276,12 +276,7 @@ namespace Legendary_Rune_Maker.Pages
                 UpdateRunePageFromRuneBook();
             }
         }
-
-        private void BugReport_Click(object sender, EventArgs e)
-        {
-            Process.Start("https://github.com/pipe01/legendary-rune-maker/issues/new");
-        }
-
+        
         private void ShowRunes_Click(object sender, EventArgs e)
         {
             Expanded = !Expanded;
@@ -324,6 +319,12 @@ namespace Legendary_Rune_Maker.Pages
         private void ChampionImage_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             e.Handled = true;
+        }
+
+        private void BugReport_Click(object sender, RoutedEventArgs e)
+        {
+            if (MessageBox.Show(Text.ReportBugDialog, "", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                Process.Start("https://github.com/pipe01/legendary-rune-maker/issues/new");
         }
     }
 }
