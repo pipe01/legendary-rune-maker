@@ -89,7 +89,7 @@ namespace Legendary_Rune_Maker.Pages
             CollectionViewSource.GetDefaultView(ChampionList).Refresh();
         }
 
-        private async void Available_Unchecked(object sender, RoutedEventArgs e)
+        private void Available_Unchecked(object sender, RoutedEventArgs e)
         {
             AvailableIDs = null;
             CollectionViewSource.GetDefaultView(ChampionList).Refresh();
