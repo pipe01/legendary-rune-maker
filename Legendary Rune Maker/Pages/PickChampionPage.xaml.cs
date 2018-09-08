@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Navigation;
@@ -38,6 +39,9 @@ namespace Legendary_Rune_Maker.Pages
         private async void Page_Initialized(object sender, EventArgs e)
         {
             await LoadAllChampions();
+
+            CollectionViewSource.GetDefaultView(ChampionList).Filter =
+                o => o == null || ((Champion)o).Name.IndexOf(Search.Text, StringComparison.OrdinalIgnoreCase) >= 0;
 
             this.Focus();
         }
@@ -110,6 +114,11 @@ namespace Legendary_Rune_Maker.Pages
             {
                 Completion.SetCanceled();
             }
+        }
+
+        private void Search_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            CollectionViewSource.GetDefaultView(ChampionList).Refresh();
         }
     }
 }
