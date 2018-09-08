@@ -75,6 +75,11 @@ namespace Legendary_Rune_Maker
             }
             else
             {
+                if (e.Content is MainPage)
+                    this.Tag = "Settings";
+                else
+                    this.Tag = "";
+
                 AllowDirectNavigation = false;
             }
         }
@@ -204,7 +209,7 @@ namespace Legendary_Rune_Maker
 
         public void Settings()
         {
-            new SettingsWindow().ShowDialog(this);
+            Frame.Navigate(new SettingsPage());
         }
 
         public void CloseCustom()

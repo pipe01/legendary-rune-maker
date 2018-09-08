@@ -1,20 +1,30 @@
 ﻿using Legendary_Rune_Maker.Data;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
+using System.Linq;
 using System.Reflection;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
 
-namespace Legendary_Rune_Maker
+namespace Legendary_Rune_Maker.Pages
 {
     /// <summary>
-    /// Interaction logic for SettingsWindow.xaml
+    /// Interaction logic for SettingsPage.xaml
     /// </summary>
-    public partial class SettingsWindow : Window
+    public partial class SettingsPage : Page, IPage
     {
-        public SettingsWindow()
+        public SettingsPage()
         {
             InitializeComponent();
 
@@ -32,13 +42,8 @@ namespace Legendary_Rune_Maker
                     LanguageCb.SelectedItem = name;
             }
         }
-
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            Config.Default.Save();
-        }
-
-        private void Restart_Click(object sender, EventArgs e)
+        
+        private void Restart_Click(object sender, RoutedEventArgs e)
         {
             Config.Default.Save();
 
@@ -51,24 +56,22 @@ namespace Legendary_Rune_Maker
             Config.Default.CultureName = Config.AvailableLanguages[LanguageCb.SelectedIndex];
         }
 
-        private void Button_MouseEnter(object sender, MouseEventArgs e)
+        public Size GetSize() => new Size(this.Width, this.Height);
+        
+        private void Cancel_Click(object sender, RoutedEventArgs e)
         {
-            Debug.WriteLine("MouseEnter");
+            NavigationService.GoBack();
         }
 
-        private void Button_MouseLeave(object sender, MouseEventArgs e)
+        private void Page_Unloaded(object sender, RoutedEventArgs e)
         {
-            Debug.WriteLine("MouseLeave");
+            Config.Reload();
         }
 
-        private void Button_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void Save_Click(object sender, RoutedEventArgs e)
         {
-            Debug.WriteLine("MouseDown");
-        }
-
-        private void Button_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            Debug.WriteLine("MouseUp");
+            Config.Default.Save();
+            NavigationService.GoBack();
         }
     }
 }

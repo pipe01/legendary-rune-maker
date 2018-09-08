@@ -82,6 +82,8 @@ namespace Legendary_Rune_Maker.Data
             File.WriteAllText(FilePath, JsonConvert.SerializeObject(this, Formatting.Indented));
         }
 
+        public static void Reload() => Default = Load();
+
         private static Config Load()
         {
             Config c;
