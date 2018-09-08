@@ -97,7 +97,7 @@
                                 <Storyboard>
                                     <DoubleAnimation From="1" To="0" Duration="0:0:0.125" Storyboard.TargetProperty="Opacity" />
                                     <DoubleAnimation From="0" To="1" Duration="0:0:0.125" Storyboard.TargetProperty="Opacity"
-                                                         Storyboard.Target="{Binding ElementName=PositionImage}"/>
+                                                     Storyboard.Target="{Binding ElementName=PositionImage}"/>
                                 </Storyboard>
                             </BeginStoryboard>
                         </EventTrigger>
@@ -120,20 +120,19 @@
                 </Grid.ColumnDefinitions>
 
                 <CheckBox x:Name="AttachChk" Grid.Row="1" Grid.ColumnSpan="2" IsChecked="{Binding Attached, Mode=TwoWay}" Margin="10"
-                              VerticalAlignment="Center" HorizontalAlignment="Left" Content="{x:Static loc:Text.Attach}" />
+                          VerticalAlignment="Center" HorizontalAlignment="Left" Content="{x:Static loc:Text.Attach}" />
 
-                <Button Grid.Column="5" Width="40" Margin="5" Click="ShowRunes_Click"
-                                     ToolTip="{x:Static loc:Text.ShowRunes}">
+                <Button Grid.Column="5" Width="40" Margin="5" Click="ShowRunes_Click" ToolTip="{x:Static loc:Text.ShowRunes}">
                     <controls:FadeImage x:Name="RunesArrow" Source="{StaticResource RightArrow}" Width="20" Height="20" />
                 </Button>
 
                 <Button x:Name="Automation" Grid.Column="4" Grid.Row="1" Width="40" Margin="5" Click="Automation_Click"
-                                     ToolTip="{x:Static loc:Text.Automate}">
+                        ToolTip="{x:Static loc:Text.Automate}">
                     <Image Source="{StaticResource Automate}" Width="20" Height="20" />
                 </Button>
 
                 <Button x:Name="BugReport" Grid.Column="5" Grid.Row="1" Width="40" Margin="5" Click="BugReport_Click"
-                                     ToolTip="{x:Static loc:Text.ReportBug}">
+                        ToolTip="{x:Static loc:Text.ReportBug}">
                     <Image Source="{StaticResource Bug}" Width="20" Height="20" />
                 </Button>
             </Grid>

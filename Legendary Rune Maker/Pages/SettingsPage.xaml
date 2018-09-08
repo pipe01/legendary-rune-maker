@@ -50,7 +50,7 @@
             </Button>
         </StackPanel>
 
-        <Button Grid.Row="4" Margin="0 0 0 5" Click="Cancel_Click">Cancel</Button>
-        <Button Grid.Row="5" Click="Save_Click">Save</Button>
+        <Button Grid.Row="4" Margin="0 0 0 5" Click="Cancel_Click" Content="{x:Static loc:Text.Cancel}" />
+        <Button Grid.Row="5" Click="Save_Click" Content="{x:Static loc:Text.Save}" />
     </Grid>
 </Page>

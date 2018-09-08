@@ -262,4 +262,7 @@
   <data name="UploadedItemSetFrom" xml:space="preserve">
     <value>From {0}</value>
   </data>
+  <data name="Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
 </root>

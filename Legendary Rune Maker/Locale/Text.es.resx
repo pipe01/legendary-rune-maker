@@ -258,4 +258,7 @@
   <data name="UploadedItemSetFrom" xml:space="preserve">
     <value>De {0}</value>
   </data>
+  <data name="Save" xml:space="preserve">
+    <value>Guardar</value>
+  </data>
 </root>
