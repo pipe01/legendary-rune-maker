@@ -301,7 +301,8 @@ namespace Legendary_Rune_Maker.Pages
             if (Config.Default.LockLoadProvider == null)
             {
                 Config.Default.LockLoadProvider = 
-                    Actuator.RuneProviders.First(o => o.ProviderOptions.HasFlag(Provider.Options.RunePages)).Name;
+                    Actuator.RuneProviders.First(o => o.ProviderOptions.HasFlag(Provider.Options.RunePages)
+                                                      && !(o is ClientProvider)).Name;
                 Config.Default.Save();
             }
 
