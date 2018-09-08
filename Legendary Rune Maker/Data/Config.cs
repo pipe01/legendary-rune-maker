@@ -7,7 +7,7 @@ namespace Legendary_Rune_Maker.Data
 {
     internal class Config
     {
-        public static Config Default { get; } = Load();
+        public static Config Default { get; set; } = Load();
 
         private const string FilePath = "config.json";
         private const int LatestVersion = 11;
