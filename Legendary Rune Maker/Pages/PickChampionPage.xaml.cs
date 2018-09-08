@@ -26,6 +26,7 @@ namespace Legendary_Rune_Maker.Pages
         public ObservableCollection<Champion> ChampionList { get; set; } = new ObservableCollection<Champion>();
 
         private TaskCompletionSource<Champion> Completion;
+        private int[] AvailableIDs;
 
         public PickChampionPage(TaskCompletionSource<Champion> completion)
         {
@@ -40,8 +41,12 @@ namespace Legendary_Rune_Maker.Pages
         {
             await LoadAllChampions();
 
+            //Show if champ is null, the search matches and either the available IDs are null or the champion ID is in
+            //the available IDs
             CollectionViewSource.GetDefaultView(ChampionList).Filter =
-                o => o == null || ((Champion)o).Name.IndexOf(Search.Text, StringComparison.OrdinalIgnoreCase) >= 0;
+                o => o == null || (
+                     ((Champion)o).Name.IndexOf(Search.Text, StringComparison.OrdinalIgnoreCase) >= 0
+                     && (AvailableIDs?.Contains(((Champion)o).ID) != false));
 
             this.Focus();
         }
@@ -80,17 +85,14 @@ namespace Legendary_Rune_Maker.Pages
 
         private async void Available_Checked(object sender, RoutedEventArgs e)
         {
-            var availableIds = (await LCU.NET.Plugins.LoL.Champions.GetOwnedChampionsMinimal()).Select(o => o.id);
-
-            foreach (var item in ChampionList.Where(o => o != null && !availableIds.Contains(o.ID)).ToArray())
-            {
-                ChampionList.Remove(item);
-            }
+            AvailableIDs = (await LCU.NET.Plugins.LoL.Champions.GetOwnedChampionsMinimal()).Select(o => o.id).ToArray();
+            CollectionViewSource.GetDefaultView(ChampionList).Refresh();
         }
 
         private async void Available_Unchecked(object sender, RoutedEventArgs e)
         {
-            await LoadAllChampions();
+            AvailableIDs = null;
+            CollectionViewSource.GetDefaultView(ChampionList).Refresh();
         }
 
         private async Task LoadAllChampions()
