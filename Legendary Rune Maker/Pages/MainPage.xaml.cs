@@ -228,7 +228,7 @@ namespace Legendary_Rune_Maker.Pages
             Load.ContextMenu = menu;
             menu.IsOpen = true;
             
-            foreach (var provider in Actuator.RuneProviders)
+            foreach (var provider in Actuator.RuneProviders.Where(o => o.ProviderOptions.HasFlag(Provider.Options.RunePages)))
             {
                 var header = new MenuItem { Header = provider.Name };
                 menu.Items.Add(header);
