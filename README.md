@@ -13,3 +13,6 @@ A rune maker for League of Legends that also offers a bunch of automation option
 * Automatically accept ready check.
 * Automatically picks champions and summoner spells and bans champions.
 * (Down)load an appropiate item set automatically from `champion.gg` and `metalol.net`.
+
+![](https://i.imgur.com/IeWsVpL.png)
+![](https://i.imgur.com/qu7ccht.png)
