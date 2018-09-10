@@ -21,6 +21,7 @@ namespace Legendary_Rune_Maker.Game
             new RunesLolProvider(),
             new ChampionGGProvider(),
             new MetaLolProvider(),
+            new LolFlavorProvider(),
             new OpGGProvider()
         };
 
