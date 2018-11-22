@@ -257,7 +257,15 @@ namespace Legendary_Rune_Maker.Pages
                         roleItem.Click += async (___, ____) =>
                         {
                             this.Cursor = Cursors.Wait;
-                            Tree.SetPage(await provider.GetRunePage(SelectedChampion, role));
+                            try
+                            {
+                                Tree.SetPage(await provider.GetRunePage(SelectedChampion, role));
+                            }
+                            catch (Exception ex)
+                            {
+                                Debug.WriteLine(ex);
+                                MessageBox.Show(ex.Message);
+                            }
                             this.Cursor = Cursors.Arrow;
                         };
 

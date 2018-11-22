@@ -93,7 +93,12 @@ namespace Legendary_Rune_Maker.Data.Providers
                     imageUrl = imageUrl.Replace(item.Item1, item.Item2);
                 }
 
-                perks.Add(Riot.GetAllRunes().Values.Single(o => o.IconURL.Contains(imageUrl)).ID);
+                Console.WriteLine(imageUrl);
+
+                var perk = Riot.GetAllRunes().Values.SingleOrDefault(o => o.IconURL.Contains(imageUrl));
+                
+                if (perk != null)
+                    perks.Add(perk.ID);
             }
 
             ret.RuneIDs = perks.ToArray();
