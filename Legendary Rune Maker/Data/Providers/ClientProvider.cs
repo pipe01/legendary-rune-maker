@@ -1,4 +1,6 @@
-﻿using Legendary_Rune_Maker.Game;
+﻿using LCU.NET;
+using Legendary_Rune_Maker.Game;
+using Ninject;
 using System;
 using System.Threading.Tasks;
 
@@ -22,6 +24,7 @@ namespace Legendary_Rune_Maker.Data.Providers
             return Task.FromResult(new Position[0]);
         }
 
-        protected override Task<RunePage> GetRunePageInner(int championId, Position position) => RunePage.GetActivePageFromClient();
+        protected override Task<RunePage> GetRunePageInner(int championId, Position position)
+            => RunePage.GetActivePageFromClient(App.Container.Get<ILoL>().Perks);
     }
 }

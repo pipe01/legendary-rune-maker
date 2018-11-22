@@ -32,7 +32,7 @@ namespace Legendary_Rune_Maker.Data
             this.Position = position;
         }
 
-        public async Task UploadToClient()
+        public async Task UploadToClient(IPerks perks)
         {
             if (!GameState.CanUpload)
                 return;
@@ -47,18 +47,18 @@ namespace Legendary_Rune_Maker.Data
 
             try
             {
-                await Perks.PostPageAsync(page);
+                await perks.PostPageAsync(page);
             }
             catch (APIErrorException ex) when (ex.Message == "Max pages reached")
             {
                 //The maximum number of pages has been reached, try to delete current page and upload again
 
-                var currentPage = await Perks.GetCurrentPageAsync();
+                var currentPage = await perks.GetCurrentPageAsync();
 
                 if (currentPage.isDeletable)
                 {
-                    await Perks.DeletePageAsync(currentPage.id);
-                    await UploadToClient();
+                    await perks.DeletePageAsync(currentPage.id);
+                    await UploadToClient(perks);
                 }
                 else
                 {
@@ -68,9 +68,9 @@ namespace Legendary_Rune_Maker.Data
             }
         }
 
-        public static async Task<RunePage> GetActivePageFromClient()
+        public static async Task<RunePage> GetActivePageFromClient(IPerks perks)
         {
-            var page = await Perks.GetCurrentPageAsync();
+            var page = await perks.GetCurrentPageAsync();
 
             return new RunePage(page.selectedPerkIds, page.primaryStyleId, page.subStyleId, 0, Position.Fill)
             {

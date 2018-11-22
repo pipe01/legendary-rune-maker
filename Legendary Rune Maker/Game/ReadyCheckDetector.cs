@@ -5,18 +5,25 @@ using Notifications.Wpf;
 
 namespace Legendary_Rune_Maker.Game
 {
-    internal static class ReadyCheckDetector
+    public class ReadyCheckDetector
     {
-        public static void Init()
+        private readonly ILoL LoL;
+
+        public ReadyCheckDetector(ILoL lol)
         {
-            LeagueSocket.Subscribe<LolMatchmakingMatchmakingReadyCheckResource>(Matchmaking.ReadyCheckEndpoint, ReadyCheckChanged);
+            this.LoL = lol;
         }
 
-        private static async void ReadyCheckChanged(EventType eventType, LolMatchmakingMatchmakingReadyCheckResource data)
+        public void Init()
+        {
+            LoL.Socket.Subscribe<LolMatchmakingMatchmakingReadyCheckResource>(Matchmaking.ReadyCheckEndpoint, ReadyCheckChanged);
+        }
+
+        private async void ReadyCheckChanged(EventType eventType, LolMatchmakingMatchmakingReadyCheckResource data)
         {
             if (eventType == EventType.Update && data.state == "InProgress" && data.playerResponse == "None" && Config.Default.AutoAccept)
             {
-                await Matchmaking.PostReadyCheckAccept();
+                await LoL.Matchmaking.PostReadyCheckAccept();
 
                 MainWindow.NotificationManager.Show(new NotificationContent
                 {

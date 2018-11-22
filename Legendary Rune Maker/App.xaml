@@ -5,8 +5,7 @@
              xmlns:controls="clr-namespace:Legendary_Rune_Maker.Controls"
              xmlns:utils="clr-namespace:Legendary_Rune_Maker.Utils"
              xmlns:loc="clr-namespace:Legendary_Rune_Maker.Locale"
-             xmlns:sys="clr-namespace:System;assembly=mscorlib"
-             StartupUri="LoadingWindow.xaml">
+             xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <Application.Resources>
         <Color x:Key="NormalColor">#D6C8A5</Color>
         <Color x:Key="PressedColor">#5C5B57</Color>

@@ -5,11 +5,18 @@ using System.Threading.Tasks;
 
 namespace Legendary_Rune_Maker.Game
 {
-    internal static class LoginDetector
+    public class LoginDetector
     {
-        public static async Task Init()
+        private ILoL LoL;
+
+        public LoginDetector(ILoL lol)
         {
-            LeagueSocket.Subscribe<LolLoginLoginSession>(Login.Endpoint, SessionEvent);
+            this.LoL = lol;
+        }
+
+        public async Task Init()
+        {
+            LoL.Socket.Subscribe<LolLoginLoginSession>(Login.Endpoint, SessionEvent);
 
             try
             {
@@ -20,9 +27,9 @@ namespace Legendary_Rune_Maker.Game
             }
         }
 
-        public static async Task ForceUpdate() => SessionEvent(EventType.Update, await Login.GetSessionAsync());
+        public async Task ForceUpdate() => SessionEvent(EventType.Update, await LoL.Login.GetSessionAsync());
 
-        private static void SessionEvent(EventType eventType, LolLoginLoginSession data)
+        private void SessionEvent(EventType eventType, LolLoginLoginSession data)
         {
             if (data == null)
                 return;

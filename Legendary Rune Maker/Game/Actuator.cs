@@ -13,8 +13,6 @@ namespace Legendary_Rune_Maker.Game
 {
     public class Actuator
     {
-        private readonly IMainWindow Main;
-
         internal static readonly Provider[] RuneProviders = new Provider[]
         {
             new ClientProvider(),
@@ -25,20 +23,32 @@ namespace Legendary_Rune_Maker.Game
             new OpGGProvider()
         };
 
-        public Actuator(IMainWindow main)
+        public IMainWindow Main { get; set; }
+
+        private ILeagueClient LeagueClient => LoL.Client;
+
+        private readonly ILoL LoL;
+        private readonly ChampSelectDetector ChampSelectDetector;
+        private readonly LoginDetector LoginDetector;
+        private readonly ReadyCheckDetector ReadyCheckDetector;
+
+        public Actuator(ILoL lol, ChampSelectDetector champSelectDetector, LoginDetector loginDetector, ReadyCheckDetector readyCheckDetector)
         {
-            this.Main = main;
+            this.LoL = lol;
+            this.ChampSelectDetector = champSelectDetector;
+            this.LoginDetector = loginDetector;
+            this.ReadyCheckDetector = readyCheckDetector;
         }
 
         public async Task Init()
         {
             GameState.State.EnteredState += State_EnteredState;
             ChampSelectDetector.SessionUpdated += ChampSelectDetector_SessionUpdated;
-            LeagueClient.Default.ConnectedChanged += LeagueClient_ConnectedChanged;
+            LeagueClient.ConnectedChanged += LeagueClient_ConnectedChanged;
 
-            if (!LeagueClient.Default.SmartInit())
+            if (!LeagueClient.Init())
             {
-                LeagueClient.Default.BeginTryInit();
+                LeagueClient.BeginTryInit();
             }
 
             await LoginDetector.Init();
@@ -69,7 +79,7 @@ namespace Legendary_Rune_Maker.Game
                 await Task.Run(async () =>
                 {
                     await Task.Delay(1000);
-                    LeagueClient.Default.BeginTryInit();
+                    LeagueClient.BeginTryInit();
                 });
             }
             else if (state == GameStates.LockedIn)
@@ -94,7 +104,7 @@ namespace Legendary_Rune_Maker.Game
             var provider = Array.Find(RuneProviders, o => o.Name == Config.Default.ItemSetProvider) ?? RuneProviders[0];
             var set = await provider.GetItemSet(Main.SelectedChampion, Main.SelectedPosition);
 
-            await set.UploadToClient();
+            await set.UploadToClient(LoL.Login, LoL.ItemSets);
 
             Main.ShowNotification(Text.UploadedItemSet,
                 Text.UploadedItemSetFrom.FormatStr(provider.Name), NotificationType.Success);
@@ -119,7 +129,7 @@ namespace Legendary_Rune_Maker.Game
                 }
             }
 
-            await Task.Run(Main.Page.UploadToClient);
+            await Task.Run(() => Main.Page.UploadToClient(LoL.Perks));
         }
 
         private void ChampSelectDetector_SessionUpdated(LolChampSelectChampSelectSession obj)

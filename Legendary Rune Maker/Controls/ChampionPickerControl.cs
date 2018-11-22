@@ -1,5 +1,7 @@
-﻿using Legendary_Rune_Maker.Data;
+﻿using LCU.NET;
+using Legendary_Rune_Maker.Data;
 using Legendary_Rune_Maker.Pages;
+using Ninject;
 using System;
 using System.Windows;
 using System.Windows.Controls;
@@ -45,7 +47,7 @@ namespace Legendary_Rune_Maker.Controls
 
         private async void ChampionPickerControl_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            var champ = await PickChampionPage.PickChampion(NavigationService, Ban);
+            var champ = await PickChampionPage.PickChampion(NavigationService, App.Container.Get<ILoL>().Champions, Ban);
 
             if (champ.Success)
             {

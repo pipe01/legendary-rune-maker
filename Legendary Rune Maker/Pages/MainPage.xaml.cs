@@ -1,4 +1,5 @@
-﻿using Legendary_Rune_Maker.Data;
+﻿using LCU.NET;
+using Legendary_Rune_Maker.Data;
 using Legendary_Rune_Maker.Data.Providers;
 using Legendary_Rune_Maker.Game;
 using Legendary_Rune_Maker.Locale;
@@ -27,12 +28,14 @@ namespace Legendary_Rune_Maker.Pages
             get => (bool)GetValue(AttachedProperty);
             set => SetValue(AttachedProperty, value);
         }
-        public static readonly DependencyProperty AttachedProperty = DependencyProperty.Register("Attached", typeof(bool), typeof(MainWindow), new PropertyMetadata(true, async (_, e) =>
+        public static readonly DependencyProperty AttachedProperty = DependencyProperty.Register("Attached", typeof(bool), typeof(MainWindow), new PropertyMetadata(true, async (sender, e) =>
         {
             if ((bool)e.NewValue)
             {
-                await ChampSelectDetector.ForceUpdate();
-                await LoginDetector.ForceUpdate();
+                var p = (MainPage)sender;
+
+                await p.ChampSelectDetector.ForceUpdate();
+                await p.LoginDetector.ForceUpdate();
             }
         }));
 
@@ -65,16 +68,26 @@ namespace Legendary_Rune_Maker.Pages
         public bool ValidPage => SelectedRunes?.Length == 6 && SelectedChampion != 0;
 
         private readonly Actuator Actuator;
-        private readonly MainWindow Owner;
+        private readonly ILoL LoL;
+        private readonly ChampSelectDetector ChampSelectDetector;
+        private readonly LoginDetector LoginDetector;
 
-        public MainPage(MainWindow owner)
+        public MainWindow Owner { get; set; }
+
+        public MainPage(ILoL lol, ChampSelectDetector champSelectDetector, LoginDetector loginDetector,
+            ReadyCheckDetector readyCheckDetector, MainWindow owner)
         {
-            this.Actuator = new Actuator(this);
+            this.LoL = lol;
+            this.ChampSelectDetector = champSelectDetector;
+            this.LoginDetector = loginDetector;
+            this.Actuator = new Actuator(lol, champSelectDetector, loginDetector, readyCheckDetector)
+            {
+                Main = this
+            };
+
             this.Owner = owner;
 
             InitializeComponent();
-
-            owner.SetSize(this.Width, this.Height);
 
             Version.Text = "Version " + Assembly.GetExecutingAssembly().GetName().Version.ToString(3);
 #if DEBUG
@@ -149,7 +162,7 @@ namespace Legendary_Rune_Maker.Pages
 
         private async void Upload_Click(object sender, EventArgs e)
         {
-            await Page.UploadToClient();
+            await Page.UploadToClient(LoL.Perks);
         }
 
         private void Tree_SelectedRunesChanged(object sender, EventArgs e)
@@ -257,7 +270,7 @@ namespace Legendary_Rune_Maker.Pages
 
         private async void ChampionImage_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            var champ = await PickChampionPage.PickChampion(NavigationService);
+            var champ = await PickChampionPage.PickChampion(NavigationService, LoL.Champions);
 
             if (champ.Success)
                 await SetChampion(champ.Selected);
@@ -295,6 +308,8 @@ namespace Legendary_Rune_Maker.Pages
 
         private async void Page_Initialized(object sender, EventArgs e)
         {
+            Owner.SetSize(this.Width, this.Height);
+
             await Actuator.Init();
             await SetChampion(null);
 

@@ -12,25 +12,31 @@ using System.Threading.Tasks;
 
 namespace Legendary_Rune_Maker.Game
 {
-    internal static class ChampSelectDetector
+    public class ChampSelectDetector
     {
-        private static LolChampSelectChampSelectSession Session;
+        public LolChampSelectChampSelectPlayerSelection CurrentSelection => Session?.myTeam?.SingleOrDefault(o => o.cellId == Session.localPlayerCellId);
 
-        private static bool Picked;
+        public event Action<LolChampSelectChampSelectSession> SessionUpdated;
 
-        public static LolChampSelectChampSelectPlayerSelection CurrentSelection => Session?.myTeam?.SingleOrDefault(o => o.cellId == Session.localPlayerCellId);
+        private LolChampSelectChampSelectSession Session;
+        private bool Picked;
 
-        public static event Action<LolChampSelectChampSelectSession> SessionUpdated;
+        private readonly ILoL LoL;
 
-        public static async Task Init()
+        public ChampSelectDetector(ILoL lol)
         {
-            LeagueSocket.Subscribe<LolChampSelectChampSelectSession>(ChampSelect.Endpoint, ChampSelectUpdate);
-            LeagueSocket.Subscribe<int>("/lol-champ-select/v1/current-champion", CurrentChampionUpdate);
+            this.LoL = lol;
+        }
+
+        public async Task Init()
+        {
+            LoL.Socket.Subscribe<LolChampSelectChampSelectSession>(ChampSelect.Endpoint, ChampSelectUpdate);
+            LoL.Socket.Subscribe<int>("/lol-champ-select/v1/current-champion", CurrentChampionUpdate);
 
             await ForceUpdate();
         }
 
-        private static void CurrentChampionUpdate(EventType eventType, int data)
+        private void CurrentChampionUpdate(EventType eventType, int data)
         {
             if (eventType != EventType.Delete)
             {
@@ -38,7 +44,7 @@ namespace Legendary_Rune_Maker.Game
             }
         }
 
-        private static async void ChampSelectUpdate(EventType eventType, LolChampSelectChampSelectSession data)
+        private async void ChampSelectUpdate(EventType eventType, LolChampSelectChampSelectSession data)
         {
             if (data == null)
                 return;
@@ -86,7 +92,7 @@ namespace Legendary_Rune_Maker.Game
             }
         }
 
-        private static async Task PickSumms()
+        private async Task PickSumms()
         {
             var pos = CurrentSelection.assignedPosition.ToPosition();
 
@@ -100,11 +106,11 @@ namespace Legendary_Rune_Maker.Game
 
             try
             {
-                await LeagueClient.Default.MakeRequestAsync(ChampSelect.Endpoint + "/my-selection", Method.PATCH, new LolChampSelectChampSelectMySelection
+                await LoL.Client.MakeRequestAsync(ChampSelect.Endpoint + "/my-selection", Method.PATCH, new LolChampSelectChampSelectMySelection
                 {
                     spell1Id = summs[0],
                     spell2Id = summs[1]
-                }, "spell1Id", "spell2Id");
+                }, null, "spell1Id", "spell2Id");
             }
             catch (APIErrorException)
             {
@@ -117,10 +123,10 @@ namespace Legendary_Rune_Maker.Game
             }
         }
 
-        private static async Task Pick(LolChampSelectChampSelectAction myAction)
+        private async Task Pick(LolChampSelectChampSelectAction myAction)
         {
             Dictionary<Position, int> picks = Config.Default.ChampionsToPick;
-            var pickable = await ChampSelect.GetPickableChampions();
+            var pickable = await LoL.ChampSelect.GetPickableChampions();
 
             Func<int, bool> isValidChamp = o => pickable.championIds.Contains(o);
 
@@ -149,7 +155,7 @@ namespace Legendary_Rune_Maker.Game
 
             try
             {
-                await ChampSelect.PatchActionById(myAction, myAction.id);
+                await LoL.ChampSelect.PatchActionById(myAction, myAction.id);
             }
             catch (APIErrorException)
             {
@@ -162,10 +168,10 @@ namespace Legendary_Rune_Maker.Game
             }
         }
 
-        private static async Task Ban(LolChampSelectChampSelectAction myAction)
+        private async Task Ban(LolChampSelectChampSelectAction myAction)
         {
             Dictionary<Position, int> bans = Config.Default.ChampionsToBan;
-            var bannable = await ChampSelect.GetBannableChampions();
+            var bannable = await LoL.ChampSelect.GetBannableChampions();
 
             Func<int, bool> isValidChamp = o => bannable.championIds.Contains(o);
 
@@ -194,7 +200,7 @@ namespace Legendary_Rune_Maker.Game
 
             try
             {
-                await ChampSelect.PatchActionById(myAction, myAction.id);
+                await LoL.ChampSelect.PatchActionById(myAction, myAction.id);
             }
             catch (APIErrorException)
             {
@@ -207,12 +213,12 @@ namespace Legendary_Rune_Maker.Game
             }
         }
 
-        private static int GetChampion(Func<int, bool> isValid, IEnumerable<int> champs)
+        private int GetChampion(Func<int, bool> isValid, IEnumerable<int> champs)
         {
             return champs.FirstOrDefault(isValid);
         }
 
-        public static async Task ForceUpdate()
+        public async Task ForceUpdate()
         {
             var session = await TryGetSession();
             
@@ -229,7 +235,7 @@ namespace Legendary_Rune_Maker.Game
 
                 try
                 {
-                    champId = await ChampSelect.GetCurrentChampion();
+                    champId = await LoL.ChampSelect.GetCurrentChampion();
                 }
                 catch (NoActiveDelegateException)
                 {
@@ -242,11 +248,11 @@ namespace Legendary_Rune_Maker.Game
             }
         }
 
-        private static async Task<(bool Success, LolChampSelectChampSelectSession Session)> TryGetSession()
+        private async Task<(bool Success, LolChampSelectChampSelectSession Session)> TryGetSession()
         {
             try
             {
-                return (true, await ChampSelect.GetSessionAsync());
+                return (true, await LoL.ChampSelect.GetSessionAsync());
             }
             catch (NoActiveDelegateException)
             {

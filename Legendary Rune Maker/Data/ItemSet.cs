@@ -20,9 +20,9 @@ namespace Legendary_Rune_Maker.Data
 
         public SetBlock[] Blocks { get; set; }
 
-        public async Task UploadToClient()
+        public async Task UploadToClient(ILogin login, IItemsSets itemSets)
         {
-            var session = await Login.GetSessionAsync();
+            var session = await login.GetSessionAsync();
             bool saveToConfig = !Config.Default.KeepItemSets;
             
             var itemSet = new LolItemSetsItemSet
@@ -41,7 +41,7 @@ namespace Legendary_Rune_Maker.Data
                 uid = Guid.NewGuid().ToString()
             };
 
-            var currentSetInfo = await ItemSets.GetItemSets(session.summonerId);
+            var currentSetInfo = await itemSets.GetItemSets(session.summonerId);
             var currentSetsList = currentSetInfo.itemSets.ToList();
 
             currentSetsList.Add(itemSet);
@@ -58,7 +58,7 @@ namespace Legendary_Rune_Maker.Data
             currentSetInfo.itemSets = currentSetsList.ToArray();
             currentSetInfo.timestamp = (long)DateTime.Now.Subtract(new DateTime(1970, 1, 1)).TotalMilliseconds;
 
-            await ItemSets.PutItemSets(session.summonerId, currentSetInfo);
+            await itemSets.PutItemSets(session.summonerId, currentSetInfo);
         }
     }
 }

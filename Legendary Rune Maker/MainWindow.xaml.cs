@@ -1,4 +1,5 @@
-﻿using Legendary_Rune_Maker.Data;
+﻿using LCU.NET;
+using Legendary_Rune_Maker.Data;
 using Legendary_Rune_Maker.Pages;
 using Legendary_Rune_Maker.Utils;
 using Notifications.Wpf;
@@ -27,9 +28,11 @@ namespace Legendary_Rune_Maker
         private bool AllowDirectNavigation;
 
         private readonly TimeSpan TransitionDuration = TimeSpan.FromSeconds(0.18);
+        private readonly ILoL LoL;
 
-        public MainWindow()
+        public MainWindow(ILoL lol)
         {
+            this.LoL = lol;
             NotificationManager = new NotificationManager(Dispatcher);
 
             InitializeComponent();
@@ -38,13 +41,17 @@ namespace Legendary_Rune_Maker
             this.Left = (workArea.Width - this.Width) / 2 + workArea.Left;
             this.Top = (workArea.Height - this.Height) / 2 + workArea.Top;
 
-            Frame.Navigate(new MainPage(this));
-
             this.Show();
             this.Activate();
 
             if (!InDesigner)
                 Application.Current.MainWindow = this;
+        }
+
+        public void SetMainPage(MainPage mainPage)
+        {
+            mainPage.Owner = this;
+            Frame.Navigate(mainPage);
         }
 
         private void Window_Initialized(object sender, EventArgs e)
@@ -197,7 +204,7 @@ namespace Legendary_Rune_Maker
         {
             if (e.Key == Key.D && (Keyboard.Modifiers & ModifierKeys.Control) == ModifierKeys.Control)
             {
-                new DebugProxyWindow().Show();
+                new DebugProxyWindow(LoL.Client).Show();
             }
         }
 

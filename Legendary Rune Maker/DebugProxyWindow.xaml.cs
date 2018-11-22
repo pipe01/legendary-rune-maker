@@ -22,7 +22,7 @@ namespace Legendary_Rune_Maker
     {
         private class DebugProxy : IProxy
         {
-            private DebugProxyWindow Window;
+            public DebugProxyWindow Window;
 
             public DebugProxy(DebugProxyWindow window)
             {
@@ -60,9 +60,13 @@ namespace Legendary_Rune_Maker
 
         private IList<(string Uri, string Json)> Events = new List<(string, string)>();
 
-        public DebugProxyWindow()
+        private readonly ILeagueClient LeagueClient;
+
+        public DebugProxyWindow(ILeagueClient leagueClient)
         {
-            LeagueClient.Default.Proxy = new DebugProxy(this);
+            this.LeagueClient = leagueClient;
+
+            LeagueClient.Proxy = new DebugProxy(this);
             //LeagueSocket.DumpToDebug = true;
             Debug.Listeners.Add(new TextWriterTraceListener("log.txt"));
 
@@ -94,7 +98,7 @@ namespace Legendary_Rune_Maker
         {
             var ev = JsonConvert.DeserializeObject<JsonApiEvent>(Input.Text);
 
-            LeagueSocket.HandleEvent(ev);
+            LeagueClient.Socket.HandleEvent(ev);
         }
 
         private void List_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -110,7 +114,7 @@ namespace Legendary_Rune_Maker
             {
                 var events = JsonConvert.DeserializeObject<EventData[]>(File.ReadAllText(diag.FileName));
 
-                LeagueSocket.Playback(events, 2);
+                (LeagueClient.Socket as LeagueSocket)?.Playback(events, 2);
             }
         }
     }

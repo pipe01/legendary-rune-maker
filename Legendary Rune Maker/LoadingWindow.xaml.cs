@@ -1,5 +1,8 @@
 ﻿using Legendary_Rune_Maker.Data;
 using Legendary_Rune_Maker.Locale;
+using Legendary_Rune_Maker.Pages;
+using Ninject;
+using Ninject.Parameters;
 using Onova;
 using Onova.Models;
 using Onova.Services;
@@ -20,8 +23,12 @@ namespace Legendary_Rune_Maker
         private bool Shown;
         private CancellationTokenSource CancelSource = new CancellationTokenSource();
 
-        public LoadingWindow()
+        private readonly IKernel Kernel;
+
+        public LoadingWindow(IKernel kernel)
         {
+            this.Kernel = kernel;
+
             Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.High;
             
             InitializeComponent();
@@ -33,7 +40,10 @@ namespace Legendary_Rune_Maker
                 return;
             Shown = true;
 
-            new MainWindow();
+            var win = Kernel.Get<MainWindow>();
+            var mainPage = Kernel.Get<MainPage>(new Parameter("MainWindow", win, true));
+            win.SetMainPage(mainPage);
+
             this.Close();
         }
 

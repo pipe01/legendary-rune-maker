@@ -1,4 +1,5 @@
-﻿using Legendary_Rune_Maker.Controls;
+﻿using LCU.NET.Plugins.LoL;
+using Legendary_Rune_Maker.Controls;
 using Legendary_Rune_Maker.Data;
 using Legendary_Rune_Maker.Game;
 using System;
@@ -28,8 +29,12 @@ namespace Legendary_Rune_Maker.Pages
         private TaskCompletionSource<Champion> Completion;
         private int[] AvailableIDs;
 
-        public PickChampionPage(TaskCompletionSource<Champion> completion)
+        private readonly IChampions PChampions;
+
+        public PickChampionPage(TaskCompletionSource<Champion> completion, IChampions champions)
         {
+            this.PChampions = champions;
+
             InitializeComponent();
 
             Available.IsEnabled = GameState.CanUpload;
@@ -59,10 +64,11 @@ namespace Legendary_Rune_Maker.Pages
             NavigationService.GoBack();
         }
 
-        public static async Task<(bool Success, Champion Selected)> PickChampion(NavigationService navigator, bool ban = false)
+        public static async Task<(bool Success, Champion Selected)> PickChampion(NavigationService navigator,
+            IChampions champions, bool ban = false)
         {
             var tcs = new TaskCompletionSource<Champion>();
-            var win = new PickChampionPage(tcs);
+            var win = new PickChampionPage(tcs, champions);
 
             if (ban)
                 win.BackImage.ImageSource = (ImageSource)Application.Current.FindResource("BgRed");
@@ -85,7 +91,7 @@ namespace Legendary_Rune_Maker.Pages
 
         private async void Available_Checked(object sender, RoutedEventArgs e)
         {
-            AvailableIDs = (await LCU.NET.Plugins.LoL.Champions.GetOwnedChampionsMinimal()).Select(o => o.id).ToArray();
+            AvailableIDs = (await PChampions.GetOwnedChampionsMinimal()).Select(o => o.id).ToArray();
             CollectionViewSource.GetDefaultView(ChampionList).Refresh();
         }
 
