@@ -7,6 +7,7 @@ using System;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
@@ -43,13 +44,22 @@ namespace Legendary_Rune_Maker
             {
                 string date = DateTime.UtcNow.ToString("HHmmss");
                 string path = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), $"dump_{date}.mdmp");
-
+                
                 using (var fs = new FileStream(path, FileMode.Create, FileAccess.ReadWrite, FileShare.Write))
                 {
                     MiniDump.Write(fs.SafeFileHandle, MiniDump.Option.Normal | MiniDump.Option.WithIndirectlyReferencedMemory | MiniDump.Option.WithDataSegs, MiniDump.ExceptionInfo.Present);
+                    
+                    using (var file = File.OpenWrite(path + ".zip"))
+                    using (var zip = new ZipArchive(file, ZipArchiveMode.Create))
+                    using (var entry = zip.CreateEntry(Path.GetFileName(path)).Open())
+                    {
+                        fs.CopyTo(entry);
+                    }
                 }
-                
-                Process.Start("explorer.exe", $"/select, \"{path}\"");
+
+                File.Delete(path);
+
+                Process.Start("explorer.exe", $"/select, \"{path}.zip\"");
             }
 
             if (e.IsTerminating)
