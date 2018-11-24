@@ -12,6 +12,12 @@ namespace Legendary_Rune_Maker.Controls
     /// </summary>
     public partial class RuneTreeControl : UserControl
     {
+        private enum Tree
+        {
+            Primary,
+            Secondary
+        }
+
         public RuneTreeControl()
         {
             InitializeComponent();
@@ -27,7 +33,7 @@ namespace Legendary_Rune_Maker.Controls
                 _PrimaryTree = value;
 
                 if (changed)
-                    SetTree(value, false);
+                    SetTree(value, Tree.Primary);
             }
         }
 
@@ -41,7 +47,7 @@ namespace Legendary_Rune_Maker.Controls
                 _SecondaryTree = value;
 
                 if (changed)
-                    SetTree(value, true);
+                    SetTree(value, Tree.Secondary);
             }
         }
 
@@ -67,48 +73,63 @@ namespace Legendary_Rune_Maker.Controls
             }
         }
 
+        private StatRune[] _SelectedStats;
+        public StatRune[] SelectedStats
+        {
+            get => _SelectedStats;
+            set
+            {
+                if (value.Length == 0)
+                    value = new StatRune[3];
+
+                _SelectedStats = value;
+                
+                SetSelectedStats(value);
+            }
+        }
+
         public event EventHandler SelectionChanged;
 
         private List<List<GrayscaleImageControl>> PrimaryControls = new List<List<GrayscaleImageControl>>();
         private List<List<GrayscaleImageControl>> SecondaryControls = new List<List<GrayscaleImageControl>>();
         private bool SettingSelection;
 
-        private void SetTree(RuneTree tree, bool secondary, bool setPicker = true)
+        private void SetTree(RuneTree tree, Tree slot, bool setPicker = true)
         {
             if (setPicker)
             {
-                (secondary ? SecondaryPicker : PrimaryPicker).SelectedTree = tree.ID;
+                (slot == Tree.Secondary ? SecondaryPicker : PrimaryPicker).SelectedTree = tree.ID;
             }
 
-            if (!secondary)
+            if (slot == Tree.Primary)
             {
                 int[] trees = Riot.GetRuneTreesByID().Keys.Where(o => o != tree.ID).ToArray();
                 SecondaryPicker.SetIDs(trees).Wait();
 
                 if (SecondaryPicker.SelectedTree == tree.ID)
                 {
-                    SetTree(Riot.GetRuneTreesByID()[trees[0]], true);
+                    SetTree(Riot.GetRuneTreesByID()[trees[0]], Tree.Secondary);
                 }
 
                 _PrimaryTree = tree;
                 _SelectedPrimary = new Rune[4];
             }
-            else
+            else if (slot == Tree.Secondary)
             {
                 _SecondaryTree = tree;
                 _SelectedSecondary = new Rune[2];
             }
-
-            var grid = secondary ? Secondary : Primary;
-            var slots = secondary ? tree.Slots.Skip(1).ToArray() : tree.Slots;
-            var controls = secondary ? SecondaryControls : PrimaryControls;
+            
+            var grid = slot == Tree.Secondary ? Secondary : Primary;
+            var slots = slot == Tree.Secondary ? tree.Slots.Skip(1).ToArray() : tree.Slots;
+            var controls = slot == Tree.Secondary ? SecondaryControls : PrimaryControls;
 
             grid.Children.Clear();
             grid.RowDefinitions.Clear();
             controls.Clear();
 
             int row = 0;
-            foreach (var slot in slots)
+            foreach (var gslot in slots)
             {
                 grid.RowDefinitions.Add(new RowDefinition());
                 controls.Add(new List<GrayscaleImageControl>());
@@ -118,15 +139,15 @@ namespace Legendary_Rune_Maker.Controls
                 Grid.SetRow(slotGrid, row++);
 
                 int col = 0;
-                foreach (var rune in slot.Runes)
+                foreach (var rune in gslot.Runes)
                 {
                     slotGrid.ColumnDefinitions.Add(new ColumnDefinition());
 
                     var runeControl = new GrayscaleImageControl(rune);
                     runeControl.SelectedChanged += RuneControl_SelectedChanged;
-                    runeControl.Tag = secondary;
+                    runeControl.Tag = slot == Tree.Secondary;
 
-                    if (row != 1 || secondary)
+                    if (row != 1 || slot == Tree.Secondary)
                     {
                         runeControl.Width = runeControl.Height = 40;
                         runeControl.ShowSelector = true;
@@ -137,6 +158,23 @@ namespace Legendary_Rune_Maker.Controls
                     Grid.SetColumn(runeControl, col++);
                 }
             }
+        }
+
+        public void SetSelectedStats(StatRune[] runes)
+        {
+            var cbs = new[] { Stat1, Stat2, Stat3 };
+
+            SettingSelection = true;
+
+            for (int i = 0; i < cbs.Length; i++)
+            {
+                if (i >= runes.Length || runes[i] == default)
+                    cbs[i].SelectedIndex = -1;
+                else
+                    cbs[i].SelectedItem = runes[i];
+            }
+
+            SettingSelection = false;
         }
 
         private void SetSelected(Rune[] runes, bool secondary)
@@ -165,6 +203,7 @@ namespace Legendary_Rune_Maker.Controls
         {
             SelectedPrimary = new Rune[4];
             SelectedSecondary = new Rune[2];
+            SelectedStats = new StatRune[3];
 
             SelectionChanged?.Invoke(this, EventArgs.Empty);
         }
@@ -226,18 +265,30 @@ namespace Legendary_Rune_Maker.Controls
             SecondaryTree = trees[1];
 
             await PrimaryPicker.SetIDs((await Riot.GetRuneTreesByIDAsync()).Keys.ToArray());
+
+            var stats = await Riot.GetStatRunesAsync();
+
+            for (int i = 0; i < 3; i++)
+            {
+                ComboBox cb = new[] { Stat1, Stat2, Stat3 }[i];
+
+                for (int j = 0; j < 3; j++)
+                {
+                    cb.Items.Add(stats[i, j]);
+                }
+            }
         }
 
         private void SecondaryPicker_SelectionChanged(object sender, EventArgs e)
         {
-            SetTree(Riot.GetRuneTreesByID()[SecondaryPicker.SelectedTree], true, false);
+            SetTree(Riot.GetRuneTreesByID()[SecondaryPicker.SelectedTree], Tree.Secondary, false);
 
             SelectionChanged?.Invoke(this, EventArgs.Empty);
         }
 
         private void PrimaryPicker_SelectionChanged(object sender, EventArgs e)
         {
-            SetTree(Riot.GetRuneTreesByID()[PrimaryPicker.SelectedTree], false, false);
+            SetTree(Riot.GetRuneTreesByID()[PrimaryPicker.SelectedTree], Tree.Primary, false);
 
             SelectionChanged?.Invoke(this, EventArgs.Empty);
         }
@@ -250,6 +301,25 @@ namespace Legendary_Rune_Maker.Controls
             SecondaryTree = trees[page.SecondaryTree];
             SelectedPrimary = PrimaryTree.Slots.SelectMany(o => o.Runes).Where(o => page.RuneIDs.Contains(o.ID)).ToArray();
             SelectedSecondary = SecondaryTree.Slots.SelectMany(o => o.Runes).Where(o => page.RuneIDs.Contains(o.ID)).ToArray();
+            
+            var statRunes = Riot.GetAllStatRunes();
+            SelectedStats = page.RuneIDs.Select(o => statRunes.SingleOrDefault(i => i.ID == o)).Where(o => o != default).ToArray();
+
+            SelectionChanged?.Invoke(this, EventArgs.Empty);
+        }
+
+        private void Stat_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (SettingSelection)
+                return;
+
+            var cb = sender as ComboBox;
+            var index = Array.IndexOf(new[] { Stat1, Stat2, Stat3 }, sender);
+
+            if (SelectedStats.Length != 3)
+                Array.Resize(ref _SelectedStats, 3);
+
+            SelectedStats[index] = (StatRune)cb.SelectedItem;
 
             SelectionChanged?.Invoke(this, EventArgs.Empty);
         }

@@ -35,34 +35,35 @@ namespace Legendary_Rune_Maker
 
         private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
-#if !DEBUG
-            var exception = e.ExceptionObject as Exception;
-            var result = MessageBox.Show($"{exception.GetType().FullName}: {exception.Message}\n" +
-                "Create minidump? You can use this to report this issue to me.", "Unhandled exception",
-                MessageBoxButton.YesNoCancel, MessageBoxImage.Error);
-
-            if (result == MessageBoxResult.Yes)
+            if (!Debugger.IsAttached)
             {
-                string date = DateTime.UtcNow.ToString("HHmmss");
-                string path = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), $"dump_{date}.mdmp");
-                
-                using (var fs = new FileStream(path, FileMode.Create, FileAccess.ReadWrite, FileShare.Write))
+                var exception = e.ExceptionObject as Exception;
+                var result = MessageBox.Show($"{exception.GetType().FullName}: {exception.Message}\n" +
+                    "Create minidump? You can use this to report this issue to me.", "Unhandled exception",
+                    MessageBoxButton.YesNoCancel, MessageBoxImage.Error);
+
+                if (result == MessageBoxResult.Yes)
                 {
-                    MiniDump.Write(fs.SafeFileHandle, MiniDump.Option.Normal | MiniDump.Option.WithIndirectlyReferencedMemory | MiniDump.Option.WithDataSegs, MiniDump.ExceptionInfo.Present);
-                    
-                    using (var file = File.OpenWrite(path + ".zip"))
-                    using (var zip = new ZipArchive(file, ZipArchiveMode.Create))
-                    using (var entry = zip.CreateEntry(Path.GetFileName(path)).Open())
+                    string date = DateTime.UtcNow.ToString("HHmmss");
+                    string path = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), $"dump_{date}.mdmp");
+
+                    using (var fs = new FileStream(path, FileMode.Create, FileAccess.ReadWrite, FileShare.Write))
                     {
-                        fs.CopyTo(entry);
+                        MiniDump.Write(fs.SafeFileHandle, MiniDump.Option.Normal | MiniDump.Option.WithIndirectlyReferencedMemory | MiniDump.Option.WithDataSegs, MiniDump.ExceptionInfo.Present);
+
+                        using (var file = File.OpenWrite(path + ".zip"))
+                        using (var zip = new ZipArchive(file, ZipArchiveMode.Create))
+                        using (var entry = zip.CreateEntry(Path.GetFileName(path)).Open())
+                        {
+                            fs.CopyTo(entry);
+                        }
                     }
+
+                    //File.Delete(path);
+
+                    Process.Start("explorer.exe", $"/select, \"{path}.zip\"");
                 }
-
-                File.Delete(path);
-
-                Process.Start("explorer.exe", $"/select, \"{path}.zip\"");
             }
-#endif
 
             if (e.IsTerminating)
             {

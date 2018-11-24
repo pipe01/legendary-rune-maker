@@ -116,6 +116,7 @@
     <Compile Include="Data\Providers\OpGGProvider.cs" />
     <Compile Include="Data\Providers\Provider.cs" />
     <Compile Include="Data\Providers\RunesLolProvider.cs" />
+    <Compile Include="Data\StatRune.cs" />
     <Compile Include="Data\SummonerSpell.cs" />
     <Compile Include="Data\WebCache.cs" />
     <Compile Include="DebugProxyWindow.xaml.cs">
@@ -168,6 +169,7 @@
     </Compile>
     <Compile Include="Utils\BitmapUtils.cs" />
     <Compile Include="Utils\Extensions.cs" />
+    <Compile Include="Utils\MiniDump.cs" />
     <Compile Include="Utils\ObjectToTypeConverter.cs" />
     <Compile Include="Utils\RelayCommand.cs" />
     <Compile Include="Utils\StringContainsConverter.cs" />
@@ -369,6 +371,8 @@
   <ItemGroup>
     <Resource Include="Images\no_spell.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="StatRunes.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

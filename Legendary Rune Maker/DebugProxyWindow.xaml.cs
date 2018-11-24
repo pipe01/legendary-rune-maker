@@ -114,7 +114,7 @@ namespace Legendary_Rune_Maker
             {
                 var events = JsonConvert.DeserializeObject<EventData[]>(File.ReadAllText(diag.FileName));
 
-                (LeagueClient.Socket as LeagueSocket)?.Playback(events, 2);
+                (LeagueClient.Socket as LeagueSocket)?.Playback(events, 5);
             }
         }
     }

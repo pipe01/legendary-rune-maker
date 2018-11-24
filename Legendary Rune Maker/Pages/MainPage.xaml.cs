@@ -6,6 +6,7 @@ using Legendary_Rune_Maker.Locale;
 using Legendary_Rune_Maker.Utils;
 using Notifications.Wpf;
 using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
@@ -21,8 +22,13 @@ namespace Legendary_Rune_Maker.Pages
     /// <summary>
     /// Interaction logic for MainPage.xaml
     /// </summary>
-    public partial class MainPage : Page, IMainWindow, IPage
+    public partial class MainPage : Page, IMainWindow, IPage, INotifyPropertyChanged
     {
+        public static double BaseWidth { get; } = 303;
+        public static double BaseHeight { get; } = 310;
+        public static double ExpandWidth { get; } = 810;
+        public static double ExpandHeight { get; } = 325;
+
         public bool Attached
         {
             get => (bool)GetValue(AttachedProperty);
@@ -47,7 +53,10 @@ namespace Legendary_Rune_Maker.Pages
         public static readonly DependencyProperty ExpandedProperty = DependencyProperty.Register("Expanded", typeof(bool), typeof(MainWindow));
 
 
-        private Rune[] SelectedRunes => Tree.SelectedPrimary.Concat(Tree.SelectedSecondary).Where(o => o != null).ToArray();
+        private Rune[] SelectedRunes => Tree.SelectedPrimary
+            .Concat(Tree.SelectedSecondary).Where(o => o != null)
+            .Concat(Tree.SelectedStats.Where(o => o != default).Select(o => new Rune { ID = o.ID }))
+            .ToArray();
 
         public RunePage Page => new RunePage(SelectedRunes.Select(o => o.ID).ToArray(), Tree.PrimaryTree.ID, Tree.SecondaryTree.ID, SelectedChampion, SelectedPosition);
 
@@ -65,12 +74,14 @@ namespace Legendary_Rune_Maker.Pages
 
         public Position SelectedPosition { get => PositionPicker.Selected; set => PositionPicker.SetSelectedRaw(value); }
 
-        public bool ValidPage => SelectedRunes?.Length == 6 && SelectedChampion != 0;
+        public bool ValidPage => SelectedRunes?.Length == 9 && SelectedChampion != 0;
 
         private readonly Actuator Actuator;
         private readonly ILoL LoL;
         private readonly ChampSelectDetector ChampSelectDetector;
         private readonly LoginDetector LoginDetector;
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public MainWindow Owner { get; set; }
 
@@ -99,7 +110,7 @@ namespace Legendary_Rune_Maker.Pages
             this.DataContext = this;
         }
 
-        public Size GetSize() => new Size(Expanded ? 810 : 303, this.Height);
+        public Size GetSize() => new Size(Expanded ? ExpandWidth : BaseWidth, Expanded ? ExpandHeight : BaseHeight);
         
         public void SafeInvoke(Action act)
         {
@@ -302,14 +313,16 @@ namespace Legendary_Rune_Maker.Pages
         {
             Expanded = !Expanded;
 
+            PropertyChanged(this, new PropertyChangedEventArgs(nameof(Expanded)));
+
             if (Expanded)
             {
-                Owner.SetSize(810, this.Height);
+                Owner.SetSize(ExpandWidth, ExpandHeight);
                 RunesArrow.Source = (ImageSource)Application.Current.FindResource("LeftArrow");
             }
             else
             {
-                Owner.SetSize(303, this.Height);
+                Owner.SetSize(BaseWidth, BaseHeight);
                 RunesArrow.Source = (ImageSource)Application.Current.FindResource("RightArrow");
             }
         }
@@ -323,12 +336,12 @@ namespace Legendary_Rune_Maker.Pages
 
             if (Config.Default.LockLoadProvider == null)
             {
-                Config.Default.LockLoadProvider = 
+                Config.Default.LockLoadProvider =
                     Actuator.RuneProviders.First(o => o.ProviderOptions.HasFlag(Provider.Options.RunePages)
                                                       && !(o is ClientProvider)).Name;
                 Config.Default.Save();
             }
-
+            
             if (Config.Default.ItemSetProvider == null)
             {
                 Config.Default.ItemSetProvider =

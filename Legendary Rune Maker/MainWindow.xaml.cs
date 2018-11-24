@@ -25,13 +25,22 @@ namespace Legendary_Rune_Maker
 
         public static INotificationManager NotificationManager;
 
+        private static MainWindow Instance;
+
         private bool AllowDirectNavigation;
 
         private readonly TimeSpan TransitionDuration = TimeSpan.FromSeconds(0.18);
         private readonly ILoL LoL;
 
+        public static void DisposeTaskbar()
+        {
+            Instance?.Taskbar?.Dispose();
+        }
+
         public MainWindow(ILoL lol)
         {
+            Instance = this;
+
             this.LoL = lol;
             NotificationManager = new NotificationManager(Dispatcher);
 
@@ -210,7 +219,6 @@ namespace Legendary_Rune_Maker
 
         private void Window_Closed(object sender, EventArgs e)
         {
-            Taskbar.Dispose();
             Environment.Exit(0);
         }
 

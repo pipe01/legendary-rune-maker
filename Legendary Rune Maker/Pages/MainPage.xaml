@@ -8,7 +8,7 @@
       xmlns:data="clr-namespace:Legendary_Rune_Maker.Data"
       xmlns:loc="clr-namespace:Legendary_Rune_Maker.Locale"
       mc:Ignorable="d" Initialized="Page_Initialized"
-      Height="310" Width="303"
+      Width="{x:Static local:MainPage.BaseWidth}" Height="{x:Static local:MainPage.BaseHeight}"
       Title="MainPage">
 
     <Page.Style>
@@ -20,7 +20,12 @@
 
                         <BeginStoryboard x:Name="EnterBegin">
                             <Storyboard>
-                                <DoubleAnimation To="810" Duration="0:0:0.25" Storyboard.TargetProperty="Width">
+                                <!--<DoubleAnimation To="{x:Static local:MainPage.ExpandWidth}" Duration="0:0:0.18" Storyboard.TargetProperty="Width">
+                                    <DoubleAnimation.EasingFunction>
+                                        <QuadraticEase EasingMode="EaseOut" />
+                                    </DoubleAnimation.EasingFunction>
+                                </DoubleAnimation>-->
+                                <DoubleAnimation To="{x:Static local:MainPage.ExpandHeight}" Duration="0:0:0.18" Storyboard.TargetProperty="Height">
                                     <DoubleAnimation.EasingFunction>
                                         <QuadraticEase EasingMode="EaseOut" />
                                     </DoubleAnimation.EasingFunction>
@@ -34,7 +39,12 @@
 
                         <BeginStoryboard x:Name="ExitBegin">
                             <Storyboard>
-                                <DoubleAnimation To="303" Duration="0:0:0.25" Storyboard.TargetProperty="Width">
+                                <!--<DoubleAnimation To="{x:Static local:MainPage.BaseWidth}" Duration="0:0:0.18" Storyboard.TargetProperty="Width">
+                                    <DoubleAnimation.EasingFunction>
+                                        <QuadraticEase EasingMode="EaseOut" />
+                                    </DoubleAnimation.EasingFunction>
+                                </DoubleAnimation>-->
+                                <DoubleAnimation To="{x:Static local:MainPage.BaseHeight}" Duration="0:0:0.18" Storyboard.TargetProperty="Height">
                                     <DoubleAnimation.EasingFunction>
                                         <QuadraticEase EasingMode="EaseOut" />
                                     </DoubleAnimation.EasingFunction>

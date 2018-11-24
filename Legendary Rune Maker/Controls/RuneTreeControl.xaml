@@ -6,11 +6,15 @@
              xmlns:local="clr-namespace:Legendary_Rune_Maker"
              mc:Ignorable="d" 
              d:DesignHeight="250" d:DesignWidth="470" Initialized="UserControl_Initialized">
-    <Grid>
+    <Grid Margin="0,0,0,-45">
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
 
         <StackPanel Grid.Column="0">
             <local:TreePickerControl x:Name="PrimaryPicker" Height="38" SelectionChanged="PrimaryPicker_SelectionChanged" />
@@ -36,5 +40,17 @@
                 </Grid.RowDefinitions>
             </Grid>
         </StackPanel>
+
+        <Grid Grid.Row="1" Grid.ColumnSpan="2" Margin="5 10 150 5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <ComboBox x:Name="Stat1" Grid.Column="0" Margin="0 0 10 0" FontSize="9" SelectionChanged="Stat_SelectionChanged"></ComboBox>
+            <ComboBox x:Name="Stat2" Grid.Column="1" Margin="0 0 10 0" FontSize="9" SelectionChanged="Stat_SelectionChanged"></ComboBox>
+            <ComboBox x:Name="Stat3" Grid.Column="2" FontSize="9" SelectionChanged="Stat_SelectionChanged"></ComboBox>
+        </Grid>
     </Grid>
 </UserControl>

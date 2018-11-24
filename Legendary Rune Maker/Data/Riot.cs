@@ -86,6 +86,49 @@ namespace Legendary_Rune_Maker.Data
             });
         }
 
+        private static StatRune[,] StatRunesSlots;
+        private static StatRune[] StatRunes;
+        
+        public static async Task<StatRune[,]> GetStatRunesAsync()
+        {
+            if (StatRunesSlots == null)
+            {
+                string url = "https://gitcdn.link/repo/pipe01/legendary-rune-maker/master/Legendary%20Rune%20Maker/StatRunes.txt";
+
+                string[] data = (await WebCache.String(url)).Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+
+                var stats = new List<StatRune>();
+                int statCount = data.TakeWhile(o => o != "====").Count();
+
+                for (int i = 0; i < statCount; i++)
+                {
+                    int id = int.Parse(data[i].Substring(0, data[i].IndexOf(' ')));
+                    string desc = data[i].Substring(data[i].IndexOf(' ') + 1);
+
+                    stats.Add(new StatRune(id, desc));
+                }
+
+                StatRunes = stats.ToArray();
+                StatRunesSlots = new StatRune[3, 3];
+
+                for (int i = 0; i < 3; i++)
+                {
+                    string[] line = data[i + statCount + 1].Split(' ');
+
+                    for (int j = 0; j < 3; j++)
+                    {
+                        StatRunesSlots[i, j] = stats.Single(o => o.ID == int.Parse(line[j]));
+                    }
+                }
+            }
+
+            return StatRunesSlots;
+        }
+
+        public static StatRune[,] GetStatRunes() => StatRunesSlots;
+
+        public static StatRune[] GetAllStatRunes() => StatRunes;
+
         public static async Task<Item[]> GetItemsAsync()
         {
             string url = $"{CdnEndpoint}{await GetLatestVersionAsync()}/data/{Locale}/item.json";
