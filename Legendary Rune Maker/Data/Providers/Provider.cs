@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Legendary_Rune_Maker.Data.Providers
@@ -27,7 +28,7 @@ namespace Legendary_Rune_Maker.Data.Providers
 
         public async Task<RunePage> GetRunePage(int championId, Position position)
             => RunePageCache.TryGetValue((championId, position), out var r) ? r :
-               RunePageCache[(championId, position)] = await GetRunePageInner(championId, position);
+               RunePageCache[(championId, position)] = FillStatsIfNone(await GetRunePageInner(championId, position));
 
         public async Task<ItemSet> GetItemSet(int championId, Position position)
             => ItemSetCache.TryGetValue((championId, position), out var r) ? r :
@@ -40,5 +41,17 @@ namespace Legendary_Rune_Maker.Data.Providers
             => throw new NotImplementedException();
         protected virtual Task<ItemSet> GetItemSetInner(int championId, Position position)
             => throw new NotImplementedException();
+
+
+        private RunePage FillStatsIfNone(RunePage page)
+        {
+            if (page.RuneIDs.Length == 6)
+            {
+                var allStats = Riot.GetStatRunes();
+                page.RuneIDs = page.RuneIDs.Concat(new[] { allStats[0,0].ID, allStats[1,0].ID, allStats[2,0].ID }).ToArray();
+            }
+
+            return page;
+        }
     }
 }
