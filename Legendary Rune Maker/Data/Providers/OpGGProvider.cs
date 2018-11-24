@@ -60,7 +60,14 @@ namespace Legendary_Rune_Maker.Data.Providers
             var pages = doc.DocumentNode.Descendants().Where(o => o.HasClass("perk-page")).Take(2);
 
             int[][] pageRows = pages.SelectMany(o => o.Descendants().Select(ParseRow)).Select(o => o.ToArray()).Where(o => o.Length > 0).ToArray();
-            var perks = pageRows.Where((_, i) => i != 0 && i != 5).SelectMany(o => o);
+            var perks = pageRows.Where((_, i) => i != 0 && i != 5).SelectMany(o => o).ToList();
+
+            var fragments = doc.DocumentNode.Descendants().Where(o => o.HasClass("fragment")).Take(3);
+            perks.AddRange(fragments.Select(o =>
+            {
+                var src = o.Descendants().Single(i => i.HasClass("tip")).GetAttributeValue("src", "");
+                return int.Parse(Regex.Match(src, @"(?<=perkShard\/).*?(?=\.png)").Value);
+            }));
 
             return new RunePage(perks.ToArray(), pageRows[0][0], pageRows[5][0], championId, position);
         }
