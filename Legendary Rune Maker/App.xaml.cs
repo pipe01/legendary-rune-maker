@@ -3,8 +3,12 @@ using Legendary_Rune_Maker.Data;
 using Legendary_Rune_Maker.Game;
 using Legendary_Rune_Maker.Pages;
 using Ninject;
+using System;
+using System.Diagnostics;
 using System.Globalization;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Windows;
 
 namespace Legendary_Rune_Maker
@@ -24,6 +28,35 @@ namespace Legendary_Rune_Maker
         public App()
         {
             CultureInfo.DefaultThreadCurrentCulture = CultureInfo.DefaultThreadCurrentUICulture = Config.Default.Culture;
+
+            AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
+        }
+
+        private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            var exception = e.ExceptionObject as Exception;
+            var result = MessageBox.Show($"{exception.GetType().FullName}: {exception.Message}\n" +
+                "Create minidump? You can use this to report this issue to me.", "Unhandled exception",
+                MessageBoxButton.YesNoCancel, MessageBoxImage.Error);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                string date = DateTime.UtcNow.ToString("HHmmss");
+                string path = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), $"dump_{date}.mdmp");
+
+                using (var fs = new FileStream(path, FileMode.Create, FileAccess.ReadWrite, FileShare.Write))
+                {
+                    MiniDump.Write(fs.SafeFileHandle, MiniDump.Option.Normal | MiniDump.Option.WithIndirectlyReferencedMemory | MiniDump.Option.WithDataSegs, MiniDump.ExceptionInfo.Present);
+                }
+                
+                Process.Start("explorer.exe", $"/select, \"{path}\"");
+            }
+
+            if (e.IsTerminating)
+            {
+                Legendary_Rune_Maker.MainWindow.DisposeTaskbar();
+                Process.GetCurrentProcess().Kill();
+            }
         }
 
         protected override void OnStartup(StartupEventArgs e)
@@ -33,7 +66,7 @@ namespace Legendary_Rune_Maker
             LoL.BindNinject(Container);
             //ILoL lol = LoL.CreateNew();
             
-            //Container.Bind<ILoL>().ToMethod(o =>  lol);
+            //Container.Bind<ILoL>().ToMethod(o => lol);
             //Container.Bind<ILeagueClient>().ToConstant(lol.Client);
             //Container.Bind<ILeagueSocket>().ToConstant(lol.Socket);
             
