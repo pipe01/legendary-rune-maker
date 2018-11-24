@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Legendary_Rune_Maker.Data.Providers
@@ -58,7 +59,7 @@ namespace Legendary_Rune_Maker.Data.Providers
             var pathIcons = doc.DocumentNode.SelectNodes("//img[contains(@class, 'PathButton__Icon')]").Take(2);
             var pathStyles = pathIcons.Select(GetPathStyleId).ToArray();
 
-            var perkIcons = doc.DocumentNode.SelectNodes("//div[contains(@class, 'LeftSide')]//img[contains(@class, 'PerkButton__Icon')]").Take(6);
+            var perkIcons = doc.DocumentNode.SelectNodes("//div[contains(@class, 'LeftSide')]//img[contains(@class, 'PerkButton__Icon')]").Take(9);
             var perkIds = perkIcons.Select(GetPerkId).ToArray();
 
             return new RunePage(perkIds, pathStyles[0], pathStyles[1], championId, position);
@@ -111,7 +112,14 @@ namespace Legendary_Rune_Maker.Data.Providers
         private static int GetPerkId(HtmlNode node)
         {
             string src = node.GetAttributeValue("src", "");
-            return Riot.GetAllRunes().Values.First(o => src.Contains(o.IconURL)).ID;
+            var rune = Riot.GetAllRunes().Values.FirstOrDefault(o => src.Contains(o.IconURL))?.ID;
+
+            if (rune == null)
+            {
+                return int.Parse(Regex.Match(src, @"(?<=rune-shards\/).*?(?=\.png)").Value);
+            }
+
+            return rune.Value;
         }
 
         private static int GetPathStyleId(HtmlNode node)
