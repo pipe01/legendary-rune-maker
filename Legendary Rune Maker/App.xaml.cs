@@ -35,6 +35,7 @@ namespace Legendary_Rune_Maker
 
         private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
+#if !DEBUG
             var exception = e.ExceptionObject as Exception;
             var result = MessageBox.Show($"{exception.GetType().FullName}: {exception.Message}\n" +
                 "Create minidump? You can use this to report this issue to me.", "Unhandled exception",
@@ -61,6 +62,7 @@ namespace Legendary_Rune_Maker
 
                 Process.Start("explorer.exe", $"/select, \"{path}.zip\"");
             }
+#endif
 
             if (e.IsTerminating)
             {
