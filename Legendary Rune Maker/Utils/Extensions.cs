@@ -1,4 +1,7 @@
 ﻿using Legendary_Rune_Maker.Data;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 
 namespace Legendary_Rune_Maker.Utils
@@ -37,5 +40,8 @@ namespace Legendary_Rune_Maker.Utils
         }
 
         public static string FormatStr(this string str, params object[] args) => string.Format(str, args: args);
+
+        public static IDictionary<TValue, TKey> Invert<TKey, TValue>(this IDictionary<TKey, TValue> dic)
+            => dic.ToDictionary(o => o.Value, o => o.Key);
     }
 }

@@ -116,6 +116,7 @@
     <Compile Include="Data\Providers\OpGGProvider.cs" />
     <Compile Include="Data\Providers\Provider.cs" />
     <Compile Include="Data\Providers\RunesLolProvider.cs" />
+    <Compile Include="Data\Providers\UGGProvider.cs" />
     <Compile Include="Data\StatRune.cs" />
     <Compile Include="Data\SummonerSpell.cs" />
     <Compile Include="Data\WebCache.cs" />

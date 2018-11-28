@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace Legendary_Rune_Maker.Data.Providers
@@ -13,6 +14,8 @@ namespace Legendary_Rune_Maker.Data.Providers
             RunePages = 1,
             ItemSets = 2,
         }
+
+        protected WebClient Client => new WebClient();
 
         public abstract string Name { get; }
 

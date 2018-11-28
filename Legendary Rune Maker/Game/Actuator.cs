@@ -20,6 +20,7 @@ namespace Legendary_Rune_Maker.Game
             new ChampionGGProvider(),
             new MetaLolProvider(),
             new LolFlavorProvider(),
+            new UGGProvider(),
             new OpGGProvider()
         };
 
