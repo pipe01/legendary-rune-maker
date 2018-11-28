@@ -54,7 +54,10 @@ namespace Legendary_Rune_Maker.Game
                 Session = data;
                 
                 SessionUpdated?.Invoke(data);
-                
+
+                if (CurrentSelection != null && Config.Default.AutoPickSumms)
+                    await PickSumms();
+
                 var myAction = data.actions.SelectMany(o => o).LastOrDefault(o => o.actorCellId == data.localPlayerCellId);
 
                 if (myAction?.completed == false)
@@ -63,9 +66,6 @@ namespace Legendary_Rune_Maker.Game
                     {
                         if (!Picked)
                         {
-                            if (Config.Default.AutoPickSumms)
-                                await PickSumms();
-
                             if (Config.Default.AutoPickChampion)
                                 await Pick(myAction);
 
@@ -79,7 +79,7 @@ namespace Legendary_Rune_Maker.Game
                     }
                 }
             }
-
+            
             if (eventType == EventType.Create)
             {
                 GameState.State.Fire(GameTriggers.EnterChampSelect);
