@@ -93,6 +93,9 @@ namespace Legendary_Rune_Maker.Data.Providers
         {
             var champData = await GetChampionData(championId);
 
+            if (position == Position.Fill || position == Position.UNSELECTED)
+                position = (await GetPossibleRoles(championId))[0];
+
             var root = champData[IdToPosition.Invert()[position].ToString()][0];
             var perksRoot = root[0];
 
@@ -108,6 +111,10 @@ namespace Legendary_Rune_Maker.Data.Providers
         protected override async Task<ItemSet> GetItemSetInner(int championId, Position position)
         {
             var champData = await GetChampionData(championId);
+
+            if (position == Position.Fill || position == Position.UNSELECTED)
+                position = (await GetPossibleRoles(championId))[0];
+
             var root = champData[IdToPosition.Invert()[position].ToString()][0];
 
             var blocks = new List<ItemSet.SetBlock>();

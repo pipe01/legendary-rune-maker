@@ -348,6 +348,8 @@ namespace Legendary_Rune_Maker.Pages
                     Actuator.RuneProviders.First(o => o.ProviderOptions.HasFlag(Provider.Options.ItemSets)).Name;
                 Config.Default.Save();
             }
+
+            await new UGGProvider().GetItemSet(6, Position.Fill);
         }
 
         public void ShowNotification(string title, string message = null, NotificationType type = NotificationType.Information)
