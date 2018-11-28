@@ -1,4 +1,6 @@
-﻿using PiMachine;
+﻿using Anotar.Log4Net;
+using log4net;
+using PiMachine;
 
 namespace Legendary_Rune_Maker.Game
 {
@@ -31,7 +33,14 @@ namespace Legendary_Rune_Maker.Game
                 .Permit(GameTriggers.LockIn, GameStates.LockedIn)
                 .Permit(GameTriggers.ExitChampSelect, GameStates.LoggedIn);
 
+            machine.EnteredState += Machine_EnteredState;
+
             return machine;
+        }
+
+        private static void Machine_EnteredState(GameStates state)
+        {
+            LogTo.Debug("Entered UI state " + state);
         }
     }
 
