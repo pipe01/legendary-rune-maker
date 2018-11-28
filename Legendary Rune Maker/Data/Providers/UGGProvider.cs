@@ -1,4 +1,6 @@
-﻿using Legendary_Rune_Maker.Utils;
+﻿//Mad props to @paolostyle for https://github.com/OrangeNote/RuneBook/pull/67
+
+using Legendary_Rune_Maker.Utils;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -101,6 +103,40 @@ namespace Legendary_Rune_Maker.Data.Providers
                 .ToArray();
 
             return new RunePage(runes, primTree, secTree, championId, position);
+        }
+
+        protected override async Task<ItemSet> GetItemSetInner(int championId, Position position)
+        {
+            var champData = await GetChampionData(championId);
+            var root = champData[IdToPosition.Invert()[position].ToString()][0];
+
+            var blocks = new List<ItemSet.SetBlock>();
+            
+            AddSimple(2, "Starting Build");
+            AddSimple(3, "Core Build");
+
+            blocks.AddRange(root[5].Select((o, i) => new ItemSet.SetBlock
+            {
+                Name = new[] { "Fourth", "Fifth", "Sixth" }[i] + " Item Options (ordered by games played)",
+                Items = o.Select(j => j[0].ToObject<int>()).ToArray()
+            }));
+
+            return new ItemSet
+            {
+                Champion = championId,
+                Name = "U.GG - {0}",
+                Position = position,
+                Blocks = blocks.ToArray()
+            };
+
+            void AddSimple(int index, string name)
+            {
+                blocks.Add(new ItemSet.SetBlock
+                {
+                    Name = $"{name} - {root[index][1].ToObject<float>() / root[index][0].ToObject<int>() * 100}% win rate",
+                    Items = root[index][2].Select(o => o.ToObject<int>()).ToArray()
+                });
+            }
         }
     }
 }
