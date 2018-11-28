@@ -1,4 +1,5 @@
-﻿using LCU.NET;
+﻿using Anotar.Log4Net;
+using LCU.NET;
 using Legendary_Rune_Maker.Data;
 using Legendary_Rune_Maker.Data.Providers;
 using Legendary_Rune_Maker.Game;
@@ -153,17 +154,23 @@ namespace Legendary_Rune_Maker.Pages
 
         public async Task LoadPageFromDefaultProvider()
         {
+            var champName = Riot.GetChampion(SelectedChampion).Name;
             var provider = Actuator.RuneProviders.FirstOrDefault(o => o.Name == Config.Default.LockLoadProvider)
                             ?? Actuator.RuneProviders[0];
+            
+            LogTo.Debug("Loading page from {0} (default) for champion {1}", provider.Name, champName);
             var positions = await provider.GetPossibleRoles(SelectedChampion);
+
+            LogTo.Info("Available positions for {0}: {1}", champName, string.Join(", ", positions));
 
             var position = positions.Contains(SelectedPosition) ? SelectedPosition : Position.Fill;
 
+            LogTo.Debug("Downloading rune page...");
             var page = await provider.GetRunePage(SelectedChampion, position);
+            LogTo.Debug("Downloaded rune page");
 
+            LogTo.Debug("Setting rune page UI");
             Tree.SetPage(page);
-
-            var champName = Riot.GetChampion(SelectedChampion).Name;
 
             MainWindow.ShowNotification(
                 Text.PageChampInPosNotSet.FormatStr(champName, SelectedPosition.ToString().ToLower()),
@@ -173,6 +180,7 @@ namespace Legendary_Rune_Maker.Pages
 
         private async void Upload_Click(object sender, EventArgs e)
         {
+            LogTo.Info("Uploading rune page manually");
             await Page.UploadToClient(LoL.Perks);
         }
 
@@ -212,6 +220,7 @@ namespace Legendary_Rune_Maker.Pages
         {
             Tree.Clear();
 
+            LogTo.Debug("Deleting current rune page");
             RuneBook.Instance.Remove(SelectedChampion, SelectedPosition);
         }
 
@@ -237,6 +246,8 @@ namespace Legendary_Rune_Maker.Pages
 
         private void SaveRunePageToBook()
         {
+            LogTo.Info("Saving rune page to book");
+
             RuneBook.Instance.Remove(SelectedChampion, SelectedPosition);
 
             if (SelectedChampion != 0)
@@ -248,11 +259,17 @@ namespace Legendary_Rune_Maker.Pages
             if (SelectedChampion == 0)
                 return;
 
+            LogTo.Debug("Building rune page load context menu");
+
             var menu = new ContextMenu();
             Load.ContextMenu = menu;
             menu.IsOpen = true;
-            
-            foreach (var provider in Actuator.RuneProviders.Where(o => o.ProviderOptions.HasFlag(Provider.Options.RunePages)))
+
+            var providers = Actuator.RuneProviders.Where(o => o.ProviderOptions.HasFlag(Provider.Options.RunePages));
+
+            LogTo.Debug("Available providers: {0}", string.Join(", ", providers.Select(o => o.Name)));
+
+            foreach (var provider in providers)
             {
                 var header = new MenuItem { Header = provider.Name };
                 menu.Items.Add(header);
@@ -267,14 +284,19 @@ namespace Legendary_Rune_Maker.Pages
                         var roleItem = new MenuItem { Header = role.ToString() };
                         roleItem.Click += async (___, ____) =>
                         {
+                            LogTo.Info(() => $"Manually loading page from {provider.Name} for {Riot.GetChampion(SelectedChampion).Name}");
+
                             this.Cursor = Cursors.Wait;
                             try
                             {
-                                Tree.SetPage(await provider.GetRunePage(SelectedChampion, role));
+                                var page = await provider.GetRunePage(SelectedChampion, role);
+
+                                LogTo.Debug("Setting page tree");
+                                Tree.SetPage(page);
                             }
                             catch (Exception ex)
                             {
-                                Debug.WriteLine(ex);
+                                LogTo.ErrorException("Failed to set/download rune page from UI", ex);
                                 MessageBox.Show(ex.Message);
                             }
                             this.Cursor = Cursors.Arrow;
@@ -304,6 +326,8 @@ namespace Legendary_Rune_Maker.Pages
         {
             if (PositionPicker.Selected != Position.UNSELECTED)
             {
+                LogTo.Debug("Changed position selection");
+
                 PositionImage.Source = (ImageSource)Application.Current.FindResource(PositionPicker.Selected.ToString());
                 UpdateRunePageFromRuneBook();
             }
@@ -329,6 +353,8 @@ namespace Legendary_Rune_Maker.Pages
 
         private async void Page_Initialized(object sender, EventArgs e)
         {
+            LogTo.Debug("Initializing main page");
+
             Owner.SetSize(this.Width, this.Height);
 
             await Actuator.Init();
@@ -348,12 +374,13 @@ namespace Legendary_Rune_Maker.Pages
                     Actuator.RuneProviders.First(o => o.ProviderOptions.HasFlag(Provider.Options.ItemSets)).Name;
                 Config.Default.Save();
             }
-
-            await new UGGProvider().GetItemSet(6, Position.Fill);
         }
 
         public void ShowNotification(string title, string message = null, NotificationType type = NotificationType.Information)
-            => MainWindow.ShowNotification(title, message, type);
+        {
+            LogTo.Debug("Showing notification with title \"{0}\"", title);
+            MainWindow.ShowNotification(title, message, type);
+        }
 
         private void ChampionImage_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
@@ -363,7 +390,10 @@ namespace Legendary_Rune_Maker.Pages
         private void BugReport_Click(object sender, RoutedEventArgs e)
         {
             if (MessageBox.Show(Text.ReportBugDialog, "", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            {
+                LogTo.Info("Opening browser to report a bug");
                 Process.Start("https://github.com/pipe01/legendary-rune-maker/issues/new");
+            }
         }
     }
 }

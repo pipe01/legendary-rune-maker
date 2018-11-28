@@ -12,6 +12,8 @@ namespace Legendary_Rune_Maker.Game
 
         private static StateMachine<GameStates, GameTriggers> CreateMachine()
         {
+            LogTo.Debug("Initializing state machine");
+
             var machine = new StateMachine<GameStates, GameTriggers>();
             machine.PermitFromAny(GameTriggers.CloseGame, GameStates.Disconnected);
             machine.PermitFromAny(GameTriggers.LogOut, GameStates.NotLoggedIn);

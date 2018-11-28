@@ -1,4 +1,5 @@
-﻿using LCU.NET;
+﻿using Anotar.Log4Net;
+using LCU.NET;
 using LCU.NET.API_Models;
 using Legendary_Rune_Maker.Data;
 using Legendary_Rune_Maker.Data.Providers;
@@ -43,23 +44,34 @@ namespace Legendary_Rune_Maker.Game
 
         public async Task Init()
         {
+            LogTo.Debug("Initializing actuator");
+
             GameState.State.EnteredState += State_EnteredState;
             ChampSelectDetector.SessionUpdated += ChampSelectDetector_SessionUpdated;
             LeagueClient.ConnectedChanged += LeagueClient_ConnectedChanged;
 
             if (!LeagueClient.Init())
             {
+                LogTo.Info("League client not open, listening");
                 LeagueClient.BeginTryInit();
             }
+            else
+            {
+                LogTo.Info("Connected to league client");
+            }
+
+            LogTo.Debug("Initializing detectors");
 
             await LoginDetector.Init();
             await ChampSelectDetector.Init();
             ReadyCheckDetector.Init();
+
+            LogTo.Debug("Initialized detectors");
         }
         
         private void LeagueClient_ConnectedChanged(bool connected)
         {
-            Debug.WriteLine("Connected: " + connected);
+            LogTo.Debug("Connected: " + connected);
 
             if (connected)
             {
@@ -77,6 +89,8 @@ namespace Legendary_Rune_Maker.Game
 
             if (state == GameStates.Disconnected)
             {
+                LogTo.Info("Disconncted from client, trying to reconnect");
+
                 await Task.Run(async () =>
                 {
                     await Task.Delay(1000);
@@ -102,26 +116,40 @@ namespace Legendary_Rune_Maker.Game
 
         private async Task UploadItemSet()
         {
+            LogTo.Debug("Trying to upload item set");
+
             var provider = Array.Find(RuneProviders, o => o.Name == Config.Default.ItemSetProvider) ?? RuneProviders[0];
             var set = await provider.GetItemSet(Main.SelectedChampion, Main.SelectedPosition);
 
+            LogTo.Info("Gotten item set from {0}", provider.Name);
+            LogTo.Debug("Uploading item set");
+
             await set.UploadToClient(LoL.Login, LoL.ItemSets);
 
+            LogTo.Debug("Uploaded item set");
             Main.ShowNotification(Text.UploadedItemSet,
                 Text.UploadedItemSetFrom.FormatStr(provider.Name), NotificationType.Success);
         }
 
         private async Task UploadPage()
         {
+            LogTo.Debug("Trying to upload rune page");
+
             string champion = Riot.GetChampion(Main.SelectedChampion).Name;
+
+            LogTo.Debug("for champion {0}", champion);
 
             Main.ShowNotification(Text.LockedInMessage, champion + ", " + Main.SelectedPosition.ToString().ToLower(), NotificationType.Success);
 
             if (!Main.ValidPage)
             {
+                LogTo.Info("Invalid current rune page");
+
                 if (Config.Default.LoadOnLock)
                 {
+                    LogTo.Info("Downloading from provider");
                     await Main.LoadPageFromDefaultProvider();
+                    LogTo.Debug("Downloaded from provider");
                 }
                 else
                 {
@@ -130,7 +158,9 @@ namespace Legendary_Rune_Maker.Game
                 }
             }
 
+            LogTo.Debug("Uploading rune page to client");
             await Task.Run(() => Main.Page.UploadToClient(LoL.Perks));
+            LogTo.Debug("Uploaded rune page to client");
         }
 
         private void ChampSelectDetector_SessionUpdated(LolChampSelectChampSelectSession obj)
@@ -141,10 +171,16 @@ namespace Legendary_Rune_Maker.Game
             {
                 if (player != null && Main.Attached)
                 {
-                    Main.SelectedPosition = player.assignedPosition.ToPosition();
+                    var pos = player.assignedPosition.ToPosition();
+
+                    LogTo.Debug("Set position: {0}", pos);
+                    Main.SelectedPosition = pos;
 
                     if (player.championId != 0)
+                    {
+                        LogTo.Debug("Set champion: {0}", player.championId);
                         await Main.SetChampion(player.championId);
+                    }
                 }
             });
         }
