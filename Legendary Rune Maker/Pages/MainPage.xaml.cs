@@ -182,6 +182,16 @@ namespace Legendary_Rune_Maker.Pages
         {
             LogTo.Info("Uploading rune page manually");
             await Page.UploadToClient(LoL.Perks);
+
+            UploadImage.Source = (ImageSource)Application.Current.FindResource("OkHand");
+
+            await Task.Delay(115);
+            UploadImage.Width = UploadImage.Height = 28;
+
+            await Task.Delay(2000);
+
+            UploadImage.Source = (ImageSource)Application.Current.FindResource("Upload");
+            UploadImage.Width = UploadImage.Height = 20;
         }
 
         private void Tree_SelectedRunesChanged(object sender, EventArgs e)
