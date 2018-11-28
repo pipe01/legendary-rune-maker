@@ -24,7 +24,10 @@ namespace Legendary_Rune_Maker.Data
         {
             var session = await login.GetSessionAsync();
             bool saveToConfig = !Config.Default.KeepItemSets;
-            
+
+            if (this.Name.Contains("{0}"))
+                this.Name = string.Format(this.Name, Riot.GetChampion(Champion).Name);
+
             var itemSet = new LolItemSetsItemSet
             {
                 map = "any",
