@@ -42,6 +42,9 @@ namespace Legendary_Rune_Maker
             if (!Debugger.IsAttached)
             {
                 var exception = e.ExceptionObject as Exception;
+
+                LogTo.FatalException("Unhandled exception", exception);
+
                 var result = MessageBox.Show($"{exception.GetType().FullName}: {exception.Message}\n" +
                     "Create minidump? You can use this to report this issue to me.", "Unhandled exception",
                     MessageBoxButton.YesNoCancel, MessageBoxImage.Error);
