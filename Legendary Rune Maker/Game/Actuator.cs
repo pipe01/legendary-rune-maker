@@ -180,6 +180,9 @@ namespace Legendary_Rune_Maker.Game
                     });
 
                     set.Blocks = blocks.ToArray();
+
+                    if (order.Contains(' '))
+                        set.Name += " " + order.Split(' ')[0];
                 }
             }
 
