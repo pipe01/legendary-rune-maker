@@ -129,7 +129,7 @@
     <Compile Include="Data\StatRune.cs" />
     <Compile Include="Data\SummonerSpell.cs" />
     <Compile Include="Data\WebCache.cs" />
-    <Compile Include="DebugProxyWindow.xaml.cs">
+    <Compile Include="Windows\DebugProxyWindow.xaml.cs">
       <DependentUpon>DebugProxyWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Game\Actuator.cs" />
@@ -146,11 +146,11 @@
     <Compile Include="Game\ChampSelectDetector.cs" />
     <Compile Include="Game\LoginDetector.cs" />
     <Compile Include="Game\ReadyCheckDetector.cs" />
-    <Compile Include="GrayscaleImageControl.xaml.cs">
+    <Compile Include="Windows\GrayscaleImageControl.xaml.cs">
       <DependentUpon>GrayscaleImageControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="IMainWindow.cs" />
-    <Compile Include="LoadingWindow.xaml.cs">
+    <Compile Include="Windows\IMainWindow.cs" />
+    <Compile Include="Windows\LoadingWindow.xaml.cs">
       <DependentUpon>LoadingWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Locale\Text.Designer.cs">
@@ -171,10 +171,10 @@
     <Compile Include="Pages\SettingsPage.xaml.cs">
       <DependentUpon>SettingsPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="PickSummonerSpellPopup.xaml.cs">
+    <Compile Include="Windows\PickSummonerSpellPopup.xaml.cs">
       <DependentUpon>PickSummonerSpellPopup.xaml</DependentUpon>
     </Compile>
-    <Compile Include="TreePickerControl.xaml.cs">
+    <Compile Include="Windows\TreePickerControl.xaml.cs">
       <DependentUpon>TreePickerControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Utils\BitmapUtils.cs" />
@@ -199,19 +199,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="DebugProxyWindow.xaml">
+    <Page Include="Windows\DebugProxyWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="GrayscaleImageControl.xaml">
+    <Page Include="Windows\GrayscaleImageControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="LoadingWindow.xaml">
+    <Page Include="Windows\LoadingWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainWindow.xaml">
+    <Page Include="Windows\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -222,7 +222,7 @@
     <Compile Include="Data\Rune.cs" />
     <Compile Include="Data\RuneSlot.cs" />
     <Compile Include="Data\RuneTree.cs" />
-    <Compile Include="MainWindow.xaml.cs">
+    <Compile Include="Windows\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
@@ -242,7 +242,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="PickSummonerSpellPopup.xaml">
+    <Page Include="Windows\PickSummonerSpellPopup.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -250,7 +250,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="TreePickerControl.xaml">
+    <Page Include="Windows\TreePickerControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -389,6 +389,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="FodyWeavers.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="GitData.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
