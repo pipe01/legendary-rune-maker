@@ -103,7 +103,7 @@ namespace Legendary_Rune_Maker.Pages
 
             Version.Text = "Version " + Assembly.GetExecutingAssembly().GetName().Version.ToString(3);
 #if DEBUG
-            Version.Text += "-debug";
+            Version.Text += "-" + LRM.GitCommit.Substring(0, 7);
 #endif
             Version.Text += " by pipe01";
 
