@@ -70,12 +70,12 @@ namespace Legendary_Rune_Maker
 
                     Process.Start("explorer.exe", $"/select, \"{path}.zip\"");
                 }
-            }
 
-            if (e.IsTerminating)
-            {
-                Legendary_Rune_Maker.MainWindow.DisposeTaskbar();
-                Process.GetCurrentProcess().Kill();
+                if (e.IsTerminating)
+                {
+                    Legendary_Rune_Maker.MainWindow.DisposeTaskbar();
+                    Process.GetCurrentProcess().Kill();
+                }
             }
         }
 

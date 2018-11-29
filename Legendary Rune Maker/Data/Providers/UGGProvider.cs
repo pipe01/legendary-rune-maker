@@ -14,6 +14,7 @@ namespace Legendary_Rune_Maker.Data.Providers
     internal class UGGProvider : Provider
     {
         public override string Name => "U.GG";
+        public override Options ProviderOptions => Options.RunePages | Options.ItemSets | Options.SkillOrder;
 
         private const string LolVersionsEndpoint = "https://ddragon.leagueoflegends.com/api/versions.json";
 
@@ -116,7 +117,7 @@ namespace Legendary_Rune_Maker.Data.Providers
                 position = (await GetPossibleRoles(championId))[0];
 
             var root = champData[IdToPosition.Invert()[position].ToString()][0];
-
+            
             var blocks = new List<ItemSet.SetBlock>();
             
             AddSimple(2, "Starting Build");
@@ -144,6 +145,21 @@ namespace Legendary_Rune_Maker.Data.Providers
                     Items = root[index][2].Select(o => o.ToObject<int>()).ToArray()
                 });
             }
+        }
+
+        protected override async Task<string> GetSkillOrderInner(int championId, Position position)
+        {
+            var champData = await GetChampionData(championId);
+
+            if (position == Position.Fill || position == Position.UNSELECTED)
+                position = (await GetPossibleRoles(championId))[0];
+
+            var root = champData[IdToPosition.Invert()[position].ToString()][0][4];
+
+            var skills = root[2].Select(o => o.ToObject<string>()[0]).ToArray();
+            string @short = root[3].ToObject<string>();
+
+            return $"{@short} {new string(skills)}";
         }
     }
 }

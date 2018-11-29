@@ -38,6 +38,9 @@ namespace Legendary_Rune_Maker.Data.Providers
         public Task<ItemSet> GetItemSet(int championId, Position position)
             => Cache(ItemSetCache, (championId, position), () => GetItemSetInner(championId, position));
 
+        /// <summary>
+        /// Format: "[QEW ]QWERQWERQWERQWERQW"
+        /// </summary>
         public Task<string> GetSkillOrder(int championId, Position position)
             => Cache(SkillOrderCache, (championId, position), () => GetSkillOrderInner(championId, position));
 

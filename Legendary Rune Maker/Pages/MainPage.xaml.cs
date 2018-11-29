@@ -384,6 +384,8 @@ namespace Legendary_Rune_Maker.Pages
                     Actuator.RuneProviders.First(o => o.ProviderOptions.HasFlag(Provider.Options.ItemSets)).Name;
                 Config.Default.Save();
             }
+
+            var s = await new UGGProvider().GetSkillOrder(54, Position.Top);
         }
 
         public void ShowNotification(string title, string message = null, NotificationType type = NotificationType.Information)
