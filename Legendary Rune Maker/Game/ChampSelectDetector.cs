@@ -115,8 +115,13 @@ namespace Legendary_Rune_Maker.Game
 
             var summs = Config.Default.SpellsToPick[pos];
 
+            LogTo.Info($"Config summoners: {string.Join(", ", summs)}");
+
             if (summs.Any(o => o == 0))
+            {
+                LogTo.Info("Invalid summoners config for lane, trying for fill");
                 summs = Config.Default.SpellsToPick[Position.Fill];
+            }
 
             LogTo.Info($"Config summoners: {string.Join(", ", summs)}");
 

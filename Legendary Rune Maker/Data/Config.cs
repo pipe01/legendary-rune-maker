@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Anotar.Log4Net;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -79,6 +80,9 @@ namespace Legendary_Rune_Maker.Data
 
         public void Save()
         {
+            LogTo.Info("Saving config");
+            LogTo.Debug(() => JsonConvert.SerializeObject(this));
+
             File.WriteAllText(FilePath, JsonConvert.SerializeObject(this, Formatting.Indented));
         }
 
@@ -98,14 +102,10 @@ namespace Legendary_Rune_Maker.Data
             }
 
             if (c.CultureName == null)
-            {
                 c.CultureName = CultureInfo.CurrentCulture.Name;
-            }
 
             if (c.ConfigVersion < LatestVersion)
-            {
                 c.ConfigVersion = LatestVersion;
-            }
 
             c.Save();
             return c;

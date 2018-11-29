@@ -3,6 +3,7 @@ using LCU.NET;
 using Legendary_Rune_Maker.Data;
 using Legendary_Rune_Maker.Game;
 using Legendary_Rune_Maker.Pages;
+using Newtonsoft.Json;
 using Ninject;
 using System;
 using System.Diagnostics;
