@@ -39,7 +39,7 @@ namespace Legendary_Rune_Maker.Data.Providers
             => Cache(ItemSetCache, (championId, position), () => GetItemSetInner(championId, position));
 
         /// <summary>
-        /// Format: "[QEW ]QWERQWERQWERQWERQW"
+        /// Format: "[(QEW) ]QWERQWERQWERQWERQW"
         /// </summary>
         public Task<string> GetSkillOrder(int championId, Position position)
             => Cache(SkillOrderCache, (championId, position), () => GetSkillOrderInner(championId, position));
@@ -53,6 +53,8 @@ namespace Legendary_Rune_Maker.Data.Providers
         protected virtual Task<string> GetSkillOrderInner(int championId, Position position)
              => throw new NotImplementedException();
 
+
+        public bool Supports(Options options) => (ProviderOptions & options) == options;
 
         private async Task<TValue> Cache<TValue, TKey>(IDictionary<TKey, TValue> cacheDic,
                                                         TKey key, Func<Task<TValue>> getter)

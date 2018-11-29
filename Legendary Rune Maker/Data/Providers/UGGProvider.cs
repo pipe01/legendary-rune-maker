@@ -15,9 +15,7 @@ namespace Legendary_Rune_Maker.Data.Providers
     {
         public override string Name => "U.GG";
         public override Options ProviderOptions => Options.RunePages | Options.ItemSets | Options.SkillOrder;
-
-        private const string LolVersionsEndpoint = "https://ddragon.leagueoflegends.com/api/versions.json";
-
+        
         private const int OverviewWorld = 12;
         private const int OverviewPlatPlus = 10;
 
@@ -38,10 +36,9 @@ namespace Legendary_Rune_Maker.Data.Providers
         {
             if (_LolUGGVersion == null)
             {
-                _LolUGGVersion = JArray.Parse(await Client.DownloadStringTaskAsync(LolVersionsEndpoint))[0].ToObject<string>();
-
-                //8.23.1 -> 8_23
-                _LolUGGVersion = string.Join("_", _LolUGGVersion.Split('.').Take(2));
+                var url = $"https://u.gg/json/new_ugg_versions/{UGGDataVersion}.json";
+                var json = JObject.Parse(await Client.DownloadStringTaskAsync(url));
+                _LolUGGVersion = (json.Children().First().Next as JProperty).Name;
             }
 
             return _LolUGGVersion;
@@ -159,7 +156,7 @@ namespace Legendary_Rune_Maker.Data.Providers
             var skills = root[2].Select(o => o.ToObject<string>()[0]).ToArray();
             string @short = root[3].ToObject<string>();
 
-            return $"{@short} {new string(skills)}";
+            return $"({@short}) {new string(skills)}";
         }
     }
 }
