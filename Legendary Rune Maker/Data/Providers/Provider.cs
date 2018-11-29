@@ -38,6 +38,8 @@ namespace Legendary_Rune_Maker.Data.Providers
         public Task<ItemSet> GetItemSet(int championId, Position position)
             => Cache(ItemSetCache, (championId, position), () => GetItemSetInner(championId, position));
 
+        public Task<string> GetSkillOrder(int championId, Position position)
+            => Cache(SkillOrderCache, (championId, position), () => GetSkillOrderInner(championId, position));
 
         protected abstract Task<Position[]> GetPossibleRolesInner(int championId);
 
@@ -45,7 +47,8 @@ namespace Legendary_Rune_Maker.Data.Providers
             => throw new NotImplementedException();
         protected virtual Task<ItemSet> GetItemSetInner(int championId, Position position)
             => throw new NotImplementedException();
-
+        protected virtual Task<string> GetSkillOrderInner(int championId, Position position)
+             => throw new NotImplementedException();
 
 
         private async Task<TValue> Cache<TValue, TKey>(IDictionary<TKey, TValue> cacheDic,
