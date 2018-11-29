@@ -11,7 +11,7 @@ namespace Legendary_Rune_Maker.Data
         public static Config Default { get; set; } = Load();
 
         private const string FilePath = "config.json";
-        private const int LatestVersion = 11;
+        private const int LatestVersion = 12;
 
         public static readonly string[] AvailableLanguages = new[]
         {
@@ -45,6 +45,9 @@ namespace Legendary_Rune_Maker.Data
         public string ItemSetProvider { get; set; }
         public bool KeepItemSets { get; set; }
         public string LastItemSetUid { get; set; }
+
+        public bool ShowSkillOrder { get; set; }
+        public string SkillOrderProvider { get; set; }
 
         
         public Dictionary<Position, int> ChampionsToPick { get; set; } = new Dictionary<Position, int>
