@@ -27,8 +27,6 @@ namespace Legendary_Rune_Maker.Game
             new OpGGProvider()
         };
 
-        private static readonly int[] SkillOrderBlockContent = new[] { 3044, 3508, 1058, 3031, 3134 };
-
         public IMainWindow Main { get; set; }
 
         private ILeagueClient LeagueClient => LoL.Client;
@@ -44,6 +42,8 @@ namespace Legendary_Rune_Maker.Game
             this.ChampSelectDetector = champSelectDetector;
             this.LoginDetector = loginDetector;
             this.ReadyCheckDetector = readyCheckDetector;
+
+            this.ChampSelectDetector.Actuator = this;
         }
 
         public async Task Init()
@@ -101,137 +101,11 @@ namespace Legendary_Rune_Maker.Game
                     LeagueClient.BeginTryInit();
                 });
             }
-            else if (state == GameStates.LockedIn)
-            {
-                await Main.SafeInvoke(async () =>
-                {
-                    if (Config.Default.UploadOnLock)
-                        await UploadPage();
-
-                    if (Config.Default.SetItemSet)
-                        await UploadItemSet();
-
-                    if (Config.Default.ShowSkillOrder && !Config.Default.SetItemSet)
-                        await UploadSkillOrder();
-                });
-            }
         }
-
-        public async Task UploadSkillOrder()
-        {
-            LogTo.Debug("Trying to upload skill order");
-
-            var provider = Array.Find(RuneProviders, o => o.Name == Config.Default.ItemSetProvider)
-                            ?? RuneProviders.First(o => o.Supports(Provider.Options.SkillOrder));
-
-            if (!provider.Supports(Provider.Options.SkillOrder))
-            {
-                LogTo.Error("Provider {0} doesn't support skill order", provider.Name);
-                return;
-            }
-
-            LogTo.Debug("Getting skill order from provider {0}", provider.Name);
-
-            var order = await provider.GetSkillOrder(Main.SelectedChampion, Main.SelectedPosition);
-            var set = new ItemSet
-            {
-                Name = "Skill order" + (order.Contains(' ') ? " " + order.Split(' ')[0] : ""),
-                Champion = Main.SelectedChampion,
-                Blocks = new []
-                {
-                    new ItemSet.SetBlock
-                    {
-                        Name = "Skill order: " + order,
-                        Items = SkillOrderBlockContent
-                    }
-                }
-            };
-
-            LogTo.Debug("Uploading skill order item set");
-            await set.UploadToClient(LoL.Login, LoL.ItemSets);
-
-            LogTo.Debug("Uploaded skill order");
-        }
-
-        private async Task UploadItemSet()
-        {
-            LogTo.Debug("Trying to upload item set");
-
-            var provider = Array.Find(RuneProviders, o => o.Name == Config.Default.ItemSetProvider) ?? RuneProviders[0];
-            var set = await provider.GetItemSet(Main.SelectedChampion, Main.SelectedPosition);
-
-            LogTo.Info("Gotten item set from {0}", provider.Name);
-
-            if (Config.Default.ShowSkillOrder)
-            {
-                if (!provider.Supports(Provider.Options.SkillOrder))
-                {
-                    LogTo.Error("Tried to upload skill order but selected provider doesn't support it");
-                }
-                else
-                {
-                    LogTo.Debug("Appending skill order block to item set");
-
-                    var order = await provider.GetSkillOrder(Main.SelectedChampion, Main.SelectedPosition);
-                    var blocks = new List<ItemSet.SetBlock>(set.Blocks);
-
-                    blocks.Insert(0, new ItemSet.SetBlock
-                    {
-                        Name = "Skill order: " + order,
-                        Items = SkillOrderBlockContent
-                    });
-
-                    set.Blocks = blocks.ToArray();
-
-                    if (order.Contains(' '))
-                        set.Name += " " + order.Split(' ')[0];
-                }
-            }
-
-            LogTo.Debug("Uploading item set");
-
-            await set.UploadToClient(LoL.Login, LoL.ItemSets);
-
-            LogTo.Debug("Uploaded item set");
-            Main.ShowNotification(Text.UploadedItemSet,
-                Text.UploadedItemSetFrom.FormatStr(provider.Name), NotificationType.Success);
-        }
-
-        private async Task UploadPage()
-        {
-            LogTo.Debug("Trying to upload rune page");
-
-            string champion = Riot.GetChampion(Main.SelectedChampion).Name;
-
-            LogTo.Debug("for champion {0}", champion);
-
-            Main.ShowNotification(Text.LockedInMessage, champion + ", " + Main.SelectedPosition.ToString().ToLower(), NotificationType.Success);
-
-            if (!Main.ValidPage)
-            {
-                LogTo.Info("Invalid current rune page");
-
-                if (Config.Default.LoadOnLock)
-                {
-                    LogTo.Info("Downloading from provider");
-                    await Main.LoadPageFromDefaultProvider();
-                    LogTo.Debug("Downloaded from provider");
-                }
-                else
-                {
-                    Main.ShowNotification(Text.PageChampNotSet.FormatStr(champion), null, NotificationType.Error);
-                    return;
-                }
-            }
-
-            LogTo.Debug("Uploading rune page to client");
-            await Task.Run(() => Main.Page.UploadToClient(LoL.Perks));
-            LogTo.Debug("Uploaded rune page to client");
-        }
-
+        
         private void ChampSelectDetector_SessionUpdated(LolChampSelectChampSelectSession obj)
         {
-            var player = ChampSelectDetector.CurrentSelection;
+            var player = ChampSelectDetector.Session.PlayerSelection;
 
             Main.SafeInvoke(async () =>
             {
