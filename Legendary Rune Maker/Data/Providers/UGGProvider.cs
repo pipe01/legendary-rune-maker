@@ -154,7 +154,7 @@ namespace Legendary_Rune_Maker.Data.Providers
             var root = champData[IdToPosition.Invert()[position].ToString()][0][4];
 
             var skills = root[2].Select(o => o.ToObject<string>()[0]).ToArray();
-            string @short = root[3].ToObject<string>();
+            string @short = string.Join(">", root[3].ToObject<string>().ToCharArray());
 
             return $"({@short}) {new string(skills)}";
         }
