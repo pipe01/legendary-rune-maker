@@ -130,6 +130,8 @@ namespace Legendary_Rune_Maker.Game
                 return;
             }
 
+            LogTo.Debug("Getting skill order from provider {0}", provider.Name);
+
             var order = await provider.GetSkillOrder(Main.SelectedChampion, Main.SelectedPosition);
             var set = new ItemSet
             {
