@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using CacheKey = System.ValueTuple<int, Legendary_Rune_Maker.Data.Position>;
 
 namespace Legendary_Rune_Maker.Data.Providers
 {
@@ -13,6 +14,7 @@ namespace Legendary_Rune_Maker.Data.Providers
         {
             RunePages = 1,
             ItemSets = 2,
+            SkillOrder = 4
         }
 
         protected WebClient Client => new WebClient();
@@ -22,20 +24,19 @@ namespace Legendary_Rune_Maker.Data.Providers
         public virtual Options ProviderOptions => Options.RunePages | Options.ItemSets;
 
         private IDictionary<int, Position[]> PossibleRolesCache = new Dictionary<int, Position[]>();
-        private IDictionary<(int, Position), RunePage> RunePageCache = new Dictionary<(int, Position), RunePage>();
-        private IDictionary<(int, Position), ItemSet> ItemSetCache = new Dictionary<(int, Position), ItemSet>();
+        private IDictionary<CacheKey, RunePage> RunePageCache = new Dictionary<CacheKey, RunePage>();
+        private IDictionary<CacheKey, ItemSet> ItemSetCache = new Dictionary<CacheKey, ItemSet>();
+        private IDictionary<CacheKey, string> SkillOrderCache = new Dictionary<CacheKey, string>();
 
-        public async Task<Position[]> GetPossibleRoles(int championId)
-            => PossibleRolesCache.TryGetValue(championId, out var r) ? r :
-               PossibleRolesCache[championId] = await GetPossibleRolesInner(championId);
+        public Task<Position[]> GetPossibleRoles(int championId)
+            => Cache(PossibleRolesCache, championId, () => GetPossibleRolesInner(championId));
 
-        public async Task<RunePage> GetRunePage(int championId, Position position)
-            => RunePageCache.TryGetValue((championId, position), out var r) ? r :
-               RunePageCache[(championId, position)] = FillStatsIfNone(await GetRunePageInner(championId, position));
+        public Task<RunePage> GetRunePage(int championId, Position position)
+            => Cache(RunePageCache, (championId, position),
+                async () => FillStatsIfNone(await GetRunePageInner(championId, position)));
 
-        public async Task<ItemSet> GetItemSet(int championId, Position position)
-            => ItemSetCache.TryGetValue((championId, position), out var r) ? r :
-               ItemSetCache[(championId, position)] = await GetItemSetInner(championId, position);
+        public Task<ItemSet> GetItemSet(int championId, Position position)
+            => Cache(ItemSetCache, (championId, position), () => GetItemSetInner(championId, position));
 
 
         protected abstract Task<Position[]> GetPossibleRolesInner(int championId);
@@ -45,6 +46,12 @@ namespace Legendary_Rune_Maker.Data.Providers
         protected virtual Task<ItemSet> GetItemSetInner(int championId, Position position)
             => throw new NotImplementedException();
 
+
+
+        private async Task<TValue> Cache<TValue, TKey>(IDictionary<TKey, TValue> cacheDic,
+                                                        TKey key, Func<Task<TValue>> getter)
+            => cacheDic.TryGetValue(key, out var val) ? val :
+               cacheDic[key] = await getter();
 
         private RunePage FillStatsIfNone(RunePage page)
         {
