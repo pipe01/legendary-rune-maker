@@ -129,6 +129,7 @@
     <Compile Include="Data\StatRune.cs" />
     <Compile Include="Data\SummonerSpell.cs" />
     <Compile Include="Data\WebCache.cs" />
+    <Compile Include="LRM.cs" />
     <Compile Include="Windows\DebugProxyWindow.xaml.cs">
       <DependentUpon>DebugProxyWindow.xaml</DependentUpon>
     </Compile>
@@ -402,4 +403,8 @@
     <Error Condition="!Exists('..\packages\Fody.3.3.2\build\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Fody.3.3.2\build\Fody.targets'))" />
   </Target>
   <Import Project="..\packages\Fody.3.3.2\build\Fody.targets" Condition="Exists('..\packages\Fody.3.3.2\build\Fody.targets')" />
+  <PropertyGroup>
+    <PreBuildEvent>git rev-parse --abbrev-ref HEAD &gt; "$(ProjectDir)GitData.txt"
+git rev-parse HEAD &gt;&gt; "$(ProjectDir)GitData.txt"</PreBuildEvent>
+  </PropertyGroup>
 </Project>

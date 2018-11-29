@@ -1,4 +1,5 @@
-﻿using LCU.NET;
+﻿using Anotar.Log4Net;
+using LCU.NET;
 using Legendary_Rune_Maker.Data;
 using Legendary_Rune_Maker.Game;
 using Legendary_Rune_Maker.Pages;
@@ -28,6 +29,8 @@ namespace Legendary_Rune_Maker
 
         public App()
         {
+            LogTo.Info($"Starting LRM {LRM.GitCommit}@{LRM.GitBranch}");
+
             CultureInfo.DefaultThreadCurrentCulture = CultureInfo.DefaultThreadCurrentUICulture = Config.Default.Culture;
 
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
