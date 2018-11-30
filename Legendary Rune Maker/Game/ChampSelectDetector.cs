@@ -15,7 +15,7 @@ namespace Legendary_Rune_Maker.Game
 
         private LolChampSelectChampSelectPlayerSelection PlayerSelection
             => Session.myTeam?.SingleOrDefault(o => o.cellId == Session.localPlayerCellId);
-        private Position CurrentPosition => PlayerSelection.assignedPosition.ToPosition();
+        private Position CurrentPosition => PlayerSelection?.assignedPosition.ToPosition() ?? Position.Fill;
 
         private readonly Config Config;
         private readonly Actuator Actuator;
@@ -38,7 +38,7 @@ namespace Legendary_Rune_Maker.Game
             {
                 State.Value.HasLockedIn = true;
 
-                LogTo.Info("Locked in champion");
+                LogTo.Info("Locked in champion {0}", data);
                 GameState.State.Fire(GameTriggers.LockIn);
 
                 if (!State.Value.HasTriedRunePage)
@@ -46,7 +46,7 @@ namespace Legendary_Rune_Maker.Game
                     State.Value.HasTriedRunePage = true;
 
                     if (Config.UploadOnLock)
-                        await Actuator.UploadRunePage(CurrentPosition, PlayerSelection.championId);
+                        await Actuator.UploadRunePage(CurrentPosition, data);
                 }
 
                 if (!State.Value.HasTriedSkillOrder)
@@ -54,7 +54,7 @@ namespace Legendary_Rune_Maker.Game
                     State.Value.HasTriedSkillOrder = true;
 
                     if (Config.ShowSkillOrder && !Config.SetItemSet)
-                        await Actuator.UploadSkillOrder(CurrentPosition, PlayerSelection.championId);
+                        await Actuator.UploadSkillOrder(CurrentPosition, data);
                 }
 
                 if (!State.Value.HasTriedItemSet)
@@ -62,7 +62,7 @@ namespace Legendary_Rune_Maker.Game
                     State.Value.HasTriedItemSet = true;
 
                     if (Config.SetItemSet)
-                        await Actuator.UploadItemSet(CurrentPosition, PlayerSelection.championId);
+                        await Actuator.UploadItemSet(CurrentPosition, data);
                 }
             }
         }

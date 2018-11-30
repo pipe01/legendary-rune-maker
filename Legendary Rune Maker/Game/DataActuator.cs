@@ -224,7 +224,7 @@ namespace Legendary_Rune_Maker.Game
                 if (Config.Default.LoadOnLock)
                 {
                     LogTo.Info("Downloading from provider");
-                    await Main.LoadPageFromDefaultProvider(championId);
+                    await Main.SafeInvoke(async () => await Main.LoadPageFromDefaultProvider(championId));
                     LogTo.Debug("Downloaded from provider");
                 }
                 else
