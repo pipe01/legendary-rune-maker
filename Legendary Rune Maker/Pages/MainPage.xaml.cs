@@ -88,11 +88,12 @@ namespace Legendary_Rune_Maker.Pages
 
         public MainWindow Owner { get; set; }
 
-        public MainPage(ILoL lol, LoginDetector loginDetector, MainWindow owner)
+        public MainPage(ILoL lol, LoginDetector loginDetector, ReadyCheckDetector readyCheckDetector, MainWindow owner)
         {
             this.LoL = lol;
 
             this.Detectors.Add(loginDetector);
+            this.Detectors.Add(readyCheckDetector);
 
             this.Actuator = new Actuator(lol)
             {

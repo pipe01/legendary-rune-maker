@@ -1,0 +1,42 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Anotar.Log4Net;
+using LCU.NET;
+using LCU.NET.Plugins.LoL;
+using Legendary_Rune_Maker.Data;
+using Notifications.Wpf;
+
+namespace Legendary_Rune_Maker.Game
+{
+    public class ReadyCheckDetector : Detector
+    {
+        private readonly Config Config;
+
+        internal ReadyCheckDetector(ILoL lol, Config config) : base(lol)
+        {
+            this.Config = config;
+        }
+
+        protected override Task Init()
+        {
+            LoL.Socket.Subscribe<LolMatchmakingMatchmakingReadyCheckResource>(Matchmaking.ReadyCheckEndpoint, ReadyCheckChanged);
+
+            return Task.CompletedTask;
+        }
+
+        private async void ReadyCheckChanged(EventType eventType, LolMatchmakingMatchmakingReadyCheckResource data)
+        {
+            if (eventType == EventType.Update && data.state == "InProgress" && data.playerResponse == "None" && Config.AutoAccept)
+            {
+                LogTo.Info("Accepting matchmaking...");
+                await LoL.Matchmaking.PostReadyCheckAccept();
+                LogTo.Info("Accepted matchmaking");
+
+                Notify("Accepted match", null, NotificationType.Success);
+            }
+        }
+    }
+}

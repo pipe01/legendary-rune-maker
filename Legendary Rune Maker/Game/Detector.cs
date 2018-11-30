@@ -1,6 +1,8 @@
 ﻿using Anotar.Log4Net;
 using LCU.NET;
+using Legendary_Rune_Maker.Pages;
 using Legendary_Rune_Maker.Utils;
+using Notifications.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +28,11 @@ namespace Legendary_Rune_Maker.Game
             LogTo.Debug("Initializing " + GetType().Name);
             await Init();
             LogTo.Debug("Initialized");
+        }
+
+        protected void Notify(string title, string text, NotificationType notificationType)
+        {
+            MainWindow.ShowNotification(title, text, notificationType);
         }
 
         protected abstract Task Init();

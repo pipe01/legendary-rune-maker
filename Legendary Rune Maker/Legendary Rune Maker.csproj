@@ -132,6 +132,7 @@
     <Compile Include="Game\DataActuator.cs" />
     <Compile Include="Game\Detector.cs" />
     <Compile Include="Game\LoginDetector.cs" />
+    <Compile Include="Game\ReadyCheckDetector.cs" />
     <Compile Include="LRM.cs" />
     <Compile Include="Utils\Container.cs" />
     <Compile Include="Windows\DebugProxyWindow.xaml.cs">
