@@ -90,6 +90,7 @@ namespace Legendary_Rune_Maker
             Container.Bind<Actuator>().ToSelf().InSingletonScope();
             Container.Bind<LoginDetector>().ToSelf();
             Container.Bind<ReadyCheckDetector>().ToSelf();
+            Container.Bind<ChampSelectDetector>().ToSelf();
 
             Container.Bind<MainWindow>().ToSelf().InSingletonScope();
             

@@ -129,6 +129,7 @@
     <Compile Include="Data\StatRune.cs" />
     <Compile Include="Data\SummonerSpell.cs" />
     <Compile Include="Data\WebCache.cs" />
+    <Compile Include="Game\ChampSelectDetector.cs" />
     <Compile Include="Game\DataActuator.cs" />
     <Compile Include="Game\Detector.cs" />
     <Compile Include="Game\LoginDetector.cs" />

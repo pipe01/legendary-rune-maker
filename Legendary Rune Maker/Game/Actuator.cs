@@ -10,8 +10,13 @@ namespace Legendary_Rune_Maker.Game
     {
         public class State
         {
-            public bool IsInChampSelect { get; set; }
-            public bool HasLockedIn { get; set; }
+            public bool HasLockedIn,
+                        HasPickedChampion,
+                        HasPickedSumms,
+                        HasBanned,
+                        HasTriedSkillOrder,
+                        HasTriedRunePage,
+                        HasTriedItemSet;
         }
 
         internal static readonly Provider[] RuneProviders = new Provider[]
@@ -29,7 +34,7 @@ namespace Legendary_Rune_Maker.Game
 
         private ILeagueClient LeagueClient => LoL.Client;
 
-        private Container<State> CurrentState;
+        private Container<State> CurrentState = new Container<State>();
 
         private readonly ILoL LoL;
         public Actuator(ILoL lol)

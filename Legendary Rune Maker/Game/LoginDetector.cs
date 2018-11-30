@@ -17,11 +17,9 @@ namespace Legendary_Rune_Maker.Game
         {
         }
 
-        protected override Task Init()
+        protected override async Task Init()
         {
-            LoL.Socket.SubscribeAndUpdate<LolLoginLoginSession>(Login.Endpoint, LoginChanged);
-
-            return Task.CompletedTask;
+            await LoL.Socket.SubscribeAndUpdate<LolLoginLoginSession>(Login.Endpoint, LoginChanged);
         }
 
         private void LoginChanged(EventType eventType, LolLoginLoginSession data)
