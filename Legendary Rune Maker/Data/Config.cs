@@ -1,8 +1,10 @@
 ﻿using Anotar.Log4Net;
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
 using System.IO;
+using System.Windows;
 
 namespace Legendary_Rune_Maker.Data
 {
@@ -86,7 +88,15 @@ namespace Legendary_Rune_Maker.Data
             LogTo.Info("Saving config");
             LogTo.Debug(() => JsonConvert.SerializeObject(this));
 
-            File.WriteAllText(FilePath, JsonConvert.SerializeObject(this, Formatting.Indented));
+            try
+            {
+                File.WriteAllText(FilePath, JsonConvert.SerializeObject(this, Formatting.Indented));
+            }
+            catch
+            {
+                if (!DesignerProperties.GetIsInDesignMode(new DependencyObject()))
+                    throw;
+            }
         }
 
         public static void Reload() => Default = Load();
@@ -95,13 +105,23 @@ namespace Legendary_Rune_Maker.Data
         {
             Config c;
 
-            if (!File.Exists(FilePath) || MainWindow.InDesigner)
+            try
             {
-                c = new Config();
+                if (!File.Exists(FilePath) || MainWindow.InDesigner)
+                {
+                    c = new Config();
+                }
+                else
+                {
+                    c = JsonConvert.DeserializeObject<Config>(File.ReadAllText(FilePath));
+                }
             }
-            else
+            catch 
             {
-                c = JsonConvert.DeserializeObject<Config>(File.ReadAllText(FilePath));
+                if (DesignerProperties.GetIsInDesignMode(new DependencyObject()))
+                    return new Config();
+
+                throw;
             }
 
             if (c.CultureName == null)
