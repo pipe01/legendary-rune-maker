@@ -84,20 +84,14 @@ namespace Legendary_Rune_Maker
             base.OnStartup(e);
 
             LoL.BindNinject(Container);
-            //ILoL lol = LoL.CreateNew();
             
-            //Container.Bind<ILoL>().ToMethod(o => lol);
-            //Container.Bind<ILeagueClient>().ToConstant(lol.Client);
-            //Container.Bind<ILeagueSocket>().ToConstant(lol.Socket);
-            
-            Container.Bind<Actuator>().ToSelf();
-            Container.Bind<ChampSelectDetector>().ToSelf();
+            Container.Bind<Actuator>().ToSelf().InSingletonScope();
             Container.Bind<LoginDetector>().ToSelf();
-            Container.Bind<ReadyCheckDetector>().ToSelf();
 
-            Container.Bind<MainPage>().ToConstructor(o => new MainPage(o.Inject<ILoL>(), o.Inject<ChampSelectDetector>(),
-                o.Inject<LoginDetector>(), o.Inject<ReadyCheckDetector>(),
-                o.Context.Parameters.First().GetValue(o.Context, o.Context.Request.Target) as MainWindow));
+            Container.Bind<MainWindow>().ToSelf().InSingletonScope();
+            //Container.Bind<MainPage>().ToConstructor(o => new MainPage(o.Inject<ILoL>(), o.Inject<ChampSelectDetector>(),
+            //    o.Inject<LoginDetector>(), o.Inject<ReadyCheckDetector>(),
+            //    o.Context.Parameters.First().GetValue(o.Context, o.Context.Request.Target) as MainWindow));
 
             Current.MainWindow = Container.Get<LoadingWindow>();
             Current.MainWindow.Show();

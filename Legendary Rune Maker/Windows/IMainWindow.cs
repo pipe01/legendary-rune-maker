@@ -8,6 +8,8 @@ namespace Legendary_Rune_Maker
 {
     public interface IMainWindow
     {
+        //event EventHandler SelectionChanged;
+
         int SelectedChampion { get; }
         Position SelectedPosition { get; set; }
         RunePage Page { get; }

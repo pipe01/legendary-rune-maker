@@ -23,11 +23,13 @@ namespace Legendary_Rune_Maker
         private bool Shown;
         private CancellationTokenSource CancelSource = new CancellationTokenSource();
 
-        private readonly IKernel Kernel;
+        private readonly MainWindow MainWindow;
+        private readonly MainPage MainPage;
 
-        public LoadingWindow(IKernel kernel)
+        public LoadingWindow(MainWindow mainWindow, MainPage mainPage)
         {
-            this.Kernel = kernel;
+            this.MainWindow = mainWindow;
+            this.MainPage = mainPage;
 
             Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.High;
             
@@ -39,10 +41,8 @@ namespace Legendary_Rune_Maker
             if (Shown)
                 return;
             Shown = true;
-
-            var win = Kernel.Get<MainWindow>();
-            var mainPage = Kernel.Get<MainPage>(new Parameter("MainWindow", win, true));
-            win.SetMainPage(mainPage);
+            
+            MainWindow.SetMainPage(MainPage);
 
             this.Close();
         }

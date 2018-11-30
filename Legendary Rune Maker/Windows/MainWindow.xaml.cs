@@ -45,14 +45,7 @@ namespace Legendary_Rune_Maker
             NotificationManager = new NotificationManager(Dispatcher);
 
             InitializeComponent();
-
-            Rect workArea = SystemParameters.WorkArea;
-            this.Left = (workArea.Width - this.Width) / 2 + workArea.Left;
-            this.Top = (workArea.Height - this.Height) / 2 + workArea.Top;
-
-            this.Show();
-            this.Activate();
-
+            
             if (!InDesigner)
                 Application.Current.MainWindow = this;
         }
@@ -61,19 +54,19 @@ namespace Legendary_Rune_Maker
         {
             mainPage.Owner = this;
             Frame.Navigate(mainPage);
-        }
 
-        private void Window_Initialized(object sender, EventArgs e)
-        {
-            AppDomain.CurrentDomain.UnhandledException += (a, b) => Taskbar.Dispose();
-        }
+            this.Show();
+            this.Activate();
 
+            this.WindowStyle = WindowStyle.SingleBorderWindow;
+
+            Rect workArea = SystemParameters.WorkArea;
+            this.Left = (workArea.Width - this.Width) / 2 + workArea.Left;
+            this.Top = (workArea.Height - this.Height) / 2 + workArea.Top;
+        }
+        
         private void Current_Navigating(object sender, NavigatingCancelEventArgs e)
         {
-            //Don't animate the first time the window is opened
-            if (Frame.Content == null)
-                return;
-
             if (e.Content != null && !AllowDirectNavigation)
             {
                 e.Cancel = true;
@@ -159,11 +152,14 @@ namespace Legendary_Rune_Maker
                     EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseOut }
                 });
                 
-                this.BeginAnimation(LeftProperty, new DoubleAnimation(this.Left, this.Left + difference / 2, animDuration)
+                if (!double.IsNaN(this.Left))
                 {
-                    EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseOut },
-                    FillBehavior = FillBehavior.Stop
-                });
+                    this.BeginAnimation(LeftProperty, new DoubleAnimation(this.Left, this.Left + difference / 2, animDuration)
+                    {
+                        EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseOut },
+                        FillBehavior = FillBehavior.Stop
+                    });
+                }
             }
 
             if (height != MainGrid.Height)
@@ -175,11 +171,14 @@ namespace Legendary_Rune_Maker
                     EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseOut }
                 });
 
-                this.BeginAnimation(TopProperty, new DoubleAnimation(this.Top, this.Top + difference / 2, animDuration)
+                if (!double.IsNaN(this.Top))
                 {
-                    EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseOut },
-                    FillBehavior = FillBehavior.Stop
-                });
+                    this.BeginAnimation(TopProperty, new DoubleAnimation(this.Top, this.Top + difference / 2, animDuration)
+                    {
+                        EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseOut },
+                        FillBehavior = FillBehavior.Stop
+                    });
+                }
             }
         }
 
@@ -187,7 +186,7 @@ namespace Legendary_Rune_Maker
         {
             if (this.WindowState == WindowState.Minimized && Config.Default.MinimizeToTaskbar)
             {
-                await Task.Delay(500); //Wait for Windows' window minimize animation to finish, cuz it looks K00L
+                await Task.Delay(450); //Wait for Windows' window minimize animation to finish, cuz it looks K00L
                 this.Hide();
             }
         }
@@ -244,7 +243,10 @@ namespace Legendary_Rune_Maker
         private void Window_PreviewKeyUp(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Escape && Frame.CanGoBack)
+            {
+                e.Handled = true;
                 Frame.GoBack();
+            }
         }
     }
 }

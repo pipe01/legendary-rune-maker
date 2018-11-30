@@ -129,7 +129,11 @@
     <Compile Include="Data\StatRune.cs" />
     <Compile Include="Data\SummonerSpell.cs" />
     <Compile Include="Data\WebCache.cs" />
+    <Compile Include="Game\DataActuator.cs" />
+    <Compile Include="Game\Detector.cs" />
+    <Compile Include="Game\LoginDetector.cs" />
     <Compile Include="LRM.cs" />
+    <Compile Include="Utils\Container.cs" />
     <Compile Include="Windows\DebugProxyWindow.xaml.cs">
       <DependentUpon>DebugProxyWindow.xaml</DependentUpon>
     </Compile>
@@ -144,9 +148,6 @@
     <Compile Include="Data\Riot.cs" />
     <Compile Include="Data\RuneBook.cs" />
     <Compile Include="Data\RunePage.cs" />
-    <Compile Include="Game\ChampSelectDetector.cs" />
-    <Compile Include="Game\LoginDetector.cs" />
-    <Compile Include="Game\ReadyCheckDetector.cs" />
     <Compile Include="Windows\GrayscaleImageControl.xaml.cs">
       <DependentUpon>GrayscaleImageControl.xaml</DependentUpon>
     </Compile>

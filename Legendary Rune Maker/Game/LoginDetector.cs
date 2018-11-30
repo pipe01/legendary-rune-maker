@@ -1,50 +1,31 @@
-﻿using Anotar.Log4Net;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Anotar.Log4Net;
 using LCU.NET;
 using LCU.NET.API_Models;
 using LCU.NET.Plugins.LoL;
-using System.Threading.Tasks;
+using Legendary_Rune_Maker.Utils;
 
 namespace Legendary_Rune_Maker.Game
 {
-    public class LoginDetector
+    public class LoginDetector : Detector
     {
-        private ILoL LoL;
-
-        public LoginDetector(ILoL lol)
+        public LoginDetector(ILoL lol) : base(lol)
         {
-            this.LoL = lol;
         }
 
-        public async Task Init()
+        protected override Task Init()
         {
-            LogTo.Debug("Initializing login detector");
+            LoL.Socket.SubscribeAndUpdate<LolLoginLoginSession>(Login.Endpoint, LoginChanged);
 
-            LoL.Socket.Subscribe<LolLoginLoginSession>(Login.Endpoint, SessionEvent);
-
-            try
-            {
-                await ForceUpdate();
-            }
-            catch (APIErrorException ex)
-            {
-                LogTo.DebugException("Failed to force login update", ex);
-            }
+            return Task.CompletedTask;
         }
 
-        public async Task ForceUpdate()
+        private void LoginChanged(EventType eventType, LolLoginLoginSession data)
         {
-            LogTo.Debug("Forcing login update");
-            SessionEvent(EventType.Update, await LoL.Login.GetSessionAsync());
-        }
-
-        private void SessionEvent(EventType eventType, LolLoginLoginSession data)
-        {
-            if (data == null)
-            {
-                LogTo.Debug("Empty data");
-                return;
-            }
-
             if (eventType == EventType.Update && data.state == "SUCCEEDED")
             {
                 LogTo.Info("User is logged in");

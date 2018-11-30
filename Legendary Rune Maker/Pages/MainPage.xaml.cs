@@ -7,6 +7,8 @@ using Legendary_Rune_Maker.Locale;
 using Legendary_Rune_Maker.Utils;
 using Notifications.Wpf;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
@@ -41,8 +43,9 @@ namespace Legendary_Rune_Maker.Pages
             {
                 var p = (MainPage)sender;
 
-                await p.ChampSelectDetector.ForceUpdate();
-                await p.LoginDetector.ForceUpdate();
+                //TODO Update detectors
+                //await p.ChampSelectDetector.ForceUpdate();
+                //await p.LoginDetector.ForceUpdate();
             }
         }));
 
@@ -79,20 +82,19 @@ namespace Legendary_Rune_Maker.Pages
 
         private readonly Actuator Actuator;
         private readonly ILoL LoL;
-        private readonly ChampSelectDetector ChampSelectDetector;
-        private readonly LoginDetector LoginDetector;
+        private readonly IList<Detector> Detectors = new List<Detector>();
 
         public event PropertyChangedEventHandler PropertyChanged;
 
         public MainWindow Owner { get; set; }
 
-        public MainPage(ILoL lol, ChampSelectDetector champSelectDetector, LoginDetector loginDetector,
-            ReadyCheckDetector readyCheckDetector, MainWindow owner)
+        public MainPage(ILoL lol, LoginDetector loginDetector, MainWindow owner)
         {
             this.LoL = lol;
-            this.ChampSelectDetector = champSelectDetector;
-            this.LoginDetector = loginDetector;
-            this.Actuator = new Actuator(lol, champSelectDetector, loginDetector, readyCheckDetector)
+
+            this.Detectors.Add(loginDetector);
+
+            this.Actuator = new Actuator(lol)
             {
                 Main = this
             };
@@ -364,10 +366,8 @@ namespace Legendary_Rune_Maker.Pages
         private async void Page_Initialized(object sender, EventArgs e)
         {
             LogTo.Debug("Initializing main page");
-
-            Owner.SetSize(this.Width, this.Height);
-
-            await Actuator.Init();
+            
+            await Actuator.Init(Detectors.ToArray());
             await SetChampion(null);
 
             if (Config.Default.LockLoadProvider == null)

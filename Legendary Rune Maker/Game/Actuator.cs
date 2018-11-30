@@ -1,21 +1,19 @@
 ﻿using Anotar.Log4Net;
 using LCU.NET;
-using LCU.NET.API_Models;
-using Legendary_Rune_Maker.Data;
 using Legendary_Rune_Maker.Data.Providers;
-using Legendary_Rune_Maker.Locale;
 using Legendary_Rune_Maker.Utils;
-using Notifications.Wpf;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Legendary_Rune_Maker.Game
 {
-    public class Actuator
+    public partial class Actuator
     {
+        public class State
+        {
+            public bool IsInChampSelect { get; set; }
+            public bool HasLockedIn { get; set; }
+        }
+
         internal static readonly Provider[] RuneProviders = new Provider[]
         {
             new ClientProvider(),
@@ -31,27 +29,19 @@ namespace Legendary_Rune_Maker.Game
 
         private ILeagueClient LeagueClient => LoL.Client;
 
-        private readonly ILoL LoL;
-        private readonly ChampSelectDetector ChampSelectDetector;
-        private readonly LoginDetector LoginDetector;
-        private readonly ReadyCheckDetector ReadyCheckDetector;
+        private Container<State> CurrentState;
 
-        public Actuator(ILoL lol, ChampSelectDetector champSelectDetector, LoginDetector loginDetector, ReadyCheckDetector readyCheckDetector)
+        private readonly ILoL LoL;
+        public Actuator(ILoL lol)
         {
             this.LoL = lol;
-            this.ChampSelectDetector = champSelectDetector;
-            this.LoginDetector = loginDetector;
-            this.ReadyCheckDetector = readyCheckDetector;
-
-            this.ChampSelectDetector.Actuator = this;
         }
 
-        public async Task Init()
+        public async Task Init(Detector[] detectors)
         {
             LogTo.Debug("Initializing actuator");
 
             GameState.State.EnteredState += State_EnteredState;
-            ChampSelectDetector.SessionUpdated += ChampSelectDetector_SessionUpdated;
             LeagueClient.ConnectedChanged += LeagueClient_ConnectedChanged;
 
             if (!LeagueClient.Init())
@@ -66,13 +56,14 @@ namespace Legendary_Rune_Maker.Game
 
             LogTo.Debug("Initializing detectors");
 
-            await LoginDetector.Init();
-            await ChampSelectDetector.Init();
-            ReadyCheckDetector.Init();
+            foreach (var item in detectors)
+            {
+                await item.Init(CurrentState);
+            }
 
             LogTo.Debug("Initialized detectors");
         }
-        
+
         private void LeagueClient_ConnectedChanged(bool connected)
         {
             LogTo.Debug("Connected: " + connected);
@@ -101,28 +92,6 @@ namespace Legendary_Rune_Maker.Game
                     LeagueClient.BeginTryInit();
                 });
             }
-        }
-        
-        private void ChampSelectDetector_SessionUpdated(LolChampSelectChampSelectSession obj)
-        {
-            var player = ChampSelectDetector.Session.PlayerSelection;
-
-            Main.SafeInvoke(async () =>
-            {
-                if (player != null && Main.Attached)
-                {
-                    var pos = player.assignedPosition.ToPosition();
-
-                    LogTo.Debug("Set position: {0}", pos);
-                    Main.SelectedPosition = pos;
-
-                    if (player.championId != 0)
-                    {
-                        LogTo.Debug("Set champion: {0}", player.championId);
-                        await Main.SetChampion(player.championId);
-                    }
-                }
-            });
         }
     }
 }
