@@ -4,6 +4,7 @@ using LCU.NET.API_Models;
 using LCU.NET.Plugins.LoL;
 using Legendary_Rune_Maker.Data;
 using Legendary_Rune_Maker.Utils;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -41,12 +42,14 @@ namespace Legendary_Rune_Maker.Game
                 LogTo.Info("Locked in champion {0}", data);
                 GameState.State.Fire(GameTriggers.LockIn);
 
+                var tasks = new List<Task>();
+
                 if (!State.Value.HasTriedRunePage)
                 {
                     State.Value.HasTriedRunePage = true;
 
                     if (Config.UploadOnLock)
-                        await Actuator.UploadRunePage(CurrentPosition, data);
+                        tasks.Add(Actuator.UploadRunePage(CurrentPosition, data));
                 }
 
                 if (!State.Value.HasTriedSkillOrder)
@@ -54,7 +57,7 @@ namespace Legendary_Rune_Maker.Game
                     State.Value.HasTriedSkillOrder = true;
 
                     if (Config.ShowSkillOrder && !Config.SetItemSet)
-                        await Actuator.UploadSkillOrder(CurrentPosition, data);
+                        tasks.Add(Actuator.UploadSkillOrder(CurrentPosition, data));
                 }
 
                 if (!State.Value.HasTriedItemSet)
@@ -62,8 +65,10 @@ namespace Legendary_Rune_Maker.Game
                     State.Value.HasTriedItemSet = true;
 
                     if (Config.SetItemSet)
-                        await Actuator.UploadItemSet(CurrentPosition, data);
+                        tasks.Add(Actuator.UploadItemSet(CurrentPosition, data));
                 }
+
+                await Task.WhenAll(tasks.ToArray());
             }
         }
 
@@ -91,12 +96,14 @@ namespace Legendary_Rune_Maker.Game
 
             UpdateMainPage();
 
+
             if (PlayerSelection != null && Config.AutoPickSumms && !State.Value.HasPickedSumms)
             {
                 State.Value.HasPickedSumms = true;
 
                 await Actuator.PickSummoners(CurrentPosition);
             }
+
 
             var myAction = data.actions.SelectMany(o => o).LastOrDefault(o => o.actorCellId == data.localPlayerCellId);
 
