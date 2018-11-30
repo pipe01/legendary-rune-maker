@@ -10,6 +10,7 @@ namespace Legendary_Rune_Maker.Data.Providers
     internal class ChampionGGProvider : Provider
     {
         public override string Name => "Champion.GG";
+        public override Options ProviderOptions => Options.RunePages | Options.ItemSets | Options.SkillOrder;
 
         private static readonly IDictionary<Position, string> PositionToName = new Dictionary<Position, string>
         {
@@ -28,7 +29,7 @@ namespace Legendary_Rune_Maker.Data.Providers
         protected override async Task<Position[]> GetPossibleRolesInner(int championId)
         {
             var doc = new HtmlDocument();
-            doc.LoadHtml(await new WebClient().DownloadStringTaskAsync(GetChampionURL(championId)));
+            doc.LoadHtml(await WebCache.String(GetChampionURL(championId), soft: true));
 
             var n = doc.DocumentNode.SelectNodes("//ul//a[contains(@href, 'champion')]//h3");
 
@@ -54,7 +55,7 @@ namespace Legendary_Rune_Maker.Data.Providers
         protected override async Task<RunePage> GetRunePageInner(int championId, Position position)
         {
             var doc = new HtmlDocument();
-            doc.LoadHtml(await new WebClient().DownloadStringTaskAsync(GetChampionURL(championId, position)));
+            doc.LoadHtml(await WebCache.String(GetChampionURL(championId, position), soft: true));
 
             var pathIcons = doc.DocumentNode.SelectNodes("//img[contains(@class, 'PathButton__Icon')]").Take(2);
             var pathStyles = pathIcons.Select(GetPathStyleId).ToArray();
@@ -68,8 +69,8 @@ namespace Legendary_Rune_Maker.Data.Providers
         protected override async Task<ItemSet> GetItemSetInner(int championId, Position position)
         {
             var doc = new HtmlDocument();
-            doc.LoadHtml(await new WebClient().DownloadStringTaskAsync(GetChampionURL(championId, position)));
-
+            doc.LoadHtml(await WebCache.String(GetChampionURL(championId, position), soft: true));
+            
             var buildWrappers = doc.DocumentNode.Descendants().Where(o => o.HasClass("build-wrapper")).Reverse();
 
             var blocks = new List<ItemSet.SetBlock>();
@@ -108,7 +109,31 @@ namespace Legendary_Rune_Maker.Data.Providers
                 return int.Parse(aNode.GetAttributeValue("data-id", ""));
             }
         }
-        
+
+        protected override async Task<string> GetSkillOrderInner(int championId, Position position)
+        {
+            var doc = new HtmlDocument();
+            doc.LoadHtml(await WebCache.String(GetChampionURL(championId, position), soft: true));
+
+            var skillOrder = doc.DocumentNode.Descendants().Where(o => o.HasClass("skill-order")).Last();
+            
+            char[] skills = new char[18];
+
+            foreach (var skill in skillOrder.Descendants().Where(o => o.HasClass("skill-selections")))
+            {
+                int i = 0;
+                foreach (var item in skill.Descendants("div"))
+                {
+                    if (item.HasClass("selected"))
+                        skills[i] = item.Descendants("span").First().InnerText[0];
+
+                    i++;
+                }
+            }
+
+            return new string(skills);
+        }
+
         private static int GetPerkId(HtmlNode node)
         {
             string src = node.GetAttributeValue("src", "");

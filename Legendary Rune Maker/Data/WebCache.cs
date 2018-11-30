@@ -17,6 +17,10 @@ namespace Legendary_Rune_Maker.Data
             public string CultureName;
             public IDictionary<string, string> FileCache = new Dictionary<string, string>();
             public IDictionary<string, object> ObjectCache = new Dictionary<string, object>();
+
+            [JsonIgnore]
+            public IDictionary<string, string> SoftFileCache = new Dictionary<string, string>();
+            public IDictionary<string, object> SoftObjectCache = new Dictionary<string, object>();
         }
 
         private static CacheData Data = new CacheData();
@@ -70,35 +74,41 @@ namespace Legendary_Rune_Maker.Data
             Save();
         }
 
-        public static async Task<string> String(string url, HttpClient client = null)
+        public static async Task<string> String(string url, HttpClient client = null, bool soft = false)
         {
-            if (!Data.FileCache.TryGetValue(url, out var value))
+            var dic = soft ? Data.SoftFileCache : Data.FileCache;
+
+            if (!dic.TryGetValue(url, out var value))
             {
-                Data.FileCache[url] = value = await (client ?? Client).GetStringAsync(url).ConfigureAwait(false);
+                dic[url] = value = await (client ?? Client).GetStringAsync(url).ConfigureAwait(false);
                 Save();
             }
 
             return value;
         }
 
-        public static async Task<T> Json<T>(string url, HttpClient client = null)
+        public static async Task<T> Json<T>(string url, HttpClient client = null, bool soft = false)
         {
-            if (!Data.ObjectCache.TryGetValue(url, out var value))
+            var dic = soft ? Data.SoftObjectCache : Data.ObjectCache;
+
+            if (!dic.TryGetValue(url, out var value))
             {
-                Data.ObjectCache[url] = value = JsonConvert.DeserializeObject<T>(await String(url, client));
+                dic[url] = value = JsonConvert.DeserializeObject<T>(await String(url, client));
                 Save();
             }
 
             return (T)value;
         }
 
-        public static async Task<T> CustomJson<T>(string url, Func<JObject, T> converter, HttpClient client = null)
+        public static async Task<T> CustomJson<T>(string url, Func<JObject, T> converter, HttpClient client = null, bool soft = false)
         {
-            if (!Data.ObjectCache.TryGetValue(url, out var value))
+            var dic = soft ? Data.SoftObjectCache : Data.ObjectCache;
+
+            if (!dic.TryGetValue(url, out var value))
             {
                 string json = await String(url, client);
 
-                Data.ObjectCache[url] = value = converter(JObject.Parse(json));
+                dic[url] = value = converter(JObject.Parse(json));
                 Save();
             }
 
