@@ -258,6 +258,9 @@ namespace Legendary_Rune_Maker.Game
             LogTo.Debug("Getting skill order from provider {0}", provider.Name);
 
             var order = await provider.GetSkillOrder(championId, pos);
+
+            LogTo.Info("Gotten skill order from {0}: {1}", provider.Name, order);
+
             var set = new ItemSet
             {
                 Name = "Skill order" + (order.Contains(' ') ? " " + order.Split(' ')[0] : ""),

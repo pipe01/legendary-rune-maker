@@ -1,4 +1,5 @@
 ﻿using HtmlAgilityPack;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,6 +31,7 @@ namespace Legendary_Rune_Maker.Data.Providers
         };
 
         public override string Name => "MetaLol";
+        public override Options ProviderOptions => Options.ItemSets | Options.RunePages | Options.SkillOrder;
 
         private static string GetChampionURL(int championId, Position? pos = null)
             => $"https://www.metalol.net/champions/lol-build-guide/solo-queue/{Riot.GetChampion(championId, "en_US").Name}"
@@ -38,7 +40,7 @@ namespace Legendary_Rune_Maker.Data.Providers
         protected override async Task<Position[]> GetPossibleRolesInner(int championId)
         {
             var doc = new HtmlDocument();
-            doc.LoadHtml(await new WebClient().DownloadStringTaskAsync(GetChampionURL(championId)));
+            doc.LoadHtml(await WebCache.String(GetChampionURL(championId), soft: true));
 
             var tabs = doc.DocumentNode.Descendants().Where(o => o.HasClass("champ-tab") && o.ChildNodes.Count > 1);
             string[] rolesStr = tabs.Select(o => o.FirstChild.InnerText.Trim('\n')).ToArray();
@@ -62,54 +64,24 @@ namespace Legendary_Rune_Maker.Data.Providers
 
         protected override async Task<RunePage> GetRunePageInner(int championId, Position position)
         {
-            const string StyleRegex = @"(?<=\/)\d+(?=\.)";
-            const string PerkRegex = @"perk-images(\/.*?)+(?=\.)";
-
-            var doc = new HtmlDocument();
-            doc.LoadHtml(await new WebClient().DownloadStringTaskAsync(GetChampionURL(championId, position)));
-
-            var runeContainers = doc.DocumentNode.Descendants()
-                .Where(o => o.HasClass("perk-image-container"))
-                .Select(o => o.ChildNodes[1])
-                .Take(8).ToArray();
-
-            var ret = new RunePage();
-            ret.ChampionID = championId;
-            ret.Position = position;
-            ret.PrimaryTree = int.Parse(Regex.Match(runeContainers[0].GetAttributeValue("src", ""), StyleRegex).Value);
-            ret.SecondaryTree = int.Parse(Regex.Match(runeContainers[5].GetAttributeValue("src", ""), StyleRegex).Value);
-
-            var perks = new List<int>();
-
-            for (int i = 0; i < runeContainers.Length; i++)
+            string html = await WebCache.String(GetChampionURL(championId, position), soft: true);
+            string perksStr = Regex.Match(html, @"(?<=perks \= ).*(?=;)").Value;
+            JToken perksJson = JArray.Parse(perksStr)[0]["tree"];
+            
+            return new RunePage
             {
-                if (i == 0 || i == 5)
-                    continue;
-
-                string imageUrl = Regex.Match(runeContainers[i].GetAttributeValue("src", ""), PerkRegex).Value;
-
-                foreach (var item in WrongRuneNames)
-                {
-                    imageUrl = imageUrl.Replace(item.Item1, item.Item2);
-                }
-
-                Console.WriteLine(imageUrl);
-
-                var perk = Riot.GetAllRunes().Values.SingleOrDefault(o => o.IconURL.Contains(imageUrl));
-                
-                if (perk != null)
-                    perks.Add(perk.ID);
-            }
-
-            ret.RuneIDs = perks.ToArray();
-
-            return ret;
+                ChampionID = championId,
+                Position = position,
+                PrimaryTree = perksJson["perkPrimaryStyle"].ToObject<int>(),
+                SecondaryTree = perksJson["perkSubStyle"].ToObject<int>(),
+                RuneIDs = Enumerable.Range(0, 6).Select(i => perksJson["perk" + i].ToObject<int>()).ToArray()
+            };
         }
 
         protected override async Task<ItemSet> GetItemSetInner(int championId, Position position)
         {
             var doc = new HtmlDocument();
-            doc.LoadHtml(await new WebClient().DownloadStringTaskAsync(GetChampionURL(championId, position)));
+            doc.LoadHtml(await WebCache.String(GetChampionURL(championId, position), soft: true));
 
             var containers = doc.DocumentNode.Descendants()
                 .Where(o => o.HasClass("champ-content-container") && !o.HasClass("description"))
@@ -148,6 +120,20 @@ namespace Legendary_Rune_Maker.Data.Providers
                 Items = items,
                 Name = name
             };
+        }
+
+        protected override async Task<string> GetSkillOrderInner(int championId, Position position)
+        {
+            if (position == Position.Fill)
+                position = (await GetPossibleRoles(championId))[0];
+
+            string html = await WebCache.String(GetChampionURL(championId, position), soft: true);
+            string perksStr = Regex.Match(html, @"(?<=skills2 \= ).*(?=;)").Value;
+            JToken perksJson = JArray.Parse(perksStr)[0]["skills"];
+
+            char[] skills = new[] { 'Q', 'W', 'E', 'R' };
+
+            return new string(perksJson.Select(o => skills[o.ToObject<int>() - 1]).ToArray());
         }
     }
 }
