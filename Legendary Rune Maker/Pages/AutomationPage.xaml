@@ -8,7 +8,7 @@
       xmlns:controls="clr-namespace:Legendary_Rune_Maker.Controls"
       xmlns:loc="clr-namespace:Legendary_Rune_Maker.Locale"
       mc:Ignorable="d" 
-      Height="437" Width="473" Loaded="Page_Loaded" Unloaded="Page_Unloaded"
+      Height="464" Width="473" Loaded="Page_Loaded" Unloaded="Page_Unloaded"
       Title="AutomationPage">
 
     <Page.Resources>
@@ -44,13 +44,14 @@
 
     <Grid Margin="10 5 10 10">
         <Grid.RowDefinitions>
-            <RowDefinition Height="81" />
+            <RowDefinition Height="108" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <Grid Margin="0 0.5 0 0">
             <Grid.RowDefinitions>
+                <RowDefinition Height="27" />
                 <RowDefinition Height="27" />
                 <RowDefinition Height="27" />
                 <RowDefinition Height="27" />
@@ -75,6 +76,22 @@
                 <ComboBox x:Name="ItemProviders" Margin="5,1,0,1" HorizontalAlignment="Stretch"
                           Height="25" Width="115" FontSize="12" SelectionChanged="ItemProviders_SelectionChanged"
                           IsEnabled="{Binding Path=SetItemSet, Source={x:Static data:Config.Default}}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Name}" />
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </StackPanel>
+
+            <StackPanel Grid.Row="3" Grid.Column="0" Orientation="Horizontal" Grid.ColumnSpan="2">
+                <CheckBox Content="{x:Static loc:Text.SetSkillOrder}" ToolTip="{x:Static loc:Text.SetSkillOrderTooltip}"
+                      IsChecked="{Binding Path=ShowSkillOrder, Source={x:Static data:Config.Default}}"
+                      VerticalAlignment="Center" />
+
+                <ComboBox x:Name="SkillProviders" Margin="5,1,0,1" HorizontalAlignment="Stretch"
+                          Height="25" Width="115" FontSize="12" SelectionChanged="SkillProviders_SelectionChanged"
+                          IsEnabled="{Binding Path=ShowSkillOrder, Source={x:Static data:Config.Default}}">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding Name}" />

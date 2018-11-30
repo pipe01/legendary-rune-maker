@@ -430,7 +430,7 @@ namespace Legendary_Rune_Maker.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Load item set for champion.
+        ///   Looks up a localized string similar to Load item set for champion from.
         /// </summary>
         public static string SetItemSet {
             get {
@@ -444,6 +444,24 @@ namespace Legendary_Rune_Maker.Locale {
         public static string SetItemSetTip {
             get {
                 return ResourceManager.GetString("SetItemSetTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Load skill order from.
+        /// </summary>
+        public static string SetSkillOrder {
+            get {
+                return ResourceManager.GetString("SetSkillOrder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to If uploading item sets is active, the skill order for your champion will be appended to the first item set block. If it isn&apos;t, a new item set will be created, showing the skill order..
+        /// </summary>
+        public static string SetSkillOrderTooltip {
+            get {
+                return ResourceManager.GetString("SetSkillOrderTooltip", resourceCulture);
             }
         }
         

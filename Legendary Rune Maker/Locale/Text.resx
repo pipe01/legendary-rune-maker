@@ -248,7 +248,7 @@
     <value>Couldn't upload rune page</value>
   </data>
   <data name="SetItemSet" xml:space="preserve">
-    <value>Load item set for champion</value>
+    <value>Load item set for champion from</value>
   </data>
   <data name="SetItemSetTip" xml:space="preserve">
     <value>Automatically load an appropiate item set for the selected champion and position.</value>
@@ -270,5 +270,11 @@
   </data>
   <data name="Search" xml:space="preserve">
     <value>Search</value>
+  </data>
+  <data name="SetSkillOrder" xml:space="preserve">
+    <value>Load skill order from</value>
+  </data>
+  <data name="SetSkillOrderTooltip" xml:space="preserve">
+    <value>If uploading item sets is active, the skill order for your champion will be appended to the first item set block. If it isn't, a new item set will be created, showing the skill order.</value>
   </data>
 </root>
