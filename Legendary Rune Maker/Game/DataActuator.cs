@@ -246,7 +246,7 @@ namespace Legendary_Rune_Maker.Game
         {
             LogTo.Debug("Trying to upload skill order");
 
-            var provider = Array.Find(RuneProviders, o => o.Name == Config.Default.ItemSetProvider)
+            var provider = Array.Find(RuneProviders, o => o.Name == Config.Default.SkillOrderProvider)
                             ?? RuneProviders.First(o => o.Supports(Provider.Options.SkillOrder));
 
             if (!provider.Supports(Provider.Options.SkillOrder))
