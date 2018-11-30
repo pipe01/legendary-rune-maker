@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Anotar.Log4Net;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -63,6 +64,8 @@ namespace Legendary_Rune_Maker.Data
 
         private static void Save()
         {
+            LogTo.Debug("Saving web cache");
+
             string text = JsonConvert.SerializeObject(Data, JsonSettings);
 
             File.WriteAllText(CachePath, Convert.ToBase64String(Encoding.UTF8.GetBytes(text)));
@@ -70,12 +73,16 @@ namespace Legendary_Rune_Maker.Data
 
         public static void Clear()
         {
+            LogTo.Debug("Clearing web cache");
+
             Data = new CacheData();
             Save();
         }
 
         public static async Task<string> String(string url, HttpClient client = null, bool soft = false)
         {
+            LogTo.Debug("Cache string requested (Soft={0}): {1}", soft, url);
+
             var dic = soft ? Data.SoftFileCache : Data.FileCache;
 
             if (!dic.TryGetValue(url, out var value))
@@ -83,12 +90,18 @@ namespace Legendary_Rune_Maker.Data
                 dic[url] = value = await (client ?? Client).GetStringAsync(url).ConfigureAwait(false);
                 Save();
             }
+            else
+            {
+                LogTo.Debug("Cache hit");
+            }
 
             return value;
         }
 
         public static async Task<T> Json<T>(string url, HttpClient client = null, bool soft = false)
         {
+            LogTo.Debug("Cache json object requested (Soft={0}): {1}", soft, url);
+
             var dic = soft ? Data.SoftObjectCache : Data.ObjectCache;
 
             if (!dic.TryGetValue(url, out var value))
@@ -96,12 +109,18 @@ namespace Legendary_Rune_Maker.Data
                 dic[url] = value = JsonConvert.DeserializeObject<T>(await String(url, client));
                 Save();
             }
+            else
+            {
+                LogTo.Debug("Cache hit");
+            }
 
             return (T)value;
         }
 
         public static async Task<T> CustomJson<T>(string url, Func<JObject, T> converter, HttpClient client = null, bool soft = false)
         {
+            LogTo.Debug("Cache custom json object requested (Soft={0}): {1}", soft, url);
+
             var dic = soft ? Data.SoftObjectCache : Data.ObjectCache;
 
             if (!dic.TryGetValue(url, out var value))
@@ -110,6 +129,10 @@ namespace Legendary_Rune_Maker.Data
 
                 dic[url] = value = converter(JObject.Parse(json));
                 Save();
+            }
+            else
+            {
+                LogTo.Debug("Cache hit");
             }
 
             return (T)value;
