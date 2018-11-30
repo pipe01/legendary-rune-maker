@@ -88,17 +88,17 @@ namespace Legendary_Rune_Maker.Pages
 
         public MainWindow Owner { get; set; }
 
-        public MainPage(ILoL lol, LoginDetector loginDetector, ReadyCheckDetector readyCheckDetector, MainWindow owner)
+        public MainPage(ILoL lol, LoginDetector loginDetector, ReadyCheckDetector readyCheckDetector,
+            ChampSelectDetector champSelectDetector, MainWindow owner, Actuator actuator)
         {
             this.LoL = lol;
 
             this.Detectors.Add(loginDetector);
             this.Detectors.Add(readyCheckDetector);
+            this.Detectors.Add(champSelectDetector);
 
-            this.Actuator = new Actuator(lol)
-            {
-                Main = this
-            };
+            this.Actuator = actuator;
+            this.Actuator.Main = this;
 
             this.Owner = owner;
 
@@ -155,25 +155,30 @@ namespace Legendary_Rune_Maker.Pages
             }
         }
 
-        public async Task LoadPageFromDefaultProvider()
+        public async Task LoadPageFromDefaultProvider(int championId = -1)
         {
-            var champName = Riot.GetChampion(SelectedChampion).Name;
+            var champId = championId == -1 ? SelectedChampion : championId;
+
+            var champName = Riot.GetChampion(champId).Name;
             var provider = Actuator.RuneProviders.FirstOrDefault(o => o.Name == Config.Default.LockLoadProvider)
                             ?? Actuator.RuneProviders[0];
             
             LogTo.Debug("Loading page from {0} (default) for champion {1}", provider.Name, champName);
-            var positions = await provider.GetPossibleRoles(SelectedChampion);
+            var positions = await provider.GetPossibleRoles(champId);
 
             LogTo.Info("Available positions for {0}: {1}", champName, string.Join(", ", positions));
 
             var position = positions.Contains(SelectedPosition) ? SelectedPosition : Position.Fill;
 
             LogTo.Debug("Downloading rune page...");
-            var page = await provider.GetRunePage(SelectedChampion, position);
+            var page = await provider.GetRunePage(champId, position);
             LogTo.Debug("Downloaded rune page");
 
-            LogTo.Debug("Setting rune page UI");
-            Tree.SetPage(page);
+            if (champId == SelectedChampion)
+            {
+                LogTo.Debug("Setting rune page UI");
+                Tree.SetPage(page);
+            }
 
             MainWindow.ShowNotification(
                 Text.PageChampInPosNotSet.FormatStr(champName, SelectedPosition.ToString().ToLower()),

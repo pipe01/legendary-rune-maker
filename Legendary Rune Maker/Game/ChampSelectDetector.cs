@@ -1,28 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Anotar.Log4Net;
+﻿using Anotar.Log4Net;
 using LCU.NET;
 using LCU.NET.API_Models;
 using LCU.NET.Plugins.LoL;
 using Legendary_Rune_Maker.Data;
-using Legendary_Rune_Maker.Pages;
 using Legendary_Rune_Maker.Utils;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Legendary_Rune_Maker.Game
 {
     public class ChampSelectDetector : Detector
     {
         private LolChampSelectChampSelectSession Session;
+
         private LolChampSelectChampSelectPlayerSelection PlayerSelection
             => Session.myTeam?.SingleOrDefault(o => o.cellId == Session.localPlayerCellId);
+        private Position CurrentPosition => PlayerSelection.assignedPosition.ToPosition();
 
         private readonly Config Config;
         private readonly Actuator Actuator;
 
-        internal ChampSelectDetector(ILoL lol, Config config, Actuator actuator) : base(lol)
+        public ChampSelectDetector(ILoL lol, Config config, Actuator actuator) : base(lol)
         {
             this.Config = config;
             this.Actuator = actuator;
@@ -48,15 +46,7 @@ namespace Legendary_Rune_Maker.Game
                     State.Value.HasTriedRunePage = true;
 
                     if (Config.UploadOnLock)
-                        await Actuator.UploadRunePage();
-                }
-
-                if (!State.Value.HasTriedItemSet)
-                {
-                    State.Value.HasTriedItemSet = true;
-
-                    if (Config.SetItemSet)
-                        await Actuator.UploadItemSet();
+                        await Actuator.UploadRunePage(CurrentPosition, PlayerSelection.championId);
                 }
 
                 if (!State.Value.HasTriedSkillOrder)
@@ -64,19 +54,21 @@ namespace Legendary_Rune_Maker.Game
                     State.Value.HasTriedSkillOrder = true;
 
                     if (Config.ShowSkillOrder && !Config.SetItemSet)
-                        await Actuator.UploadSkillOrder();
+                        await Actuator.UploadSkillOrder(CurrentPosition, PlayerSelection.championId);
+                }
+
+                if (!State.Value.HasTriedItemSet)
+                {
+                    State.Value.HasTriedItemSet = true;
+
+                    if (Config.SetItemSet)
+                        await Actuator.UploadItemSet(CurrentPosition, PlayerSelection.championId);
                 }
             }
         }
 
         private async void ChampSelectUpdate(EventType eventType, LolChampSelectChampSelectSession data)
         {
-            if (data == null)
-            {
-                LogTo.Debug("Null data");
-                return;
-            }
-
             Session = data;
 
             if (eventType == EventType.Create)
@@ -91,7 +83,20 @@ namespace Legendary_Rune_Maker.Game
                 return;
             }
 
+            if (data == null)
+            {
+                LogTo.Debug("Null data");
+                return;
+            }
+
             UpdateMainPage();
+
+            if (PlayerSelection != null && Config.AutoPickSumms && !State.Value.HasPickedSumms)
+            {
+                State.Value.HasPickedSumms = true;
+
+                await Actuator.PickSummoners(CurrentPosition);
+            }
 
             var myAction = data.actions.SelectMany(o => o).LastOrDefault(o => o.actorCellId == data.localPlayerCellId);
 
@@ -106,7 +111,7 @@ namespace Legendary_Rune_Maker.Game
                 LogTo.Debug("User must pick");
 
                 if (Config.Default.AutoPickChampion)
-                    await Actuator.PickChampion();
+                    await Actuator.PickChampion(CurrentPosition, myAction);
             }
             else if (myAction.type == "ban" && !State.Value.HasBanned)
             {
@@ -114,7 +119,7 @@ namespace Legendary_Rune_Maker.Game
                 LogTo.Debug("User must ban");
 
                 if (Config.Default.AutoBanChampion)
-                    await Actuator.BanChampion();
+                    await Actuator.BanChampion(CurrentPosition, myAction);
             }
         }
 
@@ -124,10 +129,8 @@ namespace Legendary_Rune_Maker.Game
             {
                 if (PlayerSelection != null && Actuator.Main.Attached)
                 {
-                    var pos = PlayerSelection.assignedPosition.ToPosition();
-
-                    LogTo.Debug("Set position: {0}", pos);
-                    Actuator.Main.SelectedPosition = pos;
+                    LogTo.Debug("Set position: {0}", CurrentPosition);
+                    Actuator.Main.SelectedPosition = CurrentPosition;
 
                     if (PlayerSelection.championId != 0)
                     {

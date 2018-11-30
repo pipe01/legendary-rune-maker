@@ -15,7 +15,7 @@ namespace Legendary_Rune_Maker.Game
     {
         private readonly Config Config;
 
-        internal ReadyCheckDetector(ILoL lol, Config config) : base(lol)
+        public ReadyCheckDetector(ILoL lol, Config config) : base(lol)
         {
             this.Config = config;
         }

@@ -6,7 +6,7 @@ using System.IO;
 
 namespace Legendary_Rune_Maker.Data
 {
-    internal class Config
+    public class Config
     {
         public static Config Default { get; set; } = Load();
 

@@ -1,5 +1,6 @@
 ﻿using Anotar.Log4Net;
 using LCU.NET;
+using Legendary_Rune_Maker.Data;
 using Legendary_Rune_Maker.Data.Providers;
 using Legendary_Rune_Maker.Utils;
 using System.Threading.Tasks;
@@ -37,9 +38,12 @@ namespace Legendary_Rune_Maker.Game
         private Container<State> CurrentState = new Container<State>();
 
         private readonly ILoL LoL;
-        public Actuator(ILoL lol)
+        private Config Config;
+
+        public Actuator(ILoL lol, Config config)
         {
             this.LoL = lol;
+            this.Config = config;
         }
 
         public async Task Init(Detector[] detectors)
