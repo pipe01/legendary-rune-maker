@@ -21,7 +21,7 @@ namespace Legendary_Rune_Maker.Data.Providers
         };
 
         public override string Name => "OP.GG";
-        public override Options ProviderOptions => Options.RunePages;
+        public override Options ProviderOptions => Options.RunePages | Options.SkillOrder;
 
         private static string GetRoleUrl(int championId, Position position)
             => $"https://op.gg/champion/{Riot.GetChampion(championId).Key}/statistics/{PositionToName[position]}";
@@ -83,9 +83,26 @@ namespace Legendary_Rune_Maker.Data.Providers
             }
         }
 
-        protected override Task<ItemSet> GetItemSetInner(int championId, Position position)
+        protected override async Task<string> GetSkillOrderInner(int championId, Position position)
         {
-            throw new NotImplementedException();
+            var doc = new HtmlDocument();
+            doc.LoadHtml(await new WebClient().DownloadStringTaskAsync(GetRoleUrl(championId, position)));
+
+            char[] tips = doc.DocumentNode.Descendants("li")
+                .Where(o => o.HasClass("champion-stats__list__item") && o.HasClass("tip"))
+                .Take(3)
+                .Select(o => o.Descendants("span").First().InnerText[0])
+                .ToArray();
+
+            char[] slong = doc.DocumentNode.Descendants("table")
+                .First(o => o.HasClass("champion-skill-build__table"))
+                .Descendants("tr").Last()
+                .Descendants()
+                .Where(o => o.Name.Equals("td", StringComparison.OrdinalIgnoreCase))
+                .Select(o => o.HasClass("tip") ? o.Descendants("span").First().InnerText.TrimStart()[0] : o.InnerText.TrimStart()[0])
+                .ToArray();
+
+            return $"({string.Join(">", tips)}) {new string(slong)}";
         }
     }
 }
