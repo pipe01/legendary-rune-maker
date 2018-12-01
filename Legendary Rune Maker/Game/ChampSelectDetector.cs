@@ -148,7 +148,7 @@ namespace Legendary_Rune_Maker.Game
 
             Actuator.Main.SafeInvoke(async () =>
             {
-                if (PlayerSelection != null && Actuator.Main.Attached)
+                if (PlayerSelection != null)
                 {
                     if (!State.Value.HasSetPositionUI)
                     {

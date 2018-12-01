@@ -65,21 +65,15 @@ namespace Legendary_Rune_Maker.Pages
 
         private readonly Actuator Actuator;
         private readonly ILoL LoL;
-        private readonly IList<Detector> Detectors = new List<Detector>();
 
         public event PropertyChangedEventHandler PropertyChanged;
 
         public MainWindow Owner { get; set; }
 
-        public MainPage(ILoL lol, LoginDetector loginDetector, ReadyCheckDetector readyCheckDetector,
-            ChampSelectDetector champSelectDetector, MainWindow owner, Actuator actuator)
+        public MainPage(ILoL lol, MainWindow owner, Actuator actuator)
         {
             this.LoL = lol;
-
-            this.Detectors.Add(loginDetector);
-            this.Detectors.Add(readyCheckDetector);
-            this.Detectors.Add(champSelectDetector);
-
+            
             this.Actuator = actuator;
             this.Actuator.Main = this;
 
@@ -360,7 +354,7 @@ namespace Legendary_Rune_Maker.Pages
         {
             LogTo.Debug("Initializing main page");
             
-            await Actuator.Init(Detectors.ToArray());
+            await Actuator.Init();
             await SetChampion(null);
 
             if (Config.Default.LockLoadProvider == null)
@@ -400,18 +394,12 @@ namespace Legendary_Rune_Maker.Pages
 
         private void AttachChk_Checked(object sender, RoutedEventArgs e)
         {
-            foreach (var item in Detectors)
-            {
-                item.Enabled = true;
-            }
+            Actuator.Enabled = true;
         }
 
         private void AttachChk_Unchecked(object sender, RoutedEventArgs e)
         {
-            foreach (var item in Detectors)
-            {
-                item.Enabled = false;
-            }
+            Actuator.Enabled = false;
         }
     }
 }

@@ -88,9 +88,9 @@ namespace Legendary_Rune_Maker
             Container.Bind<Config>().ToMethod(o => Config.Default);
 
             Container.Bind<Actuator>().ToSelf().InSingletonScope();
-            Container.Bind<LoginDetector>().ToSelf();
-            Container.Bind<ReadyCheckDetector>().ToSelf();
-            Container.Bind<ChampSelectDetector>().ToSelf();
+            Container.Bind<Detector>().To<LoginDetector>();
+            Container.Bind<Detector>().To<ChampSelectDetector>();
+            Container.Bind<Detector>().To<ReadyCheckDetector>();
 
             Container.Bind<MainWindow>().ToSelf().InSingletonScope();
             

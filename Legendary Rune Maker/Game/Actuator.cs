@@ -3,6 +3,7 @@ using LCU.NET;
 using Legendary_Rune_Maker.Data;
 using Legendary_Rune_Maker.Data.Providers;
 using Legendary_Rune_Maker.Utils;
+using Ninject;
 using System.Threading.Tasks;
 
 namespace Legendary_Rune_Maker.Game
@@ -38,6 +39,24 @@ namespace Legendary_Rune_Maker.Game
 
         private Container<State> CurrentState = new Container<State>();
 
+        [Inject]
+        public Detector[] Detectors { get; set; }
+
+        private bool _Enabled = true;
+        public bool Enabled
+        {
+            get => _Enabled;
+            set
+            {
+                _Enabled = value;
+
+                foreach (var item in Detectors)
+                {
+                    item.Enabled = value;
+                }
+            }
+        }
+
         private readonly ILoL LoL;
         private Config Config;
 
@@ -47,7 +66,7 @@ namespace Legendary_Rune_Maker.Game
             this.Config = config;
         }
 
-        public async Task Init(Detector[] detectors)
+        public async Task Init()
         {
             LogTo.Debug("Initializing actuator");
 
@@ -66,7 +85,7 @@ namespace Legendary_Rune_Maker.Game
 
             LogTo.Debug("Initializing detectors");
 
-            foreach (var item in detectors)
+            foreach (var item in Detectors)
             {
                 await item.Init(CurrentState);
             }
