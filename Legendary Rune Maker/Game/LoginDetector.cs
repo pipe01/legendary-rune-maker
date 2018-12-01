@@ -24,7 +24,7 @@ namespace Legendary_Rune_Maker.Game
 
         private void LoginChanged(EventType eventType, LolLoginLoginSession data)
         {
-            if (eventType == EventType.Update && data.state == "SUCCEEDED")
+            if (data?.state == "SUCCEEDED")
             {
                 LogTo.Info("User is logged in");
                 GameState.State.Fire(GameTriggers.LogIn);
