@@ -30,7 +30,6 @@ namespace Legendary_Rune_Maker.Data.Providers
         /// </summary>
         public virtual Task<string> GetSkillOrder(int championId, Position position) => throw new NotImplementedException();
 
-        
 
         public bool Supports(Options options) => (ProviderOptions & options) == options;
         

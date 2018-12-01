@@ -101,7 +101,7 @@ namespace Legendary_Rune_Maker.Data.Providers
                 Champion = championId,
                 Position = position,
                 Blocks = blocks.ToArray(),
-                Name = this.Name + ": " + position.ToString()
+                Name = this.Name + ": " + position
             };
 
             int ParseItem(HtmlNode aNode)

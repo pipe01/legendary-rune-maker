@@ -129,7 +129,7 @@ namespace Legendary_Rune_Maker.Data.Providers
             return new ItemSet
             {
                 Champion = championId,
-                Name = "U.GG - {0}",
+                Name = this.Name + ": " + position,
                 Position = position,
                 Blocks = blocks.ToArray()
             };
