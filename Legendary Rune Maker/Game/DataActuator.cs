@@ -223,14 +223,16 @@ namespace Legendary_Rune_Maker.Game
 
             Main.ShowNotification(Text.LockedInMessage, champion + ", " + pos.ToString().ToLower(), NotificationType.Success);
 
-            if (!Main.ValidPage)
+            var page = RuneBook.Instance.Get(championId, pos, false);
+
+            if (page == null)
             {
                 LogTo.Info("Invalid current rune page");
 
                 if (Config.Default.LoadOnLock)
                 {
                     LogTo.Info("Downloading from provider");
-                    await Main.SafeInvoke(async () => await Main.LoadPageFromDefaultProvider(championId));
+                    page = await Main.SafeInvoke(async () => await Main.LoadPageFromDefaultProvider(championId));
                     LogTo.Debug("Downloaded from provider");
                 }
                 else
@@ -241,10 +243,7 @@ namespace Legendary_Rune_Maker.Game
             }
 
             LogTo.Debug("Uploading rune page to client");
-
-            var page = RuneBook.Instance.Get(championId, pos, false);
             await page.UploadToClient(LoL.Perks);
-
             LogTo.Debug("Uploaded rune page to client");
         }
 

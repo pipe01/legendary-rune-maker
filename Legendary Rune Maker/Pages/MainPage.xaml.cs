@@ -132,7 +132,7 @@ namespace Legendary_Rune_Maker.Pages
             }
         }
 
-        public async Task LoadPageFromDefaultProvider(int championId = -1)
+        public async Task<RunePage> LoadPageFromDefaultProvider(int championId = -1)
         {
             var champId = championId == -1 ? SelectedChampion : championId;
 
@@ -161,6 +161,8 @@ namespace Legendary_Rune_Maker.Pages
                 Text.PageChampInPosNotSet.FormatStr(champName, SelectedPosition.ToString().ToLower()),
                 Text.PageNotSetDownloaded.FormatStr(provider.Name),
                 NotificationType.Information);
+
+            return page;
         }
 
         private async void Upload_Click(object sender, EventArgs e)

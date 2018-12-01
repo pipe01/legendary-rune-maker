@@ -36,9 +36,9 @@ namespace Legendary_Rune_Maker.Game
 
         private async void CurrentChampionUpdate(EventType eventType, int data)
         {
-            if (eventType != EventType.Delete && (State.Value?.HasLockedIn == false))
+            if (eventType != EventType.Delete && State.Value?.LockedInChamp != data)
             {
-                State.Value.HasLockedIn = true;
+                State.Value.LockedInChamp = data;
 
                 LogTo.Info("Locked in champion {0}", data);
                 GameState.State.Fire(GameTriggers.LockIn);
@@ -47,30 +47,15 @@ namespace Legendary_Rune_Maker.Game
                     return;
 
                 var tasks = new List<Task>();
-
-                if (!State.Value.HasTriedRunePage)
-                {
-                    State.Value.HasTriedRunePage = true;
-
-                    if (Config.UploadOnLock)
-                        tasks.Add(Actuator.UploadRunePage(CurrentPosition, data));
-                }
-
-                if (!State.Value.HasTriedSkillOrder)
-                {
-                    State.Value.HasTriedSkillOrder = true;
-
-                    if (Config.ShowSkillOrder && !Config.SetItemSet)
-                        tasks.Add(Actuator.UploadSkillOrder(CurrentPosition, data));
-                }
-
-                if (!State.Value.HasTriedItemSet)
-                {
-                    State.Value.HasTriedItemSet = true;
-
-                    if (Config.SetItemSet)
-                        tasks.Add(Actuator.UploadItemSet(CurrentPosition, data));
-                }
+                
+                if (Config.UploadOnLock)
+                    tasks.Add(Actuator.UploadRunePage(CurrentPosition, data));
+                    
+                if (Config.ShowSkillOrder && !Config.SetItemSet)
+                    tasks.Add(Actuator.UploadSkillOrder(CurrentPosition, data));
+                    
+                if (Config.SetItemSet)
+                    tasks.Add(Actuator.UploadItemSet(CurrentPosition, data));
 
                 await Task.WhenAll(tasks.ToArray());
             }

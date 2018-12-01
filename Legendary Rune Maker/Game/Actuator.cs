@@ -12,13 +12,11 @@ namespace Legendary_Rune_Maker.Game
     {
         public class State
         {
+            public int LockedInChamp;
             public bool HasLockedIn,
                         HasPickedChampion,
                         HasPickedSumms,
                         HasBanned,
-                        HasTriedSkillOrder,
-                        HasTriedRunePage,
-                        HasTriedItemSet,
                         HasSetPositionUI;
         }
 

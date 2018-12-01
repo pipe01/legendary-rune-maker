@@ -24,11 +24,11 @@ namespace Legendary_Rune_Maker.Data
             public IDictionary<string, object> SoftObjectCache = new Dictionary<string, object>();
         }
 
-        private static CacheData Data = new CacheData();
-
-        private static HttpClient Client => new HttpClient();
-
         private const string CachePath = "cache/data.json";
+
+        private static CacheData Data = new CacheData();
+        private static HttpClient Client => new HttpClient();
+        private static object WriteLock = new object();
         
         private static readonly JsonSerializerSettings JsonSettings = new JsonSerializerSettings
         {
@@ -71,7 +71,8 @@ namespace Legendary_Rune_Maker.Data
             lock (Data)
                 text = JsonConvert.SerializeObject(Data, JsonSettings);
 
-            File.WriteAllText(CachePath, Convert.ToBase64String(Encoding.UTF8.GetBytes(text)));
+            lock (WriteLock)
+                File.WriteAllText(CachePath, Convert.ToBase64String(Encoding.UTF8.GetBytes(text)));
         }
 
         public static void Clear()

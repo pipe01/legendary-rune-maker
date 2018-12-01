@@ -19,7 +19,7 @@ namespace Legendary_Rune_Maker
         T SafeInvoke<T>(Func<T> act);
         void SetState(GameStates state);
         void ShowNotification(string title, string message = null, NotificationType type = NotificationType.Information);
-        Task LoadPageFromDefaultProvider(int championId = -1);
+        Task<RunePage> LoadPageFromDefaultProvider(int championId = -1);
         Task SetChampion(Champion champ);
         Task SetChampion(int championId);
     }
