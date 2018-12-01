@@ -283,7 +283,7 @@ namespace Legendary_Rune_Maker.Pages
             Load.ContextMenu = menu;
             menu.IsOpen = true;
 
-            var providers = Actuator.RuneProviders.Where(o => o.ProviderOptions.HasFlag(Provider.Options.RunePages));
+            var providers = Actuator.RuneProviders.Where(o => o.Supports(Provider.Options.RunePages));
 
             LogTo.Debug("Available providers: {0}", string.Join(", ", providers.Select(o => o.Name)));
 
@@ -379,15 +379,14 @@ namespace Legendary_Rune_Maker.Pages
             if (Config.Default.LockLoadProvider == null)
             {
                 Config.Default.LockLoadProvider =
-                    Actuator.RuneProviders.First(o => o.ProviderOptions.HasFlag(Provider.Options.RunePages)
-                                                      && !(o is ClientProvider)).Name;
+                    Actuator.RuneProviders.First(o => o.Supports(Provider.Options.RunePages) && !(o is ClientProvider)).Name;
                 Config.Default.Save();
             }
             
             if (Config.Default.ItemSetProvider == null)
             {
                 Config.Default.ItemSetProvider =
-                    Actuator.RuneProviders.First(o => o.ProviderOptions.HasFlag(Provider.Options.ItemSets)).Name;
+                    Actuator.RuneProviders.First(o => o.Supports(Provider.Options.ItemSets)).Name;
                 Config.Default.Save();
             }
         }
