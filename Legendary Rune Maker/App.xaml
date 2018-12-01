@@ -40,6 +40,14 @@
         <BitmapImage x:Key="NoChamp" UriSource="Images/-1.png" />
         <BitmapImage x:Key="NoSpell" UriSource="Images/no_spell.png" />
 
+        <BitmapImage x:Key="UGGProviderIcon" UriSource="Images/ugg.png" />
+        <BitmapImage x:Key="ChampionGGProviderIcon" UriSource="Images/championgg.ico" />
+        <BitmapImage x:Key="LolFlavorProviderIcon" UriSource="Images/lolflavor.png" />
+        <BitmapImage x:Key="MetaLolProviderIcon" UriSource="Images/metalol.ico" />
+        <BitmapImage x:Key="OpGGProviderIcon" UriSource="Images/opgg.ico" />
+        <DrawingImage x:Key="RunesLolProviderIcon" />
+        <DrawingImage x:Key="ClientProviderIcon" />
+
         <!--Thanks to Google @ https://www.flaticon.com/packs/material-design-->
         <DrawingImage x:Key="Upload">
             <DrawingImage.Drawing>

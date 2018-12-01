@@ -397,6 +397,13 @@
   <ItemGroup>
     <EmbeddedResource Include="GitData.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\championgg.ico" />
+    <Resource Include="Images\lolflavor.png" />
+    <Resource Include="Images\metalol.ico" />
+    <Resource Include="Images\opgg.ico" />
+    <Resource Include="Images\ugg.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

@@ -24,12 +24,12 @@ namespace Legendary_Rune_Maker.Game
         internal static readonly Provider[] RuneProviders = new Provider[]
         {
             new ClientProvider(),
-            new RunesLolProvider(),
             new ChampionGGProvider(),
             new MetaLolProvider(),
             new LolFlavorProvider(),
             new UGGProvider(),
-            new OpGGProvider()
+            new OpGGProvider(),
+            new RunesLolProvider()
         };
 
         public IMainWindow Main { get; set; }

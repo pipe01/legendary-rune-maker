@@ -289,7 +289,11 @@ namespace Legendary_Rune_Maker.Pages
 
             foreach (var provider in providers)
             {
-                var header = new MenuItem { Header = provider.Name };
+                var header = new MenuItem
+                {
+                    Header = provider.Name,
+                    Icon = new Image() { Source = (ImageSource)Application.Current.FindResource(provider.GetType().Name + "Icon") }
+                };
                 menu.Items.Add(header);
 
                 header.SubmenuOpened += async (_, __) =>
