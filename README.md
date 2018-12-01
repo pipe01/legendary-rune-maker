@@ -16,6 +16,7 @@ A rune maker for League of Legends that also offers a bunch of automation option
 * Automatically picks champions and summoner spells and bans champions.
 * (Down)load an appropiate item set automatically from [u.gg](https://u.gg), [champion.gg](https://champion.gg), [metalol.net](http://metalol.net) and [lolflavor.com](http://lolflavor.com).
 * Shows you how to level up your skills, taken from [u.gg](https://u.gg), [champion.gg](https://champion.gg), [metalol.net](http://metalol.net) or [op.gg](https://op.gg).
+* Always up-to-date on the latest LoL patch.
 
 ![](https://i.imgur.com/IeWsVpL.png)
 ![](https://i.imgur.com/qu7ccht.png)
