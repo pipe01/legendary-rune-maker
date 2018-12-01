@@ -87,7 +87,12 @@ namespace Legendary_Rune_Maker.Data
 
             if (!dic.TryGetValue(url, out var value))
             {
-                dic[url] = value = await (client ?? Client).GetStringAsync(url).ConfigureAwait(false);
+                var response = await (client ?? Client).SendAsync(new HttpRequestMessage(HttpMethod.Get, url));
+
+                if (!response.IsSuccessStatusCode)
+                    return null;
+
+                dic[url] = value = await response.Content.ReadAsStringAsync();
                 Save();
             }
             else
@@ -97,7 +102,7 @@ namespace Legendary_Rune_Maker.Data
 
             return value;
         }
-
+        
         public static async Task<T> Json<T>(string url, HttpClient client = null, bool soft = false)
         {
             LogTo.Debug("Cache json object requested (Soft={0}): {1}", soft, url);

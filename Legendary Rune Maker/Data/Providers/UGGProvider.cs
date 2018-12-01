@@ -37,7 +37,7 @@ namespace Legendary_Rune_Maker.Data.Providers
             if (_LolUGGVersion == null)
             {
                 var url = $"https://u.gg/json/new_ugg_versions/{UGGDataVersion}.json";
-                var json = JObject.Parse(await Client.DownloadStringTaskAsync(url));
+                var json = JObject.Parse(await WebCache.String(url));
                 _LolUGGVersion = (json.Children().First().Next as JProperty).Name;
             }
 
@@ -67,7 +67,7 @@ namespace Legendary_Rune_Maker.Data.Providers
             {
                 string url = $"https://stats.u.gg/lol/{UGGApiVersion}/overview/{await GetLolUGGVersion()}/ranked_solo_5x5/{championId}/{await GetUGGOverviewVersion()}.json";
 
-                var json = JObject.Parse(await Client.DownloadStringTaskAsync(url));
+                var json = JObject.Parse(await WebCache.String(url));
                 ChampionData[championId] = data = (JObject)json[OverviewWorld.ToString()][OverviewPlatPlus.ToString()];
             }
 

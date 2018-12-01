@@ -24,8 +24,6 @@ namespace Legendary_Rune_Maker.Data.Providers
             [Position.Bottom] = "ADC",
             [Position.Fill] = ""
         };
-
-        private static IDictionary<(int, Position), string> Cache = new Dictionary<(int, Position), string>();
         
         protected override async Task<Position[]> GetPossibleRolesInner(int championId)
         {
@@ -38,15 +36,11 @@ namespace Legendary_Rune_Maker.Data.Providers
             {
                 if (item.Key == Position.Fill)
                     return;
+                
+                var data = await WebCache.String($"http://lolflavor.com/champions/{champ}/Recommended/{champ}_{item.Value}_scrape.json", soft: true);
 
-                string url = $"http://lolflavor.com/champions/{champ}/Recommended/{champ}_{item.Value}_scrape.json";
-                var data = await client.SendAsync(new HttpRequestMessage(HttpMethod.Get, url));
-
-                if (data.StatusCode != HttpStatusCode.NotFound)
-                {
-                    Cache[(championId, item.Key)] = await data.Content.ReadAsStringAsync();
+                if (data != null)
                     ret.Add(item.Key);
-                }
             }));
 
             return ret.ToArray();
@@ -54,15 +48,13 @@ namespace Legendary_Rune_Maker.Data.Providers
 
         protected override async Task<ItemSet> GetItemSetInner(int championId, Position position)
         {
-            if (!Cache.TryGetValue((championId, position), out var cacheJson))
-            {
-                string champ = Riot.GetChampion(championId).Key;
+            string champ = Riot.GetChampion(championId).Key;
+            var json = await WebCache.String($"http://lolflavor.com/champions/{champ}/Recommended/{champ}_{PositionToName[position]}_scrape.json", soft: true);
 
-                Cache[(championId, position)] = cacheJson = await new WebClient().DownloadStringTaskAsync(
-                    $"http://lolflavor.com/champions/{champ}/Recommended/{champ}_{PositionToName[position]}_scrape.json");
-            }
+            if (json == null)
+                return null;
 
-            var lolItemSet = JsonConvert.DeserializeObject<LolItemSetsItemSet>(cacheJson);
+            var lolItemSet = JsonConvert.DeserializeObject<LolItemSetsItemSet>(json);
 
             return new ItemSet
             {

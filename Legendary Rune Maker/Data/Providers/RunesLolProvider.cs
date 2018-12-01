@@ -27,16 +27,11 @@ namespace Legendary_Rune_Maker.Data.Providers
 
         private static string GetRoleUrl(int championId, Position position)
             => $"https://runes.lol/ranked/gold/champion/win/{GetChampionKey(championId)}/{PositionToName[position]}";
-
-        protected override Task<ItemSet> GetItemSetInner(int championId, Position position)
-        {
-            throw new NotImplementedException();
-        }
-
+        
         protected override async Task<Position[]> GetPossibleRolesInner(int championId)
         {
             var doc = new HtmlDocument();
-            doc.LoadHtml(await new WebClient().DownloadStringTaskAsync(GetRoleUrl(championId, Position.Fill)));
+            doc.LoadHtml(await WebCache.String(GetRoleUrl(championId, Position.Fill), soft: true));
 
             var n = doc.DocumentNode.SelectNodes("//a[contains(@class, 'lanefilter')]");
 
@@ -62,7 +57,7 @@ namespace Legendary_Rune_Maker.Data.Providers
         protected override async Task<RunePage> GetRunePageInner(int championId, Position position)
         {
             var doc = new HtmlDocument();
-            doc.LoadHtml(await new WebClient().DownloadStringTaskAsync(GetRoleUrl(championId, position)));
+            doc.LoadHtml(await WebCache.String(GetRoleUrl(championId, position), soft: true));
 
             var runeClasses = doc.DocumentNode.SelectNodes("//div[@class='runeclassicon']");
 

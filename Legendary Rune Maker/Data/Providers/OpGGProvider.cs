@@ -29,7 +29,7 @@ namespace Legendary_Rune_Maker.Data.Providers
         protected override async Task<Position[]> GetPossibleRolesInner(int championId)
         {
             var doc = new HtmlDocument();
-            doc.LoadHtml(await new WebClient().DownloadStringTaskAsync(GetRoleUrl(championId, Position.Fill)));
+            doc.LoadHtml(await WebCache.String(GetRoleUrl(championId, Position.Fill), soft: true));
 
             var positionNodes = doc.DocumentNode.Descendants().Where(o => o.HasClass("champion-stats-header__position"));
 
@@ -55,7 +55,7 @@ namespace Legendary_Rune_Maker.Data.Providers
         protected override async Task<RunePage> GetRunePageInner(int championId, Position position)
         {
             var doc = new HtmlDocument();
-            doc.LoadHtml(await new WebClient().DownloadStringTaskAsync(GetRoleUrl(championId, position)));
+            doc.LoadHtml(await WebCache.String(GetRoleUrl(championId, position), soft: true));
 
             var pages = doc.DocumentNode.Descendants().Where(o => o.HasClass("perk-page")).Take(2);
 
@@ -86,7 +86,7 @@ namespace Legendary_Rune_Maker.Data.Providers
         protected override async Task<string> GetSkillOrderInner(int championId, Position position)
         {
             var doc = new HtmlDocument();
-            doc.LoadHtml(await new WebClient().DownloadStringTaskAsync(GetRoleUrl(championId, position)));
+            doc.LoadHtml(await WebCache.String(GetRoleUrl(championId, position), soft: true));
 
             char[] tips = doc.DocumentNode.Descendants("li")
                 .Where(o => o.HasClass("champion-stats__list__item") && o.HasClass("tip"))
