@@ -37,7 +37,7 @@ namespace Legendary_Rune_Maker.Data.Providers
             => $"https://www.metalol.net/champions/lol-build-guide/solo-queue/{Riot.GetChampion(championId, "en_US").Name}"
                + (pos != null ? "/" + PositionToName[pos.Value] : "");
 
-        protected override async Task<Position[]> GetPossibleRolesInner(int championId)
+        public override async Task<Position[]> GetPossibleRoles(int championId)
         {
             var doc = new HtmlDocument();
             doc.LoadHtml(await WebCache.String(GetChampionURL(championId), soft: true));
@@ -62,7 +62,7 @@ namespace Legendary_Rune_Maker.Data.Providers
             return ret.ToArray();
         }
 
-        protected override async Task<RunePage> GetRunePageInner(int championId, Position position)
+        public override async Task<RunePage> GetRunePage(int championId, Position position)
         {
             string html = await WebCache.String(GetChampionURL(championId, position), soft: true);
             string perksStr = Regex.Match(html, @"(?<=perks \= ).*(?=;)").Value;
@@ -78,7 +78,7 @@ namespace Legendary_Rune_Maker.Data.Providers
             };
         }
 
-        protected override async Task<ItemSet> GetItemSetInner(int championId, Position position)
+        public override async Task<ItemSet> GetItemSet(int championId, Position position)
         {
             var doc = new HtmlDocument();
             doc.LoadHtml(await WebCache.String(GetChampionURL(championId, position), soft: true));
@@ -122,7 +122,7 @@ namespace Legendary_Rune_Maker.Data.Providers
             };
         }
 
-        protected override async Task<string> GetSkillOrderInner(int championId, Position position)
+        public override async Task<string> GetSkillOrder(int championId, Position position)
         {
             if (position == Position.Fill)
                 position = (await GetPossibleRoles(championId))[0];

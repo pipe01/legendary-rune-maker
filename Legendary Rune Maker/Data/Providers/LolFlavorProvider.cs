@@ -25,10 +25,9 @@ namespace Legendary_Rune_Maker.Data.Providers
             [Position.Fill] = ""
         };
         
-        protected override async Task<Position[]> GetPossibleRolesInner(int championId)
+        public override async Task<Position[]> GetPossibleRoles(int championId)
         {
             string champ = Riot.GetChampion(championId).Key;
-            var client = new HttpClient();
 
             var ret = new SynchronizedCollection<Position>();
 
@@ -46,7 +45,7 @@ namespace Legendary_Rune_Maker.Data.Providers
             return ret.ToArray();
         }
 
-        protected override async Task<ItemSet> GetItemSetInner(int championId, Position position)
+        public override async Task<ItemSet> GetItemSet(int championId, Position position)
         {
             string champ = Riot.GetChampion(championId).Key;
             var json = await WebCache.String($"http://lolflavor.com/champions/{champ}/Recommended/{champ}_{PositionToName[position]}_scrape.json", soft: true);

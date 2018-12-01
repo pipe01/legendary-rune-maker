@@ -27,8 +27,8 @@ namespace Legendary_Rune_Maker.Data.Providers
 
         private static string GetRoleUrl(int championId, Position position)
             => $"https://runes.lol/ranked/gold/champion/win/{GetChampionKey(championId)}/{PositionToName[position]}";
-        
-        protected override async Task<Position[]> GetPossibleRolesInner(int championId)
+
+        public override async Task<Position[]> GetPossibleRoles(int championId)
         {
             var doc = new HtmlDocument();
             doc.LoadHtml(await WebCache.String(GetRoleUrl(championId, Position.Fill), soft: true));
@@ -54,7 +54,7 @@ namespace Legendary_Rune_Maker.Data.Providers
             return ret.ToArray();
         }
 
-        protected override async Task<RunePage> GetRunePageInner(int championId, Position position)
+        public override async Task<RunePage> GetRunePage(int championId, Position position)
         {
             var doc = new HtmlDocument();
             doc.LoadHtml(await WebCache.String(GetRoleUrl(championId, position), soft: true));

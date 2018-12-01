@@ -74,7 +74,7 @@ namespace Legendary_Rune_Maker.Data.Providers
             return data;
         }
 
-        protected override async Task<Position[]> GetPossibleRolesInner(int championId)
+        public override async Task<Position[]> GetPossibleRoles(int championId)
         {
             JToken champData = await GetChampionData(championId);
             int totalGames = champData.Sum(o => ((JProperty)o).Value[0][0][0].ToObject<int>());
@@ -87,7 +87,7 @@ namespace Legendary_Rune_Maker.Data.Providers
                 .ToArray();
         }
 
-        protected override async Task<RunePage> GetRunePageInner(int championId, Position position)
+        public override async Task<RunePage> GetRunePage(int championId, Position position)
         {
             var champData = await GetChampionData(championId);
 
@@ -106,7 +106,7 @@ namespace Legendary_Rune_Maker.Data.Providers
             return new RunePage(runes, primTree, secTree, championId, position);
         }
 
-        protected override async Task<ItemSet> GetItemSetInner(int championId, Position position)
+        public override async Task<ItemSet> GetItemSet(int championId, Position position)
         {
             var champData = await GetChampionData(championId);
 
@@ -144,7 +144,7 @@ namespace Legendary_Rune_Maker.Data.Providers
             }
         }
 
-        protected override async Task<string> GetSkillOrderInner(int championId, Position position)
+        public override async Task<string> GetSkillOrder(int championId, Position position)
         {
             var champData = await GetChampionData(championId);
 

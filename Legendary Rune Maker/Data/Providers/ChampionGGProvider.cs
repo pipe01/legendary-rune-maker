@@ -26,7 +26,7 @@ namespace Legendary_Rune_Maker.Data.Providers
             => $"https://champion.gg/champion/{Riot.GetChampion(championId).Key}/"
                + (pos != null ? PositionToName[pos.Value] : "");
 
-        protected override async Task<Position[]> GetPossibleRolesInner(int championId)
+        public override async Task<Position[]> GetPossibleRoles(int championId)
         {
             var doc = new HtmlDocument();
             doc.LoadHtml(await WebCache.String(GetChampionURL(championId), soft: true));
@@ -52,7 +52,7 @@ namespace Legendary_Rune_Maker.Data.Providers
             return ret.ToArray();
         }
 
-        protected override async Task<RunePage> GetRunePageInner(int championId, Position position)
+        public override async Task<RunePage> GetRunePage(int championId, Position position)
         {
             var doc = new HtmlDocument();
             doc.LoadHtml(await WebCache.String(GetChampionURL(championId, position), soft: true));
@@ -63,10 +63,10 @@ namespace Legendary_Rune_Maker.Data.Providers
             var perkIcons = doc.DocumentNode.SelectNodes("//div[contains(@class, 'LeftSide')]//img[contains(@class, 'PerkButton__Icon')]").Take(9);
             var perkIds = perkIcons.Select(GetPerkId).ToArray();
 
-            return new RunePage(perkIds, pathStyles[0], pathStyles[1], championId, position);
+            return FillStatsIfNone(new RunePage(perkIds, pathStyles[0], pathStyles[1], championId, position));
         }
 
-        protected override async Task<ItemSet> GetItemSetInner(int championId, Position position)
+        public override async Task<ItemSet> GetItemSet(int championId, Position position)
         {
             var doc = new HtmlDocument();
             doc.LoadHtml(await WebCache.String(GetChampionURL(championId, position), soft: true));
@@ -110,7 +110,7 @@ namespace Legendary_Rune_Maker.Data.Providers
             }
         }
 
-        protected override async Task<string> GetSkillOrderInner(int championId, Position position)
+        public override async Task<string> GetSkillOrder(int championId, Position position)
         {
             var doc = new HtmlDocument();
             doc.LoadHtml(await WebCache.String(GetChampionURL(championId, position), soft: true));

@@ -10,13 +10,8 @@ namespace Legendary_Rune_Maker.Data.Providers
     {
         public override string Name => "Client";
         public override Options ProviderOptions => Options.RunePages;
-
-        protected override Task<ItemSet> GetItemSetInner(int championId, Position position)
-        {
-            throw new NotImplementedException();
-        }
-
-        protected override Task<Position[]> GetPossibleRolesInner(int championId)
+        
+        public override Task<Position[]> GetPossibleRoles(int championId)
         {
             if (GameState.CanUpload)
                 return Task.FromResult(new[] { Position.Fill });
@@ -24,7 +19,7 @@ namespace Legendary_Rune_Maker.Data.Providers
             return Task.FromResult(new Position[0]);
         }
 
-        protected override Task<RunePage> GetRunePageInner(int championId, Position position)
+        public override Task<RunePage> GetRunePage(int championId, Position position)
             => RunePage.GetActivePageFromClient(App.Container.Get<ILoL>().Perks);
     }
 }
