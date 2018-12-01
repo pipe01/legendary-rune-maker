@@ -8,7 +8,7 @@
       xmlns:loc="clr-namespace:Legendary_Rune_Maker.Locale"
       mc:Ignorable="d" 
       Height="450" Width="800" Initialized="Page_Initialized" PreviewKeyUp="Page_PreviewKeyUp"
-      Title="PickChampionPage" Focusable="True">
+      Title="PickChampionPage">
 
     <Page.Background>
         <ImageBrush x:Name="BackImage" Stretch="UniformToFill" ImageSource="{StaticResource BgGreen}" />
@@ -21,7 +21,8 @@
         </Grid.RowDefinitions>
 
         <DockPanel Grid.Row="0" Margin="0 0 45 0">
-            <TextBox x:Name="Search" Width="190" Height="30" Margin="5" Tag="Search" TextChanged="Search_TextChanged" />
+            <TextBox x:Name="Search" Width="190" Height="30" Margin="5" Tag="Search" TextChanged="Search_TextChanged"
+                     Focusable="True" />
 
             <CheckBox x:Name="Available" VerticalAlignment="Center" Margin="8" Content="{x:Static loc:Text.OnlyShowOwned}"
                   Checked="Available_Checked" Unchecked="Available_Unchecked" />

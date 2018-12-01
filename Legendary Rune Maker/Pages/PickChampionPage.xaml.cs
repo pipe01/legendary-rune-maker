@@ -20,6 +20,8 @@ namespace Legendary_Rune_Maker.Pages
     /// </summary>
     public partial class PickChampionPage : Page, IPage
     {
+        private static bool ShowOnlyAvailable;
+
         public bool ShowNoChampion { get; set; } = true;
 
         public Champion SelectedChampion { get; private set; }
@@ -40,6 +42,8 @@ namespace Legendary_Rune_Maker.Pages
             Available.IsEnabled = GameState.CanUpload;
             this.Completion = completion;
             this.DataContext = this;
+
+            Search.Focus();
         }
 
         private async void Page_Initialized(object sender, EventArgs e)
@@ -53,7 +57,7 @@ namespace Legendary_Rune_Maker.Pages
                      ((Champion)o).Name.IndexOf(Search.Text, StringComparison.OrdinalIgnoreCase) >= 0
                      && (AvailableIDs?.Contains(((Champion)o).ID) != false));
 
-            this.Focus();
+            await SetOnlyShowAvailable(ShowOnlyAvailable);
         }
 
         private void Champion_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
@@ -91,13 +95,19 @@ namespace Legendary_Rune_Maker.Pages
 
         private async void Available_Checked(object sender, RoutedEventArgs e)
         {
-            AvailableIDs = (await PChampions.GetOwnedChampionsMinimal()).Select(o => o.id).ToArray();
-            CollectionViewSource.GetDefaultView(ChampionList).Refresh();
+            await SetOnlyShowAvailable(true);
         }
 
-        private void Available_Unchecked(object sender, RoutedEventArgs e)
+        private async void Available_Unchecked(object sender, RoutedEventArgs e)
         {
-            AvailableIDs = null;
+            await SetOnlyShowAvailable(false);
+        }
+
+        private async Task SetOnlyShowAvailable(bool val)
+        {
+            Available.IsChecked = ShowOnlyAvailable = val;
+
+            AvailableIDs = val ? (await PChampions.GetOwnedChampionsMinimal()).Select(o => o.id).ToArray() : null;
             CollectionViewSource.GetDefaultView(ChampionList).Refresh();
         }
 

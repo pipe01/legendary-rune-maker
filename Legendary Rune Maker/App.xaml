@@ -860,7 +860,7 @@
 
                                 <Grid Margin="5 0 0 0">
                                     <TextBlock x:Name="Hint" Foreground="#938E82" Text="{x:Static loc:Text.Search}"
-                                               Visibility="Hidden"/>
+                                               Visibility="Hidden" Margin="3 0 0 0" />
                                     <ScrollViewer x:Name="PART_ContentHost" />
                                 </Grid>
                             </StackPanel>
