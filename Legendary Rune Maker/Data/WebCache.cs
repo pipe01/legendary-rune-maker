@@ -66,7 +66,10 @@ namespace Legendary_Rune_Maker.Data
         {
             LogTo.Debug("Saving web cache");
 
-            string text = JsonConvert.SerializeObject(Data, JsonSettings);
+            string text;
+
+            lock (Data)
+                text = JsonConvert.SerializeObject(Data, JsonSettings);
 
             File.WriteAllText(CachePath, Convert.ToBase64String(Encoding.UTF8.GetBytes(text)));
         }
@@ -92,7 +95,11 @@ namespace Legendary_Rune_Maker.Data
                 if (!response.IsSuccessStatusCode)
                     return null;
 
-                dic[url] = value = await response.Content.ReadAsStringAsync();
+                value = await response.Content.ReadAsStringAsync();
+
+                lock (Data)
+                    dic[url] = value;
+
                 Save();
             }
             else
@@ -111,7 +118,11 @@ namespace Legendary_Rune_Maker.Data
 
             if (!dic.TryGetValue(url, out var value))
             {
-                dic[url] = value = JsonConvert.DeserializeObject<T>(await String(url, client));
+                value = JsonConvert.DeserializeObject<T>(await String(url, client));
+
+                lock (Data)
+                    dic[url] = value;
+
                 Save();
             }
             else
@@ -132,7 +143,9 @@ namespace Legendary_Rune_Maker.Data
             {
                 string json = await String(url, client);
 
-                dic[url] = value = converter(JObject.Parse(json));
+                lock (Data)
+                    dic[url] = value = converter(JObject.Parse(json));
+
                 Save();
             }
             else
