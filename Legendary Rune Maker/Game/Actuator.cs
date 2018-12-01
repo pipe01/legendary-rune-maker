@@ -17,7 +17,8 @@ namespace Legendary_Rune_Maker.Game
                         HasBanned,
                         HasTriedSkillOrder,
                         HasTriedRunePage,
-                        HasTriedItemSet;
+                        HasTriedItemSet,
+                        HasSetPositionUI;
         }
 
         internal static readonly Provider[] RuneProviders = new Provider[]

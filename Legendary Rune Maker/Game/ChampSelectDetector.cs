@@ -4,6 +4,7 @@ using LCU.NET.API_Models;
 using LCU.NET.Plugins.LoL;
 using Legendary_Rune_Maker.Data;
 using Legendary_Rune_Maker.Utils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -105,7 +106,8 @@ namespace Legendary_Rune_Maker.Game
             }
 
 
-            var myAction = data.actions.SelectMany(o => o).LastOrDefault(o => o.actorCellId == data.localPlayerCellId);
+            var actions = data.actions.SelectMany(o => o).ToArray();
+            var myAction = actions.FirstOrDefault(o => o.actorCellId == data.localPlayerCellId && !o.completed);
 
             if (myAction?.completed != false)
                 return;
@@ -114,13 +116,19 @@ namespace Legendary_Rune_Maker.Game
 
             if (myAction.type == "pick" && !State.Value.HasPickedChampion)
             {
-                State.Value.HasPickedChampion = true;
-                LogTo.Debug("User must pick");
+                int index = Array.IndexOf(actions, myAction);
+                var prev = index > 0 ? actions[index - 1] : null;
 
-                if (Config.Default.AutoPickChampion)
-                    await Actuator.PickChampion(CurrentPosition, myAction);
+                if (prev == null || prev.completed)
+                {
+                    State.Value.HasPickedChampion = true;
+                    LogTo.Debug("User must pick");
+
+                    if (Config.Default.AutoPickChampion)
+                        await Actuator.PickChampion(CurrentPosition, myAction);
+                }
             }
-            else if (myAction.type == "ban" && !State.Value.HasBanned)
+            else if (myAction.type == "ban" && !State.Value.HasBanned && Session.timer.phase.Contains("BAN"))
             {
                 State.Value.HasBanned = true;
                 LogTo.Debug("User must ban");
@@ -136,8 +144,11 @@ namespace Legendary_Rune_Maker.Game
             {
                 if (PlayerSelection != null && Actuator.Main.Attached)
                 {
-                    LogTo.Debug("Set position: {0}", CurrentPosition);
-                    Actuator.Main.SelectedPosition = CurrentPosition;
+                    if (!State.Value.HasSetPositionUI)
+                    {
+                        LogTo.Debug("Set position: {0}", CurrentPosition);
+                        Actuator.Main.SelectedPosition = CurrentPosition;
+                    }
 
                     if (PlayerSelection.championId != 0)
                     {
