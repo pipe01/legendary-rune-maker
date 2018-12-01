@@ -1,6 +1,8 @@
 # Legendary Rune Maker
 [![Build status](https://ci.appveyor.com/api/projects/status/u5y57w0cfpluaql0?svg=true)](https://ci.appveyor.com/project/pipe01/legendary-rune-maker)
 
+[![Donate](https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif)](https://www.paypal.me/pipe01)
+
 A rune maker for League of Legends that also offers a bunch of automation options.
 
 # Features
