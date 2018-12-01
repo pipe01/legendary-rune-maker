@@ -1,4 +1,5 @@
-﻿using LCU.NET;
+﻿using Anotar.Log4Net;
+using LCU.NET;
 using LCU.NET.Plugins.LoL;
 using System;
 using System.Linq;
@@ -43,6 +44,8 @@ namespace Legendary_Rune_Maker.Data
                 }).ToArray(),
                 uid = Guid.NewGuid().ToString()
             };
+            
+            LogTo.Debug($"Uploading item set with title '{itemSet.title}' ('{this.Name}' in model)");
 
             var currentSetInfo = await itemSets.GetItemSets(session.summonerId);
             var currentSetsList = currentSetInfo.itemSets.ToList();
@@ -50,7 +53,10 @@ namespace Legendary_Rune_Maker.Data
             currentSetsList.Add(itemSet);
 
             if (saveToConfig && Config.Default.LastItemSetUid != null)
+            {
+                LogTo.Debug("Deleting last item set with ID {0}", Config.Default.LastItemSetUid);
                 currentSetsList.RemoveAll(o => o.uid == Config.Default.LastItemSetUid);
+            }
 
             if (saveToConfig)
             {

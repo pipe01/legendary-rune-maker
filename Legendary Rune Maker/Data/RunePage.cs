@@ -1,4 +1,5 @@
-﻿using LCU.NET;
+﻿using Anotar.Log4Net;
+using LCU.NET;
 using LCU.NET.API_Models;
 using LCU.NET.Plugins.LoL;
 using Legendary_Rune_Maker.Game;
@@ -45,6 +46,8 @@ namespace Legendary_Rune_Maker.Data
                 name = this.Name ?? Riot.GetChampion(ChampionID).Name + " - " + Enum.GetName(typeof(Position), Position)
             };
 
+            LogTo.Debug("Uploading rune page with name '{0}'");
+
             try
             {
                 await perks.PostPageAsync(page);
@@ -52,6 +55,7 @@ namespace Legendary_Rune_Maker.Data
             catch (APIErrorException ex) when (ex.Message == "Max pages reached")
             {
                 //The maximum number of pages has been reached, try to delete current page and upload again
+                LogTo.Info("Max number of rune pages reached, deleting current page and trying again");
 
                 var currentPage = await perks.GetCurrentPageAsync();
 
