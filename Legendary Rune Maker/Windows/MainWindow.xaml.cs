@@ -197,8 +197,10 @@ namespace Legendary_Rune_Maker
             {
                 this.Show();
                 this.WindowState = WindowState.Normal;
-                this.Activate();
             }
+
+            this.Activate();
+            this.Focus();
         }
 
         private async void Taskbar_Exit(object sender, RoutedEventArgs e)
