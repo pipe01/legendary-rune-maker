@@ -171,6 +171,12 @@ namespace Legendary_Rune_Maker.Game
             var provider = Array.Find(RuneProviders, o => o.Name == Config.ItemSetProvider) ?? RuneProviders[0];
             var set = await provider.GetItemSet(championId, pos);
 
+            if (set == null)
+            {
+                LogTo.Error("Failed to get item set from {0}", provider.Name);
+                return;
+            }
+
             LogTo.Info("Gotten item set from {0}", provider.Name);
 
             if (Config.ShowSkillOrder)
