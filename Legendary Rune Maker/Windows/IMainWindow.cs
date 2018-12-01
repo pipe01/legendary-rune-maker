@@ -14,7 +14,6 @@ namespace Legendary_Rune_Maker
         Position SelectedPosition { get; set; }
         RunePage Page { get; }
         bool ValidPage { get; }
-        bool Attached { get; }
 
         void SafeInvoke(Action act);
         T SafeInvoke<T>(Func<T> act);

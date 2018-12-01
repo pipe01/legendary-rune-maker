@@ -129,8 +129,9 @@
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
 
-                <CheckBox x:Name="AttachChk" Grid.Row="1" Grid.ColumnSpan="2" IsChecked="{Binding Attached, Mode=TwoWay}" Margin="10"
-                          VerticalAlignment="Center" HorizontalAlignment="Left" Content="{x:Static loc:Text.Attach}" />
+                <CheckBox x:Name="AttachChk" Grid.Row="1" Grid.ColumnSpan="2" Margin="10" Checked="AttachChk_Checked"
+                          Unchecked="AttachChk_Unchecked" VerticalAlignment="Center" HorizontalAlignment="Left"
+                          Content="{x:Static loc:Text.Attach}" />
 
                 <Button Grid.Column="5" Width="40" Margin="5" Click="ShowRunes_Click" ToolTip="{x:Static loc:Text.ShowRunes}">
                     <controls:FadeImage x:Name="RunesArrow" Source="{StaticResource RightArrow}" Width="20" Height="20" />

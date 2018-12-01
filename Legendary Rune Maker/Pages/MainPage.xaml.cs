@@ -31,24 +31,7 @@ namespace Legendary_Rune_Maker.Pages
         public static double BaseHeight { get; } = 310;
         public static double ExpandWidth { get; } = 810;
         public static double ExpandHeight { get; } = 325;
-
-        public bool Attached
-        {
-            get => (bool)GetValue(AttachedProperty);
-            set => SetValue(AttachedProperty, value);
-        }
-        public static readonly DependencyProperty AttachedProperty = DependencyProperty.Register("Attached", typeof(bool), typeof(MainWindow), new PropertyMetadata(true, async (sender, e) =>
-        {
-            if ((bool)e.NewValue)
-            {
-                var p = (MainPage)sender;
-
-                //TODO Update detectors
-                //await p.ChampSelectDetector.ForceUpdate();
-                //await p.LoginDetector.ForceUpdate();
-            }
-        }));
-
+        
         public bool Expanded
         {
             get { return (bool)GetValue(ExpandedProperty); }
@@ -412,6 +395,22 @@ namespace Legendary_Rune_Maker.Pages
             {
                 LogTo.Info("Opening browser to report a bug");
                 Process.Start("https://github.com/pipe01/legendary-rune-maker/issues/new");
+            }
+        }
+
+        private void AttachChk_Checked(object sender, RoutedEventArgs e)
+        {
+            foreach (var item in Detectors)
+            {
+                item.Enabled = true;
+            }
+        }
+
+        private void AttachChk_Unchecked(object sender, RoutedEventArgs e)
+        {
+            foreach (var item in Detectors)
+            {
+                item.Enabled = false;
             }
         }
     }

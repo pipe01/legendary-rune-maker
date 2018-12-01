@@ -43,6 +43,9 @@ namespace Legendary_Rune_Maker.Game
                 LogTo.Info("Locked in champion {0}", data);
                 GameState.State.Fire(GameTriggers.LockIn);
 
+                if (!Enabled)
+                    return;
+
                 var tasks = new List<Task>();
 
                 if (!State.Value.HasTriedRunePage)
@@ -140,6 +143,9 @@ namespace Legendary_Rune_Maker.Game
 
         private void UpdateMainPage()
         {
+            if (!Enabled)
+                return;
+
             Actuator.Main.SafeInvoke(async () =>
             {
                 if (PlayerSelection != null && Actuator.Main.Attached)

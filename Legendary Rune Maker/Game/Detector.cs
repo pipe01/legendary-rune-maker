@@ -16,6 +16,8 @@ namespace Legendary_Rune_Maker.Game
         protected Container<Actuator.State> State { get; private set; }
         protected ILoL LoL { get; }
 
+        public bool Enabled { get; set; } = true;
+
         public Detector(ILoL lol)
         {
             this.LoL = lol;
