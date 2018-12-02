@@ -11,6 +11,7 @@ using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Media;
 using System.Threading.Tasks;
 
 namespace Legendary_Rune_Maker.Game
@@ -70,7 +71,7 @@ namespace Legendary_Rune_Maker.Game
             }
         }
 
-        public async Task BanChampion(Position pos, LolChampSelectChampSelectAction myAction)
+        public async Task BanChampion(Position pos, LolChampSelectChampSelectAction myAction, LolChampSelectChampSelectPlayerSelection[] myTeam)
         {
             LogTo.Debug("Trying to ban champion");
 
@@ -84,7 +85,8 @@ namespace Legendary_Rune_Maker.Game
             LogTo.Debug("possibleBans: {0}", string.Join(", ", possibleBans));
 
             int preferredBan = possibleBans.FirstOrDefault(bannable.championIds.Contains);
-            LogTo.Debug("Preferred ban: {0}", preferredBan);
+            var banName = preferredBan > 0 ? Riot.GetChampion(preferredBan).Name : "None";
+            LogTo.Debug("Preferred ban: {0}", banName);
 
             if (preferredBan == 0)
             {
@@ -96,7 +98,19 @@ namespace Legendary_Rune_Maker.Game
                 return;
             }
 
-            LogTo.Debug("Candidate found ({0}), banning...", preferredBan);
+            var teamIntents = myTeam.Select(o => o.championPickIntent);
+
+            if (teamIntents.Contains(preferredBan))
+            {
+                LogTo.Info("Wanted to ban {0}, but someone wants to play it", banName);
+
+                Main.ShowNotification("Hey", $"Couldn't ban {banName} because someone wants to play it", NotificationType.Error);
+                SystemSounds.Exclamation.Play();
+
+                return;
+            }
+
+            LogTo.Debug("Candidate found ({0}), banning...", banName);
             myAction.championId = preferredBan;
             myAction.completed = true;
 

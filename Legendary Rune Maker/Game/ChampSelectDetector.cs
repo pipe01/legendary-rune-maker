@@ -122,7 +122,9 @@ namespace Legendary_Rune_Maker.Game
                 LogTo.Debug("User must ban");
 
                 if (Config.Default.AutoBanChampion)
-                    await Actuator.BanChampion(CurrentPosition, myAction);
+                {
+                    await Actuator.BanChampion(CurrentPosition, myAction, Session.myTeam);
+                }
             }
         }
 
