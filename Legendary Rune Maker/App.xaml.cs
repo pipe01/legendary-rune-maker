@@ -39,7 +39,7 @@ namespace Legendary_Rune_Maker
 
         private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
-            if (!Debugger.IsAttached)
+            if (!Debugger.IsAttached || true)
             {
                 var exception = e.ExceptionObject as Exception;
 
@@ -51,22 +51,35 @@ namespace Legendary_Rune_Maker
 
                 if (result == MessageBoxResult.Yes)
                 {
-                    string date = DateTime.UtcNow.ToString("HHmmss");
-                    string path = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), $"dump_{date}.mdmp");
+                    string date = DateTime.UtcNow.ToString("yyyyMMddHHmmss");
+                    string path = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "dumps", $"dump_{date}.mdmp");
+                    string folder = Path.GetDirectoryName(path);
+
+                    if (!Directory.Exists(folder))
+                        Directory.CreateDirectory(folder);
 
                     using (var fs = new FileStream(path, FileMode.Create, FileAccess.ReadWrite, FileShare.Write))
                     {
                         MiniDump.Write(fs.SafeFileHandle, MiniDump.Option.Normal | MiniDump.Option.WithIndirectlyReferencedMemory | MiniDump.Option.WithDataSegs, MiniDump.ExceptionInfo.Present);
+                    }
 
-                        using (var file = File.OpenWrite(path + ".zip"))
-                        using (var zip = new ZipArchive(file, ZipArchiveMode.Create))
+                    using (var file = File.OpenWrite(path + ".zip"))
+                    using (var zip = new ZipArchive(file, ZipArchiveMode.Create))
+                    {
+                        using (var dumpFile = File.OpenRead(path))
                         using (var entry = zip.CreateEntry(Path.GetFileName(path)).Open())
                         {
-                            fs.CopyTo(entry);
+                            dumpFile.CopyTo(entry);
+                        }
+
+                        using (var logFile = File.Open("logs/lrm.log", FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+                        using (var entry = zip.CreateEntry("log.txt").Open())
+                        {
+                            logFile.CopyTo(entry);
                         }
                     }
 
-                    //File.Delete(path);
+                    File.Delete(path);
 
                     Process.Start("explorer.exe", $"/select, \"{path}.zip\"");
                 }
@@ -82,6 +95,8 @@ namespace Legendary_Rune_Maker
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
+
+            throw new Exception("An exception");
 
             LoL.BindNinject(Container);
 
