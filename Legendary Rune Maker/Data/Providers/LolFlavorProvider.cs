@@ -19,7 +19,7 @@ namespace Legendary_Rune_Maker.Data.Providers
         {
             [Position.Top] = "Top",
             [Position.Jungle] = "Jungle",
-            [Position.Mid] = "Middle",
+            [Position.Mid] = "Mid",
             [Position.Support] = "Support",
             [Position.Bottom] = "ADC",
             [Position.Fill] = ""
