@@ -94,8 +94,11 @@ namespace Legendary_Rune_Maker
 
             Container.Bind<MainWindow>().ToSelf().InSingletonScope();
             
-            Current.MainWindow = Container.Get<LoadingWindow>();
-            Current.MainWindow.Show();
+            var loadingWindow = Container.Get<LoadingWindow>();
+            Current.MainWindow = loadingWindow;
+
+            if (!loadingWindow.IsClosed)
+                Current.MainWindow.Show();
         }
 
         private void Window_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)

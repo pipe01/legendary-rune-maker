@@ -1,4 +1,5 @@
-﻿using Legendary_Rune_Maker.Data;
+﻿using Anotar.Log4Net;
+using Legendary_Rune_Maker.Data;
 using Legendary_Rune_Maker.Locale;
 using Legendary_Rune_Maker.Pages;
 using Ninject;
@@ -20,6 +21,8 @@ namespace Legendary_Rune_Maker
     /// </summary>
     public partial class LoadingWindow : Window
     {
+        public bool IsClosed { get; private set; }
+
         private bool Shown;
         private CancellationTokenSource CancelSource = new CancellationTokenSource();
 
@@ -44,18 +47,20 @@ namespace Legendary_Rune_Maker
             
             MainWindow.SetMainPage(MainPage);
 
+            this.IsClosed = true;
             this.Close();
         }
 
+#pragma warning disable CS1998
         private async void Window_Initialized(object sender, EventArgs e)
+#pragma warning restore CS1998
         {
 #if !DEBUG
             if (Config.Default.CheckUpdatesBeforeStartup)
                 await CheckUpdates();
 #endif
 
-            if (Config.Default.LoadCacheBeforeStartup)
-                await LoadCache();
+            await LoadCache();
 
             ShowMainWindow();
         }
@@ -68,15 +73,11 @@ namespace Legendary_Rune_Maker
             Cancel.Visibility = Visibility.Hidden;
             Hint.Visibility = Visibility.Visible;
 
-            //If the cache is already downloaded, hide the window
-            if (ImageCache.Instance.LocalCache)
-            {
-                this.Visibility = Visibility.Hidden;
-            }
-
+            WebCache.Init();
             if (WebCache.CacheGameVersion != await Riot.GetLatestVersionAsync()
                 || WebCache.CacheLocale != CultureInfo.CurrentCulture.Name)
             {
+                LogTo.Info("Clearing web cache due to a new LoL version being available");
                 WebCache.Clear();
 
                 WebCache.CacheGameVersion = await Riot.GetLatestVersionAsync();

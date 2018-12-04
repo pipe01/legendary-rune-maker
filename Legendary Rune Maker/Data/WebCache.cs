@@ -51,7 +51,7 @@ namespace Legendary_Rune_Maker.Data
 
         public static bool InTestMode { get; set; }
         
-        private static void Init()
+        public static void Init()
         {
             if (HasInit)
                 return;

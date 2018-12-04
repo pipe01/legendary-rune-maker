@@ -24,7 +24,6 @@ namespace Legendary_Rune_Maker.Data
         public int ConfigVersion { get; set; } = LatestVersion;
 
         public bool CheckUpdatesBeforeStartup { get; set; } = true;
-        public bool LoadCacheBeforeStartup { get; set; } = true;
         public string CultureName { get; set; }
         public bool MinimizeToTaskbar { get; set; } = true;
 
