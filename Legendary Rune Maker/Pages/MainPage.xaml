@@ -8,7 +8,7 @@
       xmlns:data="clr-namespace:Legendary_Rune_Maker.Data"
       xmlns:loc="clr-namespace:Legendary_Rune_Maker.Locale"
       mc:Ignorable="d" Initialized="Page_Initialized"
-      Width="{x:Static local:MainPage.BaseWidth}" Height="{x:Static local:MainPage.BaseHeight}"
+      Width="{x:Static local:MainPage.ExpandWidth}" Height="{x:Static local:MainPage.ExpandHeight}"
       Title="MainPage">
 
     <Page.Style>
@@ -20,11 +20,6 @@
 
                         <BeginStoryboard x:Name="EnterBegin">
                             <Storyboard>
-                                <!--<DoubleAnimation To="{x:Static local:MainPage.ExpandWidth}" Duration="0:0:0.18" Storyboard.TargetProperty="Width">
-                                    <DoubleAnimation.EasingFunction>
-                                        <QuadraticEase EasingMode="EaseOut" />
-                                    </DoubleAnimation.EasingFunction>
-                                </DoubleAnimation>-->
                                 <DoubleAnimation To="{x:Static local:MainPage.ExpandHeight}" Duration="0:0:0.18" Storyboard.TargetProperty="Height">
                                     <DoubleAnimation.EasingFunction>
                                         <QuadraticEase EasingMode="EaseOut" />
@@ -39,11 +34,6 @@
 
                         <BeginStoryboard x:Name="ExitBegin">
                             <Storyboard>
-                                <!--<DoubleAnimation To="{x:Static local:MainPage.BaseWidth}" Duration="0:0:0.18" Storyboard.TargetProperty="Width">
-                                    <DoubleAnimation.EasingFunction>
-                                        <QuadraticEase EasingMode="EaseOut" />
-                                    </DoubleAnimation.EasingFunction>
-                                </DoubleAnimation>-->
                                 <DoubleAnimation To="{x:Static local:MainPage.BaseHeight}" Duration="0:0:0.18" Storyboard.TargetProperty="Height">
                                     <DoubleAnimation.EasingFunction>
                                         <QuadraticEase EasingMode="EaseOut" />
@@ -152,25 +142,43 @@
         <controls:RuneTreeControl x:Name="Tree" Grid.Column="1" Width="475" Height="245" HorizontalAlignment="Left"
                                       VerticalAlignment="Top" Margin="10 25 10 10" SelectionChanged="Tree_SelectedRunesChanged" />
 
-        <Grid Grid.Column="1" Height="44" VerticalAlignment="Bottom" Width="500">
+        <Grid Grid.Column="1" Height="88" VerticalAlignment="Bottom" Width="500">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
 
-            <Button x:Name="Clear" Grid.Column="1" Width="40" Margin="5" Click="Clear_Click"
+            <Button x:Name="Share" Grid.Row="0" Grid.Column="3" Width="40" Margin="5" Click="Share_Click"
+                                    ToolTip="{x:Static loc:Text.Clear}">
+                <Image Source="{StaticResource Share}" Width="20" Height="20" />
+
+                <Button.ContextMenu>
+                    <ContextMenu>
+                        <ContextMenu.Items>
+                            <MenuItem x:Name="ShareItem" Header="{x:Static loc:Text.Share}" Click="ShareItem_Click" />
+                            <MenuItem x:Name="ImportItem" Header="{x:Static loc:Text.ImportClipboard}" Click="ImportItem_Click" />
+                        </ContextMenu.Items>
+                    </ContextMenu>
+                </Button.ContextMenu>
+            </Button>
+            
+            <Button x:Name="Clear" Grid.Row="1" Grid.Column="1" Width="40" Margin="5" Click="Clear_Click"
                                     ToolTip="{x:Static loc:Text.Clear}">
                 <Image Source="{StaticResource Delete}" Width="20" Height="20" />
             </Button>
 
-            <Button x:Name="Load" Grid.Column="2" HorizontalAlignment="Stretch" Margin="5"
+            <Button x:Name="Load" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Stretch" Margin="5"
                                     IsEnabled="False" Click="Load_Click" Width="40" ToolTip="{x:Static loc:Text.Download}">
                 <Image Width="20" Height="20" Source="{StaticResource Download}" />
             </Button>
 
-            <Button x:Name="Upload" Grid.Column="3" Margin="5" Click="Upload_Click" IsEnabled="False"
+            <Button x:Name="Upload" Grid.Row="1" Grid.Column="3" Margin="5" Click="Upload_Click" IsEnabled="False"
                     Width="40" HorizontalAlignment="Right" ToolTip="{x:Static loc:Text.UploadToClient}">
                 <controls:FadeImage x:Name="UploadImage" Width="20" Height="20" Source="{StaticResource Upload}" />
             </Button>

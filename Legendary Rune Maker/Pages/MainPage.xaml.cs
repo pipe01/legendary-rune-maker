@@ -13,6 +13,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -184,6 +185,7 @@ namespace Legendary_Rune_Maker.Pages
         private void Tree_SelectedRunesChanged(object sender, EventArgs e)
         {
             Upload.IsEnabled = ValidPage && GameState.CanUpload;
+            ShareItem.IsEnabled = ValidPage;
 
             if (ValidPage)
                 SaveRunePageToBook();
@@ -202,6 +204,7 @@ namespace Legendary_Rune_Maker.Pages
             {
                 SelectedChampion = 0;
                 ChampionImage.Source = (ImageSource)Application.Current.FindResource("NoChamp");
+                ImportItem.IsEnabled = false;
 
                 Tree.Clear();
                 return;
@@ -209,6 +212,7 @@ namespace Legendary_Rune_Maker.Pages
 
             SelectedChampion = champ.ID;
             ChampionImage.Source = await ImageCache.Instance.Get(champ.ImageURL);
+            ImportItem.IsEnabled = true;
 
             UpdateRunePageFromRuneBook();
         }
@@ -402,6 +406,72 @@ namespace Legendary_Rune_Maker.Pages
         private void AttachChk_Unchecked(object sender, RoutedEventArgs e)
         {
             Actuator.Enabled = false;
+        }
+
+        private async void Share_Click(object sender, RoutedEventArgs e)
+        {
+            Share.ContextMenu.IsOpen = true;
+
+            ImportItem.IsEnabled = ImportItem.IsEnabled && (await GetClipboard()).Success;
+        }
+        
+        private void ShareItem_Click(object sender, RoutedEventArgs e)
+        {
+            string str = string.Join(",", Page.RuneIDs);
+            Clipboard.SetText(Convert.ToBase64String(Encoding.UTF8.GetBytes(str)));
+
+            ShowNotification(Text.Done, Text.PageCopiedToClipboard, NotificationType.Success);
+        }
+
+        private async void ImportItem_Click(object sender, RoutedEventArgs e)
+        {
+            string str = Clipboard.GetText();
+
+            var result = await GetClipboard();
+
+            if (!result.Success)
+                ShowNotification(Text.InvalidImportFormatTitle, Text.InvalidImportFormatMsg, NotificationType.Error);
+
+            Tree.SetPage(result.Result);
+            return;
+        }
+
+        private async Task<(bool Success, RunePage Result)> GetClipboard()
+        {
+            string str = Clipboard.GetText();
+
+            if (string.IsNullOrWhiteSpace(str))
+                goto no;
+
+            try
+            {
+                str = Encoding.UTF8.GetString(Convert.FromBase64String(str));
+            }
+            catch (FormatException)
+            {
+                goto no;
+            }
+
+            string[] parts = str.Split(',');
+
+            if (parts.Length != 9)
+                goto no;
+
+            int[] ids = parts.Select(o => int.TryParse(o, out var i) ? i : -1).ToArray();
+
+            if (ids.Contains(-1))
+                goto no;
+
+            int primary = (await Riot.GetRuneTrees()).FirstOrDefault(o => o.Slots.Any(i => i.Runes.Any(j => j.ID == ids[0])))?.ID ?? -1;
+            int secondary = (await Riot.GetRuneTrees()).FirstOrDefault(o => o.Slots.Any(i => i.Runes.Any(j => j.ID == ids[4])))?.ID ?? -1;
+
+            if (primary == -1 || secondary == -1)
+                goto no;
+            
+            return (true, new RunePage(ids, primary, secondary, SelectedChampion, SelectedPosition));
+
+            no:
+            return (false, null);
         }
     }
 }

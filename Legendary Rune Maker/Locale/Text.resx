@@ -223,8 +223,8 @@
   <data name="Language" xml:space="preserve">
     <value>Language:</value>
   </data>
-  <data name="LoadCacheBeforeStartup" xml:space="preserve">
-    <value>Load cache before startup</value>
+  <data name="Done" xml:space="preserve">
+    <value>Done</value>
   </data>
   <data name="Restart" xml:space="preserve">
     <value>Restart</value>
@@ -276,5 +276,20 @@
   </data>
   <data name="SetSkillOrderTooltip" xml:space="preserve">
     <value>If uploading item sets is active, the skill order for your champion will be appended to the first item set block. If it isn't, a new item set will be created, showing the skill order.</value>
+  </data>
+  <data name="PageCopiedToClipboard" xml:space="preserve">
+    <value>This rune page has been copied to your clipboard</value>
+  </data>
+  <data name="ImportClipboard" xml:space="preserve">
+    <value>Import from clipboard</value>
+  </data>
+  <data name="InvalidImportFormatMsg" xml:space="preserve">
+    <value>Make sure the string is in your clipboard</value>
+  </data>
+  <data name="InvalidImportFormatTitle" xml:space="preserve">
+    <value>Invalid rune page format</value>
+  </data>
+  <data name="Share" xml:space="preserve">
+    <value>Share</value>
   </data>
 </root>

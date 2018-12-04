@@ -205,6 +205,15 @@ namespace Legendary_Rune_Maker.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Done.
+        /// </summary>
+        public static string Done {
+            get {
+                return ResourceManager.GetString("Done", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Load from internet.
         /// </summary>
         public static string Download {
@@ -232,6 +241,15 @@ namespace Legendary_Rune_Maker.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Import from clipboard.
+        /// </summary>
+        public static string ImportClipboard {
+            get {
+                return ResourceManager.GetString("ImportClipboard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to In champ select.
         /// </summary>
         public static string InChampSelect {
@@ -241,20 +259,29 @@ namespace Legendary_Rune_Maker.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Make sure the string is in your clipboard.
+        /// </summary>
+        public static string InvalidImportFormatMsg {
+            get {
+                return ResourceManager.GetString("InvalidImportFormatMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid rune page format.
+        /// </summary>
+        public static string InvalidImportFormatTitle {
+            get {
+                return ResourceManager.GetString("InvalidImportFormatTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Language:.
         /// </summary>
         public static string Language {
             get {
                 return ResourceManager.GetString("Language", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Load cache before startup.
-        /// </summary>
-        public static string LoadCacheBeforeStartup {
-            get {
-                return ResourceManager.GetString("LoadCacheBeforeStartup", resourceCulture);
             }
         }
         
@@ -376,6 +403,15 @@ namespace Legendary_Rune_Maker.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This rune page has been copied to your clipboard.
+        /// </summary>
+        public static string PageCopiedToClipboard {
+            get {
+                return ResourceManager.GetString("PageCopiedToClipboard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Downloaded from {0}.
         /// </summary>
         public static string PageNotSetDownloaded {
@@ -462,6 +498,15 @@ namespace Legendary_Rune_Maker.Locale {
         public static string SetSkillOrderTooltip {
             get {
                 return ResourceManager.GetString("SetSkillOrderTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Share.
+        /// </summary>
+        public static string Share {
+            get {
+                return ResourceManager.GetString("Share", resourceCulture);
             }
         }
         

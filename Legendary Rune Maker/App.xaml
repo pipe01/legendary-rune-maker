@@ -174,7 +174,17 @@
                 </DrawingGroup>
             </DrawingImage.Drawing>
         </DrawingImage>
-        
+
+        <DrawingImage x:Key="Share">
+            <DrawingImage.Drawing>
+                <DrawingGroup>
+                    <DrawingGroup>
+                        <GeometryDrawing Brush="{StaticResource Normal}" Geometry="F1 M507.45,507.45z M0,0z M408,178.5C387.6,178.5,369.75,186.15,357,198.9L175.95,94.35C178.5,89.25 178.5,81.6 178.5,76.5 178.5,33.15 145.35,0 102,0 58.65,0 25.5,33.15 25.5,76.5 25.5,119.85 58.65,153 102,153 122.4,153 140.25,145.35 153,132.6L334.05,237.15C331.5,242.25 331.5,249.9 331.5,255 331.5,260.1 331.5,267.75 334.05,272.85L153,379.95C140.25,367.2 122.4,359.55 102,359.55 61.2,359.55 28.05,392.7 28.05,433.5 28.05,474.3 61.2,507.45 102,507.45 142.8,507.45 175.95,474.3 175.95,433.5 175.95,428.4 175.95,423.3 173.4,415.65L354.45,308.55C367.2,321.3 385.05,328.95 405.45,328.95 448.8,328.95 481.95,295.8 481.95,252.45 481.95,209.1 451.35,178.5 408,178.5z" />
+                    </DrawingGroup>
+                </DrawingGroup>
+            </DrawingImage.Drawing>
+        </DrawingImage>
+
         <BitmapImage x:Key="BgVoid" UriSource="Images/background.png" />
         <BitmapImage x:Key="BgBlue" UriSource="Images/default-bg.jpg" />
         <BitmapImage x:Key="BgForest" UriSource="Images/forest-bg.png" />

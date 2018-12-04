@@ -216,8 +216,8 @@
   <data name="CheckUpdatesAtStartup" xml:space="preserve">
     <value>Comprobar actualizaciones al iniciar</value>
   </data>
-  <data name="LoadCacheBeforeStartup" xml:space="preserve">
-    <value>Cargar caché antes de iniciar</value>
+  <data name="Done" xml:space="preserve">
+    <value>Hecho</value>
   </data>
   <data name="Restart" xml:space="preserve">
     <value>Reiniciar</value>
@@ -272,5 +272,20 @@
   </data>
   <data name="SetSkillOrderTooltip" xml:space="preserve">
     <value>Si la opción de cargar conjuntos de objetos está activa, el order de habilidades se añadirá a dicho conjunto. Si no, se creará un nuevo conjunto, mostrando el orden de habilidades.</value>
+  </data>
+  <data name="PageCopiedToClipboard" xml:space="preserve">
+    <value>Esta página ha sido copiada a tu portapapeles</value>
+  </data>
+  <data name="InvalidImportFormatMsg" xml:space="preserve">
+    <value>Asegúrate de que lo has copiado</value>
+  </data>
+  <data name="InvalidImportFormatTitle" xml:space="preserve">
+    <value>Formato de página inválido</value>
+  </data>
+  <data name="ImportClipboard" xml:space="preserve">
+    <value>Importar del portapapeles</value>
+  </data>
+  <data name="Share" xml:space="preserve">
+    <value>Compartir</value>
   </data>
 </root>
