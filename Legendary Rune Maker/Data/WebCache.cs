@@ -27,9 +27,11 @@ namespace Legendary_Rune_Maker.Data
         private const string CachePath = "cache/data.json";
 
         private static CacheData Data = new CacheData();
-        private static HttpClient Client => new HttpClient();
         private static object WriteLock = new object();
-        
+        private static bool HasInit = false;
+
+        private static HttpClient Client => new HttpClient();
+
         private static readonly JsonSerializerSettings JsonSettings = new JsonSerializerSettings
         {
             TypeNameHandling = TypeNameHandling.All
@@ -47,8 +49,20 @@ namespace Legendary_Rune_Maker.Data
             set => Data.CultureName = value;
         }
 
-        static WebCache()
+        public static bool InTestMode { get; set; }
+        
+        private static void Init()
         {
+            if (HasInit)
+                return;
+
+            HasInit = true;
+
+            if (InTestMode)
+                return;
+
+            LogTo.Debug("Initializing WebCache");
+
             if (!File.Exists(CachePath))
             {
                 Directory.CreateDirectory(Path.GetDirectoryName(CachePath));
@@ -64,6 +78,11 @@ namespace Legendary_Rune_Maker.Data
 
         private static void Save()
         {
+            if (InTestMode)
+                return;
+
+            Init();
+
             LogTo.Debug("Saving web cache");
 
             string text;
@@ -77,6 +96,7 @@ namespace Legendary_Rune_Maker.Data
 
         public static void Clear()
         {
+            Init();
             LogTo.Debug("Clearing web cache");
 
             Data = new CacheData();
@@ -85,6 +105,7 @@ namespace Legendary_Rune_Maker.Data
 
         public static async Task<string> String(string url, HttpClient client = null, bool soft = false)
         {
+            Init();
             LogTo.Debug("Cache string requested (Soft={0}): {1}", soft, url);
 
             var dic = soft ? Data.SoftFileCache : Data.FileCache;
@@ -113,6 +134,7 @@ namespace Legendary_Rune_Maker.Data
         
         public static async Task<T> Json<T>(string url, HttpClient client = null, bool soft = false)
         {
+            Init();
             LogTo.Debug("Cache json object requested (Soft={0}): {1}", soft, url);
 
             var dic = soft ? Data.SoftObjectCache : Data.ObjectCache;
@@ -136,6 +158,7 @@ namespace Legendary_Rune_Maker.Data
 
         public static async Task<T> CustomJson<T>(string url, Func<JObject, T> converter, HttpClient client = null, bool soft = false)
         {
+            Init();
             LogTo.Debug("Cache custom json object requested (Soft={0}): {1}", soft, url);
 
             var dic = soft ? Data.SoftObjectCache : Data.ObjectCache;
