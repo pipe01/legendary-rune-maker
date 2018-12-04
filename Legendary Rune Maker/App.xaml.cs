@@ -95,9 +95,7 @@ namespace Legendary_Rune_Maker
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-
-            throw new Exception("An exception");
-
+            
             LoL.BindNinject(Container);
 
             Container.Bind<Config>().ToMethod(o => Config.Default);
