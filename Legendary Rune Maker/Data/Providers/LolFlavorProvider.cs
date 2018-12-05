@@ -47,6 +47,9 @@ namespace Legendary_Rune_Maker.Data.Providers
 
         public override async Task<ItemSet> GetItemSet(int championId, Position position)
         {
+            if (position == Position.Fill)
+                position = (await GetPossibleRoles(championId))[0];
+
             string champ = Riot.GetChampion(championId).Key;
             var json = await WebCache.String($"http://lolflavor.com/champions/{champ}/Recommended/{champ}_{PositionToName[position]}_scrape.json", soft: true);
 
