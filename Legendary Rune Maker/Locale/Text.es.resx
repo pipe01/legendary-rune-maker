@@ -268,7 +268,7 @@
     <value>Buscar</value>
   </data>
   <data name="SetSkillOrder" xml:space="preserve">
-    <value>Cargar order de habilidad desde</value>
+    <value>Cargar orden de habilidad desde</value>
   </data>
   <data name="SetSkillOrderTooltip" xml:space="preserve">
     <value>Si la opción de cargar conjuntos de objetos está activa, el order de habilidades se añadirá a dicho conjunto. Si no, se creará un nuevo conjunto, mostrando el orden de habilidades.</value>
