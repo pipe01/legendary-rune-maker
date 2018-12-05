@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace Legendary_Rune_Maker.Utils
 {
-    public class Container<T>
+    public class Container<T> where T : class
     {
         public T Value { get; set; }
+        public bool HasValue => Value != null;
 
         public Container()
         {

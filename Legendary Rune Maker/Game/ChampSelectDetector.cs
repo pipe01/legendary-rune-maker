@@ -65,7 +65,7 @@ namespace Legendary_Rune_Maker.Game
         {
             Session = data;
 
-            if (eventType == EventType.Create)
+            if (eventType == EventType.Create || (eventType == EventType.Update && !State.HasValue))
             {
                 State.Value = new Actuator.State();
                 GameState.State.Fire(GameTriggers.EnterChampSelect);
