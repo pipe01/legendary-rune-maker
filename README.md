@@ -31,8 +31,10 @@ A rune maker for League of Legends that also offers a bunch of automation option
 | Runes.lol   | ![](./table_mark.png) |           |             |
 | U.GG        | ![](./table_mark.png) | ![](./table_mark.png) | ![](./table_mark.png) |
 
-![](https://i.imgur.com/IeWsVpL.png)
-![](https://i.imgur.com/qu7ccht.png)
+# Screenshots
+
+![](https://i.imgur.com/TuUbid4.png)
+![](https://i.imgur.com/Ltv3490.png)
 
 # Credits
 * [@Sudravirodhin](https://github.com/sudravirodhin) for helping me a ton debugging the app and suggesting new features.
