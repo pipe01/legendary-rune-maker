@@ -198,7 +198,7 @@ namespace Legendary_Rune_Maker.Pages
 
         public Task SetChampion(int championId) => SetChampion(Riot.GetChampion(championId));
 
-        public async Task SetChampion(Champion champ)
+        public async Task SetChampion(Champion champ, bool canCopy = false)
         {
             if (champ == null)
             {
@@ -214,7 +214,7 @@ namespace Legendary_Rune_Maker.Pages
             ChampionImage.Source = await ImageCache.Instance.Get(champ.ImageURL);
             ImportItem.IsEnabled = true;
 
-            UpdateRunePageFromRuneBook();
+            UpdateRunePageFromRuneBook(canCopy);
         }
 
         private void Clear_Click(object sender, EventArgs e)
@@ -319,7 +319,7 @@ namespace Legendary_Rune_Maker.Pages
             var champ = await PickChampionPage.PickChampion(NavigationService, LoL.Champions);
 
             if (champ.Success)
-                await SetChampion(champ.Selected);
+                await SetChampion(champ.Selected, true);
         }
 
         private void Automation_Click(object sender, EventArgs e)

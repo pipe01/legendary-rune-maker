@@ -20,7 +20,7 @@ namespace Legendary_Rune_Maker
         void SetState(GameStates state);
         void ShowNotification(string title, string message = null, NotificationType type = NotificationType.Information);
         Task<RunePage> LoadPageFromDefaultProvider(int championId = -1);
-        Task SetChampion(Champion champ);
+        Task SetChampion(Champion champ, bool canCopy = false);
         Task SetChampion(int championId);
     }
 }
