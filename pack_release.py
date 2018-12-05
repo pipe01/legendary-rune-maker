@@ -17,7 +17,7 @@ def ziprelease(silent=False):
                 zfn = absfn[len(basedir) + len(os.sep):]  # relative path
 
                 if (zfn.startswith("cache") or zfn.endswith(".json") or
-                        zfn.endswith(".xml") or zfn.endswith(".pdb")):
+                        zfn.endswith(".xml")):
                     continue
 
                 if (not silent):
