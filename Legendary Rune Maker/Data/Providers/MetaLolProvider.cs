@@ -35,7 +35,7 @@ namespace Legendary_Rune_Maker.Data.Providers
 
         private static string GetChampionURL(int championId, Position? pos = null)
             => $"https://www.metalol.net/champions/lol-build-guide/solo-queue/{Riot.GetChampion(championId, "en_US").Name}"
-               + (pos != null ? "/" + PositionToName[pos.Value] : "");
+               + (pos != null && pos != Position.Fill ? "/" + PositionToName[pos.Value] : "");
 
         public override async Task<Position[]> GetPossibleRoles(int championId)
         {
