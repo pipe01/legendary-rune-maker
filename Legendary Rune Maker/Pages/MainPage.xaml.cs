@@ -427,12 +427,12 @@ namespace Legendary_Rune_Maker.Pages
         {
             string str = Clipboard.GetText();
 
-            var result = await GetClipboard();
+            var (success, result) = await GetClipboard();
 
-            if (!result.Success)
+            if (!success)
                 ShowNotification(Text.InvalidImportFormatTitle, Text.InvalidImportFormatMsg, NotificationType.Error);
 
-            Tree.SetPage(result.Result);
+            Tree.SetPage(result);
             return;
         }
 
