@@ -26,10 +26,10 @@ namespace Legendary_Rune_Maker
         private bool Shown;
         private CancellationTokenSource CancelSource = new CancellationTokenSource();
 
-        private readonly MainWindow MainWindow;
-        private readonly MainPage MainPage;
+        private readonly Lazy<MainWindow> MainWindow;
+        private readonly Lazy<MainPage> MainPage;
 
-        public LoadingWindow(MainWindow mainWindow, MainPage mainPage)
+        public LoadingWindow(Lazy<MainWindow> mainWindow, Lazy<MainPage> mainPage)
         {
             this.MainWindow = mainWindow;
             this.MainPage = mainPage;
@@ -45,7 +45,7 @@ namespace Legendary_Rune_Maker
                 return;
             Shown = true;
             
-            MainWindow.SetMainPage(MainPage);
+            MainWindow.Value.SetMainPage(MainPage.Value);
 
             this.IsClosed = true;
             this.Close();
@@ -77,7 +77,7 @@ namespace Legendary_Rune_Maker
             if (WebCache.CacheGameVersion != await Riot.GetLatestVersionAsync()
                 || WebCache.CacheLocale != CultureInfo.CurrentCulture.Name)
             {
-                LogTo.Info("Clearing web cache due to a new LoL version being available");
+                LogTo.Info("Clearing web cache due to a new LoL version being available, or a language change");
                 WebCache.Clear();
 
                 WebCache.CacheGameVersion = await Riot.GetLatestVersionAsync();
