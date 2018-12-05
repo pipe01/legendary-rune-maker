@@ -50,6 +50,8 @@ namespace Legendary_Rune_Maker.Data
         public bool ShowSkillOrder { get; set; } = true;
         public string SkillOrderProvider { get; set; } = "U.GG";
 
+        public int DelayBeforeAction { get; set; } = 3000;
+
         
         public Dictionary<Position, int> ChampionsToPick { get; set; } = new Dictionary<Position, int>
         {

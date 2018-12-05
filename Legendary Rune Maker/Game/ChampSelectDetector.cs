@@ -117,8 +117,11 @@ namespace Legendary_Rune_Maker.Game
                     State.Value.HasPickedChampion = true;
                     LogTo.Debug("User must pick");
 
-                    if (Config.Default.AutoPickChampion)
+                    if (Config.AutoPickChampion)
+                    {
+                        await Task.Delay(Config.DelayBeforeAction);
                         await Actuator.PickChampion(CurrentPosition, myAction);
+                    }
                 }
             }
             else if (myAction.type == "ban" && !State.Value.HasBanned && Session.timer.phase.Contains("BAN"))
@@ -126,8 +129,9 @@ namespace Legendary_Rune_Maker.Game
                 State.Value.HasBanned = true;
                 LogTo.Debug("User must ban");
 
-                if (Config.Default.AutoBanChampion)
+                if (Config.AutoBanChampion)
                 {
+                    await Task.Delay(Config.DelayBeforeAction);
                     await Actuator.BanChampion(CurrentPosition, myAction, Session.myTeam);
                 }
             }
