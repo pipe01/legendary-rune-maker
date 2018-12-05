@@ -418,8 +418,9 @@ namespace Legendary_Rune_Maker.Pages
         private void ShareItem_Click(object sender, RoutedEventArgs e)
         {
             string str = string.Join(",", Page.RuneIDs);
-            Clipboard.SetText(Convert.ToBase64String(Encoding.UTF8.GetBytes(str)));
-
+            byte[] data = Page.RuneIDs.SelectMany(o => BitConverter.GetBytes((short)o)).ToArray();
+            Clipboard.SetText(Convert.ToBase64String(data));
+            
             ShowNotification(Text.Done, Text.PageCopiedToClipboard, NotificationType.Success);
         }
 
@@ -443,25 +444,22 @@ namespace Legendary_Rune_Maker.Pages
             if (string.IsNullOrWhiteSpace(str))
                 goto no;
 
+            byte[] data;
+
             try
             {
-                str = Encoding.UTF8.GetString(Convert.FromBase64String(str));
+                data = Convert.FromBase64String(str);
             }
             catch (FormatException)
             {
                 goto no;
             }
 
-            string[] parts = str.Split(',');
-
-            if (parts.Length != 9)
+            if (data.Length != sizeof(short) * 9)
                 goto no;
 
-            int[] ids = parts.Select(o => int.TryParse(o, out var i) ? i : -1).ToArray();
-
-            if (ids.Contains(-1))
-                goto no;
-
+            int[] ids = Enumerable.Range(0, 9).Select(i => (int)BitConverter.ToInt16(data, i * sizeof(short))).ToArray();
+            
             int primary = (await Riot.GetRuneTrees()).FirstOrDefault(o => o.Slots.Any(i => i.Runes.Any(j => j.ID == ids[0])))?.ID ?? -1;
             int secondary = (await Riot.GetRuneTrees()).FirstOrDefault(o => o.Slots.Any(i => i.Runes.Any(j => j.ID == ids[4])))?.ID ?? -1;
 
