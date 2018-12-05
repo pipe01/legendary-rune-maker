@@ -18,6 +18,8 @@ A rune maker for League of Legends that also offers a bunch of automation option
 * Shows you how to level up your skills, taken from [u.gg](https://u.gg), [champion.gg](https://champion.gg), [metalol.net](http://metalol.net) or [op.gg](https://op.gg).
 * Always up-to-date on the latest LoL patch.
 
+*Hint: hold shift when selecting a champion or position to copy the current page over*
+
 ![](https://i.imgur.com/IeWsVpL.png)
 ![](https://i.imgur.com/qu7ccht.png)
 
