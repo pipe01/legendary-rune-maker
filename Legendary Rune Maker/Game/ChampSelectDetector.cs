@@ -84,7 +84,12 @@ namespace Legendary_Rune_Maker.Game
             }
 
             UpdateMainPage();
-
+            
+            if (!State.HasValue)
+            {
+                LogTo.Error("State is empty!");
+                return;
+            }
 
             if (PlayerSelection != null && Config.AutoPickSumms && !State.Value.HasPickedSumms)
             {
