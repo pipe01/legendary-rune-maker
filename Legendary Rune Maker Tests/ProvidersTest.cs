@@ -18,7 +18,8 @@ namespace Legendary_Rune_Maker_Tests
             [64] = Position.Jungle, //Lee Sin
             [84] = Position.Mid, //Akali
             [18] = Position.Bottom, //Tristana
-            [16] = Position.Support //Soraka
+            [16] = Position.Support, //Soraka
+            [240] = Position.Fill //Kled
         };
 
         private static object[] GetTestProviders(Provider.Options options)
