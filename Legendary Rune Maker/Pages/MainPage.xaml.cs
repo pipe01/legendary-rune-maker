@@ -362,20 +362,6 @@ namespace Legendary_Rune_Maker.Pages
             
             await Actuator.Init();
             await SetChampion(null);
-
-            if (Config.Default.LockLoadProvider == null)
-            {
-                Config.Default.LockLoadProvider =
-                    Actuator.RuneProviders.First(o => o.Supports(Provider.Options.RunePages) && !(o is ClientProvider)).Name;
-                Config.Default.Save();
-            }
-            
-            if (Config.Default.ItemSetProvider == null)
-            {
-                Config.Default.ItemSetProvider =
-                    Actuator.RuneProviders.First(o => o.Supports(Provider.Options.ItemSets)).Name;
-                Config.Default.Save();
-            }
         }
 
         public void ShowNotification(string title, string message = null, NotificationType type = NotificationType.Information)

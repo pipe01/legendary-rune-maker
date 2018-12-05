@@ -31,7 +31,7 @@ namespace Legendary_Rune_Maker.Data
 
         public bool UploadOnLock { get; set; } = true;
         public bool LoadOnLock { get; set; } = true;
-        public string LockLoadProvider { get; set; }
+        public string LockLoadProvider { get; set; } = "U.GG";
 
         public bool AutoPickChampion { get; set; }
         public bool DisablePickChampion { get; set; } = true;
@@ -43,12 +43,12 @@ namespace Legendary_Rune_Maker.Data
         public bool DisablePickSumms { get; set; } = true;
 
         public bool SetItemSet { get; set; } = true;
-        public string ItemSetProvider { get; set; }
+        public string ItemSetProvider { get; set; } = "U.GG";
         public bool KeepItemSets { get; set; }
         public string LastItemSetUid { get; set; }
 
-        public bool ShowSkillOrder { get; set; }
-        public string SkillOrderProvider { get; set; }
+        public bool ShowSkillOrder { get; set; } = true;
+        public string SkillOrderProvider { get; set; } = "U.GG";
 
         
         public Dictionary<Position, int> ChampionsToPick { get; set; } = new Dictionary<Position, int>
