@@ -155,7 +155,7 @@
             </Grid.RowDefinitions>
 
             <Button x:Name="Share" Grid.Row="0" Grid.Column="3" Width="40" Margin="5" Click="Share_Click"
-                                    ToolTip="{x:Static loc:Text.Clear}">
+                                    ToolTip="{x:Static loc:Text.Share}">
                 <Image Source="{StaticResource Share}" Width="20" Height="20" />
 
                 <Button.ContextMenu>
