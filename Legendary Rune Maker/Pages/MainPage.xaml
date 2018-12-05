@@ -8,7 +8,7 @@
       xmlns:data="clr-namespace:Legendary_Rune_Maker.Data"
       xmlns:loc="clr-namespace:Legendary_Rune_Maker.Locale"
       mc:Ignorable="d" Initialized="Page_Initialized"
-      Width="{x:Static local:MainPage.ExpandWidth}" Height="{x:Static local:MainPage.ExpandHeight}"
+      Width="{x:Static local:MainPage.BaseWidth}" Height="{x:Static local:MainPage.BaseHeight}"
       Title="MainPage">
 
     <Page.Style>
