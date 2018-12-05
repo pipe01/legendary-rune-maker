@@ -417,7 +417,6 @@ namespace Legendary_Rune_Maker.Pages
         
         private void ShareItem_Click(object sender, RoutedEventArgs e)
         {
-            string str = string.Join(",", Page.RuneIDs);
             byte[] data = Page.RuneIDs.SelectMany(o => BitConverter.GetBytes((short)o)).ToArray();
             Clipboard.SetText(Convert.ToBase64String(data));
             
