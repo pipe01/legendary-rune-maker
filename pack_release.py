@@ -3,6 +3,8 @@ from __future__ import with_statement
 import os
 from contextlib import closing
 from zipfile import ZipFile, ZIP_DEFLATED
+import re
+import subprocess
 
 
 def ziprelease(silent=False):
@@ -26,6 +28,23 @@ def ziprelease(silent=False):
                 z.write(absfn, zfn)
 
 
+def getVersion():
+    return [x for x in
+            [re.findall(r"(?<=AssemblyVersion\(\").*(?=\")", line) for line in open("./Legendary Rune Maker/Properties/AssemblyInfo.cs")]
+            if len(x) == 1][0][0]
+
+
+def setSetupVersion(version):
+    with open('./setup/script.iss', 'r') as f:
+        content = f.read()
+        content = re.sub(r'(?<=MyAppVersion \").*(?=\")', version, content, flags = re.M)
+
+    with open('./setup/script.iss', 'w') as f:
+        f.write(content)
+
+
+print("Building version " + getVersion() + "...")
+
 code = os.system("msbuild /p:Configuration=Release /v:m")
 
 if (code != 0):
@@ -35,3 +54,12 @@ if (code != 0):
 
 print("Packing...")
 ziprelease(True)
+
+print("Setting version on InnoSetup script...")
+setSetupVersion(getVersion())
+
+print("Compiling setup...")
+subprocess.run("C:/Program Files (x86)/Inno Setup 5/ISCC.exe setup/script.iss")
+
+print()
+input("Done")
