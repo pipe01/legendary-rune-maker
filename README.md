@@ -17,6 +17,7 @@ A rune maker for League of Legends that also offers a bunch of automation option
 * (Down)load an appropiate item set automatically.
 * Shows you how to level up your skills.
 * Always up-to-date on the latest LoL patch.
+* Share rune pages with a single short text string.
 
 *Hint: hold shift when selecting a champion or position to copy the current page over*
 
