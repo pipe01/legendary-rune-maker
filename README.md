@@ -3,7 +3,7 @@
 
 [![Donate](https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif)](https://www.paypal.me/pipe01)
 
-A rune maker for League of Legends that also offers a bunch of automation options.
+A rune maker for League of Legends that also offers a bunch of automation options. Download latest release [here](https://github.com/pipe01/legendary-rune-maker/releases/latest).
 
 # Features
 * Copy and create rune pages without the sluggishness of the LoL client.
