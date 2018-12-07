@@ -13,6 +13,8 @@ namespace Legendary_Rune_Maker.Game
 {
     public class ReadyCheckDetector : Detector
     {
+        private bool IsAccepting;
+
         private readonly Config Config;
 
         public ReadyCheckDetector(ILoL lol, Config config) : base(lol)
@@ -31,8 +33,21 @@ namespace Legendary_Rune_Maker.Game
         {
             if (eventType == EventType.Update && data.state == "InProgress" && data.playerResponse == "None" && Config.AutoAccept)
             {
+                IsAccepting = true;
+
                 LogTo.Info("Accepting matchmaking...");
-                await LoL.Matchmaking.PostReadyCheckAccept();
+
+                await Task.Delay(5000); //TODO Add config for this
+
+                try
+                {
+                    await LoL.Matchmaking.PostReadyCheckAccept();
+                }
+                finally
+                {
+                    IsAccepting = false;
+                }
+
                 LogTo.Info("Accepted matchmaking");
 
                 Notify("Accepted match", null, NotificationType.Success);
