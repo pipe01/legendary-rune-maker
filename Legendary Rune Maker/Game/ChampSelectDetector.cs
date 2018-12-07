@@ -93,15 +93,26 @@ namespace Legendary_Rune_Maker.Game
                 return;
             }
 
-            if (PlayerSelection != null && Config.AutoPickSumms && !State.Value.HasPickedSumms)
-            {
-                State.Value.HasPickedSumms = true;
+            var actions = data.actions.SelectMany(o => o).ToArray();
 
-                await Actuator.PickSummoners(CurrentPosition);
+            if (PlayerSelection != null)
+            {
+                if (Config.AutoPickSumms && !State.Value.HasPickedSumms)
+                {
+                    State.Value.HasPickedSumms = true;
+
+                    await Actuator.PickSummoners(CurrentPosition);
+                }
+
+                if (!State.Value.HasSetIntent)
+                {
+                    State.Value.HasSetIntent = true;
+
+                    var action = actions.FirstOrDefault(o => o.actorCellId == data.localPlayerCellId && o.type == "pick" && !o.completed);
+                    await Actuator.PickChampion(CurrentPosition, action, true);
+                }
             }
 
-
-            var actions = data.actions.SelectMany(o => o).ToArray();
             var myAction = actions.FirstOrDefault(o => o.actorCellId == data.localPlayerCellId && !o.completed);
 
             if (myAction?.completed != false)
@@ -147,8 +158,8 @@ namespace Legendary_Rune_Maker.Game
 
                     if (Config.AutoPickChampion)
                     {
-                        await Task.Delay(Math.Max(Config.DelayBeforeAction, MinimumActionDelay));
-                        await Actuator.PickChampion(CurrentPosition, myAction);
+                        await Task.Delay(Config.DelayBeforeAction);
+                        await Actuator.PickChampion(CurrentPosition, myAction, false);
                     }
                 }
             }

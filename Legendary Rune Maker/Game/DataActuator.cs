@@ -20,9 +20,9 @@ namespace Legendary_Rune_Maker.Game
     {
         private static readonly int[] SkillOrderBlockContent = new[] { 3044, 3508, 1058, 3031, 3134 };
 
-        public async Task PickChampion(Position pos, LolChampSelectChampSelectAction myAction)
+        public async Task PickChampion(Position pos, LolChampSelectChampSelectAction myAction, bool intent)
         {
-            LogTo.Debug("Trying to pick champion");
+            LogTo.Debug("Trying to pick champion" + (intent ? " intent" : ""));
 
             Dictionary<Position, int> picks = Config.ChampionsToPick;
             var pickable = await LoL.ChampSelect.GetPickableChampions();
@@ -42,14 +42,15 @@ namespace Legendary_Rune_Maker.Game
                 LogTo.Info("Couldn't pick preferred champion");
 
                 //TODO Add translatable string
-                Main.ShowNotification("Couldn't pick any champion",
-                    "Maybe all of your selected champions were banned", NotificationType.Error);
+                if (!intent)
+                    Main.ShowNotification("Couldn't pick any champion",
+                        "Maybe all of your selected champions were banned", NotificationType.Error);
                 return;
             }
 
             LogTo.Debug("Candidate found, picking...");
             myAction.championId = preferredPick;
-            myAction.completed = true;
+            myAction.completed = !intent;
 
             try
             {
@@ -61,7 +62,7 @@ namespace Legendary_Rune_Maker.Game
                 LogTo.DebugException("Couldn't pick champion", ex);
             }
 
-            if (Config.DisablePickChampion)
+            if (Config.DisablePickChampion && !intent)
             {
                 LogTo.Debug("Unset auto pick champion");
 

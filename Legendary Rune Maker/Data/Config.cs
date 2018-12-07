@@ -1,5 +1,6 @@
 ﻿using Anotar.Log4Net;
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
@@ -13,7 +14,7 @@ namespace Legendary_Rune_Maker.Data
         public static Config Default { get; set; } = Load();
 
         private const string FilePath = "config.json";
-        private const int LatestVersion = 12;
+        private const int LatestVersion = 13;
 
         public static readonly string[] AvailableLanguages = new[]
         {
@@ -51,8 +52,9 @@ namespace Legendary_Rune_Maker.Data
         public string SkillOrderProvider { get; set; } = "U.GG";
 
         public int DelayBeforeAction { get; set; } = 3000;
+        public int DelayBeforeAcceptReady { get; set; } = 4000;
 
-        
+
         public Dictionary<Position, int> ChampionsToPick { get; set; } = new Dictionary<Position, int>
         {
             [Position.Fill] = 0,
@@ -83,6 +85,7 @@ namespace Legendary_Rune_Maker.Data
 
         [JsonIgnore]
         public CultureInfo Culture => new CultureInfo(this.CultureName);
+
 
         public void Save()
         {
