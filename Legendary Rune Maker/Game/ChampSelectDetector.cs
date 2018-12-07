@@ -13,6 +13,8 @@ namespace Legendary_Rune_Maker.Game
 {
     public class ChampSelectDetector : Detector
     {
+        private const int MinimumActionDelay = 5000;
+
         private LolChampSelectChampSelectSession Session;
 
         private LolChampSelectChampSelectPlayerSelection PlayerSelection
@@ -109,17 +111,43 @@ namespace Legendary_Rune_Maker.Game
 
             if (myAction.type == "pick" && !State.Value.HasPickedChampion)
             {
-                int index = Array.IndexOf(actions, myAction);
-                var prev = index > 0 ? actions[index - 1] : null;
+                bool pick = false;
 
-                if (prev == null || prev.completed)
+                if (data.actions.Where(o => o.All(i => i.type == "pick")).Count() == 1)
+                {
+                    //Blind pick mode
+
+                    if (data.actions.Count() > 1)
+                    {
+                        //There is a ban phase
+
+                        //Second-to-last
+                        var phaseBeforePick = data.actions.ElementAt(data.actions.Count() - 2);
+
+                        pick = phaseBeforePick.All(o => o.completed);
+                    }
+                    else
+                    {
+                        pick = true;
+                    }
+                }
+                else
+                {
+                    //Draft pick mode
+
+                    var nextAction = data.actions.Where(o => o.All(i => i.type == "pick") && !o.All(i => i.completed)).FirstOrDefault();
+
+                    pick = nextAction?.Any(o => o.actorCellId == data.localPlayerCellId) ?? false;
+                }
+
+                if (pick)
                 {
                     State.Value.HasPickedChampion = true;
                     LogTo.Debug("User must pick");
 
                     if (Config.AutoPickChampion)
                     {
-                        await Task.Delay(Config.DelayBeforeAction);
+                        await Task.Delay(Math.Max(Config.DelayBeforeAction, MinimumActionDelay));
                         await Actuator.PickChampion(CurrentPosition, myAction);
                     }
                 }
@@ -131,7 +159,7 @@ namespace Legendary_Rune_Maker.Game
 
                 if (Config.AutoBanChampion)
                 {
-                    await Task.Delay(Config.DelayBeforeAction);
+                    await Task.Delay(Math.Max(Config.DelayBeforeAction, MinimumActionDelay));
                     await Actuator.BanChampion(CurrentPosition, myAction, Session.myTeam);
                 }
             }
