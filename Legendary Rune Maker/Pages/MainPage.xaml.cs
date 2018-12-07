@@ -281,7 +281,22 @@ namespace Legendary_Rune_Maker.Pages
 
                 header.SubmenuOpened += async (_, __) =>
                 {
-                    var roles = await provider.GetPossibleRoles(SelectedChampion);
+                    Position[] roles;
+
+                    try
+                    {
+                        roles = await provider.GetPossibleRoles(SelectedChampion);
+                    }
+                    catch (Exception ex)
+                    {
+                        LogTo.ErrorException($"Failed to load possible positions from {provider.Name} for {Riot.GetChampion(SelectedChampion).Name}", ex);
+
+                        header.Items.Clear();
+                        header.Items.Add("Error");
+
+                        return;
+                    }
+
                     header.Items.Clear();
 
                     foreach (var role in roles)
