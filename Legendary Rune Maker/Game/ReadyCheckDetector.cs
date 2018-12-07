@@ -31,7 +31,8 @@ namespace Legendary_Rune_Maker.Game
 
         private async void ReadyCheckChanged(EventType eventType, LolMatchmakingMatchmakingReadyCheckResource data)
         {
-            if (eventType == EventType.Update && data.state == "InProgress" && data.playerResponse == "None" && Config.AutoAccept)
+            if (eventType == EventType.Update && data.state == "InProgress" && data.playerResponse == "None"
+                && Config.AutoAccept && !IsAccepting)
             {
                 IsAccepting = true;
 
