@@ -143,6 +143,7 @@
     <Compile Include="Game\ReadyCheckDetector.cs" />
     <Compile Include="LRM.cs" />
     <Compile Include="Utils\Container.cs" />
+    <Compile Include="Utils\Timer.cs" />
     <Compile Include="Windows\DebugProxyWindow.xaml.cs">
       <DependentUpon>DebugProxyWindow.xaml</DependentUpon>
     </Compile>

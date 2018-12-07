@@ -1,4 +1,5 @@
 ﻿using Anotar.Log4Net;
+using Legendary_Rune_Maker.Utils;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -112,10 +113,15 @@ namespace Legendary_Rune_Maker.Data
 
             if (!dic.TryGetValue(url, out var value))
             {
-                var response = await (client ?? Client).SendAsync(new HttpRequestMessage(HttpMethod.Get, url));
+                var (time, response) = await Timer.Time(() => (client ?? Client).SendAsync(new HttpRequestMessage(HttpMethod.Get, url)));
 
                 if (!response.IsSuccessStatusCode)
+                {
+                    LogTo.Error("Failed: {1}", url, response.StatusCode);
                     return null;
+                }
+
+                LogTo.Debug("Gotten in {0}", time);
 
                 value = await response.Content.ReadAsStringAsync();
 
