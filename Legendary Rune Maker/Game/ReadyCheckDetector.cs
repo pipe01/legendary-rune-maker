@@ -39,7 +39,7 @@ namespace Legendary_Rune_Maker.Game
                 LogTo.Info("Accepting matchmaking...");
                 Notify("Accepting match", null, NotificationType.Success);
 
-                await Task.Delay(5000); //TODO Add config for this
+                await Task.Delay(Config.DelayBeforeAcceptReady);
 
                 try
                 {
