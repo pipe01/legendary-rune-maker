@@ -31,7 +31,6 @@ namespace Legendary_Rune_Maker.Game
             var possiblePicks = new List<int>();
             possiblePicks.Add(picks[pos]);
             possiblePicks.Add(picks[Position.Fill]);
-            possiblePicks.AddRange(Enumerable.Range(0, (int)Position.UNSELECTED - 1).Select(o => picks[(Position)o]));
             LogTo.Debug("possiblePicks: {0}", string.Join(", ", picks.Values.ToArray()));
 
             //Get the first valid one
@@ -81,7 +80,6 @@ namespace Legendary_Rune_Maker.Game
             var possibleBans = new List<int>();
             possibleBans.Add(bans[pos]);
             possibleBans.Add(bans[Position.Fill]);
-            possibleBans.AddRange(Enumerable.Range(0, (int)Position.UNSELECTED - 1).Select(o => bans[(Position)o]));
             LogTo.Debug("possibleBans: {0}", string.Join(", ", possibleBans));
 
             int preferredBan = possibleBans.FirstOrDefault(bannable.championIds.Contains);
