@@ -37,6 +37,7 @@ namespace Legendary_Rune_Maker.Game
                 IsAccepting = true;
 
                 LogTo.Info("Accepting matchmaking...");
+                Notify("Accepting match", null, NotificationType.Success);
 
                 await Task.Delay(5000); //TODO Add config for this
 
@@ -50,8 +51,6 @@ namespace Legendary_Rune_Maker.Game
                 }
 
                 LogTo.Info("Accepted matchmaking");
-
-                Notify("Accepted match", null, NotificationType.Success);
             }
         }
     }
