@@ -22,6 +22,7 @@ namespace Legendary_Rune_Maker.Data
 
             [JsonIgnore]
             public IDictionary<string, string> SoftFileCache = new Dictionary<string, string>();
+            [JsonIgnore]
             public IDictionary<string, object> SoftObjectCache = new Dictionary<string, object>();
         }
 
