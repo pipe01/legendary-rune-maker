@@ -104,7 +104,7 @@ namespace Legendary_Rune_Maker.Game
                     await Actuator.PickSummoners(CurrentPosition);
                 }
 
-                if (!State.Value.HasSetIntent)
+                if (!State.Value.HasSetIntent && Config.AutoPickChampion)
                 {
                     State.Value.HasSetIntent = true;
 
