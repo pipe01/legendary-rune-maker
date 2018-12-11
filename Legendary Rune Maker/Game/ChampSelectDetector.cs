@@ -13,14 +13,33 @@ namespace Legendary_Rune_Maker.Game
 {
     public class ChampSelectDetector : Detector
     {
+        private struct SessionData
+        {
+            public LolChampSelectChampSelectSession Data { get; }
+
+            public bool IsARAM => Data.actions.Length == 0;
+
+            public LolChampSelectChampSelectPlayerSelection Player
+            {
+                get
+                {
+                    var @this = this; //wtf c#
+                    return Data.myTeam?.SingleOrDefault(o => o.cellId == @this.Data.localPlayerCellId);
+                }
+            }
+
+            public Position Position => Player?.assignedPosition.ToPosition() ?? Position.Fill;
+
+            public SessionData(LolChampSelectChampSelectSession data)
+            {
+                this.Data = data;
+            }
+        }
+
         private const int MinimumActionDelay = 5000;
 
-        private LolChampSelectChampSelectSession Session;
-
-        private LolChampSelectChampSelectPlayerSelection PlayerSelection
-            => Session.myTeam?.SingleOrDefault(o => o.cellId == Session.localPlayerCellId);
-        private Position CurrentPosition => PlayerSelection?.assignedPosition.ToPosition() ?? Position.Fill;
-
+        private SessionData Session;
+        
         private readonly Config Config;
         private readonly Actuator Actuator;
 
@@ -51,13 +70,13 @@ namespace Legendary_Rune_Maker.Game
                 var tasks = new List<Task>();
                 
                 if (Config.UploadOnLock)
-                    tasks.Add(Actuator.UploadRunePage(CurrentPosition, data));
+                    tasks.Add(Actuator.UploadRunePage(Session.Position, data));
                     
                 if (Config.ShowSkillOrder && !Config.SetItemSet)
-                    tasks.Add(Actuator.UploadSkillOrder(CurrentPosition, data));
+                    tasks.Add(Actuator.UploadSkillOrder(Session.Position, data));
                     
                 if (Config.SetItemSet)
-                    tasks.Add(Actuator.UploadItemSet(CurrentPosition, data));
+                    tasks.Add(Actuator.UploadItemSet(Session.Position, data));
 
                 await Task.WhenAll(tasks.ToArray());
             }
@@ -65,7 +84,7 @@ namespace Legendary_Rune_Maker.Game
 
         private async void ChampSelectUpdate(EventType eventType, LolChampSelectChampSelectSession data)
         {
-            Session = data;
+            Session = new SessionData(data);
 
             if (eventType == EventType.Create || (eventType == EventType.Update && !State.HasValue))
             {
@@ -95,27 +114,27 @@ namespace Legendary_Rune_Maker.Game
 
             var actions = data.actions.SelectMany(o => o).ToArray();
 
-            if (PlayerSelection != null)
+            if (Session.Player != null)
             {
                 if (Config.AutoPickSumms && !State.Value.HasPickedSumms)
                 {
                     State.Value.HasPickedSumms = true;
 
-                    await Actuator.PickSummoners(CurrentPosition);
+                    await Actuator.PickSummoners(Session.Position);
                 }
 
-                if (!State.Value.HasSetIntent && Config.AutoPickChampion)
+                if (!State.Value.HasSetIntent && Config.AutoPickChampion && !Session.IsARAM)
                 {
                     State.Value.HasSetIntent = true;
 
                     var action = actions.FirstOrDefault(o => o.actorCellId == data.localPlayerCellId && o.type == "pick" && !o.completed);
-                    await Actuator.PickChampion(CurrentPosition, action, true);
+                    await Actuator.PickChampion(Session.Position, action, true);
                 }
             }
 
             var myAction = actions.FirstOrDefault(o => o.actorCellId == data.localPlayerCellId && !o.completed);
 
-            if (myAction?.completed != false)
+            if (myAction?.completed != false || Session.IsARAM)
                 return;
 
             LogTo.Debug("Incomplete user action found");
@@ -159,11 +178,11 @@ namespace Legendary_Rune_Maker.Game
                     if (Config.AutoPickChampion)
                     {
                         await Task.Delay(Config.DelayBeforeAction);
-                        await Actuator.PickChampion(CurrentPosition, myAction, false);
+                        await Actuator.PickChampion(Session.Position, myAction, false);
                     }
                 }
             }
-            else if (myAction.type == "ban" && !State.Value.HasBanned && Session.timer.phase.Contains("BAN"))
+            else if (myAction.type == "ban" && !State.Value.HasBanned && Session.Data.timer.phase.Contains("BAN"))
             {
                 State.Value.HasBanned = true;
                 LogTo.Debug("User must ban");
@@ -171,7 +190,7 @@ namespace Legendary_Rune_Maker.Game
                 if (Config.AutoBanChampion)
                 {
                     await Task.Delay(Math.Max(Config.DelayBeforeAction, MinimumActionDelay));
-                    await Actuator.BanChampion(CurrentPosition, myAction, Session.myTeam);
+                    await Actuator.BanChampion(Session.Position, myAction, Session.Data.myTeam);
                 }
             }
         }
@@ -183,18 +202,18 @@ namespace Legendary_Rune_Maker.Game
 
             Actuator.Main.SafeInvoke(async () =>
             {
-                if (PlayerSelection != null)
+                if (Session.Player != null)
                 {
                     if (!State.Value.HasSetPositionUI)
                     {
-                        LogTo.Debug("Set position: {0}", CurrentPosition);
-                        Actuator.Main.SelectedPosition = CurrentPosition;
+                        LogTo.Debug("Set position: {0}", Session.Position);
+                        Actuator.Main.SelectedPosition = Session.Position;
                     }
 
-                    if (PlayerSelection.championId != 0)
+                    if (Session.Player.championId != 0)
                     {
-                        LogTo.Debug("Set champion: {0}", PlayerSelection.championId);
-                        await Actuator.Main.SetChampion(PlayerSelection.championId);
+                        LogTo.Debug("Set champion: {0}", Session.Player.championId);
+                        await Actuator.Main.SetChampion(Session.Player.championId);
                     }
                 }
             });

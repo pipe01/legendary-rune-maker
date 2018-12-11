@@ -290,7 +290,7 @@ namespace Legendary_Rune_Maker.Pages
                     catch (Exception ex)
                     {
                         LogTo.ErrorException($"Failed to load possible positions from {provider.Name} for {Riot.GetChampion(SelectedChampion).Name}", ex);
-
+                        
                         header.Items.Clear();
                         header.Items.Add("Error");
 
