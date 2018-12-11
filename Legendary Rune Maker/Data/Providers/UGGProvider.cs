@@ -65,7 +65,7 @@ namespace Legendary_Rune_Maker.Data.Providers
         {
             if (!ChampionData.TryGetValue(championId, out var data))
             {
-                string url = $"https://stats.u.gg/lol/{UGGApiVersion}/overview/{await GetLolUGGVersion()}/ranked_solo_5x5/{championId}/{await GetUGGOverviewVersion()}.json";
+                string url = $"https://stats2.u.gg/lol/{UGGApiVersion}/overview/{await GetLolUGGVersion()}/ranked_solo_5x5/{championId}/{await GetUGGOverviewVersion()}.json";
 
                 var json = JObject.Parse(await WebCache.String(url));
                 ChampionData[championId] = data = (JObject)json[OverviewWorld.ToString()][OverviewPlatPlus.ToString()];
