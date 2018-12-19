@@ -128,6 +128,7 @@ namespace Legendary_Rune_Maker.Game
                     State.Value.HasSetIntent = true;
 
                     var action = actions.FirstOrDefault(o => o.actorCellId == data.localPlayerCellId && o.type == "pick" && !o.completed);
+                    await Task.Delay(Config.DelayBeforeIntentSet);
                     await Actuator.PickChampion(Session.Position, action, true);
                 }
             }

@@ -14,7 +14,7 @@ namespace Legendary_Rune_Maker.Data
         public static Config Default { get; set; } = Load();
 
         private const string FilePath = "config.json";
-        private const int LatestVersion = 13;
+        private const int LatestVersion = 14;
 
         public static readonly string[] AvailableLanguages = new[]
         {
@@ -53,6 +53,7 @@ namespace Legendary_Rune_Maker.Data
 
         public int DelayBeforeAction { get; set; } = 3000;
         public int DelayBeforeAcceptReady { get; set; } = 4000;
+        public int DelayBeforeIntentSet { get; set; } = 4000;
 
 
         public Dictionary<Position, int> ChampionsToPick { get; set; } = new Dictionary<Position, int>
