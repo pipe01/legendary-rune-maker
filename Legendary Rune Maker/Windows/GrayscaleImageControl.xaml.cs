@@ -47,8 +47,9 @@ namespace Legendary_Rune_Maker
             InitializeComponent();
             
             var description = (View.ToolTip as DependencyObject).FindChild<RichTextBox>("Description");
+            string descNice = rune.RichLongDesc.Replace("&nbsp;", " ");
 
-            description.Document = XamlReader.Parse(rune.RichLongDesc) as FlowDocument;
+            description.Document = XamlReader.Parse(descNice) as FlowDocument;
 
             var paragraph = description.Document.Blocks.First() as Paragraph;
 
