@@ -39,16 +39,12 @@ namespace Legendary_Rune_Maker.Data
                 ("<br>", "<LineBreak/>"),
                 (@"<b>(.*?)<\/b>", "<Bold>$1</Bold>"),
                 (@"<i>(.*?)<\/i>", "<Italic>$1</Italic>"),
-                (@"<rules>(.*?)<\/rules>", "$1"),
-                (@"<scale.*?>(.*?)<\/scale.*?>", "$1"),
                 (@"<hr><\/hr>", "<Line/>"),
                 (@"<\/li>", "</li> "),
-                (@"<lol-uikit-tooltipped-keyword key='.*?'>(.*?)<\/lol-uikit-tooltipped-keyword>", "$1"),
                 (@"<font color='(.*?)'>(.*?)<\/font>", "<Run Foreground=\"$1\">$2</Run>"),
+                (@"<(.*?)( .*?)?>(?<content>.*?)<\/\1>", "${content}"), //Replace all remaining XML tags with just their content
             };
-
-            bool b = desc.Contains("Noxian");
-
+            
             foreach (var item in patterns)
             {
                 desc = Regex.Replace(desc, item.Pattern, item.Replacement, RegexOptions.None);

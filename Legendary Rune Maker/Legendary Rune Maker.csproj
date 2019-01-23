@@ -418,11 +418,11 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Anotar.Log4Net.Fody.4.6.7\build\Anotar.Log4Net.Fody.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Anotar.Log4Net.Fody.4.6.7\build\Anotar.Log4Net.Fody.props'))" />
-    <Error Condition="!Exists('..\packages\Fody.3.3.2\build\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Fody.3.3.2\build\Fody.targets'))" />
+    <Error Condition="!Exists('..\packages\Fody.3.3.5\build\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Fody.3.3.5\build\Fody.targets'))" />
   </Target>
-  <Import Project="..\packages\Fody.3.3.2\build\Fody.targets" Condition="Exists('..\packages\Fody.3.3.2\build\Fody.targets')" />
   <PropertyGroup>
     <PreBuildEvent>git rev-parse --abbrev-ref HEAD &gt; "$(ProjectDir)GitData.txt"
 git rev-parse HEAD &gt;&gt; "$(ProjectDir)GitData.txt"</PreBuildEvent>
   </PropertyGroup>
+  <Import Project="..\packages\Fody.3.3.5\build\Fody.targets" Condition="Exists('..\packages\Fody.3.3.5\build\Fody.targets')" />
 </Project>
