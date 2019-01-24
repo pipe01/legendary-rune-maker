@@ -16,7 +16,7 @@ using System.Windows;
 
 [assembly: ThemeInfo(ResourceDictionaryLocation.None, ResourceDictionaryLocation.SourceAssembly)]
 
-[assembly: AssemblyVersion("1.2.1")]
+[assembly: AssemblyVersion("1.2.2")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
 [assembly: log4net.Config.XmlConfigurator(ConfigFile = "log4net.config")]
