@@ -55,7 +55,7 @@ namespace Legendary_Rune_Maker
         private async void Window_Initialized(object sender, EventArgs e)
 #pragma warning restore CS1998
         {
-#if DEBUG
+#if !DEBUG
             if (Config.Default.CheckUpdatesBeforeStartup)
                 await CheckUpdates();
 #endif
