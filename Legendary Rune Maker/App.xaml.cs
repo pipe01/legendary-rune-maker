@@ -39,7 +39,7 @@ namespace Legendary_Rune_Maker
 
         private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
-            if (!Debugger.IsAttached || true)
+            if (!Debugger.IsAttached)
             {
                 var exception = e.ExceptionObject as Exception;
 

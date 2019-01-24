@@ -55,7 +55,7 @@ namespace Legendary_Rune_Maker
         private async void Window_Initialized(object sender, EventArgs e)
 #pragma warning restore CS1998
         {
-#if !DEBUG
+#if DEBUG
             if (Config.Default.CheckUpdatesBeforeStartup)
                 await CheckUpdates();
 #endif
@@ -94,11 +94,11 @@ namespace Legendary_Rune_Maker
             Progress.IsIndeterminate = true;
 
             var manager = new UpdateManager(
-                new GithubPackageResolver("pipe01", "legendary-rune-maker", "*.*.*"),
+                new GithubPackageResolver("pipe01", "legendary-rune-maker", "*.zip"),
                 new ZipPackageExtractor());
 
             var update = await await Task.WhenAny(
-                    Task.Delay(3000).ContinueWith<CheckForUpdatesResult>(_ => null),
+                    Task.Delay(3000000).ContinueWith<CheckForUpdatesResult>(_ => null),
                     manager.CheckForUpdatesAsync());
             
             if (update?.CanUpdate == true)
