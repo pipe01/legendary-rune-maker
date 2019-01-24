@@ -48,6 +48,8 @@ namespace Legendary_Rune_Maker.Data
         public bool KeepItemSets { get; set; }
         public string LastItemSetUid { get; set; }
 
+        public int LastRunePageId { get; set; }
+
         public bool ShowSkillOrder { get; set; } = true;
         public string SkillOrderProvider { get; set; } = "U.GG";
 
