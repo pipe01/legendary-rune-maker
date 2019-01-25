@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -45,6 +46,11 @@ namespace Legendary_Rune_Maker.Pages
         
         private void Restart_Click(object sender, RoutedEventArgs e)
         {
+            Restart();
+        }
+
+        private void Restart()
+        {
             Config.Default.Save();
 
             Process.Start(Assembly.GetExecutingAssembly().Location);
@@ -72,6 +78,22 @@ namespace Legendary_Rune_Maker.Pages
         {
             Config.Default.Save();
             NavigationService.GoBack();
+        }
+
+        private void ClearCache_Click(object sender, RoutedEventArgs e)
+        {
+            if (MessageBox.Show("Wipe cache? This will automatically restart the application.\n" +
+                    "Please note that it may take some time to regenerate the cache.", "Wipe cache?", MessageBoxButton.YesNoCancel) == MessageBoxResult.Yes)
+            {
+                try
+                {
+                    Directory.Delete(ImageCache.Instance.FullCachePath, true);
+                }
+                finally
+                {
+                    Restart();
+                }
+            }
         }
     }
 }

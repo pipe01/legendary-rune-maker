@@ -648,7 +648,7 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
                         <Border x:Name="BtnBorder" BorderThickness="2">
-                            <Grid>
+                            <Grid Margin="{TemplateBinding Padding}">
                                 <Grid x:Name="BlackFade">
                                     <Rectangle Width="2" HorizontalAlignment="Left">
                                         <Rectangle.Fill>

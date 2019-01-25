@@ -292,4 +292,7 @@
   <data name="Share" xml:space="preserve">
     <value>Share</value>
   </data>
+  <data name="WipeCache" xml:space="preserve">
+    <value>Wipe cache</value>
+  </data>
 </root>

@@ -24,6 +24,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="17.5" />
             <RowDefinition Height="17"/>
+            <RowDefinition Height="Auto" />
             <RowDefinition />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
@@ -46,7 +47,11 @@
             </Button>
         </StackPanel>
 
-        <Button Grid.Row="3" Margin="0 0 0 5" Click="Save_Click" Content="{x:Static loc:Text.Save}" />
-        <Button Grid.Row="4" Click="Cancel_Click" Content="{x:Static loc:Text.Cancel}" />
+        <Grid Grid.Row="3">
+            <Button Click="ClearCache_Click" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0 5" Padding="5 0" Content="{x:Static loc:Text.WipeCache}" />
+        </Grid>
+
+        <Button Grid.Row="4" Margin="0 0 0 5" Click="Save_Click" Content="{x:Static loc:Text.Save}" />
+        <Button Grid.Row="5" Click="Cancel_Click" Content="{x:Static loc:Text.Cancel}" />
     </Grid>
 </Page>

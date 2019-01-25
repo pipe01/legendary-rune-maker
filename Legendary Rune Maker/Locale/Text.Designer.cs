@@ -581,5 +581,14 @@ namespace Legendary_Rune_Maker.Locale {
                 return ResourceManager.GetString("UploadToClient", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wipe cache.
+        /// </summary>
+        public static string WipeCache {
+            get {
+                return ResourceManager.GetString("WipeCache", resourceCulture);
+            }
+        }
     }
 }
