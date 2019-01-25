@@ -62,7 +62,12 @@ namespace Legendary_Rune_Maker.Pages
 
         private void Champion_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            SelectedChampion = ((ChampionImageControl)sender).Champion;
+            SetChampion(((ChampionImageControl)sender).Champion);
+        }
+
+        private void SetChampion(Champion champion)
+        {
+            SelectedChampion = champion;
 
             Completion.SetResult(SelectedChampion);
             NavigationService.GoBack();
@@ -137,6 +142,17 @@ namespace Legendary_Rune_Maker.Pages
         private void Search_TextChanged(object sender, TextChangedEventArgs e)
         {
             CollectionViewSource.GetDefaultView(ChampionList).Refresh();
+        }
+
+        private void Search_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                var list = CollectionViewSource.GetDefaultView(ChampionList).Cast<Champion>().Where(o => o != null);
+
+                if (list.Count() == 1)
+                    SetChampion(list.First());
+            }
         }
     }
 }
