@@ -22,13 +22,13 @@ namespace Legendary_Rune_Maker_Tests
             [240] = Position.Fill //Kled
         };
 
-        private static object[] GetTestProviders(Provider.Options options)
+        private static object[] GetTestProviders(Provider.Options? options)
         {
             return typeof(Provider).Assembly.GetTypes()
                 .Where(o => o.BaseType == typeof(Provider) && o != typeof(ClientProvider))
                 .Select(o => (Provider)Activator.CreateInstance(o))
-                .Where(o => o.Supports(options))
-                .SelectMany(o => TestData.Select(i => new object[] { o, i.Key, i.Value }))
+                .Where(o => options == null || o.Supports(options.Value))
+                .SelectMany(o => TestData.Select(i => options == null ? new object[] { o, i.Key } : new object[] { o, i.Key, i.Value }))
                 .ToArray();
         }
 
@@ -65,6 +65,15 @@ namespace Legendary_Rune_Maker_Tests
 
             Assert.IsNotNull(order);
             Assert.IsNotEmpty(order.Trim());
+        }
+
+        [TestCaseSource(nameof(GetTestProviders), new object[] { null })]
+        public async Task PossibleRoles(Provider provider, int champion)
+        {
+            var roles = await provider.GetPossibleRoles(champion);
+
+            Assert.IsNotNull(roles);
+            Assert.IsNotEmpty(roles);
         }
     }
 }
