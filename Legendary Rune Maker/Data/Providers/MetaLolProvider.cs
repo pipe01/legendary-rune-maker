@@ -34,8 +34,8 @@ namespace Legendary_Rune_Maker.Data.Providers
         public override Options ProviderOptions => Options.ItemSets | Options.RunePages | Options.SkillOrder;
 
         private static string GetChampionURL(int championId, Position? pos = null)
-            => $"https://www.metalol.net/champions/lol-build-guide/solo-queue/{Riot.GetChampion(championId, "en_US").Name}"
-               + (pos != null && pos != Position.Fill ? "/" + PositionToName[pos.Value] : "");
+            => $"https://www.metalol.net/champions/lol-build-guide/solo-queue/{Riot.GetChampion(championId, "en_US").Name}/"
+               + (pos != null && pos != Position.Fill ? PositionToName[pos.Value] : "top"); //Use 'top' as a dummy
 
         public override async Task<Position[]> GetPossibleRoles(int championId)
         {
