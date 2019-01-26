@@ -23,14 +23,14 @@ A rune maker for League of Legends that also offers a bunch of automation option
 
 # Providers
 
-|             | Rune pages | Item sets | Skill order |
-|-------------|:----------:|:---------:|:-----------:|
-| Champion.GG | ![](./table_mark.png) | ![](./table_mark.png) | ![](./table_mark.png) |
-| LoLFlavor   |            | ![](./table_mark.png) |             |
-| MetaLoL     | ![](./table_mark.png) | ![](./table_mark.png) | ![](./table_mark.png) |
-| Op.GG       | ![](./table_mark.png) |           | ![](./table_mark.png) |
-| Runes.lol   | ![](./table_mark.png) |           |             |
-| U.GG        | ![](./table_mark.png) | ![](./table_mark.png) | ![](./table_mark.png) |
+|             |       Rune pages      |       Item sets       |      Skill order      |       Stat runes      |
+|-------------|:---------------------:|:---------------------:|:---------------------:|:---------------------:|
+| Champion.GG | ![](./table_mark.png) | ![](./table_mark.png) | ![](./table_mark.png) | ![](./table_mark.png) |
+| LoLFlavor   |                       | ![](./table_mark.png) |                       |                       |
+| MetaLoL     | ![](./table_mark.png) | ![](./table_mark.png) | ![](./table_mark.png) |                       |
+| Op.GG       | ![](./table_mark.png) |                       | ![](./table_mark.png) | ![](./table_mark.png) |
+| Runes.lol   | ![](./table_mark.png) |                       |                       |                       |
+| U.GG        | ![](./table_mark.png) | ![](./table_mark.png) | ![](./table_mark.png) | ![](./table_mark.png) |
 
 # Screenshots
 
