@@ -31,8 +31,9 @@ namespace Legendary_Rune_Maker.Game
 
         private async void ReadyCheckChanged(EventType eventType, LolMatchmakingMatchmakingReadyCheckResource data)
         {
-            if (eventType == EventType.Update && data.state == "InProgress" && data.playerResponse == "None"
-                && Config.AutoAccept && !IsAccepting)
+            Func<bool> hasUserActed = () => data.state != "InProgress" || data.playerResponse != "None";
+
+            if (eventType == EventType.Update && !hasUserActed() && Config.AutoAccept && !IsAccepting)
             {
                 IsAccepting = true;
 
@@ -40,6 +41,9 @@ namespace Legendary_Rune_Maker.Game
                 Notify("Accepting match", null, NotificationType.Success);
 
                 await Task.Delay(Config.DelayBeforeAcceptReady);
+
+                if (hasUserActed())
+                    return;
 
                 try
                 {
