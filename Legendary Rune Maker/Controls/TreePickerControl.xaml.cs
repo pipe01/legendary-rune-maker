@@ -41,11 +41,11 @@ namespace Legendary_Rune_Maker
 
         public async Task SetIDs(int[] ids)
         {
+            ids = ids.OrderBy(o => o).ToArray();
+
             this.ValidIDs = ids;
 
-            var trees = (await Riot.GetRuneTrees())
-                .Where(o => ids.Contains(o.ID))
-                .OrderBy(o => o.ID);
+            var trees = ids.Select(o => Riot.TreeStructures[o]);
 
             var remove = new List<UIElement>();
             foreach (UIElement item in MainGrid.Children)
@@ -67,7 +67,7 @@ namespace Legendary_Rune_Maker
 
                 var icon = new Image
                 {
-                    Source = await ImageCache.Instance.Get(Riot.ImageEndpoint + item.IconURL),
+                    Source = await ImageCache.Instance.Get(item.IconURL),
                     Cursor = Cursors.Hand,
                     Tag = item,
                     Width = 23,
@@ -87,7 +87,7 @@ namespace Legendary_Rune_Maker
 
         private void Icon_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            SelectedTree = ((RuneTree)((Image)sender).Tag).ID;
+            SelectedTree = ((TreeStructure)((Image)sender).Tag).ID;
             SelectionChanged(this, EventArgs.Empty);
         }
     }

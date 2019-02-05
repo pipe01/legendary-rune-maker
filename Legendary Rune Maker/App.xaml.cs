@@ -95,7 +95,7 @@ namespace Legendary_Rune_Maker
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-            
+
             LoL.BindNinject(Container);
 
             Container.Bind<Config>().ToMethod(o => Config.Default);

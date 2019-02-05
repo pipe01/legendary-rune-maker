@@ -133,7 +133,6 @@
     <Compile Include="Data\Providers\Provider.cs" />
     <Compile Include="Data\Providers\RunesLolProvider.cs" />
     <Compile Include="Data\Providers\UGGProvider.cs" />
-    <Compile Include="Data\StatRune.cs" />
     <Compile Include="Data\SummonerSpell.cs" />
     <Compile Include="Data\TreeStructure.cs" />
     <Compile Include="Data\WebCache.cs" />
@@ -159,7 +158,7 @@
     <Compile Include="Data\Riot.cs" />
     <Compile Include="Data\RuneBook.cs" />
     <Compile Include="Data\RunePage.cs" />
-    <Compile Include="Windows\GrayscaleImageControl.xaml.cs">
+    <Compile Include="Controls\GrayscaleImageControl.xaml.cs">
       <DependentUpon>GrayscaleImageControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\IMainWindow.cs" />
@@ -187,7 +186,7 @@
     <Compile Include="Windows\PickSummonerSpellPopup.xaml.cs">
       <DependentUpon>PickSummonerSpellPopup.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\TreePickerControl.xaml.cs">
+    <Compile Include="Controls\TreePickerControl.xaml.cs">
       <DependentUpon>TreePickerControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Utils\BitmapUtils.cs" />
@@ -216,7 +215,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\GrayscaleImageControl.xaml">
+    <Page Include="Controls\GrayscaleImageControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -233,8 +232,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Data\Rune.cs" />
-    <Compile Include="Data\RuneSlot.cs" />
-    <Compile Include="Data\RuneTree.cs" />
     <Compile Include="Windows\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -263,7 +260,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Windows\TreePickerControl.xaml">
+    <Page Include="Controls\TreePickerControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

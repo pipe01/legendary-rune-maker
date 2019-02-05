@@ -123,7 +123,7 @@ namespace Legendary_Rune_Maker.Pages
             if (ShowNoChampion)
                 ChampionList.Add(null);
 
-            foreach (var item in await Riot.GetChampions())
+            foreach (var item in await Riot.GetChampionsAsync())
             {
                 ChampionList.Add(item);
             }

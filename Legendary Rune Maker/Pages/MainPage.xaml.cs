@@ -193,7 +193,7 @@ namespace Legendary_Rune_Maker.Pages
 
         private async Task SetChampionIndex(int index)
         {
-            await SetChampion((await Riot.GetChampions())[index]);
+            await SetChampion((await Riot.GetChampionsAsync())[index]);
         }
 
         public Task SetChampion(int championId) => SetChampion(Riot.GetChampion(championId));
@@ -460,8 +460,8 @@ namespace Legendary_Rune_Maker.Pages
 
             int[] ids = Enumerable.Range(0, 9).Select(i => (int)BitConverter.ToInt16(data, i * sizeof(short))).ToArray();
             
-            int primary = (await Riot.GetRuneTrees()).FirstOrDefault(o => o.Slots.Any(i => i.Runes.Any(j => j.ID == ids[0])))?.ID ?? -1;
-            int secondary = (await Riot.GetRuneTrees()).FirstOrDefault(o => o.Slots.Any(i => i.Runes.Any(j => j.ID == ids[4])))?.ID ?? -1;
+            int primary = GetStyleFromRuneID(ids[0]);
+            int secondary = GetStyleFromRuneID(ids[4]);
 
             if (primary == -1 || secondary == -1)
                 goto no;
@@ -470,6 +470,18 @@ namespace Legendary_Rune_Maker.Pages
 
             no:
             return (false, null);
+
+            int GetStyleFromRuneID(int runeId)
+            {
+                var tree = Riot.TreeStructures
+                    .Select(o => o.Value)
+                    .FirstOrDefault(o => o.PerkSlots.SelectMany(i => i).Any(i => i.ID == runeId));
+
+                if (tree != null)
+                    return tree.ID;
+
+                return -1;
+            }
         }
     }
 }

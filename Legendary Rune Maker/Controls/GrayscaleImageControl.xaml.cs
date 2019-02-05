@@ -76,8 +76,8 @@ namespace Legendary_Rune_Maker
         
         private async void UserControl_Initialized(object sender, EventArgs e)
         {
-            this.Normal = await ImageCache.Instance.Get(Riot.ImageEndpoint + this.Rune.IconURL);
-            this.Gray = await ImageCache.Instance.GetGrayscale(Riot.ImageEndpoint + this.Rune.IconURL);
+            this.Normal = await ImageCache.Instance.Get(this.Rune.IconURL);
+            this.Gray = await ImageCache.Instance.GetGrayscale(this.Rune.IconURL);
 
             View.Source = this.Gray;
         }

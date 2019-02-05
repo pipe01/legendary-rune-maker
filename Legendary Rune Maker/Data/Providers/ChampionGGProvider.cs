@@ -137,7 +137,7 @@ namespace Legendary_Rune_Maker.Data.Providers
         private static int GetPerkId(HtmlNode node)
         {
             string src = node.GetAttributeValue("src", "");
-            var rune = Riot.GetAllRunes().Values.FirstOrDefault(o => src.Contains(o.IconURL))?.ID;
+            var rune = Riot.Runes.Values.FirstOrDefault(o => src.Contains(o.IconURL))?.ID;
 
             if (rune == null)
             {
@@ -150,7 +150,7 @@ namespace Legendary_Rune_Maker.Data.Providers
         private static int GetPathStyleId(HtmlNode node)
         {
             string src = node.GetAttributeValue("src", "");
-            return Riot.GetRuneTrees().Result.First(o => src.Contains(o.IconURL)).ID;
+            return Riot.TreeStructures.Values.First(o => src.Contains(o.IconURL)).ID;
         }
     }
 }

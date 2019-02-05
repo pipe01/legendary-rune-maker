@@ -37,8 +37,8 @@ namespace Legendary_Rune_Maker.Data.Providers
         {
             if (page.RuneIDs.Length == 6)
             {
-                var allStats = Riot.GetStatRunes();
-                page.RuneIDs = page.RuneIDs.Concat(new[] { allStats[0,0].ID, allStats[1,0].ID, allStats[2,0].ID }).ToArray();
+                var allStats = Riot.GetStatRuneStructureAsync().Result;
+                page.RuneIDs = page.RuneIDs.Concat(new[] { allStats[0][0].ID, allStats[1][0].ID, allStats[2][0].ID }).ToArray();
             }
 
             return page;

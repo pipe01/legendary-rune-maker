@@ -51,8 +51,6 @@ namespace Legendary_Rune_Maker.Game
 
         protected override async Task Init()
         {
-            await Riot.GetTreeStructures();
-
             await LoL.Socket.SubscribeAndUpdate<LolChampSelectChampSelectSession>(ChampSelect.Endpoint, ChampSelectUpdate);
             await LoL.Socket.SubscribeAndUpdate<int>("/lol-champ-select/v1/current-champion", CurrentChampionUpdate);
         }

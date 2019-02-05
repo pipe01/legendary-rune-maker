@@ -23,8 +23,8 @@ namespace Legendary_Rune_Maker.Controls
             InitializeComponent();
         }
 
-        private RuneTree _PrimaryTree;
-        public RuneTree PrimaryTree
+        private TreeStructure _PrimaryTree;
+        public TreeStructure PrimaryTree
         {
             get => _PrimaryTree;
             set
@@ -37,8 +37,8 @@ namespace Legendary_Rune_Maker.Controls
             }
         }
 
-        private RuneTree _SecondaryTree;
-        public RuneTree SecondaryTree
+        private TreeStructure _SecondaryTree;
+        public TreeStructure SecondaryTree
         {
             get => _SecondaryTree;
             set
@@ -73,14 +73,14 @@ namespace Legendary_Rune_Maker.Controls
             }
         }
 
-        private StatRune[] _SelectedStats;
-        public StatRune[] SelectedStats
+        private Rune[] _SelectedStats;
+        public Rune[] SelectedStats
         {
             get => _SelectedStats;
             set
             {
                 if (value.Length == 0)
-                    value = new StatRune[3];
+                    value = new Rune[3];
 
                 _SelectedStats = value;
                 
@@ -94,7 +94,7 @@ namespace Legendary_Rune_Maker.Controls
         private List<List<GrayscaleImageControl>> SecondaryControls = new List<List<GrayscaleImageControl>>();
         private bool SettingSelection;
 
-        private void SetTree(RuneTree tree, Tree slot, bool setPicker = true)
+        private void SetTree(TreeStructure tree, Tree slot, bool setPicker = true)
         {
             if (setPicker)
             {
@@ -103,12 +103,12 @@ namespace Legendary_Rune_Maker.Controls
 
             if (slot == Tree.Primary)
             {
-                int[] trees = Riot.GetRuneTreesByID().Keys.Where(o => o != tree.ID).ToArray();
+                int[] trees = Riot.TreeStructures.Keys.Where(o => o != tree.ID).ToArray();
                 SecondaryPicker.SetIDs(trees).Wait();
 
                 if (SecondaryPicker.SelectedTree == tree.ID)
                 {
-                    SetTree(Riot.GetRuneTreesByID()[trees[0]], Tree.Secondary);
+                    SetTree(Riot.TreeStructures[trees[0]], Tree.Secondary);
                 }
 
                 _PrimaryTree = tree;
@@ -121,7 +121,7 @@ namespace Legendary_Rune_Maker.Controls
             }
             
             var grid = slot == Tree.Secondary ? Secondary : Primary;
-            var slots = slot == Tree.Secondary ? tree.Slots.Skip(1).ToArray() : tree.Slots;
+            var slots = slot == Tree.Secondary ? tree.PerkSlots.Skip(1).ToArray() : tree.PerkSlots;
             var controls = slot == Tree.Secondary ? SecondaryControls : PrimaryControls;
 
             grid.Children.Clear();
@@ -139,7 +139,7 @@ namespace Legendary_Rune_Maker.Controls
                 Grid.SetRow(slotGrid, row++);
 
                 int col = 0;
-                foreach (var rune in gslot.Runes)
+                foreach (var rune in gslot)
                 {
                     slotGrid.ColumnDefinitions.Add(new ColumnDefinition());
 
@@ -160,7 +160,7 @@ namespace Legendary_Rune_Maker.Controls
             }
         }
 
-        public void SetSelectedStats(StatRune[] runes)
+        public void SetSelectedStats(Rune[] runes)
         {
             var cbs = new[] { Stat1, Stat2, Stat3 };
 
@@ -203,7 +203,7 @@ namespace Legendary_Rune_Maker.Controls
         {
             SelectedPrimary = new Rune[4];
             SelectedSecondary = new Rune[2];
-            SelectedStats = new StatRune[3];
+            SelectedStats = new Rune[3];
 
             SelectionChanged?.Invoke(this, EventArgs.Empty);
         }
@@ -259,14 +259,14 @@ namespace Legendary_Rune_Maker.Controls
             if (MainWindow.InDesigner)
                 return;
 
-            RuneTree[] trees = await Riot.GetRuneTrees();
+            var trees = await Riot.GetTreeStructuresAsync();
 
-            PrimaryTree = trees[0];
-            SecondaryTree = trees[1];
+            PrimaryTree = trees.Values.First();
+            SecondaryTree = trees.Values.ElementAt(1);
 
-            await PrimaryPicker.SetIDs((await Riot.GetRuneTreesByIDAsync()).Keys.ToArray());
+            await PrimaryPicker.SetIDs(trees.Keys.ToArray());
 
-            var stats = await Riot.GetStatRunesAsync();
+            var stats = await Riot.GetStatRuneStructureAsync();
 
             for (int i = 0; i < 3; i++)
             {
@@ -274,35 +274,35 @@ namespace Legendary_Rune_Maker.Controls
 
                 for (int j = 0; j < 3; j++)
                 {
-                    cb.Items.Add(stats[i, j]);
+                    cb.Items.Add(stats[i][j]);
                 }
             }
         }
 
         private void SecondaryPicker_SelectionChanged(object sender, EventArgs e)
         {
-            SetTree(Riot.GetRuneTreesByID()[SecondaryPicker.SelectedTree], Tree.Secondary, false);
+            SetTree(Riot.TreeStructures[SecondaryPicker.SelectedTree], Tree.Secondary, false);
 
             SelectionChanged?.Invoke(this, EventArgs.Empty);
         }
 
         private void PrimaryPicker_SelectionChanged(object sender, EventArgs e)
         {
-            SetTree(Riot.GetRuneTreesByID()[PrimaryPicker.SelectedTree], Tree.Primary, false);
+            SetTree(Riot.TreeStructures[PrimaryPicker.SelectedTree], Tree.Primary, false);
 
             SelectionChanged?.Invoke(this, EventArgs.Empty);
         }
 
         public void SetPage(RunePage page)
         {
-            var trees = Riot.GetRuneTreesByID();
+            var trees = Riot.TreeStructures;
 
             PrimaryTree = trees[page.PrimaryTree];
             SecondaryTree = trees[page.SecondaryTree];
-            SelectedPrimary = PrimaryTree.Slots.SelectMany(o => o.Runes).Where(o => page.RuneIDs.Contains(o.ID)).ToArray();
-            SelectedSecondary = SecondaryTree.Slots.SelectMany(o => o.Runes).Where(o => page.RuneIDs.Contains(o.ID)).ToArray();
+            SelectedPrimary = PrimaryTree.PerkSlots.SelectMany(o => o).Where(o => page.RuneIDs.Contains(o.ID)).ToArray();
+            SelectedSecondary = SecondaryTree.PerkSlots.SelectMany(o => o).Where(o => page.RuneIDs.Contains(o.ID)).ToArray();
             
-            var statRunes = Riot.GetAllStatRunes();
+            var statRunes = Riot.StatRunes.Select(o => o.Value);
             SelectedStats = page.RuneIDs.Select(o => statRunes.SingleOrDefault(i => i.ID == o)).Where(o => o != default).ToArray();
 
             SelectionChanged?.Invoke(this, EventArgs.Empty);
@@ -319,7 +319,7 @@ namespace Legendary_Rune_Maker.Controls
             if (SelectedStats.Length != 3)
                 Array.Resize(ref _SelectedStats, 3);
 
-            SelectedStats[index] = (StatRune)cb.SelectedItem;
+            SelectedStats[index] = (Rune)cb.SelectedItem;
 
             SelectionChanged?.Invoke(this, EventArgs.Empty);
         }

@@ -4,16 +4,16 @@ using System.Text.RegularExpressions;
 
 namespace Legendary_Rune_Maker.Data
 {
+    [JsonObject(MemberSerialization.OptIn)]
     public class Rune
     {
         [JsonProperty("id")]
         public int ID { get; set; }
+        
+        [JsonProperty("iconPath")]
+        public string IconPath { get; set; }
 
-        [JsonProperty("key")]
-        public string Key { get; set; }
-
-        [JsonProperty("icon")]
-        public string IconURL { get; set; }
+        public string IconURL => Riot.GetCDragonRuneIconUrl(IconPath);
 
         [JsonProperty("name")]
         public string Name { get; set; }
@@ -23,6 +23,8 @@ namespace Legendary_Rune_Maker.Data
 
         [JsonProperty("longDesc")]
         public string LongDesc { get; set; }
+
+        public bool IsStatMod => ID.ToString().StartsWith("50");
 
         public string UppercaseName => Name.ToUpper();
 

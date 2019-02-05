@@ -22,23 +22,30 @@ namespace Legendary_Rune_Maker.Data
         
         private static WebClient Client => new WebClient { Encoding = Encoding.UTF8 };
 
-        private static RuneTree[] Trees;
-        public static async Task<RuneTree[]> GetRuneTrees()
+        public static IDictionary<int, Rune> StatRunes => Runes.Where(o => o.Value.IsStatMod).ToDictionary(o => o.Key, o => o.Value);
+        public static IDictionary<int, Rune> Runes { get; private set; }
+        public static async Task<IDictionary<int, Rune>> GetRunes()
         {
-            if (Trees == null)
+            if (Runes == null)
             {
-                Trees = (await WebCache.Json<RuneTree[]>($"{CdnEndpoint}{await GetLatestVersionAsync()}/data/{Locale}/runesReforged.json")).OrderBy(o => o.ID).ToArray();
+                string raw = await WebCache.String("https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/perks.json");
+                var array = JArray.Parse(raw);
+
+                Runes = array.Select(o => o.ToObject<Rune>()).ToDictionary(o => o.ID);
             }
 
-            return Trees;
+            return Runes;
         }
 
-        private static IDictionary<int, TreeStructure> TreeStructures;
-        public static async Task<IDictionary<int, TreeStructure>> GetTreeStructures()
+        public static IDictionary<int, TreeStructure> TreeStructures { get; private set; }
+        public static async Task<IDictionary<int, TreeStructure>> GetTreeStructuresAsync()
         {
             if (TreeStructures == null)
             {
-                //kMixedRegularSplashable
+                TreeStructures = new Dictionary<int, TreeStructure>();
+
+                var runes = await GetRunes();
+
                 string raw = await WebCache.String("https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/perkstyles.json");
                 var json = JObject.Parse(raw);
 
@@ -47,28 +54,38 @@ namespace Legendary_Rune_Maker.Data
                 foreach (var style in json["styles"].ToArray())
                 {
                     int id = style["id"].ToObject<int>();
-                    List<int[]> runeSlots = new List<int[]>(),
-                                statSlots = new List<int[]>();
+                    List<Rune[]> runeSlots = new List<Rune[]>(),
+                                 statSlots = new List<Rune[]>();
 
                     foreach (var slot in style["slots"].ToArray())
                     {
                         string type = slot["type"].ToObject<string>();
-                        int[] ids = slot["perks"].ToArray().Select(o => o.ToObject<int>()).ToArray();
+                        Rune[] ids = slot["perks"].ToArray().Select(o => runes[o.ToObject<int>()]).ToArray();
 
-                        if (type == "kMixedRegularSplashable")
+                        if (type == "kMixedRegularSplashable" || type == "kKeyStone")
                             runeSlots.Add(ids);
                         else if (type == "kStatMod")
                             statSlots.Add(ids);
                     }
 
-                    TreeStructures[id] = new TreeStructure(id, runeSlots.ToArray(), statSlots.ToArray());
+                    TreeStructures[id] = new TreeStructure
+                    {
+                        ID = id,
+                        Name = style["name"].ToObject<string>(),
+                        IconURL = GetCDragonRuneIconUrl(style["iconPath"].ToObject<string>()),
+                        PerkSlots = runeSlots.ToArray(),
+                        StatSlots = statSlots.ToArray()
+                    };
                 }
             }
 
             return TreeStructures;
         }
         
-        public static async Task<Champion[]> GetChampions(string locale = null)
+        public static async Task<Rune[][]> GetStatRuneStructureAsync()
+            => (await GetTreeStructuresAsync()).Values.First().StatSlots;
+
+        public static async Task<Champion[]> GetChampionsAsync(string locale = null)
         {
             locale = locale ?? Locale;
 
@@ -92,7 +109,7 @@ namespace Legendary_Rune_Maker.Data
             });
         }
         
-        public static async Task<SummonerSpell[]> GetSummonerSpells()
+        public static async Task<SummonerSpell[]> GetSummonerSpellsAsync()
         {
             string url = $"{CdnEndpoint}{await GetLatestVersionAsync()}/data/{Locale}/summoner.json";
 
@@ -115,50 +132,7 @@ namespace Legendary_Rune_Maker.Data
                 .ToArray();
             });
         }
-
-        private static StatRune[,] StatRunesSlots;
-        private static StatRune[] StatRunes;
         
-        public static async Task<StatRune[,]> GetStatRunesAsync()
-        {
-            if (StatRunesSlots == null)
-            {
-                string url = "https://gitcdn.link/repo/pipe01/legendary-rune-maker/master/Legendary%20Rune%20Maker/StatRunes.txt";
-
-                string[] data = (await WebCache.String(url)).Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
-
-                var stats = new List<StatRune>();
-                int statCount = data.TakeWhile(o => o != "====").Count();
-
-                for (int i = 0; i < statCount; i++)
-                {
-                    int id = int.Parse(data[i].Substring(0, data[i].IndexOf(' ')));
-                    string desc = data[i].Substring(data[i].IndexOf(' ') + 1);
-
-                    stats.Add(new StatRune(id, desc));
-                }
-
-                StatRunes = stats.ToArray();
-                StatRunesSlots = new StatRune[3, 3];
-
-                for (int i = 0; i < 3; i++)
-                {
-                    string[] line = data[i + statCount + 1].Split(' ');
-
-                    for (int j = 0; j < 3; j++)
-                    {
-                        StatRunesSlots[i, j] = stats.Single(o => o.ID == int.Parse(line[j]));
-                    }
-                }
-            }
-
-            return StatRunesSlots;
-        }
-
-        public static StatRune[,] GetStatRunes() => StatRunesSlots;
-
-        public static StatRune[] GetAllStatRunes() => StatRunes;
-
         public static async Task<Item[]> GetItemsAsync()
         {
             string url = $"{CdnEndpoint}{await GetLatestVersionAsync()}/data/{Locale}/item.json";
@@ -175,7 +149,7 @@ namespace Legendary_Rune_Maker.Data
         }
 
 
-        public static async Task SetLanguage(CultureInfo culture)
+        public static async Task SetLanguageAsync(CultureInfo culture)
         {
             var availLangs = JsonConvert.DeserializeObject<string[]>(await Client.DownloadStringTaskAsync(CdnEndpoint + "languages.json"));
 
@@ -190,51 +164,33 @@ namespace Legendary_Rune_Maker.Data
                 //Try to get a locale that matches the region (es_ES -> es)
                 string almostLocale = availLangs.FirstOrDefault(o => o.Split('_')[0].Equals(cultureName.Split('_')[0]));
 
-                if (almostLocale != null)
-                {
-                    Locale = almostLocale;
-                }
-                else
-                {
-                    Locale = "en_US";
-                }
+                Locale = almostLocale ?? "en_US";
             }
         }
-
 
 
         private static string LatestVersion;
         public static async Task<string> GetLatestVersionAsync()
             => LatestVersion ?? (LatestVersion = JsonConvert.DeserializeObject<string[]>(await Client.DownloadStringTaskAsync("https://ddragon.leagueoflegends.com/api/versions.json"))[0]);
 
-
-
-        public static async Task<IDictionary<int, RuneTree>> GetRuneTreesByIDAsync()
-            => (await GetRuneTrees()).ToDictionary(o => o.ID);
-
-        public static IDictionary<int, RuneTree> GetRuneTreesByID()
-            => Trees.ToDictionary(o => o.ID);
-
-        public static IDictionary<int, Rune> GetAllRunes()
-            => Trees.SelectMany(o => o.Slots).SelectMany(o => o.Runes).ToDictionary(o => o.ID);
-
+        
         public static Champion GetChampion(int id, string locale = null)
         {
-            var task = GetChampions(locale);
+            var task = GetChampionsAsync(locale);
             task.Wait();
             return task.Result.SingleOrDefault(o => o.ID == id);
         }
 
-        public static async Task CacheAll(Action<double> progress)
+        public static async Task CacheAllAsync(Action<double> progress)
         {
             await GetLatestVersionAsync();
 
             await GetItemsAsync();
 
-            var runes = (await GetRuneTrees()).SelectMany(o => o.Slots).SelectMany(o => o.Runes).Select(o => ImageEndpoint + o.IconURL);
-            var champions = (await GetChampions()).Select(o => o.ImageURL);
-            var spells = (await GetSummonerSpells()).Select(o => o.ImageURL);
-            var trees = (await GetRuneTrees()).Select(o => ImageEndpoint + o.IconURL);
+            var champions = (await GetChampionsAsync()).Select(o => o.ImageURL);
+            var spells = (await GetSummonerSpellsAsync()).Select(o => o.ImageURL);
+            var runes = (await GetRunes()).Select(o => o.Value.IconURL);
+            var trees = (await GetTreeStructuresAsync()).Select(o => o.Value.IconURL);
 
             var total = runes.Concat(champions).Concat(spells).Concat(trees);
             int count = total.Count();
@@ -246,5 +202,9 @@ namespace Legendary_Rune_Maker.Data
                 progress((double)p++ / count);
             }));
         }
+
+        public static string GetCDragonRuneIconUrl(string url)
+            => "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/"
+                + url.Replace("/lol-game-data/assets/v1/", "").ToLower();
     }
 }

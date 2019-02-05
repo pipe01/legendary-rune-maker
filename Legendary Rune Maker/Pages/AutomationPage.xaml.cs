@@ -147,7 +147,7 @@ namespace Legendary_Rune_Maker.Pages
                 Bans[i++].Champion = Riot.GetChampion(item.Value);
             }
 
-            var spells = await Riot.GetSummonerSpells();
+            var spells = await Riot.GetSummonerSpellsAsync();
 
             i = 0;
             foreach (var item in Config.Default.SpellsToPick)

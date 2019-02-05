@@ -41,7 +41,7 @@ namespace Legendary_Rune_Maker
 
         private async void Window_Initialized(object sender, EventArgs e)
         {
-            foreach (var item in await Riot.GetSummonerSpells())
+            foreach (var item in await Riot.GetSummonerSpellsAsync())
             {
                 if (SpellWhitelist.Any(o => o == item.ID))
                     List.Items.Add(new IHateWpf(item, item == SelectedSpell));
