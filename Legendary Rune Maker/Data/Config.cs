@@ -106,6 +106,8 @@ namespace Legendary_Rune_Maker.Data
             }
         }
 
+        public Config Clone() => (Config)this.MemberwiseClone();
+
         public static void Reload() => Default = Load();
 
         private static Config Load()

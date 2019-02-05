@@ -20,9 +20,14 @@ namespace Legendary_Rune_Maker.Pages
                                              Bans = new List<ChampionPickerControl>();
         private IList<SummonerSpellControl> Spells = new List<SummonerSpellControl>();
 
+        private Config Config;
+
         public AutomationPage()
         {
+            Config = Config.Default.Clone();
             InitializeComponent();
+
+            this.DataContext = Config;
         }
 
         private void PickBan_Changed(object sender, EventArgs e)
@@ -159,6 +164,7 @@ namespace Legendary_Rune_Maker.Pages
 
         private void Page_Unloaded(object sender, RoutedEventArgs e)
         {
+            Config.Default = Config;
             Config.Default.Save();
         }
 

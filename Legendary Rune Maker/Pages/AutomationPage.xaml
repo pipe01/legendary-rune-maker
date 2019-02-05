@@ -62,20 +62,20 @@
             </Grid.ColumnDefinitions>
 
             <CheckBox Grid.Row="0" Content="{x:Static loc:Text.AutoAccept}" ToolTip="{x:Static loc:Text.AutoAcceptTip}"
-                      IsChecked="{Binding Path=AutoAccept, Source={x:Static data:Config.Default}}" VerticalAlignment="Center" />
+                      IsChecked="{Binding Path=AutoAccept}" VerticalAlignment="Center" />
 
             <CheckBox Grid.Row="1" Content="{x:Static loc:Text.UploadOnLock}" ToolTip="{x:Static loc:Text.UploadOnLockTip}"
-                      IsChecked="{Binding Path=UploadOnLock, Source={x:Static data:Config.Default}}"
+                      IsChecked="{Binding Path=UploadOnLock}"
                       VerticalAlignment="Center"/>
 
             <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal" Grid.ColumnSpan="2">
                 <CheckBox Content="{x:Static loc:Text.SetItemSet}" ToolTip="{x:Static loc:Text.SetItemSetTip}"
-                      IsChecked="{Binding Path=SetItemSet, Source={x:Static data:Config.Default}}"
+                      IsChecked="{Binding Path=SetItemSet}"
                       VerticalAlignment="Center" />
 
                 <ComboBox x:Name="ItemProviders" Margin="5,1,0,1" HorizontalAlignment="Stretch"
                           Height="25" Width="115" FontSize="12" SelectionChanged="ItemProviders_SelectionChanged"
-                          IsEnabled="{Binding Path=SetItemSet, Source={x:Static data:Config.Default}}">
+                          IsEnabled="{Binding Path=SetItemSet}">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding Name}" />
@@ -86,12 +86,12 @@
 
             <StackPanel Grid.Row="3" Grid.Column="0" Orientation="Horizontal" Grid.ColumnSpan="2">
                 <CheckBox Content="{x:Static loc:Text.SetSkillOrder}" ToolTip="{x:Static loc:Text.SetSkillOrderTooltip}"
-                      IsChecked="{Binding Path=ShowSkillOrder, Source={x:Static data:Config.Default}}"
+                      IsChecked="{Binding Path=ShowSkillOrder}"
                       VerticalAlignment="Center" />
 
                 <ComboBox x:Name="SkillProviders" Margin="5,1,0,1" HorizontalAlignment="Stretch"
                           Height="25" Width="115" FontSize="12" SelectionChanged="SkillProviders_SelectionChanged"
-                          IsEnabled="{Binding Path=ShowSkillOrder, Source={x:Static data:Config.Default}}">
+                          IsEnabled="{Binding Path=ShowSkillOrder}">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding Name}" />
@@ -101,12 +101,12 @@
             </StackPanel>
 
             <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal"
-                        IsEnabled="{Binding Path=UploadOnLock, Source={x:Static data:Config.Default}}">
+                        IsEnabled="{Binding Path=UploadOnLock}">
                 <CheckBox HorizontalAlignment="Left" VerticalAlignment="Center"
                           Margin="5 1 0 0" SnapsToDevicePixels="True"
                           Content="{x:Static loc:Text.LoadFromFirstProvider}"
                           ToolTip="{x:Static loc:Text.LoadFromFirstProviderTip}"
-                          IsChecked="{Binding Path=LoadOnLock, Source={x:Static data:Config.Default}}" />
+                          IsChecked="{Binding Path=LoadOnLock}" />
 
                 <ComboBox x:Name="Providers" Margin="5,1,0,1" HorizontalAlignment="Stretch"
                           Height="25" Width="115" FontSize="12" SelectionChanged="Providers_SelectionChanged">
@@ -144,29 +144,33 @@
             <Image Grid.Column="6" Grid.Row="0" Source="{StaticResource Support}" Width="50" Height="50" Margin="5" ToolTip="Support" />
 
             <StackPanel Grid.Column="0" Grid.Row="1" VerticalAlignment="Center">
-                <CheckBox IsChecked="{Binding Path=AutoPickChampion, Source={x:Static data:Config.Default}}"
+                <CheckBox IsChecked="{Binding Path=AutoPickChampion}"
                           Content="{x:Static loc:Text.AutoPick}" />
-                <CheckBox IsChecked="{Binding Path=DisablePickChampion, Source={x:Static data:Config.Default}}"
+                <CheckBox IsChecked="{Binding Path=DisablePickChampion}"
                           Style="{StaticResource AutoDisable}" />
             </StackPanel>
 
             <StackPanel Grid.Column="0" Grid.Row="2" VerticalAlignment="Center">
-                <CheckBox IsChecked="{Binding Path=AutoBanChampion, Source={x:Static data:Config.Default}}"
+                <CheckBox IsChecked="{Binding Path=AutoBanChampion}"
                           Content="{x:Static loc:Text.AutoBan}" />
-                <CheckBox IsChecked="{Binding Path=DisableBanChampion, Source={x:Static data:Config.Default}}"
+                <CheckBox IsChecked="{Binding Path=DisableBanChampion}"
                           Style="{StaticResource AutoDisable}" />
             </StackPanel>
 
             <StackPanel Grid.Column="0" Grid.Row="3" VerticalAlignment="Center">
-                <CheckBox IsChecked="{Binding Path=AutoPickSumms, Source={x:Static data:Config.Default}}">
+                <CheckBox IsChecked="{Binding Path=AutoPickSumms}">
                     <TextBlock TextWrapping="Wrap" Width="70" Text="{x:Static loc:Text.AutoPickSumms}" />
                 </CheckBox>
-                <CheckBox IsChecked="{Binding Path=DisablePickSumms, Source={x:Static data:Config.Default}}"
+                <CheckBox IsChecked="{Binding Path=DisablePickSumms}"
                           Margin="0 0.1 0 0" Style="{StaticResource AutoDisable}" />
             </StackPanel>
         </Grid>
 
         <Grid Grid.Row="2">
+            <TextBlock Style="{StaticResource LoLText}" Foreground="#70bbbbbb" VerticalAlignment="Center" FontSize="12">
+                Changes will be saved when you exit this page
+            </TextBlock>
+            
             <Button Width="40" Height="34" HorizontalAlignment="Right" Click="Button_Click_1">
                 <Image Source="{StaticResource Back}" Width="20" Height="20" />
             </Button>
