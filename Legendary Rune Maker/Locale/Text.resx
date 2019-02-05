@@ -295,4 +295,7 @@
   <data name="WipeCache" xml:space="preserve">
     <value>Wipe cache</value>
   </data>
+  <data name="SavedOnExit" xml:space="preserve">
+    <value>Changes will be changed when you exit this page</value>
+  </data>
 </root>

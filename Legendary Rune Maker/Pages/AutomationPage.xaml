@@ -167,10 +167,9 @@
         </Grid>
 
         <Grid Grid.Row="2">
-            <TextBlock Style="{StaticResource LoLText}" Foreground="#70bbbbbb" VerticalAlignment="Center" FontSize="12">
-                Changes will be saved when you exit this page
-            </TextBlock>
-            
+            <TextBlock Style="{StaticResource LoLText}" Foreground="#70bbbbbb" VerticalAlignment="Center" FontSize="12"
+                       Text="{x:Static loc:Text.SavedOnExit}" />
+
             <Button Width="40" Height="34" HorizontalAlignment="Right" Click="Button_Click_1">
                 <Image Source="{StaticResource Back}" Width="20" Height="20" />
             </Button>

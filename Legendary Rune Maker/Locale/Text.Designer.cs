@@ -457,6 +457,15 @@ namespace Legendary_Rune_Maker.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Changes will be changed when you exit this page.
+        /// </summary>
+        public static string SavedOnExit {
+            get {
+                return ResourceManager.GetString("SavedOnExit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Search.
         /// </summary>
         public static string Search {
