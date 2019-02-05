@@ -24,7 +24,7 @@ namespace Legendary_Rune_Maker.Data
 
         public static IDictionary<int, Rune> StatRunes => Runes.Where(o => o.Value.IsStatMod).ToDictionary(o => o.Key, o => o.Value);
         public static IDictionary<int, Rune> Runes { get; private set; }
-        public static async Task<IDictionary<int, Rune>> GetRunes()
+        public static async Task<IDictionary<int, Rune>> GetRunesAsync()
         {
             if (Runes == null)
             {
@@ -44,7 +44,7 @@ namespace Legendary_Rune_Maker.Data
             {
                 TreeStructures = new Dictionary<int, TreeStructure>();
 
-                var runes = await GetRunes();
+                var runes = await GetRunesAsync();
 
                 string raw = await WebCache.String("https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/perkstyles.json");
                 var json = JObject.Parse(raw);
@@ -189,7 +189,7 @@ namespace Legendary_Rune_Maker.Data
 
             var champions = (await GetChampionsAsync()).Select(o => o.ImageURL);
             var spells = (await GetSummonerSpellsAsync()).Select(o => o.ImageURL);
-            var runes = (await GetRunes()).Select(o => o.Value.IconURL);
+            var runes = (await GetRunesAsync()).Select(o => o.Value.IconURL);
             var trees = (await GetTreeStructuresAsync()).Select(o => o.Value.IconURL);
 
             var total = runes.Concat(champions).Concat(spells).Concat(trees);

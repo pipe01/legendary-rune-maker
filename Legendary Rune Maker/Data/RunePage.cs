@@ -5,6 +5,7 @@ using LCU.NET.Plugins.LoL;
 using Legendary_Rune_Maker.Game;
 using Legendary_Rune_Maker.Locale;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Legendary_Rune_Maker.Data
@@ -33,10 +34,17 @@ namespace Legendary_Rune_Maker.Data
             this.Position = position;
         }
 
+        private void VerifyRunes()
+        {
+            this.RuneIDs = this.RuneIDs.Select(o => Riot.Runes.Single(i => i.Key == o).Key).ToArray();
+        }
+
         public async Task UploadToClient(IPerks perks)
         {
             if (!GameState.CanUpload)
                 return;
+
+            VerifyRunes();
 
             var page = new LolPerksPerkPageResource
             {
@@ -58,7 +66,7 @@ namespace Legendary_Rune_Maker.Data
                 {
                 }
             }
-            
+
             try
             {
                 var pageRet = await perks.PostPageAsync(page);
@@ -66,7 +74,6 @@ namespace Legendary_Rune_Maker.Data
             }
             catch (APIErrorException ex) when (ex.Message == "Max pages reached")
             {
-                //The maximum number of pages has been reached, try to delete current page and upload again
                 LogTo.Info("Max number of rune pages reached, deleting current page and trying again");
 
                 var currentPage = await perks.GetCurrentPageAsync();
