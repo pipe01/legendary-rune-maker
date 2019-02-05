@@ -37,6 +37,41 @@ namespace Legendary_Rune_Maker.Data
 
             return Trees;
         }
+
+        private static IDictionary<int, TreeStructure> TreeStructures;
+        public static async Task<IDictionary<int, TreeStructure>> GetTreeStructures()
+        {
+            if (TreeStructures == null)
+            {
+                //kMixedRegularSplashable
+                string raw = await WebCache.String("https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/perkstyles.json");
+                var json = JObject.Parse(raw);
+
+                TreeStructures = new Dictionary<int, TreeStructure>();
+                
+                foreach (var style in json["styles"].ToArray())
+                {
+                    int id = style["id"].ToObject<int>();
+                    List<int[]> runeSlots = new List<int[]>(),
+                                statSlots = new List<int[]>();
+
+                    foreach (var slot in style["slots"].ToArray())
+                    {
+                        string type = slot["type"].ToObject<string>();
+                        int[] ids = slot["perks"].ToArray().Select(o => o.ToObject<int>()).ToArray();
+
+                        if (type == "kMixedRegularSplashable")
+                            runeSlots.Add(ids);
+                        else if (type == "kStatMod")
+                            statSlots.Add(ids);
+                    }
+
+                    TreeStructures[id] = new TreeStructure(id, runeSlots.ToArray(), statSlots.ToArray());
+                }
+            }
+
+            return TreeStructures;
+        }
         
         public static async Task<Champion[]> GetChampions(string locale = null)
         {
