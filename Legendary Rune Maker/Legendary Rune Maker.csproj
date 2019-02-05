@@ -395,9 +395,6 @@
     <Resource Include="Images\no_spell.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="StatRunes.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="FodyWeavers.xml" />
   </ItemGroup>
   <ItemGroup>
