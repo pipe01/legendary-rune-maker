@@ -185,7 +185,6 @@ namespace Legendary_Rune_Maker.Pages
         private void Tree_SelectedRunesChanged(object sender, EventArgs e)
         {
             Upload.IsEnabled = ValidPage && GameState.CanUpload;
-            ShareItem.IsEnabled = ValidPage;
 
             if (ValidPage)
                 SaveRunePageToBook();
@@ -409,11 +408,12 @@ namespace Legendary_Rune_Maker.Pages
             Actuator.Enabled = false;
         }
 
-        private async void Share_Click(object sender, RoutedEventArgs e)
+        private void Share_Click(object sender, RoutedEventArgs e)
         {
             Share.ContextMenu.IsOpen = true;
 
-            ImportItem.IsEnabled = ImportItem.IsEnabled && (await GetClipboard()).Success;
+            ShareItem.IsEnabled = SelectedRunes?.Length == 9;
+            ImportItem.IsEnabled = GetClipboard().Success;
         }
         
         private void ShareItem_Click(object sender, RoutedEventArgs e)
@@ -424,20 +424,19 @@ namespace Legendary_Rune_Maker.Pages
             ShowNotification(Text.Done, Text.PageCopiedToClipboard, NotificationType.Success);
         }
 
-        private async void ImportItem_Click(object sender, RoutedEventArgs e)
+        private void ImportItem_Click(object sender, RoutedEventArgs e)
         {
             string str = Clipboard.GetText();
 
-            var (success, result) = await GetClipboard();
+            var (success, result) = GetClipboard();
 
             if (!success)
                 ShowNotification(Text.InvalidImportFormatTitle, Text.InvalidImportFormatMsg, NotificationType.Error);
 
             Tree.SetPage(result);
-            return;
         }
 
-        private async Task<(bool Success, RunePage Result)> GetClipboard()
+        private (bool Success, RunePage Result) GetClipboard()
         {
             string str = Clipboard.GetText();
 
