@@ -106,7 +106,10 @@ namespace Legendary_Rune_Maker.Data
             }
         }
 
-        public Config Clone() => (Config)this.MemberwiseClone();
+        public Config Clone()
+        {
+            return JsonConvert.DeserializeObject<Config>(JsonConvert.SerializeObject(this));
+        }
 
         public static void Reload() => Default = Load();
 
