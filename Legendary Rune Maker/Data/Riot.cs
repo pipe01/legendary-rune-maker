@@ -19,12 +19,7 @@ namespace Legendary_Rune_Maker.Data
         public static string ImageEndpoint => CdnEndpoint + "img/";
 
         public static string Locale { get; set; } = "en_US";
-
-        private static readonly string[] CacheZipURLs = new[]
-        {
-            "https://www.dropbox.com/s/jre9wq13mu1k7bc/cache.zip?dl=1"
-        };
-
+        
         private static WebClient Client => new WebClient { Encoding = Encoding.UTF8 };
 
         private static RuneTree[] Trees;
@@ -250,41 +245,6 @@ namespace Legendary_Rune_Maker.Data
                 await ImageCache.Instance.Get(o);
                 progress((double)p++ / count);
             }));
-        }
-
-        public static async Task DownloadCacheCompressed(int host = 0)
-        {
-            if (!Directory.Exists(ImageCache.Instance.FullCachePath))
-                Directory.CreateDirectory(ImageCache.Instance.FullCachePath);
-
-            using (Stream file = await Client.OpenReadTaskAsync(CacheZipURLs[host]))
-            {
-                var zip = new ZipInputStream(file);
-                ZipEntry entry;
-
-                while ((entry = zip.GetNextEntry()) != null)
-                {
-                    string path = Path.Combine(ImageCache.Instance.FullCachePath, entry.Name);
-                    
-                    using (Stream local = File.OpenWrite(path))
-                    {
-                        await Copy(zip, local);
-                    }
-                }
-            }
-        }
-
-        private static async Task Copy(Stream source, Stream target)
-        {
-            byte[] buffer = new byte[4096];
-            int read;
-
-            while ((read = await source.ReadAsync(buffer, 0, 4096)) != 0)
-            {
-                await target.WriteAsync(buffer, 0, read);
-            }
-
-            await target.FlushAsync();
         }
     }
 }
