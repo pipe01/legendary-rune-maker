@@ -209,6 +209,8 @@ namespace Legendary_Rune_Maker.Game
                     {
                         LogTo.Debug("Set position: {0}", Session.Position);
                         Actuator.Main.SelectedPosition = Session.Position;
+
+                        State.Value.HasSetPositionUI = true;
                     }
 
                     if (Session.Player.championId != 0)
