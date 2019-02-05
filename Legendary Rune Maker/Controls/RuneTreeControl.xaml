@@ -48,9 +48,9 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
-            <ComboBox x:Name="Stat1" Grid.Column="0" Margin="0 0 10 0" FontSize="9" SelectionChanged="Stat_SelectionChanged"></ComboBox>
-            <ComboBox x:Name="Stat2" Grid.Column="1" Margin="0 0 10 0" FontSize="9" SelectionChanged="Stat_SelectionChanged"></ComboBox>
-            <ComboBox x:Name="Stat3" Grid.Column="2" FontSize="9" SelectionChanged="Stat_SelectionChanged"></ComboBox>
+            <ComboBox x:Name="Stat1" Grid.Column="0" Margin="0 0 10 0" FontSize="9" SelectionChanged="Stat_SelectionChanged" DisplayMemberPath="FlatShortDesc"></ComboBox>
+            <ComboBox x:Name="Stat2" Grid.Column="1" Margin="0 0 10 0" FontSize="9" SelectionChanged="Stat_SelectionChanged" DisplayMemberPath="FlatShortDesc"></ComboBox>
+            <ComboBox x:Name="Stat3" Grid.Column="2" FontSize="9" SelectionChanged="Stat_SelectionChanged" DisplayMemberPath="FlatShortDesc"></ComboBox>
         </Grid>
     </Grid>
 </UserControl>

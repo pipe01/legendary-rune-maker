@@ -24,6 +24,8 @@ namespace Legendary_Rune_Maker.Data
         [JsonProperty("longDesc")]
         public string LongDesc { get; set; }
 
+        public string FlatShortDesc => Regex.Replace(ShortDesc, "<.*?>", "");
+
         public bool IsStatMod => ID.ToString().StartsWith("50");
 
         public string UppercaseName => Name.ToUpper();
