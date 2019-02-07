@@ -1,0 +1,10 @@
+5001 +15-90 Health
+5002 +5 Armor
+5003 +6 Magic Resist
+5005 +9% Attack Speed
+5007 +1-10% CDR
+5008 +10 Adaptive Force
+====
+5008 5005 5007
+5008 5002 5003
+5001 5002 5003 
