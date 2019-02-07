@@ -18,6 +18,12 @@ namespace Legendary_Rune_Maker.Data
         
         public static string ImageEndpoint => CdnEndpoint + "img/";
 
+        private static IDictionary<string, string> CDragonLocale = new Dictionary<string, string>
+        {
+            ["en_US"] = "en_gb",
+            ["es_ES"] = "es_es"
+        };
+
         public static string Locale { get; set; } = "en_US";
         
         private static WebClient Client => new WebClient { Encoding = Encoding.UTF8 };
@@ -28,7 +34,8 @@ namespace Legendary_Rune_Maker.Data
         {
             if (Runes == null)
             {
-                string raw = await WebCache.String("https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/perks.json");
+                string locale = CDragonLocale[Locale];
+                string raw = await WebCache.String($"https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/{locale}/v1/perks.json");
                 var array = JArray.Parse(raw);
 
                 Runes = array.Select(o => o.ToObject<Rune>()).ToDictionary(o => o.ID);
@@ -46,7 +53,8 @@ namespace Legendary_Rune_Maker.Data
 
                 var runes = await GetRunesAsync();
 
-                string raw = await WebCache.String("https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/perkstyles.json");
+                string locale = CDragonLocale[Locale];
+                string raw = await WebCache.String($"https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/{locale}/v1/perkstyles.json");
                 var json = JObject.Parse(raw);
 
                 TreeStructures = new Dictionary<int, TreeStructure>();
