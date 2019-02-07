@@ -137,20 +137,21 @@ namespace Legendary_Rune_Maker.Data.Providers
         private static int GetPerkId(HtmlNode node)
         {
             string src = node.GetAttributeValue("src", "");
-            var rune = Riot.Runes.Values.FirstOrDefault(o => src.Contains(o.IconURL))?.ID;
+            string iconFilename = src.Split('/').Last();
+            var rune = Riot.Runes.FirstOrDefault(o => o.Value.IconPath.EndsWith(iconFilename)).Key;
 
-            if (rune == null)
+            if (rune == default)
             {
                 return int.Parse(Regex.Match(src, @"(?<=rune-shards\/).*?(?=\.png)").Value);
             }
 
-            return rune.Value;
+            return rune;
         }
 
         private static int GetPathStyleId(HtmlNode node)
         {
             string src = node.GetAttributeValue("src", "");
-            return Riot.TreeStructures.Values.First(o => src.Contains(o.IconURL)).ID;
+            return int.Parse(Regex.Match(src, @"(?<=\/)\d+(?=_)").Value);
         }
     }
 }

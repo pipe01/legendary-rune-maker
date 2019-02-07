@@ -36,7 +36,7 @@ namespace Legendary_Rune_Maker_Tests
         public async Task OneTimeSetUp()
         {
             WebCache.InTestMode = true;
-            await Riot.GetTreeStructuresAsync() ;
+            await Riot.GetTreeStructuresAsync();
         }
 
         [TestCaseSource(nameof(GetTestProviders), new object[] { Provider.Options.RunePages })]
