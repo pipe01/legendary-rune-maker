@@ -19,7 +19,7 @@ namespace Legendary_Rune_Maker.Data
         
         public static string ImageEndpoint => CdnEndpoint + "img/";
 
-        private static IDictionary<string, string> CDragonLocale = new Dictionary<string, string>
+        private static readonly IDictionary<string, string> CDragonLocale = new Dictionary<string, string>
         {
             ["en_US"] = "en_gb",
             ["es_ES"] = "es_es"
@@ -35,8 +35,6 @@ namespace Legendary_Rune_Maker.Data
         {
             if (Runes == null)
             {
-                LogTo.Debug("Locale: " + Locale);
-
                 string locale = CDragonLocale[Locale];
                 string raw = await WebCache.String($"https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/{locale}/v1/perks.json");
                 var array = JArray.Parse(raw);
@@ -160,9 +158,9 @@ namespace Legendary_Rune_Maker.Data
         }
 
 
-        public static async Task SetLanguageAsync(CultureInfo culture)
+        public static void SetLanguage(CultureInfo culture)
         {
-            var availLangs = JsonConvert.DeserializeObject<string[]>(await Client.DownloadStringTaskAsync(CdnEndpoint + "languages.json"));
+            var availLangs = CDragonLocale.Keys;
 
             string cultureName = culture.Name.Replace('-', '_');
 
@@ -177,6 +175,8 @@ namespace Legendary_Rune_Maker.Data
 
                 Locale = almostLocale ?? "en_US";
             }
+
+            LogTo.Debug("Riot locale set to " + Locale);
         }
 
 
