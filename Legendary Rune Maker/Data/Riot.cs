@@ -1,4 +1,5 @@
-﻿using ICSharpCode.SharpZipLib.Zip;
+﻿using Anotar.Log4Net;
+using ICSharpCode.SharpZipLib.Zip;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -34,6 +35,8 @@ namespace Legendary_Rune_Maker.Data
         {
             if (Runes == null)
             {
+                LogTo.Debug("Locale: " + Locale);
+
                 string locale = CDragonLocale[Locale];
                 string raw = await WebCache.String($"https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/{locale}/v1/perks.json");
                 var array = JArray.Parse(raw);
