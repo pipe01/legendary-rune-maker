@@ -54,7 +54,7 @@ namespace Legendary_Rune_Maker.Data
                 name = this.Name ?? Riot.GetChampion(ChampionID).Name + " - " + Enum.GetName(typeof(Position), Position)
             };
 
-            LogTo.Debug("Uploading rune page with name '{0}'");
+            LogTo.Debug("Uploading rune page with name '{0}' and runes [ {1} ]", page.name, string.Join(", ", RuneIDs));
 
             if (Config.Default.LastRunePageId != default)
             {
