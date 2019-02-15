@@ -49,10 +49,12 @@ namespace Legendary_Rune_Maker.Game
                 {
                     await LoL.Matchmaking.PostReadyCheckAccept();
                 }
-                finally
+                catch (Exception ex)
                 {
-                    IsAccepting = false;
+                    LogTo.Error("Failed to accept matchmaking: " + ex);
                 }
+
+                IsAccepting = false;
 
                 LogTo.Info("Accepted matchmaking");
             }
