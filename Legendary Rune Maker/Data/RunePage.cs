@@ -37,7 +37,7 @@ namespace Legendary_Rune_Maker.Data
 
         private void VerifyRunes()
         {
-            var statIds = this.RuneIDs.Reverse().Take(3).Reverse();
+            var statIds = this.RuneIDs.Where(o => Riot.TreeStructures[PrimaryTree].StatSlots.Any(p => p.Any(q => q.ID == o)));
             this.RuneIDs = GetRunes(PrimaryTree).Concat(GetRunes(SecondaryTree)).Concat(statIds).ToArray();
 
             IEnumerable<int> GetRunes(int tree)
