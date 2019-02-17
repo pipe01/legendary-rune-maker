@@ -5,6 +5,7 @@ using LCU.NET.Plugins.LoL;
 using Legendary_Rune_Maker.Game;
 using Legendary_Rune_Maker.Locale;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -36,7 +37,20 @@ namespace Legendary_Rune_Maker.Data
 
         private void VerifyRunes()
         {
-            this.RuneIDs = this.RuneIDs.Select(o => Riot.Runes.Single(i => i.Key == o).Key).ToArray();
+            var statIds = this.RuneIDs.Reverse().Take(3).Reverse();
+            this.RuneIDs = GetRunes(PrimaryTree).Concat(GetRunes(SecondaryTree)).Concat(statIds).ToArray();
+
+            IEnumerable<int> GetRunes(int tree)
+            {
+                foreach (var slot in Riot.TreeStructures[tree].PerkSlots)
+                {
+                    foreach (var rune in slot)
+                    {
+                        if (this.RuneIDs.Contains(rune.ID))
+                            yield return rune.ID;
+                    }
+                }
+            }
         }
 
         public async Task UploadToClient(IPerks perks)
