@@ -29,34 +29,56 @@ namespace Legendary_Rune_Maker.Game
             return Task.CompletedTask;
         }
 
+        private async Task<bool> HasUserActed()
+        {
+            LolMatchmakingMatchmakingReadyCheckResource data;
+
+            try
+            {
+                data = await LoL.Matchmaking.GetReadyCheck();
+            }
+            catch
+            {
+                return true;
+            }
+
+            return data.state != "InProgress" || data.playerResponse != "None";
+        }
+
         private async void ReadyCheckChanged(EventType eventType, LolMatchmakingMatchmakingReadyCheckResource data)
         {
-            Func<bool> hasUserActed = () => data.state != "InProgress" || data.playerResponse != "None";
-
-            if (eventType == EventType.Update && !hasUserActed() && Config.AutoAccept && !IsAccepting)
+            if (eventType == EventType.Update && !await HasUserActed() && Config.AutoAccept && !IsAccepting)
             {
                 IsAccepting = true;
 
                 LogTo.Info("Accepting matchmaking...");
                 Notify("Accepting match", null, NotificationType.Success);
 
-                await Task.Delay(Config.DelayBeforeAcceptReady);
-
-                if (hasUserActed())
-                    return;
-
-                try
+#pragma warning disable CS4014
+                Task.Run(async () =>
                 {
-                    await LoL.Matchmaking.PostReadyCheckAccept();
-                }
-                catch (Exception ex)
-                {
-                    LogTo.Error("Failed to accept matchmaking: " + ex);
-                }
+                    await Task.Delay(Config.DelayBeforeAcceptReady);
 
-                IsAccepting = false;
+                    if (await HasUserActed())
+                        goto exit;
 
-                LogTo.Info("Accepted matchmaking");
+                    try
+                    {
+                        await LoL.Matchmaking.PostReadyCheckAccept();
+                    }
+                    catch (Exception ex)
+                    {
+                        LogTo.Error("Failed to accept matchmaking: " + ex);
+                    }
+
+                    LogTo.Info("Accepted matchmaking");
+
+                exit:
+                    LogTo.Debug($"Ready state: {data.state}, player response: {data.playerResponse}");
+
+                    IsAccepting = false;
+                });
+#pragma warning restore CS4014
             }
         }
     }

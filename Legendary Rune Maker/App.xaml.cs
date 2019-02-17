@@ -25,13 +25,13 @@ namespace Legendary_Rune_Maker
 
         static App()
         {
+            LogTo.Info($"Starting LRM {LRM.GitCommit}@{LRM.GitBranch}");
+
             Container = new StandardKernel();
         }
 
         public App()
         {
-            LogTo.Info($"Starting LRM {LRM.GitCommit}@{LRM.GitBranch}");
-
             CultureInfo.DefaultThreadCurrentCulture = CultureInfo.DefaultThreadCurrentUICulture = Config.Default.Culture;
 
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
