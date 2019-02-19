@@ -52,7 +52,7 @@ namespace Legendary_Rune_Maker.Utils
                 return (x, x, x);
             });
         }
-        
+
         public static BitmapSource Bitmap2BitmapSource(Bitmap bitmap)
         {
             IntPtr hBitmap = bitmap.GetHbitmap();

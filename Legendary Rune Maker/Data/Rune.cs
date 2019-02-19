@@ -9,7 +9,7 @@ namespace Legendary_Rune_Maker.Data
     {
         [JsonProperty("id")]
         public int ID { get; set; }
-        
+
         [JsonProperty("iconPath")]
         public string IconPath { get; set; }
 
@@ -48,7 +48,7 @@ namespace Legendary_Rune_Maker.Data
                 (@"<font color='(.*?)'>(.*?)<\/font>", "<Run Foreground=\"$1\">$2</Run>"),
                 (@"<(.*?)( .*?)?>(?<content>.*?)<\/\1>", "${content}"), //Replace all remaining XML tags with just their content
             };
-            
+
             foreach (var item in patterns)
             {
                 desc = Regex.Replace(desc, item.Pattern, item.Replacement, RegexOptions.None);

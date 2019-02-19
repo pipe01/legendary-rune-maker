@@ -32,7 +32,7 @@ namespace Legendary_Rune_Maker
             set { SetValue(ShowSelectorProperty, value); }
         }
         public static readonly DependencyProperty ShowSelectorProperty = DependencyProperty.Register("ShowSelector", typeof(bool), typeof(GrayscaleImageControl), new PropertyMetadata(false));
-        
+
         public event EventHandler<bool> SelectedChanged;
 
         public Rune Rune { get; }
@@ -45,7 +45,7 @@ namespace Legendary_Rune_Maker
             this.DataContext = this;
 
             InitializeComponent();
-            
+
             var description = (View.ToolTip as DependencyObject).FindChild<RichTextBox>("Description");
             string descNice = rune.RichLongDesc.Replace("&nbsp;", " ");
 
@@ -73,7 +73,7 @@ namespace Legendary_Rune_Maker
                 }
             }
         }
-        
+
         private async void UserControl_Initialized(object sender, EventArgs e)
         {
             this.Normal = await ImageCache.Instance.Get(this.Rune.IconURL);
@@ -81,7 +81,7 @@ namespace Legendary_Rune_Maker
 
             View.Source = this.Gray;
         }
-        
+
         private static void OnSelectedChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (e.OldValue == e.NewValue)
@@ -101,7 +101,7 @@ namespace Legendary_Rune_Maker
 
             image.SelectedChanged?.Invoke(image, (bool)e.NewValue);
         }
-        
+
         private void UserControl_MouseDown(object sender, MouseButtonEventArgs e)
         {
             e.Handled = true;

@@ -33,7 +33,7 @@ namespace Legendary_Rune_Maker.Controls
                 SetSelectedRaw(value);
             }
         }
-        
+
         public event EventHandler SelectedChanged;
 
         public PositionPickerControl()

@@ -45,7 +45,7 @@ namespace Legendary_Rune_Maker
             NotificationManager = new NotificationManager(Dispatcher);
 
             InitializeComponent();
-            
+
             if (!InDesigner)
                 Application.Current.MainWindow = this;
         }
@@ -64,7 +64,7 @@ namespace Legendary_Rune_Maker
             this.Left = (workArea.Width - this.Width) / 2 + workArea.Left;
             this.Top = (workArea.Height - this.Height) / 2 + workArea.Top;
         }
-        
+
         private void Current_Navigating(object sender, NavigatingCancelEventArgs e)
         {
             if (e.Content != null && !AllowDirectNavigation)
@@ -146,12 +146,12 @@ namespace Legendary_Rune_Maker
             if (width != MainGrid.Width)
             {
                 double difference = MainGrid.Width - width;
-                
+
                 MainGrid.BeginAnimation(WidthProperty, new DoubleAnimation(MainGrid.Width, width, animDuration)
                 {
                     EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseOut }
                 });
-                
+
                 if (!double.IsNaN(this.Left))
                 {
                     this.BeginAnimation(LeftProperty, new DoubleAnimation(this.Left, this.Left + difference / 2, animDuration)
@@ -165,7 +165,7 @@ namespace Legendary_Rune_Maker
             if (height != MainGrid.Height)
             {
                 double difference = MainGrid.Height - height;
-                
+
                 MainGrid.BeginAnimation(HeightProperty, new DoubleAnimation(MainGrid.Height, height, animDuration)
                 {
                     EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseOut }

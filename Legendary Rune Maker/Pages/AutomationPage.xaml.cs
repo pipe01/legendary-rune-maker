@@ -40,7 +40,7 @@ namespace Legendary_Rune_Maker.Pages
 
             dic[key] = picker.Champion?.ID ?? 0;
         }
-        
+
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
             await PickSummonerSpellPopup.SelectSpell();
@@ -53,7 +53,7 @@ namespace Legendary_Rune_Maker.Pages
 
             Config.Default.SpellsToPick[Config.Default.SpellsToPick.Keys.ElementAt(n / 2)][n % 2] = picker.Spell?.ID ?? 0;
         }
-        
+
         private void Providers_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Config.Default.LockLoadProvider = ((Provider)Providers.SelectedItem).Name;

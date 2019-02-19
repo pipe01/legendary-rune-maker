@@ -15,7 +15,7 @@ namespace Legendary_Rune_Maker.Data.Providers
     {
         public override string Name => "U.GG";
         public override Options ProviderOptions => Options.RunePages | Options.ItemSets | Options.SkillOrder;
-        
+
         private const int OverviewWorld = 12;
         private const int OverviewPlatPlus = 10;
 
@@ -30,7 +30,7 @@ namespace Legendary_Rune_Maker.Data.Providers
             [4] = Position.Top,
             [5] = Position.Mid
         };
-        
+
         private string _LolUGGVersion;
         private async Task<string> GetLolUGGVersion()
         {
@@ -78,7 +78,7 @@ namespace Legendary_Rune_Maker.Data.Providers
         {
             JToken champData = await GetChampionData(championId);
             int totalGames = champData.Sum(o => ((JProperty)o).Value[0][0][0].ToObject<int>());
-            
+
             //Only count positions that make up for more than 10% of the champion's total played games
             return champData
                 .Cast<JProperty>()
@@ -114,9 +114,9 @@ namespace Legendary_Rune_Maker.Data.Providers
                 position = (await GetPossibleRoles(championId))[0];
 
             var root = champData[IdToPosition.Invert()[position].ToString()][0];
-            
+
             var blocks = new List<ItemSet.SetBlock>();
-            
+
             AddSimple(2, "Starting Build");
             AddSimple(3, "Core Build");
 

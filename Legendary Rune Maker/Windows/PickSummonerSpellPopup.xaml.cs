@@ -30,7 +30,7 @@ namespace Legendary_Rune_Maker
 
         public int[] SpellWhitelist { get; set; } = new[] { 21, 1, 14, 3, 4, 6, 7, 13, 11, 12, 32 };
         public SummonerSpell SelectedSpell { get; private set; }
-        
+
         public PickSummonerSpellPopup(int[] allowedSpells, SummonerSpell selected)
         {
             this.SpellWhitelist = allowedSpells ?? SpellWhitelist;
@@ -79,7 +79,7 @@ namespace Legendary_Rune_Maker
         public static async Task<SummonerSpell> SelectSpell(SummonerSpell selectedSpell = null, int[] allowedSpells = null)
         {
             var win = new PickSummonerSpellPopup(allowedSpells, selectedSpell);
-            
+
             var ev = new TaskCompletionSource<bool>();
 
             win.Closed += (_, __) => ev.SetResult(true);

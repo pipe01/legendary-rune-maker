@@ -83,7 +83,7 @@ namespace Legendary_Rune_Maker.Controls
                     value = new Rune[3];
 
                 _SelectedStats = value;
-                
+
                 SetSelectedStats(value);
             }
         }
@@ -119,7 +119,7 @@ namespace Legendary_Rune_Maker.Controls
                 _SecondaryTree = tree;
                 _SelectedSecondary = new Rune[2];
             }
-            
+
             var grid = slot == Tree.Secondary ? Secondary : Primary;
             var slots = slot == Tree.Secondary ? tree.PerkSlots.Skip(1).ToArray() : tree.PerkSlots;
             var controls = slot == Tree.Secondary ? SecondaryControls : PrimaryControls;
@@ -301,7 +301,7 @@ namespace Legendary_Rune_Maker.Controls
             SecondaryTree = trees[page.SecondaryTree];
             SelectedPrimary = PrimaryTree.PerkSlots.SelectMany(o => o).Where(o => page.RuneIDs.Contains(o.ID)).ToArray();
             SelectedSecondary = SecondaryTree.PerkSlots.SelectMany(o => o).Where(o => page.RuneIDs.Contains(o.ID)).ToArray();
-            
+
             var statRunes = Riot.StatRunes.Select(o => o.Value);
             SelectedStats = page.RuneIDs.Select(o => statRunes.SingleOrDefault(i => i.ID == o)).Where(o => o != default).ToArray();
 

@@ -70,7 +70,7 @@ namespace Legendary_Rune_Maker.Data.Providers
         {
             var doc = new HtmlDocument();
             doc.LoadHtml(await WebCache.String(GetChampionURL(championId, position), soft: true));
-            
+
             var buildWrappers = doc.DocumentNode.Descendants().Where(o => o.HasClass("build-wrapper")).Reverse();
 
             var blocks = new List<ItemSet.SetBlock>();
@@ -116,7 +116,7 @@ namespace Legendary_Rune_Maker.Data.Providers
             doc.LoadHtml(await WebCache.String(GetChampionURL(championId, position), soft: true));
 
             var skillOrder = doc.DocumentNode.Descendants().Where(o => o.HasClass("skill-order")).Last();
-            
+
             char[] skills = new char[18];
 
             foreach (var skill in skillOrder.Descendants().Where(o => o.HasClass("skill-selections")))

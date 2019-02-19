@@ -51,7 +51,7 @@ namespace Legendary_Rune_Maker.Controls
             FadeIn = (Storyboard)Resources["FadeIn"];
             FadeOut = (Storyboard)Resources["FadeOut"];
         }
-        
+
         private static void SourceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var fadeImage = d as FadeImage;
@@ -61,7 +61,7 @@ namespace Legendary_Rune_Maker.Controls
                 fadeImage.Switch(e.NewValue as ImageSource);
             }
         }
-        
+
         private void Switch(ImageSource newImage)
         {
             ImgB.Source = newImage;
@@ -71,7 +71,7 @@ namespace Legendary_Rune_Maker.Controls
 
             FadeOut.Begin(ImgA);
             FadeIn.Begin(ImgB);
-            
+
             var a = ImgA;
             ImgA = ImgB;
             ImgB = a;

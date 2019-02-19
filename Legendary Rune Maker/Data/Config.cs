@@ -128,7 +128,7 @@ namespace Legendary_Rune_Maker.Data
                     c = JsonConvert.DeserializeObject<Config>(File.ReadAllText(FilePath));
                 }
             }
-            catch 
+            catch
             {
                 if (DesignerProperties.GetIsInDesignMode(new DependencyObject()))
                     return new Config();

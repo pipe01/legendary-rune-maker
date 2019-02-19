@@ -44,7 +44,7 @@ namespace Legendary_Rune_Maker.Data
             get => Data.GameVersion;
             set => Data.GameVersion = value;
         }
-        
+
         public static string CacheLocale
         {
             get => Data.CultureName;
@@ -52,7 +52,7 @@ namespace Legendary_Rune_Maker.Data
         }
 
         public static bool InTestMode { get; set; }
-        
+
         public static void Init()
         {
             if (HasInit)
@@ -138,7 +138,7 @@ namespace Legendary_Rune_Maker.Data
 
             return value;
         }
-        
+
         public static async Task<T> Json<T>(string url, HttpClient client = null, bool soft = false)
         {
             Init();

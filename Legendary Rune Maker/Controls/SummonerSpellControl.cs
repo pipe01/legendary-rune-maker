@@ -15,14 +15,14 @@ namespace Legendary_Rune_Maker.Controls
             set { SetValue(SpellImageProperty, value); }
         }
         public static readonly DependencyProperty SpellImageProperty = DependencyProperty.Register("SpellImage", typeof(ImageSource), typeof(SummonerSpellControl));
-        
+
         public SummonerSpell Spell
         {
             get { return (SummonerSpell)GetValue(SpellProperty); }
             set { SetValue(SpellProperty, value); }
         }
         public static readonly DependencyProperty SpellProperty = DependencyProperty.Register("Spell", typeof(SummonerSpell), typeof(SummonerSpellControl), new PropertyMetadata(SpellChanged));
-        
+
         public bool Selected
         {
             get { return (bool)GetValue(SelectedProperty); }
@@ -36,14 +36,14 @@ namespace Legendary_Rune_Maker.Controls
             set { SetValue(ImageMarginProperty, value); }
         }
         public static readonly DependencyProperty ImageMarginProperty = DependencyProperty.Register("ImageMargin", typeof(double), typeof(SummonerSpellControl));
-        
+
         public bool Picker
         {
             get { return (bool)GetValue(PickerProperty); }
             set { SetValue(PickerProperty, value); }
         }
         public static readonly DependencyProperty PickerProperty = DependencyProperty.Register("Picker", typeof(bool), typeof(SummonerSpellControl));
-        
+
         public event EventHandler SpellSelected;
 
         private static void SelectedChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -70,7 +70,7 @@ namespace Legendary_Rune_Maker.Controls
                 c.BorderThickness = c.Selected ? new Thickness(2) : new Thickness(1);
             }
         }
-        
+
         static SummonerSpellControl()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(SummonerSpellControl), new FrameworkPropertyMetadata(typeof(SummonerSpellControl)));

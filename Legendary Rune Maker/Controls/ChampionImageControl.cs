@@ -15,7 +15,7 @@ namespace Legendary_Rune_Maker.Controls
             set { SetValue(SourceProperty, value); }
         }
         public static readonly DependencyProperty SourceProperty = DependencyProperty.Register("Source", typeof(ImageSource), typeof(ChampionImageControl), new PropertyMetadata(NoChamp));
-        
+
         public Champion Champion
         {
             get { return (Champion)GetValue(ChampionProperty); }

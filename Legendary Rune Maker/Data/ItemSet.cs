@@ -44,7 +44,7 @@ namespace Legendary_Rune_Maker.Data
                 }).ToArray(),
                 uid = Guid.NewGuid().ToString()
             };
-            
+
             LogTo.Debug($"Uploading item set with title '{itemSet.title}' ('{this.Name}' in model)");
 
             var currentSetInfo = await itemSets.GetItemSets(session.summonerId);

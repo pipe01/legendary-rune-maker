@@ -39,7 +39,7 @@ namespace Legendary_Rune_Maker.Game
         private const int MinimumActionDelay = 5000;
 
         private SessionData Session;
-        
+
         private readonly Config Config;
         private readonly Actuator Actuator;
 
@@ -68,13 +68,13 @@ namespace Legendary_Rune_Maker.Game
                     return;
 
                 var tasks = new List<Task>();
-                
+
                 if (Config.UploadOnLock)
                     tasks.Add(Actuator.UploadRunePage(Session.Position, data));
-                    
+
                 if (Config.ShowSkillOrder && !Config.SetItemSet)
                     tasks.Add(Actuator.UploadSkillOrder(Session.Position, data));
-                    
+
                 if (Config.SetItemSet)
                     tasks.Add(Actuator.UploadItemSet(Session.Position, data));
 
@@ -105,7 +105,7 @@ namespace Legendary_Rune_Maker.Game
             }
 
             UpdateMainPage();
-            
+
             if (!State.HasValue)
             {
                 LogTo.Error("State is empty!");

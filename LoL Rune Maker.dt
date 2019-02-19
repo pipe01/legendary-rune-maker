@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-16"?>
+<DevTrackerData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" SolutionTotalEditTime="PT4.1903846S" SolutionTotalViewTime="PT2M10.8461396S" SolutionTotalDebugTime="PT0S">
+  <FileVersion>
+    <Major>1</Major>
+    <Minor>0</Minor>
+  </FileVersion>
+  <SolutionFolder>C:\Users\piper\Documents\Visual Studio 2017\Projects\legendary-rune-maker</SolutionFolder>
+  <SessionTimeList />
+  <LastSessionTimeList>
+    <DevTrackerDataItem ViewActiveTime="PT2M10.9033255S" EditActiveTime="PT4.1903846S">
+      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
+      <EditedCount>1</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>C:\Users\piper\Documents\Visual Studio 2017\Projects\legendary-rune-maker\Legendary Rune Maker\Game\ReadyCheckDetector.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>C:\Users\piper\Documents\Visual Studio 2017\Projects\legendary-rune-maker\Legendary Rune Maker\Legendary Rune Maker.csproj</ProjectName>
+      <CreatedDate>2019-02-19T20:42:31.2237609+01:00</CreatedDate>
+      <ViewedBy>piper</ViewedBy>
+    </DevTrackerDataItem>
+  </LastSessionTimeList>
+  <TotalTimeList>
+    <DevTrackerDataItem ViewActiveTime="PT2M10.8461359S" EditActiveTime="PT4.1903846S">
+      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
+      <EditedCount>1</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>C:\Users\piper\Documents\Visual Studio 2017\Projects\legendary-rune-maker\Legendary Rune Maker\Game\ReadyCheckDetector.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>C:\Users\piper\Documents\Visual Studio 2017\Projects\legendary-rune-maker\Legendary Rune Maker\Legendary Rune Maker.csproj</ProjectName>
+      <CreatedDate>2019-02-19T20:42:31.2237609+01:00</CreatedDate>
+      <ViewedBy>piper</ViewedBy>
+    </DevTrackerDataItem>
+  </TotalTimeList>
+  <HistoryTimeList>
+    <DevTrackerDataItem ViewActiveTime="PT2M10.8471385S" EditActiveTime="PT4.1903846S">
+      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
+      <EditedCount>1</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>C:\Users\piper\Documents\Visual Studio 2017\Projects\legendary-rune-maker\Legendary Rune Maker\Game\ReadyCheckDetector.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>C:\Users\piper\Documents\Visual Studio 2017\Projects\legendary-rune-maker\Legendary Rune Maker\Legendary Rune Maker.csproj</ProjectName>
+      <CreatedDate>2019-02-19T20:42:31.2237609+01:00</CreatedDate>
+      <ViewedBy>piper</ViewedBy>
+    </DevTrackerDataItem>
+  </HistoryTimeList>
+</DevTrackerData>

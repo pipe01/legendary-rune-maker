@@ -16,7 +16,7 @@ namespace Legendary_Rune_Maker.Utils
             string func = parameter as string;
 
             if (func == "Close")
-                return new RelayCommand(_ => 
+                return new RelayCommand(_ =>
                 {
                     if (!TryInvoke(value, "CloseCustom")) window.Close();
                 });
@@ -25,7 +25,7 @@ namespace Legendary_Rune_Maker.Utils
 
             return new RelayCommand(_ => TryInvoke(value, (string)parameter));
         }
-        
+
         private bool TryInvoke(object obj, string funcName)
         {
             var method = obj.GetType().GetMethod(funcName);

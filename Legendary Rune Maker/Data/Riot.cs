@@ -16,7 +16,7 @@ namespace Legendary_Rune_Maker.Data
     internal static class Riot
     {
         public const string CdnEndpoint = "https://ddragon.leagueoflegends.com/cdn/";
-        
+
         public static string ImageEndpoint => CdnEndpoint + "img/";
 
         private static readonly IDictionary<string, string> CDragonLocale = new Dictionary<string, string>
@@ -26,7 +26,7 @@ namespace Legendary_Rune_Maker.Data
         };
 
         public static string Locale { get; set; } = "en_US";
-        
+
         private static WebClient Client => new WebClient { Encoding = Encoding.UTF8 };
 
         public static IDictionary<int, Rune> StatRunes => Runes.Where(o => o.Value.IsStatMod).ToDictionary(o => o.Key, o => o.Value);
@@ -59,7 +59,7 @@ namespace Legendary_Rune_Maker.Data
                 var json = JObject.Parse(raw);
 
                 TreeStructures = new Dictionary<int, TreeStructure>();
-                
+
                 foreach (var style in json["styles"].ToArray())
                 {
                     int id = style["id"].ToObject<int>();
@@ -90,7 +90,7 @@ namespace Legendary_Rune_Maker.Data
 
             return TreeStructures;
         }
-        
+
         public static async Task<Rune[][]> GetStatRuneStructureAsync()
             => (await GetTreeStructuresAsync()).Values.First().StatSlots;
 
@@ -117,7 +117,7 @@ namespace Legendary_Rune_Maker.Data
                 .ToArray();
             });
         }
-        
+
         public static async Task<SummonerSpell[]> GetSummonerSpellsAsync()
         {
             string url = $"{CdnEndpoint}{await GetLatestVersionAsync()}/data/{Locale}/summoner.json";
@@ -141,7 +141,7 @@ namespace Legendary_Rune_Maker.Data
                 .ToArray();
             });
         }
-        
+
         public static async Task<Item[]> GetItemsAsync()
         {
             string url = $"{CdnEndpoint}{await GetLatestVersionAsync()}/data/{Locale}/item.json";
@@ -184,7 +184,6 @@ namespace Legendary_Rune_Maker.Data
         public static async Task<string> GetLatestVersionAsync()
             => LatestVersion ?? (LatestVersion = JsonConvert.DeserializeObject<string[]>(await Client.DownloadStringTaskAsync("https://ddragon.leagueoflegends.com/api/versions.json"))[0]);
 
-        
         public static Champion GetChampion(int id, string locale = null)
         {
             var task = GetChampionsAsync(locale);

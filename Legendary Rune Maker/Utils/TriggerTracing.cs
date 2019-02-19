@@ -173,7 +173,7 @@ namespace Legendary_Rune_Maker.Utils
 
                         // the element being acted upon
                         object targetElement = args[5];
-                        
+
                         TriggerBase triggerBase = storyboard.TriggerBase;
                         string triggerName = GetTriggerName(storyboard.TriggerBase);
 

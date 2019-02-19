@@ -67,7 +67,7 @@ namespace Legendary_Rune_Maker.Data.Providers
             string html = await WebCache.String(GetChampionURL(championId, position), soft: true);
             string perksStr = Regex.Match(html, @"(?<=perks \= ).*(?=;)").Value;
             JToken perksJson = JArray.Parse(perksStr)[0]["tree"];
-            
+
             return new RunePage
             {
                 ChampionID = championId,
@@ -114,7 +114,7 @@ namespace Legendary_Rune_Maker.Data.Providers
                 .Where(o => o.HasClass("champ-item") && o.ParentNode.GetAttributeValue("style", null) == null)
                 .Select(o => o.GetAttributeValue("item", 0))
                 .ToArray();
-            
+
             return new ItemSet.SetBlock
             {
                 Items = items,

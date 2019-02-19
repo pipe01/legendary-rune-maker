@@ -24,7 +24,7 @@ namespace Legendary_Rune_Maker.Data.Providers
             [Position.Bottom] = "ADC",
             [Position.Fill] = ""
         };
-        
+
         public override async Task<Position[]> GetPossibleRoles(int championId)
         {
             string champ = Riot.GetChampion(championId).Key;
@@ -35,7 +35,7 @@ namespace Legendary_Rune_Maker.Data.Providers
             {
                 if (item.Key == Position.Fill)
                     return;
-                
+
                 var data = await WebCache.String($"http://lolflavor.com/champions/{champ}/Recommended/{champ}_{item.Value}_scrape.json", soft: true);
 
                 if (data != null)

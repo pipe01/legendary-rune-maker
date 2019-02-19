@@ -35,7 +35,7 @@ namespace Legendary_Rune_Maker
             this.MainPage = mainPage;
 
             Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.High;
-            
+
             InitializeComponent();
         }
 
@@ -44,7 +44,7 @@ namespace Legendary_Rune_Maker
             if (Shown)
                 return;
             Shown = true;
-            
+
             MainWindow.Value.SetMainPage(MainPage.Value);
 
             this.IsClosed = true;
@@ -83,11 +83,11 @@ namespace Legendary_Rune_Maker
                 WebCache.CacheGameVersion = await Riot.GetLatestVersionAsync();
                 WebCache.CacheLocale = CultureInfo.CurrentCulture.Name;
             }
-            
+
             Riot.SetLanguage(Config.Default.Culture);
             await Riot.CacheAllAsync(o => Dispatcher.Invoke(() => Progress.Value = o));
         }
-        
+
         private async Task CheckUpdates()
         {
             Status.Text = Text.CheckingUpdates;
@@ -100,7 +100,7 @@ namespace Legendary_Rune_Maker
             var update = await await Task.WhenAny(
                     Task.Delay(3000000).ContinueWith<CheckForUpdatesResult>(_ => null),
                     manager.CheckForUpdatesAsync());
-            
+
             if (update?.CanUpdate == true)
             {
                 Status.Text = Text.Updating;

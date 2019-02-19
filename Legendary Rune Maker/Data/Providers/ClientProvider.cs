@@ -10,12 +10,12 @@ namespace Legendary_Rune_Maker.Data.Providers
     {
         public override string Name => "Client";
         public override Options ProviderOptions => Options.RunePages;
-        
+
         public override Task<Position[]> GetPossibleRoles(int championId)
         {
             if (GameState.CanUpload)
                 return Task.FromResult(new[] { Position.Fill });
-            
+
             return Task.FromResult(new Position[0]);
         }
 

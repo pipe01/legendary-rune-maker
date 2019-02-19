@@ -44,20 +44,20 @@ namespace Legendary_Rune_Maker.Data
                 else
                 {
                     data = await new WebClient().DownloadDataTaskAsync(url);
-                    
+
                     if (!DesignerProperties.GetIsInDesignMode(new DependencyObject()))
                     {
                         Directory.CreateDirectory(CachePath);
                         File.WriteAllBytes(file, data);
                     }
                 }
-                
+
                 Dicc[url] = (RawToBitmapImage(data), null, data);
             }
 
             return Dicc[url].n;
         }
-        
+
         public async Task<BitmapSource> GetGrayscale(string url)
         {
             if (!Dicc.ContainsKey(url))
@@ -83,7 +83,7 @@ namespace Legendary_Rune_Maker.Data
             image.EndInit();
             return image;
         }
-        
+
         private static string ToMD5(string txt)
         {
             using (var m = MD5.Create())

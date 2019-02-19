@@ -32,7 +32,7 @@ namespace Legendary_Rune_Maker.Pages
         public static double BaseHeight { get; } = 310;
         public static double ExpandWidth { get; } = 810;
         public static double ExpandHeight { get; } = 325;
-        
+
         public bool Expanded
         {
             get { return (bool)GetValue(ExpandedProperty); }
@@ -74,7 +74,7 @@ namespace Legendary_Rune_Maker.Pages
         public MainPage(ILoL lol, MainWindow owner, Actuator actuator)
         {
             this.LoL = lol;
-            
+
             this.Actuator = actuator;
             this.Actuator.Main = this;
 
@@ -93,7 +93,7 @@ namespace Legendary_Rune_Maker.Pages
         }
 
         public Size GetSize() => new Size(Expanded ? ExpandWidth : BaseWidth, Expanded ? ExpandHeight : BaseHeight);
-        
+
         public void SafeInvoke(Action act)
         {
             if (!Dispatcher.CheckAccess())
@@ -140,7 +140,7 @@ namespace Legendary_Rune_Maker.Pages
             var champName = Riot.GetChampion(champId).Name;
             var provider = Actuator.RuneProviders.FirstOrDefault(o => o.Name == Config.Default.LockLoadProvider)
                             ?? Actuator.RuneProviders[0];
-            
+
             LogTo.Debug("Loading page from {0} (default) for champion {1}", provider.Name, champName);
             var positions = await provider.GetPossibleRoles(champId);
 
@@ -289,7 +289,7 @@ namespace Legendary_Rune_Maker.Pages
                     catch (Exception ex)
                     {
                         LogTo.ErrorException($"Failed to load possible positions from {provider.Name} for {Riot.GetChampion(SelectedChampion).Name}", ex);
-                        
+
                         header.Items.Clear();
                         header.Items.Add("Error");
 
@@ -351,7 +351,7 @@ namespace Legendary_Rune_Maker.Pages
                 UpdateRunePageFromRuneBook();
             }
         }
-        
+
         private void ShowRunes_Click(object sender, EventArgs e)
         {
             Expanded = !Expanded;
@@ -373,7 +373,7 @@ namespace Legendary_Rune_Maker.Pages
         private async void Page_Initialized(object sender, EventArgs e)
         {
             LogTo.Debug("Initializing main page");
-            
+
             await Actuator.Init();
             await SetChampion(null);
         }
@@ -415,12 +415,12 @@ namespace Legendary_Rune_Maker.Pages
             ShareItem.IsEnabled = SelectedRunes?.Length == 9;
             ImportItem.IsEnabled = GetClipboard().Success;
         }
-        
+
         private void ShareItem_Click(object sender, RoutedEventArgs e)
         {
             byte[] data = Page.RuneIDs.SelectMany(o => BitConverter.GetBytes((short)o)).ToArray();
             Clipboard.SetText(Convert.ToBase64String(data));
-            
+
             ShowNotification(Text.Done, Text.PageCopiedToClipboard, NotificationType.Success);
         }
 
@@ -458,13 +458,13 @@ namespace Legendary_Rune_Maker.Pages
                 goto no;
 
             int[] ids = Enumerable.Range(0, 9).Select(i => (int)BitConverter.ToInt16(data, i * sizeof(short))).ToArray();
-            
+
             int primary = GetStyleFromRuneID(ids[0]);
             int secondary = GetStyleFromRuneID(ids[4]);
 
             if (primary == -1 || secondary == -1)
                 goto no;
-            
+
             return (true, new RunePage(ids, primary, secondary, SelectedChampion, SelectedPosition));
 
             no:

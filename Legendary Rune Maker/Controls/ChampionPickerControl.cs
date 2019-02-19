@@ -18,9 +18,9 @@ namespace Legendary_Rune_Maker.Controls
             set => SetValue(ChampionProperty, value);
         }
         public static readonly DependencyProperty ChampionProperty = DependencyProperty.Register("Champion", typeof(Champion), typeof(ChampionPickerControl));
-        
+
         public bool Ban { get; set; }
-        
+
         public event EventHandler ChampionChanged;
 
         private NavigationService NavigationService;

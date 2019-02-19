@@ -81,7 +81,7 @@ namespace Legendary_Rune_Maker.Pages
 
             if (ban)
                 win.BackImage.ImageSource = (ImageSource)Application.Current.FindResource("BgRed");
-            
+
             navigator.Navigate(win);
 
             Champion selChampion;
@@ -130,7 +130,7 @@ namespace Legendary_Rune_Maker.Pages
         }
 
         public Size GetSize() => new Size(this.Width, this.Height);
-        
+
         private void Page_PreviewKeyUp(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Escape)

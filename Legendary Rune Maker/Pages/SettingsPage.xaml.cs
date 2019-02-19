@@ -43,7 +43,7 @@ namespace Legendary_Rune_Maker.Pages
                     LanguageCb.SelectedItem = name;
             }
         }
-        
+
         private void Restart_Click(object sender, RoutedEventArgs e)
         {
             Restart();
@@ -63,7 +63,7 @@ namespace Legendary_Rune_Maker.Pages
         }
 
         public Size GetSize() => new Size(this.Width, this.Height);
-        
+
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.GoBack();

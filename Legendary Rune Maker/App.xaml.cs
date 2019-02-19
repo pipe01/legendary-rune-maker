@@ -106,7 +106,7 @@ namespace Legendary_Rune_Maker
             Container.Bind<Detector>().To<ReadyCheckDetector>();
 
             Container.Bind<MainWindow>().ToSelf().InSingletonScope();
-            
+
             var loadingWindow = Container.Get<LoadingWindow>();
             Current.MainWindow = loadingWindow;
 
