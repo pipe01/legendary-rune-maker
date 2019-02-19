@@ -294,4 +294,7 @@
   <data name="SavedOnExit" xml:space="preserve">
     <value>Los cambios se guardarán cuando salgas de esta página</value>
   </data>
+  <data name="PageChampNotSet" xml:space="preserve">
+    <value>Página para {0} no creada</value>
+  </data>
 </root>
