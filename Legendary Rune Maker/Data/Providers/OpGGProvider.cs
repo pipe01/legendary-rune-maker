@@ -28,28 +28,7 @@ namespace Legendary_Rune_Maker.Data.Providers
 
         public override async Task<Position[]> GetPossibleRoles(int championId)
         {
-            var doc = new HtmlDocument();
-            doc.LoadHtml(await WebCache.String(GetRoleUrl(championId, Position.Fill), soft: true));
-
-            var positionNodes = doc.DocumentNode.Descendants().Where(o => o.HasClass("champion-stats-header__position"));
-
-            return positionNodes.Select<HtmlNode, Position?>(o =>
-            {
-                string data = o.GetAttributeValue("data-position", "");
-
-                if (data == "ADC")
-                    return Position.Bottom;
-
-                foreach (var item in PositionToName)
-                {
-                    if (item.Value.Equals(data, StringComparison.InvariantCultureIgnoreCase))
-                    {
-                        return item.Key;
-                    }
-                }
-
-                return null;
-            }).Where(o => o != null).Select(o => o.Value).ToArray();
+            return PositionToName.Keys.Except(new []{ Position.Fill }).ToArray();
         }
 
         public override async Task<RunePage> GetRunePage(int championId, Position position)
@@ -62,10 +41,10 @@ namespace Legendary_Rune_Maker.Data.Providers
             int[][] pageRows = pages.SelectMany(o => o.Descendants().Select(ParseRow)).Select(o => o.ToArray()).Where(o => o.Length > 0).ToArray();
             var perks = pageRows.Where((_, i) => i != 0 && i != 5).SelectMany(o => o).ToList();
 
-            var fragments = doc.DocumentNode.Descendants().Where(o => o.HasClass("fragment")).Take(3);
+            var fragments = doc.DocumentNode.Descendants().Where(o => o.HasClass("fragment__row")).Take(3);
             perks.AddRange(fragments.Select(o =>
             {
-                var src = o.Descendants().Single(i => i.HasClass("tip")).GetAttributeValue("src", "");
+                var src = o.Descendants().Single(i => i.HasClass("tip") && i.HasClass("active")).GetAttributeValue("src", "");
                 return int.Parse(Regex.Match(src, @"(?<=perkShard\/).*?(?=\.png)").Value);
             }));
 
