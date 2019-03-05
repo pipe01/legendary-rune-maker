@@ -312,7 +312,6 @@ namespace Legendary_Rune_Maker.Pages
 
                                 LogTo.Debug("Setting page tree");
                                 Tree.SetPage(page);
-                                SelectedPosition = page.Position;
                             }
                             catch (Exception ex)
                             {
