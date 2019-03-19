@@ -56,7 +56,7 @@ namespace Legendary_Rune_Maker
 #pragma warning restore CS1998
         {
 #if !DEBUG
-            if (Config.Default.CheckUpdatesBeforeStartup)
+            if (Config.Current.CheckUpdatesBeforeStartup)
                 await CheckUpdates();
 #endif
 
