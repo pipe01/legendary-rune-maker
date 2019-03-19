@@ -72,7 +72,10 @@ namespace Legendary_Rune_Maker.Data
             }
             else
             {
-                string text = Encoding.UTF8.GetString(Convert.FromBase64String(File.ReadAllText(CachePath)));
+                string text;
+
+                lock (WriteLock)
+                    text = Encoding.UTF8.GetString(Convert.FromBase64String(File.ReadAllText(CachePath)));
 
                 Data = JsonConvert.DeserializeObject<CacheData>(text, JsonSettings);
             }
