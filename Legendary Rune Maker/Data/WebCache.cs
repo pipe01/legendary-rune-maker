@@ -77,7 +77,15 @@ namespace Legendary_Rune_Maker.Data
                 lock (WriteLock)
                     text = Encoding.UTF8.GetString(Convert.FromBase64String(File.ReadAllText(CachePath)));
 
-                Data = JsonConvert.DeserializeObject<CacheData>(text, JsonSettings);
+                try
+                {
+                    Data = JsonConvert.DeserializeObject<CacheData>(text, JsonSettings);
+                }
+                catch (JsonSerializationException ex)
+                {
+                    LogTo.ErrorException("Failed to load web cache file", ex);
+                    Data = new CacheData();
+                }
             }
         }
 
