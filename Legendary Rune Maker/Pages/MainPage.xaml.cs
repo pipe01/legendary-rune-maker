@@ -138,7 +138,7 @@ namespace Legendary_Rune_Maker.Pages
             var champId = championId == -1 ? SelectedChampion : championId;
 
             var champName = Riot.GetChampion(champId).Name;
-            var provider = Actuator.RuneProviders.FirstOrDefault(o => o.Name == Config.Default.LockLoadProvider)
+            var provider = Actuator.RuneProviders.FirstOrDefault(o => o.Name == Config.Current.LockLoadProvider)
                             ?? Actuator.RuneProviders[0];
 
             LogTo.Debug("Loading page from {0} (default) for champion {1}", provider.Name, champName);

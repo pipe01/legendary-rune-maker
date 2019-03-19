@@ -84,7 +84,7 @@ namespace Legendary_Rune_Maker
                 WebCache.CacheLocale = CultureInfo.CurrentCulture.Name;
             }
 
-            Riot.SetLanguage(Config.Default.Culture);
+            Riot.SetLanguage(Config.Current.Culture);
             await Riot.CacheAllAsync(o => Dispatcher.Invoke(() => Progress.Value = o));
         }
 

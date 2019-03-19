@@ -24,7 +24,7 @@ namespace Legendary_Rune_Maker.Pages
 
         public AutomationPage()
         {
-            Config = Config.Default.Clone();
+            Config = Config.Current.Clone();
             InitializeComponent();
 
             this.DataContext = Config;
@@ -35,7 +35,7 @@ namespace Legendary_Rune_Maker.Pages
             var picker = (ChampionPickerControl)sender;
             int n = (int)picker.Tag;
 
-            var dic = picker.Ban ? Config.Default.ChampionsToBan : Config.Default.ChampionsToPick;
+            var dic = picker.Ban ? Config.ChampionsToBan : Config.ChampionsToPick;
             var key = dic.Keys.ElementAt(n);
 
             dic[key] = picker.Champion?.ID ?? 0;
@@ -51,12 +51,12 @@ namespace Legendary_Rune_Maker.Pages
             var picker = (SummonerSpellControl)sender;
             int n = (int)picker.Tag;
 
-            Config.Default.SpellsToPick[Config.Default.SpellsToPick.Keys.ElementAt(n / 2)][n % 2] = picker.Spell?.ID ?? 0;
+            Config.SpellsToPick[Config.SpellsToPick.Keys.ElementAt(n / 2)][n % 2] = picker.Spell?.ID ?? 0;
         }
 
         private void Providers_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Config.Default.LockLoadProvider = ((Provider)Providers.SelectedItem).Name;
+            Config.LockLoadProvider = ((Provider)Providers.SelectedItem).Name;
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
@@ -129,25 +129,25 @@ namespace Legendary_Rune_Maker.Pages
                         SkillProviders.Items.Add(item);
 
 
-                    if (item.Name == Config.Default.LockLoadProvider)
+                    if (item.Name == Config.LockLoadProvider)
                         Providers.SelectedItem = item;
 
-                    if (item.Name == Config.Default.ItemSetProvider)
+                    if (item.Name == Config.ItemSetProvider)
                         ItemProviders.SelectedItem = item;
 
-                    if (item.Name == Config.Default.SkillOrderProvider)
+                    if (item.Name == Config.SkillOrderProvider)
                         SkillProviders.SelectedItem = item;
                 }
             }
 
             int i = 0;
-            foreach (var item in Config.Default.ChampionsToPick)
+            foreach (var item in Config.ChampionsToPick)
             {
                 Picks[i++].Champion = Riot.GetChampion(item.Value);
             }
 
             i = 0;
-            foreach (var item in Config.Default.ChampionsToBan)
+            foreach (var item in Config.ChampionsToBan)
             {
                 Bans[i++].Champion = Riot.GetChampion(item.Value);
             }
@@ -155,7 +155,7 @@ namespace Legendary_Rune_Maker.Pages
             var spells = await Riot.GetSummonerSpellsAsync();
 
             i = 0;
-            foreach (var item in Config.Default.SpellsToPick)
+            foreach (var item in Config.SpellsToPick)
             {
                 Spells[i++].Spell = spells.SingleOrDefault(o => o.ID == item.Value[0]);
                 Spells[i++].Spell = spells.SingleOrDefault(o => o.ID == item.Value[1]);
@@ -164,18 +164,18 @@ namespace Legendary_Rune_Maker.Pages
 
         private void Page_Unloaded(object sender, RoutedEventArgs e)
         {
-            Config.Default = Config;
-            Config.Default.Save();
+            Config.Current = Config;
+            Config.Current.Save();
         }
 
         private void ItemProviders_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Config.Default.ItemSetProvider = ((Provider)ItemProviders.SelectedItem).Name;
+            Config.ItemSetProvider = ((Provider)ItemProviders.SelectedItem).Name;
         }
 
         private void SkillProviders_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Config.Default.SkillOrderProvider = ((Provider)SkillProviders.SelectedItem).Name;
+            Config.SkillOrderProvider = ((Provider)SkillProviders.SelectedItem).Name;
         }
 
         public Size GetSize() => new Size(this.Width, this.Height);

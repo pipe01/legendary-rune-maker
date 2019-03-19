@@ -39,7 +39,7 @@ namespace Legendary_Rune_Maker.Pages
 
                 LanguageCb.Items.Add(name);
 
-                if (item == Config.Default.CultureName)
+                if (item == Config.Current.CultureName)
                     LanguageCb.SelectedItem = name;
             }
         }
@@ -51,7 +51,7 @@ namespace Legendary_Rune_Maker.Pages
 
         private void Restart()
         {
-            Config.Default.Save();
+            Config.Current.Save();
 
             Process.Start(Assembly.GetExecutingAssembly().Location);
             Application.Current.Shutdown();
@@ -59,7 +59,7 @@ namespace Legendary_Rune_Maker.Pages
 
         private void LanguageCb_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Config.Default.CultureName = Config.AvailableLanguages[LanguageCb.SelectedIndex];
+            Config.Current.CultureName = Config.AvailableLanguages[LanguageCb.SelectedIndex];
         }
 
         public Size GetSize() => new Size(this.Width, this.Height);
@@ -76,7 +76,7 @@ namespace Legendary_Rune_Maker.Pages
 
         private void Save_Click(object sender, RoutedEventArgs e)
         {
-            Config.Default.Save();
+            Config.Current.Save();
             NavigationService.GoBack();
         }
 

@@ -24,7 +24,7 @@ namespace Legendary_Rune_Maker.Data
         public async Task UploadToClient(ILogin login, IItemsSets itemSets)
         {
             var session = await login.GetSessionAsync();
-            bool saveToConfig = !Config.Default.KeepItemSets;
+            bool saveToConfig = !Config.Current.KeepItemSets;
 
             if (this.Name.Contains("{0}"))
                 this.Name = string.Format(this.Name, Riot.GetChampion(Champion).Name);
@@ -52,16 +52,16 @@ namespace Legendary_Rune_Maker.Data
 
             currentSetsList.Add(itemSet);
 
-            if (saveToConfig && Config.Default.LastItemSetUid != null)
+            if (saveToConfig && Config.Current.LastItemSetUid != null)
             {
-                LogTo.Debug("Deleting last item set with ID {0}", Config.Default.LastItemSetUid);
-                currentSetsList.RemoveAll(o => o.uid == Config.Default.LastItemSetUid);
+                LogTo.Debug("Deleting last item set with ID {0}", Config.Current.LastItemSetUid);
+                currentSetsList.RemoveAll(o => o.uid == Config.Current.LastItemSetUid);
             }
 
             if (saveToConfig)
             {
-                Config.Default.LastItemSetUid = itemSet.uid;
-                Config.Default.Save();
+                Config.Current.LastItemSetUid = itemSet.uid;
+                Config.Current.Save();
             }
 
             currentSetInfo.itemSets = currentSetsList.ToArray();

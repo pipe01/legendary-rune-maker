@@ -3,6 +3,7 @@ using LCU.NET;
 using Legendary_Rune_Maker.Data;
 using Legendary_Rune_Maker.Game;
 using Legendary_Rune_Maker.Pages;
+using Legendary_Rune_Maker.Utils;
 using Newtonsoft.Json;
 using Ninject;
 using System;
@@ -32,7 +33,7 @@ namespace Legendary_Rune_Maker
 
         public App()
         {
-            CultureInfo.DefaultThreadCurrentCulture = CultureInfo.DefaultThreadCurrentUICulture = Config.Default.Culture;
+            CultureInfo.DefaultThreadCurrentCulture = CultureInfo.DefaultThreadCurrentUICulture = Config.Current.Culture;
 
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
         }
@@ -98,7 +99,8 @@ namespace Legendary_Rune_Maker
 
             LoL.BindNinject(Container);
 
-            Container.Bind<Config>().ToMethod(o => Config.Default);
+            Container.Bind<Config>().ToMethod(_ => Config.Current);
+            Container.Bind<Container<Config>>().ToConstant(Config.Container);
 
             Container.Bind<Actuator>().ToSelf().InSingletonScope();
             Container.Bind<Detector>().To<LoginDetector>();

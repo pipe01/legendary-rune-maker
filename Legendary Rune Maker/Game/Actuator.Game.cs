@@ -75,7 +75,7 @@ namespace Legendary_Rune_Maker.Game
         {
             LogTo.Debug("Trying to ban champion");
 
-            Dictionary<Position, int> bans = Config.Default.ChampionsToBan;
+            Dictionary<Position, int> bans = Config.Current.ChampionsToBan;
             var bannable = await LoL.ChampSelect.GetBannableChampions();
 
             var possibleBans = new List<int>();
@@ -242,7 +242,7 @@ namespace Legendary_Rune_Maker.Game
             {
                 LogTo.Info("Invalid current rune page");
 
-                if (Config.Default.LoadOnLock)
+                if (Config.Current.LoadOnLock)
                 {
                     LogTo.Info("Downloading from provider");
                     page = await Main.SafeInvoke(async () => await Main.LoadPageFromDefaultProvider(championId));
@@ -264,7 +264,7 @@ namespace Legendary_Rune_Maker.Game
         {
             LogTo.Debug("Trying to upload skill order");
 
-            var provider = Array.Find(RuneProviders, o => o.Name == Config.Default.SkillOrderProvider)
+            var provider = Array.Find(RuneProviders, o => o.Name == Config.Current.SkillOrderProvider)
                             ?? RuneProviders.First(o => o.Supports(Provider.Options.SkillOrder));
 
             if (!provider.Supports(Provider.Options.SkillOrder))

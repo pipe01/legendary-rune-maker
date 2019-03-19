@@ -36,7 +36,7 @@ namespace Legendary_Rune_Maker.Game
 
         private ILeagueClient LeagueClient => LoL.Client;
 
-        private Container<State> CurrentState = new Container<State>();
+        private readonly Container<State> CurrentState = new Container<State>();
 
         [Inject]
         public Detector[] Detectors { get; set; }
@@ -57,12 +57,14 @@ namespace Legendary_Rune_Maker.Game
         }
 
         private readonly ILoL LoL;
-        private Config Config;
+        private readonly Container<Config> ConfigContainer;
 
-        public Actuator(ILoL lol, Config config)
+        private Config Config => ConfigContainer;
+
+        public Actuator(ILoL lol, Container<Config> config)
         {
             this.LoL = lol;
-            this.Config = config;
+            this.ConfigContainer = config;
         }
 
         public async Task Init()

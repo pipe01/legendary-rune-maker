@@ -40,12 +40,14 @@ namespace Legendary_Rune_Maker.Game
 
         private SessionData Session;
 
-        private readonly Config Config;
+        private readonly Container<Config> ConfigContainer;
         private readonly Actuator Actuator;
 
-        public ChampSelectDetector(ILoL lol, Config config, Actuator actuator) : base(lol)
+        private Config Config => ConfigContainer.Value;
+
+        public ChampSelectDetector(ILoL lol, Container<Config> config, Actuator actuator) : base(lol)
         {
-            this.Config = config;
+            this.ConfigContainer = config;
             this.Actuator = actuator;
         }
 
@@ -128,8 +130,12 @@ namespace Legendary_Rune_Maker.Game
                     State.Value.HasSetIntent = true;
 
                     var action = actions.FirstOrDefault(o => o.actorCellId == data.localPlayerCellId && o.type == "pick" && !o.completed);
-                    await Task.Delay(Config.DelayBeforeIntentSet);
-                    await Actuator.PickChampion(Session.Position, action, true);
+
+                    if (action != null)
+                    {
+                        await Task.Delay(Config.DelayBeforeIntentSet);
+                        await Actuator.PickChampion(Session.Position, action, true);
+                    }
                 }
             }
 
@@ -144,16 +150,16 @@ namespace Legendary_Rune_Maker.Game
             {
                 bool pick = false;
 
-                if (data.actions.Where(o => o.All(i => i.type == "pick")).Count() == 1)
+                if (data.actions.Count(o => o.All(i => i.type == "pick")) == 1)
                 {
                     //Blind pick mode
 
-                    if (data.actions.Count() > 1)
+                    if (data.actions.Length > 1)
                     {
                         //There is a ban phase
 
                         //Second-to-last
-                        var phaseBeforePick = data.actions.ElementAt(data.actions.Count() - 2);
+                        var phaseBeforePick = data.actions[data.actions.Length - 2];
 
                         pick = phaseBeforePick.All(o => o.completed);
                     }
@@ -166,7 +172,7 @@ namespace Legendary_Rune_Maker.Game
                 {
                     //Draft pick mode
 
-                    var nextAction = data.actions.Where(o => o.All(i => i.type == "pick") && !o.All(i => i.completed)).FirstOrDefault();
+                    var nextAction = data.actions.FirstOrDefault(o => o.All(i => i.type == "pick") && !o.All(i => i.completed));
 
                     pick = nextAction?.Any(o => o.actorCellId == data.localPlayerCellId) ?? false;
                 }

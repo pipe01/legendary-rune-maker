@@ -7,6 +7,7 @@ using Anotar.Log4Net;
 using LCU.NET;
 using LCU.NET.Plugins.LoL;
 using Legendary_Rune_Maker.Data;
+using Legendary_Rune_Maker.Utils;
 using Notifications.Wpf;
 
 namespace Legendary_Rune_Maker.Game
@@ -15,9 +16,9 @@ namespace Legendary_Rune_Maker.Game
     {
         private bool IsAccepting;
 
-        private readonly Config Config;
+        private readonly Container<Config> Config;
 
-        public ReadyCheckDetector(ILoL lol, Config config) : base(lol)
+        public ReadyCheckDetector(ILoL lol, Container<Config> config) : base(lol)
         {
             this.Config = config;
         }
@@ -47,7 +48,7 @@ namespace Legendary_Rune_Maker.Game
 
         private async void ReadyCheckChanged(EventType eventType, LolMatchmakingMatchmakingReadyCheckResource data)
         {
-            if (eventType == EventType.Update && !await HasUserActed() && Config.AutoAccept && !IsAccepting)
+            if (eventType == EventType.Update && !await HasUserActed() && Config.Value.AutoAccept && !IsAccepting)
             {
                 IsAccepting = true;
 
@@ -57,7 +58,7 @@ namespace Legendary_Rune_Maker.Game
 #pragma warning disable CS4014
                 Task.Run(async () =>
                 {
-                    await Task.Delay(Config.DelayBeforeAcceptReady);
+                    await Task.Delay(Config.Value.DelayBeforeAcceptReady);
 
                     if (await HasUserActed())
                         goto exit;

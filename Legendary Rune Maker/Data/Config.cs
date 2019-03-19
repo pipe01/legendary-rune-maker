@@ -1,4 +1,5 @@
 ﻿using Anotar.Log4Net;
+using Legendary_Rune_Maker.Utils;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,8 @@ namespace Legendary_Rune_Maker.Data
 {
     public class Config
     {
-        public static Config Default { get; set; } = Load();
+        public static Config Current { get => Container.Value; set => Container.Value = value; }
+        public static Container<Config> Container { get; } = new Container<Config>(Load());
 
         private const string FilePath = "config.json";
         private const int LatestVersion = 14;
@@ -111,7 +113,7 @@ namespace Legendary_Rune_Maker.Data
             return JsonConvert.DeserializeObject<Config>(JsonConvert.SerializeObject(this));
         }
 
-        public static void Reload() => Default = Load();
+        public static void Reload() => Current = Load();
 
         private static Config Load()
         {

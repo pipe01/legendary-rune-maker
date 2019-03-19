@@ -70,11 +70,11 @@ namespace Legendary_Rune_Maker.Data
 
             LogTo.Debug("Uploading rune page with name '{0}' and runes [ {1} ]", page.name, string.Join(", ", RuneIDs));
 
-            if (Config.Default.LastRunePageId != default)
+            if (Config.Current.LastRunePageId != default)
             {
                 try
                 {
-                    await perks.DeletePageAsync(Config.Default.LastRunePageId);
+                    await perks.DeletePageAsync(Config.Current.LastRunePageId);
                 }
                 catch
                 {
@@ -84,7 +84,7 @@ namespace Legendary_Rune_Maker.Data
             try
             {
                 var pageRet = await perks.PostPageAsync(page);
-                Config.Default.LastRunePageId = pageRet.id;
+                Config.Current.LastRunePageId = pageRet.id;
             }
             catch (APIErrorException ex) when (ex.Message == "Max pages reached")
             {
