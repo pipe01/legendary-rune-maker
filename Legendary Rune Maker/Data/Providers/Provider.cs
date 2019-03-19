@@ -19,6 +19,7 @@ namespace Legendary_Rune_Maker.Data.Providers
         protected WebClient Client => new WebClient();
 
         public abstract string Name { get; }
+        public virtual bool IsEnabled => true;
 
         public virtual Options ProviderOptions => Options.RunePages | Options.ItemSets;
 

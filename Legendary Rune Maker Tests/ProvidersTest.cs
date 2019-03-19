@@ -27,7 +27,7 @@ namespace Legendary_Rune_Maker_Tests
             return typeof(Provider).Assembly.GetTypes()
                 .Where(o => o.BaseType == typeof(Provider) && o != typeof(ClientProvider))
                 .Select(o => (Provider)Activator.CreateInstance(o))
-                .Where(o => options == null || o.Supports(options.Value))
+                .Where(o => o.IsEnabled && (options == null || o.Supports(options.Value)))
                 .SelectMany(o => TestData.Select(i => options == null ? new object[] { o, i.Key } : new object[] { o, i.Key, i.Value }))
                 .ToArray();
         }

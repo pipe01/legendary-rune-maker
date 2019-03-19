@@ -274,7 +274,8 @@ namespace Legendary_Rune_Maker.Pages
                 var header = new MenuItem
                 {
                     Header = provider.Name,
-                    Icon = new Image() { Source = (ImageSource)Application.Current.FindResource(provider.GetType().Name + "Icon") }
+                    Icon = new Image() { Source = (ImageSource)Application.Current.FindResource(provider.GetType().Name + "Icon") },
+                    IsEnabled = provider.IsEnabled
                 };
                 menu.Items.Add(header);
 

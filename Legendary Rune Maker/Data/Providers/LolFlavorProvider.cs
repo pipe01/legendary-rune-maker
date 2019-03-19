@@ -14,6 +14,7 @@ namespace Legendary_Rune_Maker.Data.Providers
     {
         public override string Name => "LolFlavor";
         public override Options ProviderOptions => Options.ItemSets;
+        public override bool IsEnabled => false;
 
         private static readonly IDictionary<Position, string> PositionToName = new Dictionary<Position, string>
         {
