@@ -25,6 +25,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NotifyIconWpf", "notifyicon
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Legendary Rune Maker Tests", "Legendary Rune Maker Tests\Legendary Rune Maker Tests.csproj", "{5850F2F4-BFD1-4386-89F8-34D6EC8FF03D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LCU.NET.Extras", "LCU.NET.Extras\LCU.NET.Extras.csproj", "{8DE28889-C573-4CEA-B336-D0223C04C06F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -114,6 +116,16 @@ Global
 		{5850F2F4-BFD1-4386-89F8-34D6EC8FF03D}.Release 4.6.1|Any CPU.Build.0 = Release|Any CPU
 		{5850F2F4-BFD1-4386-89F8-34D6EC8FF03D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5850F2F4-BFD1-4386-89F8-34D6EC8FF03D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8DE28889-C573-4CEA-B336-D0223C04C06F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8DE28889-C573-4CEA-B336-D0223C04C06F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8DE28889-C573-4CEA-B336-D0223C04C06F}.Release 4.0|Any CPU.ActiveCfg = Release|Any CPU
+		{8DE28889-C573-4CEA-B336-D0223C04C06F}.Release 4.0|Any CPU.Build.0 = Release|Any CPU
+		{8DE28889-C573-4CEA-B336-D0223C04C06F}.Release 4.5|Any CPU.ActiveCfg = Release|Any CPU
+		{8DE28889-C573-4CEA-B336-D0223C04C06F}.Release 4.5|Any CPU.Build.0 = Release|Any CPU
+		{8DE28889-C573-4CEA-B336-D0223C04C06F}.Release 4.6.1|Any CPU.ActiveCfg = Release|Any CPU
+		{8DE28889-C573-4CEA-B336-D0223C04C06F}.Release 4.6.1|Any CPU.Build.0 = Release|Any CPU
+		{8DE28889-C573-4CEA-B336-D0223C04C06F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8DE28889-C573-4CEA-B336-D0223C04C06F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

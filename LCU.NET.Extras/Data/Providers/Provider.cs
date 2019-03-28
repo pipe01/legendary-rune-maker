@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Legendary_Rune_Maker.Data.Providers
 {
-    internal abstract class Provider
+    public abstract class Provider
     {
         [Flags]
         public enum Options

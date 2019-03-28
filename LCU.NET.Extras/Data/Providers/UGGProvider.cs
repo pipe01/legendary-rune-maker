@@ -1,5 +1,6 @@
 ﻿//Mad props to @paolostyle for https://github.com/OrangeNote/RuneBook/pull/67
 
+using LCU.NET.Extras.Utils;
 using Legendary_Rune_Maker.Utils;
 using Newtonsoft.Json.Linq;
 using System;

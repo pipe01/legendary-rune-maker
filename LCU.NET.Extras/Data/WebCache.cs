@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Legendary_Rune_Maker.Data
 {
-    internal static class WebCache
+    public static class WebCache
     {
         private class CacheData
         {

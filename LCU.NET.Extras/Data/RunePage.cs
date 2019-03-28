@@ -1,9 +1,9 @@
 ﻿using Anotar.Log4Net;
 using LCU.NET;
 using LCU.NET.API_Models;
+using LCU.NET.Extras;
 using LCU.NET.Plugins.LoL;
 using Legendary_Rune_Maker.Game;
-using Legendary_Rune_Maker.Locale;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -99,7 +99,7 @@ namespace Legendary_Rune_Maker.Data
                 }
                 else
                 {
-                    MainWindow.ShowNotification(Text.CantUploadPageTitle, Text.CantUploadPageMessage);
+                    LCUApp.MainWindow.ShowNotification("Couldn't upload rune page", "There is no room for more pages.");
                     return;
                 }
             }

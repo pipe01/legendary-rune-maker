@@ -1,12 +1,11 @@
 ﻿using Anotar.Log4Net;
 using LCU.NET;
 using LCU.NET.API_Models;
+using LCU.NET.Extras.Data;
 using LCU.NET.Plugins.LoL;
 using Legendary_Rune_Maker.Data;
 using Legendary_Rune_Maker.Data.Providers;
-using Legendary_Rune_Maker.Locale;
 using Legendary_Rune_Maker.Utils;
-using Notifications.Wpf;
 using RestSharp;
 using System;
 using System.Collections.Generic;
@@ -222,8 +221,8 @@ namespace Legendary_Rune_Maker.Game
             await set.UploadToClient(LoL.Login, LoL.ItemSets);
             LogTo.Debug("Uploaded item set");
 
-            Main.ShowNotification(Text.UploadedItemSet,
-                Text.UploadedItemSetFrom.FormatStr(provider.Name), NotificationType.Success);
+            Main.ShowNotification("Upload item set",
+                string.Format("From {0}", provider.Name), NotificationType.Success);
         }
 
         public async Task UploadRunePage(Position pos, int championId)
@@ -234,7 +233,7 @@ namespace Legendary_Rune_Maker.Game
 
             LogTo.Debug("for champion {0}", champion);
 
-            Main.ShowNotification(Text.LockedInMessage, champion + ", " + pos.ToString().ToLower(), NotificationType.Success);
+            Main.ShowNotification("Locked in", champion + ", " + pos.ToString().ToLower(), NotificationType.Success);
 
             var page = RuneBook.Instance.Get(championId, pos, false);
 
@@ -250,7 +249,7 @@ namespace Legendary_Rune_Maker.Game
                 }
                 else
                 {
-                    Main.ShowNotification(Text.PageChampNotSet.FormatStr(champion), null, NotificationType.Error);
+                    Main.ShowNotification(string.Format("Rune page for champion {0} not set", champion), null, NotificationType.Error);
                     return;
                 }
             }

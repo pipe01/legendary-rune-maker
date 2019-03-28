@@ -4,7 +4,7 @@ using PiMachine;
 
 namespace Legendary_Rune_Maker.Game
 {
-    internal static class GameState
+    public static class GameState
     {
         public static StateMachine<GameStates, GameTriggers> State { get; } = CreateMachine();
 

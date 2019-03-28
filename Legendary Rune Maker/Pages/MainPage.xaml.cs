@@ -1,5 +1,6 @@
 ﻿using Anotar.Log4Net;
 using LCU.NET;
+using LCU.NET.Extras;
 using Legendary_Rune_Maker.Data;
 using Legendary_Rune_Maker.Data.Providers;
 using Legendary_Rune_Maker.Game;
@@ -26,7 +27,7 @@ namespace Legendary_Rune_Maker.Pages
     /// <summary>
     /// Interaction logic for MainPage.xaml
     /// </summary>
-    public partial class MainPage : Page, IMainWindow, IPage, INotifyPropertyChanged
+    public partial class MainPage : Page, IUiActuator, IPage, INotifyPropertyChanged
     {
         public static double BaseWidth { get; } = 303;
         public static double BaseHeight { get; } = 310;
@@ -90,6 +91,7 @@ namespace Legendary_Rune_Maker.Pages
 
             this.Width = 810;
             this.DataContext = this;
+            LCUApp.MainWindow = this;
         }
 
         public Size GetSize() => new Size(Expanded ? ExpandWidth : BaseWidth, Expanded ? ExpandHeight : BaseHeight);
@@ -379,10 +381,10 @@ namespace Legendary_Rune_Maker.Pages
             await SetChampion(null);
         }
 
-        public void ShowNotification(string title, string message = null, NotificationType type = NotificationType.Information)
+        public void ShowNotification(string title, string message = null, LCU.NET.Extras.Data.NotificationType type = LCU.NET.Extras.Data.NotificationType.Information)
         {
             LogTo.Debug("Showing notification with title \"{0}\"", title);
-            MainWindow.ShowNotification(title, message, type);
+            MainWindow.ShowNotification(title, message, (NotificationType)type);
         }
 
         private void ChampionImage_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -422,7 +424,7 @@ namespace Legendary_Rune_Maker.Pages
             byte[] data = Page.RuneIDs.SelectMany(o => BitConverter.GetBytes((short)o)).ToArray();
             Clipboard.SetText(Convert.ToBase64String(data));
 
-            ShowNotification(Text.Done, Text.PageCopiedToClipboard, NotificationType.Success);
+            ShowNotification(Text.Done, Text.PageCopiedToClipboard, LCU.NET.Extras.Data.NotificationType.Success);
         }
 
         private void ImportItem_Click(object sender, RoutedEventArgs e)
@@ -432,7 +434,7 @@ namespace Legendary_Rune_Maker.Pages
             var (success, result) = GetClipboard();
 
             if (!success)
-                ShowNotification(Text.InvalidImportFormatTitle, Text.InvalidImportFormatMsg, NotificationType.Error);
+                ShowNotification(Text.InvalidImportFormatTitle, Text.InvalidImportFormatMsg, LCU.NET.Extras.Data.NotificationType.Error);
 
             Tree.SetPage(result);
         }
@@ -468,7 +470,7 @@ namespace Legendary_Rune_Maker.Pages
 
             return (true, new RunePage(ids, primary, secondary, SelectedChampion, SelectedPosition));
 
-            no:
+        no:
             return (false, null);
 
             int GetStyleFromRuneID(int runeId)

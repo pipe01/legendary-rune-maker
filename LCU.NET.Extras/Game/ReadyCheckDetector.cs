@@ -1,14 +1,14 @@
-﻿using System;
+﻿using Anotar.Log4Net;
+using LCU.NET;
+using LCU.NET.Extras.Data;
+using LCU.NET.Plugins.LoL;
+using Legendary_Rune_Maker.Data;
+using Legendary_Rune_Maker.Utils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Anotar.Log4Net;
-using LCU.NET;
-using LCU.NET.Plugins.LoL;
-using Legendary_Rune_Maker.Data;
-using Legendary_Rune_Maker.Utils;
-using Notifications.Wpf;
 
 namespace Legendary_Rune_Maker.Game
 {

@@ -3,6 +3,8 @@
 
 [![Donate](https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif)](https://www.paypal.me/pipe01)
 
+This is a fork of the original [Legendary Rune Maker](https://github.com/pipe01/legendary-rune-maker/), in order to use its internals in [RiftGG](https://rift.gg)
+
 A rune maker for League of Legends that also offers a bunch of automation options. Download latest release [here](https://github.com/pipe01/legendary-rune-maker/releases/latest).
 
 # Features
@@ -38,6 +40,7 @@ A rune maker for League of Legends that also offers a bunch of automation option
 ![](https://i.imgur.com/Ltv3490.png)
 
 # Credits
+* [@pipe01](https://github.com/pipe01/) for creating the original Legendary Rune Maker
 * [@Sudravirodhin](https://github.com/sudravirodhin) for helping me a ton debugging the app and suggesting new features.
 * [RuneBook](https://github.com/OrangeNote/RuneBook) and [Championify](https://github.com/dustinblackman/Championify) for inspiration and some provider reference.
 * Riot for their amazing work on the client and its API.

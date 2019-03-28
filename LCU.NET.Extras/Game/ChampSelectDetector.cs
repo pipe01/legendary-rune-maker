@@ -1,6 +1,7 @@
 ﻿using Anotar.Log4Net;
 using LCU.NET;
 using LCU.NET.API_Models;
+using LCU.NET.Extras.Utils;
 using LCU.NET.Plugins.LoL;
 using Legendary_Rune_Maker.Data;
 using Legendary_Rune_Maker.Utils;

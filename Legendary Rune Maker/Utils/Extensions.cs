@@ -8,25 +8,6 @@ namespace Legendary_Rune_Maker.Utils
 {
     public static class Extensions
     {
-        public static Position ToPosition(this string str)
-        {
-            switch (str)
-            {
-                case "TOP":
-                    return Position.Top;
-                case "JUNGLE":
-                    return Position.Jungle;
-                case "MIDDLE":
-                    return Position.Mid;
-                case "UTILITY":
-                    return Position.Support;
-                case "BOTTOM":
-                    return Position.Bottom;
-                default:
-                    return Position.Fill;
-            }
-        }
-
         public static bool? ShowDialog(this Window window, Window owner)
         {
             window.Owner = owner;
@@ -41,7 +22,5 @@ namespace Legendary_Rune_Maker.Utils
 
         public static string FormatStr(this string str, params object[] args) => string.Format(str, args: args);
 
-        public static IDictionary<TValue, TKey> Invert<TKey, TValue>(this IDictionary<TKey, TValue> dic)
-            => dic.ToDictionary(o => o.Value, o => o.Key);
     }
 }

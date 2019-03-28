@@ -1,4 +1,5 @@
 ﻿using LCU.NET;
+using LCU.NET.Extras;
 using Legendary_Rune_Maker.Game;
 using Ninject;
 using System;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Legendary_Rune_Maker.Data.Providers
 {
-    internal class ClientProvider : Provider
+    public class ClientProvider : Provider
     {
         public override string Name => "Client";
         public override Options ProviderOptions => Options.RunePages;
@@ -20,6 +21,6 @@ namespace Legendary_Rune_Maker.Data.Providers
         }
 
         public override Task<RunePage> GetRunePage(int championId, Position position)
-            => RunePage.GetActivePageFromClient(App.Container.Get<ILoL>().Perks);
+            => RunePage.GetActivePageFromClient(LCUApp.Container.Get<ILoL>().Perks);
     }
 }

@@ -1,8 +1,8 @@
 ﻿using Anotar.Log4Net;
 using LCU.NET;
-using Legendary_Rune_Maker.Pages;
+using LCU.NET.Extras;
+using LCU.NET.Extras.Data;
 using Legendary_Rune_Maker.Utils;
-using Notifications.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,12 +15,14 @@ namespace Legendary_Rune_Maker.Game
     {
         protected Container<Actuator.State> State { get; private set; }
         protected ILoL LoL { get; }
+        protected IUiActuator MainWindow { get; }
 
         public bool Enabled { get; set; } = true;
 
         public Detector(ILoL lol)
         {
             this.LoL = lol;
+            this.MainWindow = LCUApp.MainWindow;
         }
 
         public async Task Init(Container<Actuator.State> state)

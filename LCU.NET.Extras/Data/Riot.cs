@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Legendary_Rune_Maker.Data
 {
-    internal static class Riot
+    public static class Riot
     {
         public const string CdnEndpoint = "https://ddragon.leagueoflegends.com/cdn/";
 
@@ -191,25 +191,27 @@ namespace Legendary_Rune_Maker.Data
             return task.Result.SingleOrDefault(o => o.ID == id);
         }
 
-        public static async Task CacheAllAsync(Action<double> progress)
+        [Obsolete ("Rift shouldn't call this method")]
+        public static async Task CacheAllAsync (Action<double> progress)
         {
-            await GetLatestVersionAsync();
+            await GetLatestVersionAsync ();
 
-            await GetItemsAsync();
+            await GetItemsAsync ();
 
-            var champions = (await GetChampionsAsync()).Select(o => o.ImageURL);
-            var spells = (await GetSummonerSpellsAsync()).Select(o => o.ImageURL);
-            var runes = (await GetRunesAsync()).Select(o => o.Value.IconURL);
-            var trees = (await GetTreeStructuresAsync()).Select(o => o.Value.IconURL);
+            var champions = (await GetChampionsAsync ()).Select (o => o.ImageURL);
+            var spells = (await GetSummonerSpellsAsync ()).Select (o => o.ImageURL);
+            var runes = (await GetRunesAsync ()).Select (o => o.Value.IconURL);
+            var trees = (await GetTreeStructuresAsync ()).Select (o => o.Value.IconURL);
 
-            var total = runes.Concat(champions).Concat(spells).Concat(trees);
-            int count = total.Count();
+            var total = runes.Concat (champions).Concat (spells).Concat (trees);
+            int count = total.Count ();
 
             int p = 0;
-            await Task.WhenAll(total.Select(async o =>
-            {
-                await ImageCache.Instance.Get(o);
-                progress((double)p++ / count);
+            await Task.WhenAll (total.Select (async o => {
+                // This was calling this:
+                //await ImageCache.Instance.Get (o);
+                // but it has a dependency with WPF
+                progress ((double)p++ / count);
             }));
         }
 

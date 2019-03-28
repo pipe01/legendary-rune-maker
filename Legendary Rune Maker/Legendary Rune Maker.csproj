@@ -9,7 +9,7 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>Legendary_Rune_Maker</RootNamespace>
     <AssemblyName>Legendary Rune Maker</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
@@ -32,6 +32,7 @@
     <BootstrapperEnabled>true</BootstrapperEnabled>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -52,7 +53,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <LangVersion>7.1</LangVersion>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>Images\lrm_icon.ico</ApplicationIcon>
@@ -91,9 +92,6 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.IO.Compression, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL" />
     <Reference Include="System.ServiceModel" />
-    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net461\System.ValueTuple.dll</HintPath>
-    </Reference>
     <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -122,53 +120,33 @@
       <DependentUpon>PositionPickerControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\SummonerSpellControl.cs" />
-    <Compile Include="Data\Config.cs" />
-    <Compile Include="Data\Item.cs" />
-    <Compile Include="Data\ItemSet.cs" />
-    <Compile Include="Data\Providers\ChampionGGProvider.cs" />
-    <Compile Include="Data\Providers\ClientProvider.cs" />
-    <Compile Include="Data\Providers\LolFlavorProvider.cs" />
-    <Compile Include="Data\Providers\MetaLolProvider.cs" />
-    <Compile Include="Data\Providers\OpGGProvider.cs" />
-    <Compile Include="Data\Providers\Provider.cs" />
-    <Compile Include="Data\Providers\RunesLolProvider.cs" />
-    <Compile Include="Data\Providers\UGGProvider.cs" />
-    <Compile Include="Data\SummonerSpell.cs" />
-    <Compile Include="Data\TreeStructure.cs" />
-    <Compile Include="Data\WebCache.cs" />
-    <Compile Include="Game\ChampSelectDetector.cs" />
-    <Compile Include="Game\Actuator.Game.cs" />
-    <Compile Include="Game\Detector.cs" />
-    <Compile Include="Game\LoginDetector.cs" />
-    <Compile Include="Game\ReadyCheckDetector.cs" />
+    <Compile Include="Data\ImageCache.cs" />
+    <Compile Include="Locale\Text.Designer.cs">
+      <DependentUpon>Text.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="LRM.cs" />
-    <Compile Include="Utils\Container.cs" />
-    <Compile Include="Utils\Timer.cs" />
+    <Compile Include="Utils\BitmapUtils.cs" />
+    <Compile Include="Utils\Extensions.cs" />
+    <Compile Include="Utils\ObjectToTypeConverter.cs" />
+    <Compile Include="Utils\RelayCommand.cs" />
+    <Compile Include="Utils\StringContainsConverter.cs" />
+    <Compile Include="Utils\TriggerTracing.cs" />
+    <Compile Include="Utils\UppercaseConverter.cs" />
+    <Compile Include="Utils\VisualHierarchyHelper.cs" />
+    <Compile Include="Utils\WindowCommandConverter.cs" />
     <Compile Include="Windows\DebugProxyWindow.xaml.cs">
       <DependentUpon>DebugProxyWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Game\Actuator.cs" />
-    <Compile Include="Game\GameState.cs" />
     <Compile Include="Controls\RuneTreeControl.xaml.cs">
       <DependentUpon>RuneTreeControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Data\Champion.cs" />
-    <Compile Include="Data\ImageCache.cs" />
-    <Compile Include="Data\Position.cs" />
-    <Compile Include="Data\Riot.cs" />
-    <Compile Include="Data\RuneBook.cs" />
-    <Compile Include="Data\RunePage.cs" />
     <Compile Include="Controls\GrayscaleImageControl.xaml.cs">
       <DependentUpon>GrayscaleImageControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\IMainWindow.cs" />
     <Compile Include="Windows\LoadingWindow.xaml.cs">
       <DependentUpon>LoadingWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Locale\Text.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Text.resx</DependentUpon>
     </Compile>
     <Compile Include="Pages\AutomationPage.xaml.cs">
       <DependentUpon>AutomationPage.xaml</DependentUpon>
@@ -189,16 +167,6 @@
     <Compile Include="Controls\TreePickerControl.xaml.cs">
       <DependentUpon>TreePickerControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Utils\BitmapUtils.cs" />
-    <Compile Include="Utils\Extensions.cs" />
-    <Compile Include="Utils\MiniDump.cs" />
-    <Compile Include="Utils\ObjectToTypeConverter.cs" />
-    <Compile Include="Utils\RelayCommand.cs" />
-    <Compile Include="Utils\StringContainsConverter.cs" />
-    <Compile Include="Utils\TriggerTracing.cs" />
-    <Compile Include="Utils\UppercaseConverter.cs" />
-    <Compile Include="Utils\VisualHierarchyHelper.cs" />
-    <Compile Include="Utils\WindowCommandConverter.cs" />
     <Page Include="Controls\FadeImage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -231,7 +199,6 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Data\Rune.cs" />
     <Compile Include="Windows\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -311,6 +278,10 @@
     <Resource Include="Images\background.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\LCU.NET.Extras\LCU.NET.Extras.csproj">
+      <Project>{8de28889-c573-4cea-b336-d0223c04c06f}</Project>
+      <Name>LCU.NET.Extras</Name>
+    </ProjectReference>
     <ProjectReference Include="..\LCU.NET\LCU.NET.csproj">
       <Project>{531938f3-2e4e-4c45-be4d-ceced31ac294}</Project>
       <Name>LCU.NET</Name>
