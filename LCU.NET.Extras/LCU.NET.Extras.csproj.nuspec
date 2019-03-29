@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>LCU.NET.Extras</id>
+    <version>1.0.0</version>
+    <authors>Pipe01</authors>
+    <owners>Fluendo S.A., Rift S.A.</owners>
+    <description>LCU extras exported from the Legendary Rune Maker</description>
+    <projectUrl>https://github.com/fluendo/legendary-rune-maker</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Client for the League of Legends LCU API</description>
+    <dependencies>
+	<dependency id="Anotar.Log4Net.Fody" version="3.3.1"/>
+	<dependency id="HtmlAgilityPack"/>
+	<dependency id="Newtonsoft.Json"/>
+	<dependency id="Ninject"/>
+	<dependency id="RestSharp"/>
+	<dependency id="SharpZipLib"/>
+    <dependency id="WebSocketSharp"/>
+    </dependencies>
+  </metadata>
+</package>

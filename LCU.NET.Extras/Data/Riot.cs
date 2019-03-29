@@ -186,9 +186,8 @@ namespace Legendary_Rune_Maker.Data
 
         public static Champion GetChampion(int id, string locale = null)
         {
-            var task = GetChampionsAsync(locale);
-            task.Wait();
-            return task.Result.SingleOrDefault(o => o.ID == id);
+            var champions = GetChampionsAsync(locale).Result;
+            return champions.SingleOrDefault(o => o.ID == id);
         }
 
         [Obsolete ("Rift shouldn't call this method")]
