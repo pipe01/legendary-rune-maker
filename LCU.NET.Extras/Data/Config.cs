@@ -12,8 +12,9 @@ namespace Legendary_Rune_Maker.Data
 {
     public class Config
     {
+        const string DEFAULT_PROVIDER = "RiftGG";
         public static Config Current { get => Container.Value; set => Container.Value = value; }
-        public static Container<Config> Container { get; } = new Container<Config>(Load());
+        public static Container<Config> Container { get; } = new Container<Config> (Load ());
 
         private const string FilePath = "config.json";
         private const int LatestVersion = 14;
@@ -34,7 +35,7 @@ namespace Legendary_Rune_Maker.Data
 
         public bool UploadOnLock { get; set; } = true;
         public bool LoadOnLock { get; set; } = true;
-        public string LockLoadProvider { get; set; } = "U.GG";
+        public string LockLoadProvider { get; set; } = DEFAULT_PROVIDER;
 
         public bool AutoPickChampion { get; set; }
         public bool DisablePickChampion { get; set; } = true;
@@ -46,22 +47,21 @@ namespace Legendary_Rune_Maker.Data
         public bool DisablePickSumms { get; set; } = true;
 
         public bool SetItemSet { get; set; } = true;
-        public string ItemSetProvider { get; set; } = "U.GG";
+        public string ItemSetProvider { get; set; } = DEFAULT_PROVIDER;
         public bool KeepItemSets { get; set; }
         public string LastItemSetUid { get; set; }
 
         public int LastRunePageId { get; set; }
 
         public bool ShowSkillOrder { get; set; } = true;
-        public string SkillOrderProvider { get; set; } = "U.GG";
+        public string SkillOrderProvider { get; set; } = DEFAULT_PROVIDER;
 
         public int DelayBeforeAction { get; set; } = 3000;
         public int DelayBeforeAcceptReady { get; set; } = 4000;
         public int DelayBeforeIntentSet { get; set; } = 4000;
 
 
-        public Dictionary<Position, int> ChampionsToPick { get; set; } = new Dictionary<Position, int>
-        {
+        public Dictionary<Position, int> ChampionsToPick { get; set; } = new Dictionary<Position, int> {
             [Position.Fill] = 0,
             [Position.Top] = 0,
             [Position.Jungle] = 0,
@@ -69,8 +69,7 @@ namespace Legendary_Rune_Maker.Data
             [Position.Bottom] = 0,
             [Position.Support] = 0
         };
-        public Dictionary<Position, int> ChampionsToBan { get; set; } = new Dictionary<Position, int>
-        {
+        public Dictionary<Position, int> ChampionsToBan { get; set; } = new Dictionary<Position, int> {
             [Position.Fill] = 0,
             [Position.Top] = 0,
             [Position.Jungle] = 0,
@@ -78,8 +77,7 @@ namespace Legendary_Rune_Maker.Data
             [Position.Bottom] = 0,
             [Position.Support] = 0
         };
-        public Dictionary<Position, int[]> SpellsToPick { get; set; } = new Dictionary<Position, int[]>
-        {
+        public Dictionary<Position, int[]> SpellsToPick { get; set; } = new Dictionary<Position, int[]> {
             [Position.Fill] = new int[2],
             [Position.Top] = new int[2],
             [Position.Jungle] = new int[2],
@@ -89,48 +87,39 @@ namespace Legendary_Rune_Maker.Data
         };
 
         [JsonIgnore]
-        public CultureInfo Culture => new CultureInfo(this.CultureName);
+        public CultureInfo Culture => new CultureInfo (this.CultureName);
 
 
-        public void Save()
+        public void Save ()
         {
-            LogTo.Info("Saving config");
-            LogTo.Debug(() => JsonConvert.SerializeObject(this));
+            LogTo.Info ("Saving config");
+            LogTo.Debug (() => JsonConvert.SerializeObject (this));
 
-            try
-            {
-                File.WriteAllText(FilePath, JsonConvert.SerializeObject(this, Formatting.Indented));
-            }
-            catch
-            {
+            try {
+                File.WriteAllText (FilePath, JsonConvert.SerializeObject (this, Formatting.Indented));
+            } catch {
                 throw;
             }
         }
 
-        public Config Clone()
+        public Config Clone ()
         {
-            return JsonConvert.DeserializeObject<Config>(JsonConvert.SerializeObject(this));
+            return JsonConvert.DeserializeObject<Config> (JsonConvert.SerializeObject (this));
         }
 
-        public static void Reload() => Current = Load();
+        public static void Reload () => Current = Load ();
 
-        private static Config Load()
+        private static Config Load ()
         {
             Config c;
 
-            try
-            {
-                if (!File.Exists(FilePath))
-                {
-                    c = new Config();
+            try {
+                if (!File.Exists (FilePath)) {
+                    c = new Config ();
+                } else {
+                    c = JsonConvert.DeserializeObject<Config> (File.ReadAllText (FilePath));
                 }
-                else
-                {
-                    c = JsonConvert.DeserializeObject<Config>(File.ReadAllText(FilePath));
-                }
-            }
-            catch
-            {
+            } catch {
                 throw;
             }
 
@@ -140,7 +129,7 @@ namespace Legendary_Rune_Maker.Data
             if (c.ConfigVersion < LatestVersion)
                 c.ConfigVersion = LatestVersion;
 
-            c.Save();
+            c.Save ();
             return c;
         }
     }
