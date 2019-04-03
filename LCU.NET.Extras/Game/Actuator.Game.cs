@@ -209,8 +209,6 @@ namespace Legendary_Rune_Maker.Game
 
 			LogTo.Debug ("for champion {0}", champion);
 
-			Main.ShowNotification ("Locked in", champion + ", " + pos.ToString ().ToLower (), NotificationType.Success);
-
 			var page = RuneBook.Instance.Get (championId, pos, false);
 
 			if (page == null) {
@@ -219,6 +217,10 @@ namespace Legendary_Rune_Maker.Game
 				if (Config.Current.LoadOnLock) {
 					LogTo.Info ("Downloading from provider");
 					page = await Main.SafeInvoke (async () => await Main.LoadPageFromProvider (Config.LockLoadProvider, championId));
+					if (page == null) {
+						Main.ShowNotification ("No runes available", $"There's not enough info to get the runes for {champion} in position {pos.ToString ().ToLower ()}", NotificationType.Error);
+						return;
+					}
 					LogTo.Debug ("Downloaded from provider");
 				} else {
 					Main.ShowNotification (string.Format ("Rune page for champion {0} not set", champion), null, NotificationType.Error);
@@ -228,6 +230,7 @@ namespace Legendary_Rune_Maker.Game
 
 			LogTo.Debug ("Uploading rune page to client");
 			await page.UploadToClient (LoL.Perks);
+			Main.ShowNotification ($"We just set the runes for you!", $"The page name is: {page.Name}");
 			LogTo.Debug ("Uploaded rune page to client");
 		}
 
