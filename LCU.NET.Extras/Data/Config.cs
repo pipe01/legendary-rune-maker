@@ -27,15 +27,15 @@ namespace Legendary_Rune_Maker.Data
 
         public int ConfigVersion { get; set; } = LatestVersion;
 
-        public bool CheckUpdatesBeforeStartup { get; set; } = true;
+        public bool CheckUpdatesBeforeStartup => false;
         public string CultureName { get; set; }
         public bool MinimizeToTaskbar { get; set; } = true;
 
         public bool AutoAccept { get; set; } = true;
 
-        public bool UploadOnLock { get; set; } = true;
-        public bool LoadOnLock { get; set; } = true;
-        public string LockLoadProvider { get; set; } = DEFAULT_PROVIDER;
+        public bool UploadOnLock => true;
+        public bool LoadOnLock => true;
+        public string LockLoadProvider => DEFAULT_PROVIDER;
 
         public bool AutoPickChampion { get; set; }
         public bool DisablePickChampion { get; set; } = true;
@@ -46,15 +46,15 @@ namespace Legendary_Rune_Maker.Data
         public bool AutoPickSumms { get; set; }
         public bool DisablePickSumms { get; set; } = true;
 
-        public bool SetItemSet { get; set; } = true;
-        public string ItemSetProvider { get; set; } = DEFAULT_PROVIDER;
+        public bool SetItemSet => false;
+        public string ItemSetProvider => DEFAULT_PROVIDER;
         public bool KeepItemSets { get; set; }
         public string LastItemSetUid { get; set; }
 
         public int LastRunePageId { get; set; }
 
-        public bool ShowSkillOrder { get; set; } = true;
-        public string SkillOrderProvider { get; set; } = DEFAULT_PROVIDER;
+        public bool ShowSkillOrder => false;
+        public string SkillOrderProvider => DEFAULT_PROVIDER;
 
         public int DelayBeforeAction { get; set; } = 3000;
         public int DelayBeforeAcceptReady { get; set; } = 4000;
