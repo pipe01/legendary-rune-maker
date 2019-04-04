@@ -1,5 +1,6 @@
 ﻿using LCU.NET.Extras.Data;
 using Legendary_Rune_Maker.Data;
+using Legendary_Rune_Maker.Data.Providers;
 using Legendary_Rune_Maker.Game;
 using System;
 using System.Threading.Tasks;
@@ -23,7 +24,7 @@ namespace Legendary_Rune_Maker
 
 		void SetState (GameStates state);
 		void ShowNotification (string title, string message = null, NotificationType type = NotificationType.Information);
-		Task<RunePage> LoadPageFromProvider (string providerName, int championId = -1);
+		Task<RunePage> LoadPageFromProvider (Provider provider, int championId = -1);
 		Task SetChampion (Champion champ, bool canCopy = false);
 		Task SetChampion (int championId);
 	}

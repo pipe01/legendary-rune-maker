@@ -12,9 +12,12 @@ namespace Legendary_Rune_Maker.Data.Providers
         public enum Options
         {
             RunePages = 1,
-            ItemSets = 2,
-            SkillOrder = 4
-        }
+            ItemSets = 2,			
+            SkillOrder = 4,
+			Spells = 5,
+		}
+
+		public int[] SpellIds = null;
 
         protected WebClient Client => new WebClient();
 
@@ -25,12 +28,11 @@ namespace Legendary_Rune_Maker.Data.Providers
 
         public virtual Task<Position[]> GetPossibleRoles(int championId) => throw new NotImplementedException();
         public virtual Task<RunePage> GetRunePage(int championId, Position position) => throw new NotImplementedException();
-        public virtual Task<ItemSet> GetItemSet(int championId, Position position) => throw new NotImplementedException();
-        /// <summary>
-        /// Format: "[(QEW) ]QWERQWERQWERQWERQW"
-        /// </summary>
-        public virtual Task<string> GetSkillOrder(int championId, Position position) => throw new NotImplementedException();
-
+        public virtual Task<ItemSet> GetItemSet(int championId, Position position) => throw new NotImplementedException();		
+		/// <summary>
+		/// Format: "[(QEW) ]QWERQWERQWERQWERQW"
+		/// </summary>
+		public virtual Task<string> GetSkillOrder(int championId, Position position) => throw new NotImplementedException();
 
         public bool Supports(Options options) => (ProviderOptions & options) == options;
 
