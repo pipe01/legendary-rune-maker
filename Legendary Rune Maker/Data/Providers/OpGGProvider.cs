@@ -21,10 +21,13 @@ namespace Legendary_Rune_Maker.Data.Providers
         };
 
         public override string Name => "OP.GG";
-        public override Options ProviderOptions => Options.RunePages | Options.SkillOrder;
+        public override Options ProviderOptions => Options.ItemSets | Options.RunePages | Options.SkillOrder;
 
         private static string GetRoleUrl(int championId, Position position)
             => $"https://op.gg/champion/{Riot.GetChampion(championId).Key}/statistics/{PositionToName[position]}";
+
+        private static string GetItemUrl(int championId, Position position)
+            => $"https://op.gg/champion/{Riot.GetChampion(championId).Key}/statistics{(string.IsNullOrEmpty(PositionToName[position]) ? "" : $"/{PositionToName[position]}")}/item";
 
         public override async Task<Position[]> GetPossibleRoles(int championId)
         {
@@ -82,6 +85,71 @@ namespace Legendary_Rune_Maker.Data.Providers
                 .ToArray();
 
             return $"({string.Join(">", tips)}) {new string(slong)}";
+        }
+
+        public override async Task<ItemSet> GetItemSet(int championId, Position position)
+        {
+            var test = GetItemUrl(championId, position);
+            var doc = new HtmlDocument();
+            doc.LoadHtml(await WebCache.String(GetItemUrl(championId, position), soft: true));
+
+            var contentTables = doc.DocumentNode.Descendants("table")
+                .Where(o => o.HasClass("champion-stats__table")).ToList();
+
+            var starterItem = GetRows("Starter Items");
+            var coreItems = GetRows("Core Build");
+            var bootsItem = GetRows("Boots");
+            
+            var blocks = new List<ItemSet.SetBlock>();
+            AddBlockEntry(starterItem, "Starter Items");
+            AddBlockEntry(coreItems, "Core Build");
+            AddBlockEntry(bootsItem, "Boots");
+            
+            return new ItemSet
+            {
+                Champion = championId,
+                Name = this.Name + ": " + position,
+                Position = position,
+                Blocks = blocks.ToArray()
+            };
+
+            List<HtmlNode> GetRows(string tableHeader)
+            {
+                var table = contentTables.FirstOrDefault(d1 => d1.Descendants("th").Any(d2 => d2.InnerText.Contains(tableHeader)));
+                return table?.Descendants("tr").Where(tr => tr.ChildNodes.Any(td => td.HasClass("champion-stats__table__cell"))).ToList();
+            }
+
+            void AddBlockEntry(List<HtmlNode> nodes, string blockName)
+            {
+                foreach (var node in nodes)
+                {
+                    var items = new List<int>();
+                    var itemCounter = 0;
+                    node.Descendants("img").ToList().ForEach(n =>
+                    {
+                        if (n.ParentNode.HasClass("champion-stats__list__item"))
+                        {
+                            itemCounter++;
+                            if (int.TryParse(Regex.Match(n.Attributes["src"].Value, "/item/(\\d+).png").Groups[1].Value, out var item))
+                            {
+                                items.Add(item);
+                            }   
+                        }
+                    });
+                    if (items.Count != itemCounter)
+                        continue;
+                    
+                    var pickRate = node.Descendants("td").FirstOrDefault(td => td.HasClass("champion-stats__table__cell--pickrate"))?.InnerText ?? "";
+                    pickRate = Regex.Replace(pickRate, @"[^\w|\.|%]", "");
+                    var matches = Regex.Match(pickRate, @"(\d{1,2}\.\d{2})%(\d+)");
+                    var winRate = node.Descendants("td").FirstOrDefault(td => td.HasClass("champion-stats__table__cell--winrate"))?.InnerText;
+                    blocks.Add(new ItemSet.SetBlock
+                    {
+                        Name = $"{blockName} | PickRate {matches?.Groups[1].Value}% | PickCount {matches?.Groups[2].Value} | WinRate {winRate}",
+                        Items = items.ToArray()
+                    });
+                }
+            }
         }
     }
 }
