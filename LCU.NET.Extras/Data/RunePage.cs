@@ -79,12 +79,17 @@ namespace Legendary_Rune_Maker.Data
 				var pageRet = await perks.PostPageAsync (page);
 				Config.Current.LastRunePageId = pageRet.id;
 			} catch (APIErrorException ex) when (ex.Message == "Max pages reached") {
-				LogTo.Info ("Max number of rune pages reached, deleting current page and trying again");
+				LogTo.Info ("Max number of rune pages reached, deleting previous page and trying again");
 
-				var currentPage = await perks.GetCurrentPageAsync ();
+				var pages = await perks.GetPagesAsync ();
+				var replacedPage = pages.FirstOrDefault (p => p.name.StartsWith (Config.Current.LockLoadProvider));
 
-				if (currentPage.isDeletable) {
-					await perks.DeletePageAsync (currentPage.id);
+				if (replacedPage == null) {
+					replacedPage = await perks.GetCurrentPageAsync ();
+				}
+
+				if (replacedPage.isDeletable) {
+					await perks.DeletePageAsync (replacedPage.id);
 					await UploadToClient (perks);
 				} else {
 					LCUApp.MainWindow.ShowNotification ("Couldn't upload rune page", "There is no room for more pages.");
