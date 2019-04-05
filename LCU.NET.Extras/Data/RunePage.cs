@@ -56,9 +56,6 @@ namespace Legendary_Rune_Maker.Data
 			if (!GameState.CanUpload)
 				return;
 
-			await Riot.GetTreeStructuresAsync ();
-			VerifyRunes ();
-
 			var page = new LolPerksPerkPageResource {
 				primaryStyleId = PrimaryTree,
 				subStyleId = SecondaryTree,

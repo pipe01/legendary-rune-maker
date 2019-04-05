@@ -201,15 +201,12 @@ namespace Legendary_Rune_Maker.Game
 				string.Format ("From {0}", provider.Name), NotificationType.Success);
 		}
 
-		public async Task UploadRunePage (Position pos, int championId)
+		public async Task UploadRunes (Position pos, int championId)
 		{
 			LogTo.Debug ("Trying to upload rune page");
-
 			string champion = Riot.GetChampion (championId).Name;
-
 			LogTo.Debug ("for champion {0}", champion);
 
-			var provider = Actuator.RuneProviders.First (o => o.Name == Config.LockLoadProvider);
 			var page = RuneBook.Instance.Get (championId, pos, false);
 
 			if (page == null) {
@@ -217,12 +214,14 @@ namespace Legendary_Rune_Maker.Game
 
 				if (Config.Current.LoadOnLock) {
 					LogTo.Info ("Downloading from provider");
-					page = await Main.SafeInvoke (async () => await Main.LoadPageFromProvider (provider, championId));
+					Provider provider = GetProvider ();
+					page = await Main.LoadPageFromProvider (provider, championId);
 					if (page == null) {
-						Main.ShowNotification ("No runes available", $"There's not enough info to get the runes for {champion} in position {pos.ToString ().ToLower ()}", NotificationType.Error);
+						var positionName = pos.ToString ().ToLower ();
+						LogTo.Debug ($"Could not retrieve a valid rune page for {champion} in {positionName}");
+						Main.ShowNotification ($"No runes for {positionName}", $"There's not enough info to set runes for {champion} in {positionName}", NotificationType.Error);
 						return;
-					}					
-
+					}
 					LogTo.Debug ("Downloaded from provider");
 				} else {
 					Main.ShowNotification (string.Format ("Rune page for champion {0} not set", champion), null, NotificationType.Error);
@@ -232,12 +231,12 @@ namespace Legendary_Rune_Maker.Game
 
 			LogTo.Debug ("Uploading rune page to client");
 			await page.UploadToClient (LoL.Perks);
-			Main.ShowNotification ($"We just set the runes for you!", $"The page name is: {page.Name}");			
 			LogTo.Debug ("Uploaded rune page to client");
+		}
 
-			if (provider.Supports (Provider.Options.Spells)) {
-				await SetChampionSpells (provider, championId, pos);
-			}
+		private Provider GetProvider ()
+		{
+			return Actuator.RuneProviders.First (o => o.Name == Config.LockLoadProvider);
 		}
 
 		public async Task UploadSkillOrder (Position pos, int championId)
@@ -277,26 +276,38 @@ namespace Legendary_Rune_Maker.Game
 			LogTo.Debug ("Uploaded skill order");
 		}
 
-		async Task SetChampionSpells (Provider provider, int championId, Position pos)
+		public async Task UploadSpells (Position pos, int championId)
 		{
-			LogTo.Debug ("Trying to upload item set");
-			
-			if (provider.SpellIds.Length == 2) {					
+			LogTo.Debug ("Trying to upload spells");
+			string champion = Riot.GetChampion (championId).Name;
+			LogTo.Debug ("for champion {0}", champion);
+
+			Provider provider = GetProvider ();
+
+			if (provider.Supports (Provider.Options.Spells)) {
+				LogTo.Debug ("Trying to upload champion spell");
+				var spells = await provider.GetSpellSet (championId, pos);
+
+				if (spells == null || spells.Length != 2) {
+					var positionName = pos.ToString ().ToLower ();
+					LogTo.Debug ($"Could not retrieve valid spells for {champion} in {positionName}");
+					Main.ShowNotification ($"No runes for {positionName}", $"There's not enough info to set runes for {champion} in {positionName}", NotificationType.Error);
+					return;
+				}
+
 				LogTo.Debug ("Uploading spells");
 
 				await LoL.Client.MakeRequestAsync (
 					ChampSelect.Endpoint + "/my-selection",
 					Method.PATCH,
 					new LolChampSelectChampSelectMySelection {
-						spell1Id = provider.SpellIds[0],
-						spell2Id = provider.SpellIds[1]
+						spell1Id = spells[0],
+						spell2Id = spells[1]
 					},
 					null,
 					"spell1Id", "spell2Id");
 
 				LogTo.Debug ("Uploaded spells");
-			} else {
-				LogTo.Debug ("Incorecct SpellIds count");
 			}
 		}
 	}
