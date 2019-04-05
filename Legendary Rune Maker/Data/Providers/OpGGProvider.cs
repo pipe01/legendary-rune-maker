@@ -87,19 +87,33 @@ namespace Legendary_Rune_Maker.Data.Providers
             return $"({string.Join(">", tips)}) {new string(slong)}";
         }
 
+        public async Task<Position> GetPopularPosition(int championId)
+        {
+            var doc = new HtmlDocument();
+            doc.LoadHtml(await WebCache.String(GetItemUrl(championId, Position.Fill), soft: true));
+            var popularPositionNode = doc.DocumentNode.Descendants("link")
+                .FirstOrDefault(l => l.Attributes["rel"]?.Value == "canonical")
+                .Attributes["href"]?.Value;
+            var popularPosition = Regex.Match(popularPositionNode, @"/statistics/(\w+)");
+            return PositionToName.FirstOrDefault(p => p.Value.Equals(popularPosition.Groups[1].Value, StringComparison.CurrentCultureIgnoreCase)).Key;
+        }
+
         public override async Task<ItemSet> GetItemSet(int championId, Position position)
         {
-            var test = GetItemUrl(championId, position);
+            if (position == Position.Fill)
+            {
+                position = await GetPopularPosition(championId);
+            }
+
             var doc = new HtmlDocument();
             doc.LoadHtml(await WebCache.String(GetItemUrl(championId, position), soft: true));
-
             var contentTables = doc.DocumentNode.Descendants("table")
                 .Where(o => o.HasClass("champion-stats__table")).ToList();
 
             var starterItem = GetRows("Starter Items");
             var coreItems = GetRows("Core Build");
             var bootsItem = GetRows("Boots");
-            
+
             var blocks = new List<ItemSet.SetBlock>();
             AddBlockEntry(starterItem, "Starter Items");
             AddBlockEntry(coreItems, "Core Build");
