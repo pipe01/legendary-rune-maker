@@ -203,9 +203,7 @@ namespace Legendary_Rune_Maker.Game
 
 		public async Task UploadRunes (Position pos, int championId)
 		{
-			LogTo.Debug ("Trying to upload rune page");
-			string champion = Riot.GetChampion (championId).Name;
-			LogTo.Debug ("for champion {0}", champion);
+			LogTo.Debug ($"Trying to upload rune page for champion {championId}");
 
 			var page = RuneBook.Instance.Get (championId, pos, false);
 
@@ -218,13 +216,13 @@ namespace Legendary_Rune_Maker.Game
 					page = await Main.LoadPageFromProvider (provider, championId);
 					if (page == null) {
 						var positionName = pos.ToString ().ToLower ();
-						LogTo.Debug ($"Could not retrieve a valid rune page for {champion} in {positionName}");
-						Main.ShowNotification ($"No runes for {positionName}", $"There's not enough info to set runes for {champion} in {positionName}", NotificationType.Error);
+						LogTo.Debug ($"Could not retrieve a valid rune page for champion {championId} in {positionName}");
+						Main.ShowNotification ($"No runes for {positionName}", $"There's not enough info to set runes for {championId} in {positionName}", NotificationType.Error);
 						return;
 					}
 					LogTo.Debug ("Downloaded from provider");
 				} else {
-					Main.ShowNotification (string.Format ("Rune page for champion {0} not set", champion), null, NotificationType.Error);
+					Main.ShowNotification (string.Format ("Rune page for champion {0} not set", championId), null, NotificationType.Error);
 					return;
 				}
 			}
@@ -278,9 +276,7 @@ namespace Legendary_Rune_Maker.Game
 
 		public async Task UploadSpells (Position pos, int championId)
 		{
-			LogTo.Debug ("Trying to upload spells");
-			string champion = Riot.GetChampion (championId).Name;
-			LogTo.Debug ("for champion {0}", champion);
+			LogTo.Debug ($"Trying to upload spells for {championId}");
 
 			Provider provider = GetProvider ();
 
@@ -290,8 +286,8 @@ namespace Legendary_Rune_Maker.Game
 
 				if (spells == null || spells.Length != 2) {
 					var positionName = pos.ToString ().ToLower ();
-					LogTo.Debug ($"Could not retrieve valid spells for {champion} in {positionName}");
-					Main.ShowNotification ($"No runes for {positionName}", $"There's not enough info to set runes for {champion} in {positionName}", NotificationType.Error);
+					LogTo.Debug ($"Could not retrieve valid spells for champion {championId} in {positionName}");
+					Main.ShowNotification ($"No runes for {positionName}", $"There's not enough info to set runes for champion {championId} in {positionName}", NotificationType.Error);
 					return;
 				}
 
