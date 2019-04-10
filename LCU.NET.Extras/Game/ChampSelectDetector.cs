@@ -59,28 +59,32 @@ namespace Legendary_Rune_Maker.Game
 		private async void CurrentChampionUpdate (EventType eventType, int data)
 		{
 			if (eventType != EventType.Delete && State.Value?.LockedInChamp != data) {
-				State.Value.LockedInChamp = data;
+				try {
+					State.Value.LockedInChamp = data;
 
-				LogTo.Info ("Locked in champion {0}", data);
-				GameState.State.Fire (GameTriggers.LockIn);
+					LogTo.Info ("Locked in champion {0}", data);
+					GameState.State.Fire (GameTriggers.LockIn);
 
-				if (!Enabled)
-					return;
+					if (!Enabled)
+						return;
 
-				var tasks = new List<Task> ();
+					var tasks = new List<Task> ();
 
-				if (Config.UploadOnLock) {
-					tasks.Add (Actuator.UploadRunes (Session.Position, data));
-					tasks.Add (Actuator.UploadSpells (Session.Position, data));
+					if (Config.UploadOnLock) {
+						tasks.Add (Actuator.UploadRunes (Session.Position, data));
+						tasks.Add (Actuator.UploadSpells (Session.Position, data));
+					}
+
+					if (Config.ShowSkillOrder && !Config.SetItemSet)
+						tasks.Add (Actuator.UploadSkillOrder (Session.Position, data));
+
+					if (Config.SetItemSet)
+						tasks.Add (Actuator.UploadItemSet (Session.Position, data));
+
+					await Task.WhenAll (tasks.ToArray ());
+				} catch (Exception ex) {
+					LogTo.Error ($"Error while locking the champion. ChampionId: {data}. EventType: {eventType} - {ex}");
 				}
-
-				if (Config.ShowSkillOrder && !Config.SetItemSet)
-					tasks.Add (Actuator.UploadSkillOrder (Session.Position, data));
-
-				if (Config.SetItemSet)
-					tasks.Add (Actuator.UploadItemSet (Session.Position, data));
-
-				await Task.WhenAll (tasks.ToArray ());
 			}
 		}
 
