@@ -203,29 +203,23 @@ namespace Legendary_Rune_Maker.Game
 
 		public async Task UploadRunes (Position pos, int championId)
 		{
+			if (!Config.Current.LoadRunesOnLock) {
+				return;
+			}
+
 			LogTo.Debug ($"Trying to upload rune page for champion {championId}");
 
-			var page = RuneBook.Instance.Get (championId, pos, false);
-
+			LogTo.Info ("Downloading from provider");
+			Provider provider = GetProvider ();
+			RunePage page = await Main.LoadPageFromProvider (provider, championId);
 			if (page == null) {
-				LogTo.Info ("Invalid current rune page");
 
-				if (Config.Current.LoadOnLock) {
-					LogTo.Info ("Downloading from provider");
-					Provider provider = GetProvider ();
-					page = await Main.LoadPageFromProvider (provider, championId);
-					if (page == null) {
-						var positionName = pos.ToString ().ToLower ();
-						LogTo.Debug ($"Could not retrieve a valid rune page for champion {championId} in {positionName}");
-						Main.ShowNotification ($"No runes for {positionName}", $"There's not enough info to set runes for {championId} in {positionName}", NotificationType.Error);
-						return;
-					}
-					LogTo.Debug ("Downloaded from provider");
-				} else {
-					Main.ShowNotification (string.Format ("Rune page for champion {0} not set", championId), null, NotificationType.Error);
-					return;
-				}
+				var positionName = pos.ToString ().ToLower ();
+				LogTo.Debug ($"Could not retrieve a valid rune page for {championId} in {positionName}");
+				Main.ShowNotification ($"No runes for {positionName}", $"There's not enough info to set runes for {championId} in {positionName}", NotificationType.Error);
+				return;
 			}
+			LogTo.Debug ("Downloaded from provider");
 
 			LogTo.Debug ("Uploading rune page to client");
 			await page.UploadToClient (LoL.Perks);
@@ -276,6 +270,10 @@ namespace Legendary_Rune_Maker.Game
 
 		public async Task UploadSpells (Position pos, int championId)
 		{
+			if (!Config.Current.LoadSpellsOnLock) {
+				return;
+			}
+
 			LogTo.Debug ($"Trying to upload spells for {championId}");
 
 			Provider provider = GetProvider ();
