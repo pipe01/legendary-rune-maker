@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Legendary_Rune_Maker.Data.Providers
@@ -21,6 +22,7 @@ namespace Legendary_Rune_Maker.Data.Providers
 
         private const string UGGApiVersion = "1.1";
         private const string UGGDataVersion = "1.2";
+        private const string UGGOverviewVersion = "1.2.5";
 
         private readonly static IDictionary<int, Position> IdToPosition = new Dictionary<int, Position>
         {
@@ -36,28 +38,17 @@ namespace Legendary_Rune_Maker.Data.Providers
         {
             if (_LolUGGVersion == null)
             {
-                var url = $"https://u.gg/json/new_ugg_versions/{UGGDataVersion}.json";
-                var json = JObject.Parse(await WebCache.String(url));
-                _LolUGGVersion = (json.Children().First().Next as JProperty).Name;
+                var page = await WebCache.String("https://u.gg");
+                var scriptUrl = Regex.Match(page, @"(?<=<script src="").*main.*\.js").Value;
+
+                var scriptText = await WebCache.String(scriptUrl);
+                var versionsJson = Regex.Match(scriptText, @"(?<=Ln=)\[.*?\]").Value;
+                var versions = JArray.Parse(versionsJson);
+
+                _LolUGGVersion = versions[0]["value"].ToObject<string>();
             }
 
             return _LolUGGVersion;
-        }
-
-        private string _UGGOverviewVersion;
-        private async Task<string> GetUGGOverviewVersion()
-        {
-            if (_UGGOverviewVersion == null)
-            {
-                var url = $"https://u.gg/json/new_ugg_versions/{UGGDataVersion}.json";
-
-                var json = JObject.Parse(await Client.DownloadStringTaskAsync(url));
-
-                _UGGOverviewVersion = json["latest"]["overview"].ToObject<string>();
-            }
-
-            return _UGGOverviewVersion;
-
         }
 
         private IDictionary<int, JObject> ChampionData = new Dictionary<int, JObject>();
@@ -65,7 +56,7 @@ namespace Legendary_Rune_Maker.Data.Providers
         {
             if (!ChampionData.TryGetValue(championId, out var data))
             {
-                string url = $"https://stats2.u.gg/lol/{UGGApiVersion}/overview/{await GetLolUGGVersion()}/ranked_solo_5x5/{championId}/{await GetUGGOverviewVersion()}.json";
+                string url = $"https://stats2.u.gg/lol/{UGGApiVersion}/overview/{await GetLolUGGVersion()}/ranked_solo_5x5/{championId}/{UGGOverviewVersion}.json";
 
                 var json = JObject.Parse(await WebCache.String(url));
                 ChampionData[championId] = data = (JObject)json[OverviewWorld.ToString()][OverviewPlatPlus.ToString()];

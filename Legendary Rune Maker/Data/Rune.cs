@@ -43,7 +43,7 @@ namespace Legendary_Rune_Maker.Data
                 ("<br>", "<LineBreak/>"),
                 (@"<b>(.*?)<\/b>", "<Bold>$1</Bold>"),
                 (@"<i>(.*?)<\/i>", "<Italic>$1</Italic>"),
-                (@"<hr><\/hr>", "<Line/>"),
+                (@"<hr\/?>(<\/hr>)?", "<Line/>"),
                 (@"<\/li>", "</li> "),
                 (@"<font color='(.*?)'>(.*?)<\/font>", "<Run Foreground=\"$1\">$2</Run>"),
                 (@"<(.*?)( .*?)?>(?<content>.*?)<\/\1>", "${content}"), //Replace all remaining XML tags with just their content
