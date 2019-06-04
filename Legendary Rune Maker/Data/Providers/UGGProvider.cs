@@ -38,11 +38,11 @@ namespace Legendary_Rune_Maker.Data.Providers
         {
             if (_LolUGGVersion == null)
             {
-                var page = await WebCache.String("https://u.gg");
+                var page = await WebCache.String("https://u.gg", soft: true);
                 var scriptUrl = Regex.Match(page, @"(?<=<script src="").*main.*\.js").Value;
 
-                var scriptText = await WebCache.String(scriptUrl);
-                var versionsJson = Regex.Match(scriptText, @"(?<=Ln=)\[.*?\]").Value;
+                var scriptText = await WebCache.String(scriptUrl, soft: true);
+                var versionsJson = Regex.Match(scriptText, @"(?<=\=)\[\{value:""\d+_\d+.*?]").Value;
                 var versions = JArray.Parse(versionsJson);
 
                 _LolUGGVersion = versions[0]["value"].ToObject<string>();
@@ -58,7 +58,7 @@ namespace Legendary_Rune_Maker.Data.Providers
             {
                 string url = $"https://stats2.u.gg/lol/{UGGApiVersion}/overview/{await GetLolUGGVersion()}/ranked_solo_5x5/{championId}/{UGGOverviewVersion}.json";
 
-                var json = JObject.Parse(await WebCache.String(url));
+                var json = JObject.Parse(await WebCache.String(url, soft: true));
                 ChampionData[championId] = data = (JObject)json[OverviewWorld.ToString()][OverviewPlatPlus.ToString()];
             }
 
