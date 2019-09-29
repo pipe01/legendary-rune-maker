@@ -22,7 +22,7 @@ namespace Legendary_Rune_Maker.Data.Providers
 
         private const string UGGApiVersion = "1.1";
         private const string UGGDataVersion = "1.2";
-        private const string UGGOverviewVersion = "1.2.5";
+        private const string UGGOverviewVersion = "1.2.6";
 
         private readonly static IDictionary<int, Position> IdToPosition = new Dictionary<int, Position>
         {
@@ -39,7 +39,7 @@ namespace Legendary_Rune_Maker.Data.Providers
             if (_LolUGGVersion == null)
             {
                 var page = await WebCache.String("https://u.gg", soft: true);
-                var scriptUrl = Regex.Match(page, @"(?<=<script src="").*main.*\.js").Value;
+                var scriptUrl = Regex.Match(page, @"src=""(.*/main\..*?\.js)").Groups[1].Value;
 
                 var scriptText = await WebCache.String(scriptUrl, soft: true);
                 var versionsJson = Regex.Match(scriptText, @"(?<=\=)\[\{value:""\d+_\d+.*?]").Value;
