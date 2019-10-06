@@ -20,6 +20,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Navigation;
+using Rune = Legendary_Rune_Maker.Data.Rune;
 
 namespace Legendary_Rune_Maker.Pages
 {

@@ -68,7 +68,7 @@ namespace Legendary_Rune_Maker
 
             LeagueClient.Proxy = new DebugProxy(this);
             //LeagueSocket.DumpToDebug = true;
-            Debug.Listeners.Add(new TextWriterTraceListener("log.txt"));
+            Trace.Listeners.Add(new TextWriterTraceListener("log.txt"));
 
             InitializeComponent();
 

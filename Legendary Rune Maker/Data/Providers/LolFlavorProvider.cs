@@ -1,6 +1,7 @@
 ﻿using LCU.NET;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -30,7 +31,7 @@ namespace Legendary_Rune_Maker.Data.Providers
         {
             string champ = Riot.GetChampion(championId).Key;
 
-            var ret = new SynchronizedCollection<Position>();
+            var ret = new ConcurrentBag<Position>();
 
             await Task.WhenAll(PositionToName.Select(async item =>
             {
