@@ -4,6 +4,7 @@ using Legendary_Rune_Maker.Data;
 using Legendary_Rune_Maker.Game;
 using Legendary_Rune_Maker.Pages;
 using Legendary_Rune_Maker.Utils;
+using Legendary_Rune_Maker.Windows;
 using Newtonsoft.Json;
 using Ninject;
 using System;
@@ -96,6 +97,9 @@ namespace Legendary_Rune_Maker
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
+
+            new OverlayWindow().ShowDialog();
+            return;
 
             LoL.BindNinject(Container);
 

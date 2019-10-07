@@ -190,6 +190,11 @@ namespace Legendary_Rune_Maker.Data
             task.Wait();
             return task.Result.SingleOrDefault(o => o.ID == id);
         }
+        
+        public static async Task<Champion> GetChampionAsync(int id, string locale = null)
+        {
+            return (await GetChampionsAsync(locale)).SingleOrDefault(o => o.ID == id);
+        }
 
         public static async Task CacheAllAsync(Action<double> progress)
         {

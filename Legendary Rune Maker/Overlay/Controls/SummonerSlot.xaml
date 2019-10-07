@@ -1,0 +1,53 @@
+﻿<UserControl x:Class="Legendary_Rune_Maker.Overlay.Controls.SummonerSlot"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Legendary_Rune_Maker.Overlay.Controls"
+             xmlns:ctrls="clr-namespace:Legendary_Rune_Maker.Controls"
+             xmlns:data="clr-namespace:Legendary_Rune_Maker.Data"
+             d:DataContext="{d:DesignInstance local:SummonerSlot}"
+             mc:Ignorable="d" Width="243" Height="79">
+    <!--<UserControl.Background>
+        <ImageBrush ImageSource="{StaticResource ChampSelectTestSlot}" />
+    </UserControl.Background>-->
+
+    <Canvas DataContext="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:SummonerSlot}}">
+        <Grid Canvas.Left="{Binding AvatarLeft, Mode=OneWay, FallbackValue=183}" Canvas.Top="8" Width="55" Height="55"
+              Background="Transparent" IsHitTestVisible="True">
+            <Grid.Style>
+                <Style TargetType="Grid">
+                    <Style.Setters>
+                        <Setter Property="Opacity" Value="0.01" />
+                    </Style.Setters>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsMouseOver}" Value="True">
+                            <DataTrigger.Setters>
+                                <Setter Property="Opacity" Value="0.4" />
+                            </DataTrigger.Setters>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Grid.Style>
+
+            <Ellipse Fill="Gray" />
+            <Image Source="{StaticResource Swords}" Width="30" Height="30" />
+        </Grid>
+
+        <ListBox Canvas.Left="2" Canvas.Top="54" Width="175" Height="26" ItemsSource="{Binding EnemyData.GoodPicks}"
+                 Style="{StaticResource UnstyledList}" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                 ScrollViewer.VerticalScrollBarVisibility="Disabled">
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel IsItemsHost="True" Orientation="Horizontal" HorizontalAlignment="Right" />
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+
+            <ListBox.ItemTemplate>
+                <DataTemplate DataType="{x:Type data:Champion}">
+                    <ctrls:CachedImage ImageURL="{Binding ImageURL}" Width="25" Height="25" Margin="2 0 0 0" />
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </Canvas>
+</UserControl>

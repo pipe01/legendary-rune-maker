@@ -3,10 +3,34 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Legendary_Rune_Maker.Windows"
-        mc:Ignorable="d"
-        Title="OverlayWindow" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+        xmlns:c="clr-namespace:Legendary_Rune_Maker.Overlay.Controls"
+        xmlns:local="clr-namespace:Legendary_Rune_Maker.Windows" Initialized="Window_Initialized"
+        xmlns:o="clr-namespace:Legendary_Rune_Maker.Overlay"
+        xmlns:utils="clr-namespace:Legendary_Rune_Maker.Utils"
+        xmlns:diag="clr-namespace:System.Diagnostics;assembly=WindowsBase"
+        mc:Ignorable="d" d:DataContext="{d:DesignInstance Type=local:OverlayWindow}" Background="Transparent" Visibility="Hidden"
+        Title="OverlayWindow" Height="720" Width="1280" Topmost="True" WindowStyle="None" AllowsTransparency="True">
+    <Viewbox Stretch="Uniform">
+        <Canvas Width="1280" Height="720" Opacity="0.6">
+            <!--<Canvas.Background>
+                <ImageBrush ImageSource="{StaticResource ChampSelectTest1}" />
+            </Canvas.Background>-->
+            <ListBox x:Name="EnemySumms" ItemsSource="{Binding EnemySummoners}" Canvas.Left="1022" Canvas.Top="86"
+                     Style="{StaticResource UnstyledList}" Margin="0 1 0 0" Height="420">
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel IsItemsHost="True" VerticalAlignment="Center" />
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+
+                <ListBox.ItemTemplate>
+                    <DataTemplate DataType="{x:Type o:Enemy}">
+                        <Grid>
+                            <c:SummonerSlot Margin="0 1 0 0" EnemyData="{Binding}" />
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Canvas>
+    </Viewbox>
 </Window>
