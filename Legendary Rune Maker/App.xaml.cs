@@ -98,9 +98,6 @@ namespace Legendary_Rune_Maker
         {
             base.OnStartup(e);
 
-            new OverlayWindow().ShowDialog();
-            return;
-
             LoL.BindNinject(Container);
 
             Container.Bind<Config>().ToMethod(_ => Config.Current);
@@ -112,6 +109,10 @@ namespace Legendary_Rune_Maker
             Container.Bind<Detector>().To<ReadyCheckDetector>();
 
             Container.Bind<MainWindow>().ToSelf().InSingletonScope();
+            Container.Bind<OverlayWindow>().ToSelf().InSingletonScope();
+
+            Container.Get<OverlayWindow>().ShowDialog();
+            return;
 
             var loadingWindow = Container.Get<LoadingWindow>();
             Current.MainWindow = loadingWindow;

@@ -8,6 +8,14 @@ namespace Legendary_Rune_Maker.Overlay
         [DllImport("user32.dll")]
         public static extern bool GetWindowRect(IntPtr hwnd, ref RECT rectangle);
 
+        [DllImport("user32.dll")]
+        public static extern IntPtr GetForegroundWindow();
+
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool SetForegroundWindow(IntPtr hWnd);
+
+
         [StructLayout(LayoutKind.Sequential)]
         public struct RECT
         {

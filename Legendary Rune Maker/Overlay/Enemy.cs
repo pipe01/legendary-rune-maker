@@ -1,14 +1,18 @@
 ﻿using Legendary_Rune_Maker.Data;
-using System.ComponentModel;
 
 namespace Legendary_Rune_Maker.Overlay
 {
-    public class Enemy : INotifyPropertyChanged
+    public readonly struct Enemy
     {
-        public event PropertyChangedEventHandler PropertyChanged;
+        public Champion Champion { get; }
+        public Champion[] GoodPicks { get; }
+        public Champion[] BadPicks { get; }
 
-        public Champion Champion { get; set; }
-        public Champion[] GoodPicks { get; set; }
-        public Champion[] BadPicks { get; set; }
+        public Enemy(Champion champion, Champion[] goodPicks, Champion[] badPicks)
+        {
+            this.Champion = champion;
+            this.GoodPicks = goodPicks;
+            this.BadPicks = badPicks;
+        }
     }
 }

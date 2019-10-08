@@ -1,9 +1,13 @@
-﻿using Legendary_Rune_Maker.Data;
+﻿using LCU.NET;
+using LCU.NET.API_Models;
+using Legendary_Rune_Maker.Data;
 using Legendary_Rune_Maker.Overlay;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -29,9 +33,16 @@ namespace Legendary_Rune_Maker.Windows
 
         private readonly Timer LockTimer;
         private readonly IntPtr LeagueHandle;
+        private readonly ILoL LoL;
 
-        public OverlayWindow()
+        public OverlayWindow() : this(null, null)
         {
+        }
+
+        public OverlayWindow(ILoL lol, ILeagueClient client)
+        {
+            this.LoL = lol;
+
             InitializeComponent();
 
             this.DataContext = this;
@@ -46,17 +57,57 @@ namespace Legendary_Rune_Maker.Windows
             LockTimer = new Timer(10);
             LockTimer.Elapsed += this.LockTimer_Elapsed;
             LockTimer.Start();
+
+            client.Init();
+            lol?.Socket.SubscribeAndUpdate<LolChampSelectChampSelectSession>("/lol-champ-select/v1/session", ChampSelectSessionCallback);
+
+            var events = JsonConvert.DeserializeObject<EventData[]>(File.ReadAllText("events.json"));
+            client.Socket.Playback(events, 10);
+        }
+
+        private async void ChampSelectSessionCallback(EventType eventType, LolChampSelectChampSelectSession data)
+        {
+            await Dispatcher.Invoke(async () =>
+            {
+                if (eventType == EventType.Delete)
+                    this.Close();
+
+                if (this.EnemySummoners.Count == 0)
+                {
+                    foreach (var enemy in data.theirTeam)
+                    {
+                        EnemySummoners.Add(new Enemy(enemy.championId == 0 ? null : await Riot.GetChampionAsync(enemy.championId), null, null));
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i < data.theirTeam.Length; i++)
+                    {
+                        var theirChamp = data.theirTeam[i].championId;
+
+                        if (theirChamp != 0 && EnemySummoners[i].Champion == null)
+                        {
+                            EnemySummoners[i] = new Enemy(await Riot.GetChampionAsync(theirChamp), new[] { EnemySummoners[i].Champion }, null);
+                        }
+                    }
+                }
+            });
         }
 
         private void LockTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
+            if (Dispatcher.HasShutdownStarted)
+                return;
+
             Dispatcher.Invoke(() =>
             {
                 Win32.RECT leagueRect = default;
-                if (Win32.GetWindowRect(LeagueHandle, ref leagueRect))
+                var focusedWindow = Win32.GetForegroundWindow();
+
+                if (focusedWindow == LeagueHandle && Win32.GetWindowRect(LeagueHandle, ref leagueRect))
                 {
                     if (this.Visibility != Visibility.Visible)
-                        this.Visibility = Visibility.Hidden;
+                        this.Visibility = Visibility.Visible;
 
                     this.Left = leagueRect.Left;
                     this.Top = leagueRect.Top;
@@ -70,20 +121,14 @@ namespace Legendary_Rune_Maker.Windows
             });
         }
 
-        private async void Window_Initialized(object sender, EventArgs e)
+        private void Window_Initialized(object sender, EventArgs e)
         {
             this.Visibility = Visibility.Visible;
+        }
 
-            var champs = await Riot.GetChampionsAsync();
-            var rng = new Random();
-            
-            for (int i = 0; i < 3; i++)
-            {
-                EnemySummoners.Add(new Enemy
-                {
-                    GoodPicks = Enumerable.Repeat(0, 4).Select(o => champs[rng.Next(0, champs.Length)]).ToArray()
-                });
-            }
+        private void Window_Activated(object sender, EventArgs e)
+        {
+            Win32.SetForegroundWindow(LeagueHandle);
         }
     }
 }

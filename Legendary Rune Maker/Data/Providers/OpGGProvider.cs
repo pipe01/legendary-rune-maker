@@ -1,4 +1,5 @@
-﻿using HtmlAgilityPack;
+﻿using Fizzler.Systems.HtmlAgilityPack;
+using HtmlAgilityPack;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,7 +22,7 @@ namespace Legendary_Rune_Maker.Data.Providers
         };
 
         public override string Name => "OP.GG";
-        public override Options ProviderOptions => Options.RunePages | Options.SkillOrder;
+        public override Options ProviderOptions => Options.RunePages | Options.SkillOrder | Options.Counters;
 
         private static string GetRoleUrl(int championId, Position position)
             => $"https://op.gg/champion/{Riot.GetChampion(championId).Key}/statistics/{PositionToName[position]}";
@@ -82,6 +83,24 @@ namespace Legendary_Rune_Maker.Data.Providers
                 .ToArray();
 
             return $"({string.Join(">", tips)}) {new string(slong)}";
+        }
+
+        public override async Task<Champion[]> GetCountersFor(int championId, Position position)
+        {
+            var doc = new HtmlDocument();
+            doc.LoadHtml(await WebCache.String(GetRoleUrl(championId, position), soft: true));
+
+            var rows = doc.DocumentNode.QuerySelectorAll(".champion-stats-header-matchup__table--strong > tbody > tr");
+
+            var ids = rows.Select(o => o.GetAttributeValue("data-champion-id", 0));
+            var champs = new List<Champion>();
+
+            foreach (var item in ids)
+            {
+                champs.Add(await Riot.GetChampionAsync(item));
+            }
+
+            return champs.ToArray();
         }
     }
 }

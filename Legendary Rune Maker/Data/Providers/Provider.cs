@@ -13,7 +13,8 @@ namespace Legendary_Rune_Maker.Data.Providers
         {
             RunePages = 1,
             ItemSets = 2,
-            SkillOrder = 4
+            SkillOrder = 4,
+            Counters = 8
         }
 
         protected WebClient Client => new WebClient();
@@ -30,6 +31,7 @@ namespace Legendary_Rune_Maker.Data.Providers
         /// Format: "[(QEW) ]QWERQWERQWERQWERQW"
         /// </summary>
         public virtual Task<string> GetSkillOrder(int championId, Position position) => throw new NotImplementedException();
+        public virtual Task<Champion[]> GetCountersFor(int championId, Position position) => throw new NotImplementedException();
 
 
         public bool Supports(Options options) => (ProviderOptions & options) == options;

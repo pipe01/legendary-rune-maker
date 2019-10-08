@@ -23,7 +23,7 @@
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding IsMouseOver}" Value="True">
                             <DataTrigger.Setters>
-                                <Setter Property="Opacity" Value="0.4" />
+                                <Setter Property="Opacity" Value="0.6" />
                             </DataTrigger.Setters>
                         </DataTrigger>
                     </Style.Triggers>
@@ -45,7 +45,10 @@
 
             <ListBox.ItemTemplate>
                 <DataTemplate DataType="{x:Type data:Champion}">
-                    <ctrls:CachedImage ImageURL="{Binding ImageURL}" Width="25" Height="25" Margin="2 0 0 0" />
+                    <Grid>
+                        <TextBlock Text="{Binding Name}" />
+                        <ctrls:CachedImage ImageURL="{Binding ImageURL}" Width="25" Height="25" Margin="2 0 0 0" />
+                    </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>

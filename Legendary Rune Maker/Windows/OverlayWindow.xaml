@@ -8,8 +8,8 @@
         xmlns:o="clr-namespace:Legendary_Rune_Maker.Overlay"
         xmlns:utils="clr-namespace:Legendary_Rune_Maker.Utils"
         xmlns:diag="clr-namespace:System.Diagnostics;assembly=WindowsBase"
-        mc:Ignorable="d" d:DataContext="{d:DesignInstance Type=local:OverlayWindow}" Background="Transparent" Visibility="Hidden"
-        Title="OverlayWindow" Height="720" Width="1280" Topmost="True" WindowStyle="None" AllowsTransparency="True">
+        mc:Ignorable="d" d:DataContext="{d:DesignInstance Type=local:OverlayWindow}" Background="Transparent" Visibility="Hidden" ShowInTaskbar="False"
+        Title="OverlayWindow" Height="720" Width="1280" Topmost="True" WindowStyle="None" AllowsTransparency="True" Activated="Window_Activated">
     <Viewbox Stretch="Uniform">
         <Canvas Width="1280" Height="720" Opacity="0.6">
             <!--<Canvas.Background>
