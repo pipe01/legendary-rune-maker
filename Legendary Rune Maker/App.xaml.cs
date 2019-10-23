@@ -111,8 +111,10 @@ namespace Legendary_Rune_Maker
             Container.Bind<MainWindow>().ToSelf().InSingletonScope();
             Container.Bind<OverlayWindow>().ToSelf().InSingletonScope();
 
-            Container.Get<OverlayWindow>().ShowDialog();
-            return;
+            Container.Bind<ITeamGuesser>().To<TeamGuesser>().InSingletonScope();
+
+            Container.Get<OverlayWindow>().Show();
+            //return;
 
             var loadingWindow = Container.Get<LoadingWindow>();
             Current.MainWindow = loadingWindow;
