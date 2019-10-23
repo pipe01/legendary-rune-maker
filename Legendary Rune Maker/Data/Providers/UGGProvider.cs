@@ -43,7 +43,8 @@ namespace Legendary_Rune_Maker.Data.Providers
 
                 var scriptText = await WebCache.String(scriptUrl, soft: true);
                 var versionsJson = Regex.Match(scriptText, @"(?<=\=)\[\{value:""\d+_\d+.*?]").Value;
-                var versions = JArray.Parse(versionsJson);
+                var versions = 
+                    JArray.Parse(versionsJson);
 
                 _LolUGGVersion = versions[0]["value"].ToObject<string>();
             }
@@ -148,6 +149,17 @@ namespace Legendary_Rune_Maker.Data.Providers
             string @short = string.Join(">", root[3].ToObject<string>().ToCharArray());
 
             return $"({@short}) {new string(skills)}";
+        }
+
+        public async Task<IEnumerable<PositionData>> GetDeepRoles(int championId)
+        {
+            JToken champData = await GetChampionData(championId);
+            int totalGames = champData.Sum(o => ((JProperty)o).Value[0][0][0].ToObject<int>());
+
+            return champData
+                .Cast<JProperty>()
+                .OrderByDescending(o => o.Value[0][0][0])
+                .Select(o => new PositionData(IdToPosition[int.Parse(o.Name)], o.Value[0][0][0].ToObject<float>() / totalGames));
         }
     }
 }

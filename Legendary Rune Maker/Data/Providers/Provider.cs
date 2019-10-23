@@ -31,7 +31,7 @@ namespace Legendary_Rune_Maker.Data.Providers
         /// Format: "[(QEW) ]QWERQWERQWERQWERQW"
         /// </summary>
         public virtual Task<string> GetSkillOrder(int championId, Position position) => throw new NotImplementedException();
-        public virtual Task<Champion[]> GetCountersFor(int championId, Position position) => throw new NotImplementedException();
+        public virtual Task<Champion[]> GetCountersFor(int championId, Position position, int maxCount = 5) => throw new NotImplementedException();
 
 
         public bool Supports(Options options) => (ProviderOptions & options) == options;

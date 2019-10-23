@@ -85,17 +85,17 @@ namespace Legendary_Rune_Maker.Data.Providers
             return $"({string.Join(">", tips)}) {new string(slong)}";
         }
 
-        public override async Task<Champion[]> GetCountersFor(int championId, Position position)
+        public override async Task<Champion[]> GetCountersFor(int championId, Position position, int maxCount = 5)
         {
             var doc = new HtmlDocument();
-            doc.LoadHtml(await WebCache.String(GetRoleUrl(championId, position), soft: true));
+            doc.LoadHtml(await WebCache.String(GetRoleUrl(championId, position), soft: false));
 
             var rows = doc.DocumentNode.QuerySelectorAll(".champion-stats-header-matchup__table--strong > tbody > tr");
 
             var ids = rows.Select(o => o.GetAttributeValue("data-champion-id", 0));
             var champs = new List<Champion>();
 
-            foreach (var item in ids)
+            foreach (var item in ids.Take(maxCount))
             {
                 champs.Add(await Riot.GetChampionAsync(item));
             }
