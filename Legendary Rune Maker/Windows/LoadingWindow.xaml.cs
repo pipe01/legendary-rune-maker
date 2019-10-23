@@ -1,5 +1,6 @@
 ﻿using Anotar.Log4Net;
 using Legendary_Rune_Maker.Data;
+using Legendary_Rune_Maker.Game;
 using Legendary_Rune_Maker.Locale;
 using Legendary_Rune_Maker.Pages;
 using Ninject;
@@ -28,11 +29,13 @@ namespace Legendary_Rune_Maker
 
         private readonly Lazy<MainWindow> MainWindow;
         private readonly Lazy<MainPage> MainPage;
+        private readonly ITeamGuesser TeamGuesser;
 
-        public LoadingWindow(Lazy<MainWindow> mainWindow, Lazy<MainPage> mainPage)
+        public LoadingWindow(Lazy<MainWindow> mainWindow, Lazy<MainPage> mainPage, ITeamGuesser teamGuesser)
         {
             this.MainWindow = mainWindow;
             this.MainPage = mainPage;
+            this.TeamGuesser = teamGuesser;
 
             Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.High;
 
@@ -85,7 +88,8 @@ namespace Legendary_Rune_Maker
             }
 
             Riot.SetLanguage(Config.Current.Culture);
-            await Riot.CacheAllAsync(o => Dispatcher.Invoke(() => Progress.Value = o));
+            await Riot.CacheAllAsync(o => Dispatcher.Invoke(() => Progress.Value = o * 0.7));
+            await TeamGuesser.Load(new Progress<float>(o => Dispatcher.Invoke(() => Progress.Value = 0.7 + (o * 0.3))));
         }
 
         private async Task CheckUpdates()

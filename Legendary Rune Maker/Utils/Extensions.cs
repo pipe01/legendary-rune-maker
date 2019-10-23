@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 
 namespace Legendary_Rune_Maker.Utils
@@ -43,5 +44,19 @@ namespace Legendary_Rune_Maker.Utils
 
         public static IDictionary<TValue, TKey> Invert<TKey, TValue>(this IDictionary<TKey, TValue> dic)
             => dic.ToDictionary(o => o.Value, o => o.Key);
+
+        public static T ArrayLast<T>(this T[] arr) => arr[arr.Length - 1];
+
+        public static async Task<T[]> AwaitAll<T>(this Task<T>[] tasks)
+        {
+            var ret = new T[tasks.Length];
+
+            for (int i = 0; i < tasks.Length; i++)
+            {
+                ret[i] = await tasks[i];
+            }
+
+            return ret;
+        }
     }
 }

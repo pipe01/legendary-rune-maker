@@ -196,6 +196,16 @@ namespace Legendary_Rune_Maker.Data
             return (await GetChampionsAsync(locale)).SingleOrDefault(o => o.ID == id);
         }
 
+        private static IDictionary<string, Champion> ChampionsByKey;
+
+        public static async Task<Champion> GetChampionAsync(string key, string locale = null)
+        {
+            if (ChampionsByKey == null)
+                ChampionsByKey = (await GetChampionsAsync(locale)).ToDictionary(o => o.Key);
+
+            return ChampionsByKey[key];
+        }
+
         public static async Task CacheAllAsync(Action<double> progress)
         {
             await GetLatestVersionAsync();
