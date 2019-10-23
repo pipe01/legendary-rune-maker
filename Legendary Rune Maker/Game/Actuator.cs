@@ -4,6 +4,8 @@ using Legendary_Rune_Maker.Data;
 using Legendary_Rune_Maker.Data.Providers;
 using Legendary_Rune_Maker.Utils;
 using Ninject;
+using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Legendary_Rune_Maker.Game
@@ -21,16 +23,10 @@ namespace Legendary_Rune_Maker.Game
                         HasSetIntent;
         }
 
-        internal static readonly Provider[] RuneProviders = new Provider[]
-        {
-            new ClientProvider(),
-            new ChampionGGProvider(),
-            new MetaLolProvider(),
-            new LolFlavorProvider(),
-            new UGGProvider(),
-            new OpGGProvider(),
-            new RunesLolProvider()
-        };
+        internal static Provider[] RuneProviders { get; } = typeof(Provider).Assembly.GetTypes()
+            .Where(o => o.BaseType == typeof(Provider))
+            .Select(o => (Provider)Activator.CreateInstance(o))
+            .ToArray();
 
         public IMainWindow Main { get; set; }
 
