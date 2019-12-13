@@ -34,7 +34,7 @@ namespace Legendary_Rune_Maker.Game
             LogTo.Debug("possiblePicks: {0}", string.Join(", ", picks.Values.ToArray()));
 
             //Get the first valid one
-            int preferredPick = possiblePicks.FirstOrDefault(pickable.championIds.Contains);
+            int preferredPick = possiblePicks.FirstOrDefault(pickable.Contains);
             LogTo.Debug("Preferred champ: {0}", preferredPick);
 
             if (preferredPick == 0)
@@ -83,7 +83,7 @@ namespace Legendary_Rune_Maker.Game
             possibleBans.Add(bans[Position.Fill]);
             LogTo.Debug("possibleBans: {0}", string.Join(", ", possibleBans));
 
-            int preferredBan = possibleBans.FirstOrDefault(bannable.championIds.Contains);
+            int preferredBan = possibleBans.FirstOrDefault(bannable.Contains);
             var banName = preferredBan > 0 ? Riot.GetChampion(preferredBan).Name : "None";
             LogTo.Debug("Preferred ban: {0}", banName);
 

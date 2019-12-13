@@ -85,15 +85,19 @@ namespace Legendary_Rune_Maker.Windows
                         this.Visibility = Visibility.Visible;
                     }
 
-                    await UpdateTeam(data.theirTeam.Select(o => o.championId).ToArray());
+                    await UpdateTeam(data);
                 }
             });
         }
 
-        private async Task UpdateTeam(int[] team)
+        private async Task UpdateTeam(LolChampSelectChampSelectSession data)
         {
+            int[] team = data.theirTeam.Select(o => o.championId).ToArray();
+
             if (PreviousTeam != null && team.SequenceEqual(PreviousTeam))
                 return;
+
+            var myPosition = data.myTeam.Single(o => o.cellId == data.localPlayerCellId).assignedPosition.ToPosition();
 
             var guessedPositions = Guesser.Guess(team.Where(o => o != 0).ToArray());
 
@@ -108,11 +112,14 @@ namespace Legendary_Rune_Maker.Windows
 
                 if (theirChamp != 0)
                 {
+                    var enemyPosition = guessedPositions.Invert()[theirChamp];
+
                     EnemySummoners[i] = new Enemy(
                         await Riot.GetChampionAsync(theirChamp),
                         await new METAsrcProvider().GetCountersFor(theirChamp, Position.Fill),
                         null,
-                        guessedPositions.Invert()[theirChamp].ToString().ToUpper());
+                        enemyPosition.ToString().ToUpper(),
+                        enemyPosition == myPosition);
                 }
             }
 
@@ -172,6 +179,8 @@ namespace Legendary_Rune_Maker.Windows
             await Guesser.Load(new Progress<float>(o => Console.WriteLine("Loading: {0:0.0}", o * 100)));
 
             await LoL?.Socket.SubscribeAndUpdate<LolChampSelectChampSelectSession>("/lol-champ-select/v1/session", ChampSelectSessionCallback);
+
+            var c = await new UGGProvider().GetCountersFor(84, Position.Mid);
 
             //var events = JsonConvert.DeserializeObject<EventData[]>(File.ReadAllText("events.json"));
             //Client.Socket.Playback(events, 10);

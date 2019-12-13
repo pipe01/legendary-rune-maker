@@ -15,7 +15,7 @@ namespace Legendary_Rune_Maker.Data.Providers
     internal class UGGProvider : Provider
     {
         public override string Name => "U.GG";
-        public override Options ProviderOptions => Options.RunePages | Options.ItemSets | Options.SkillOrder;
+        public override Options ProviderOptions => Options.RunePages | Options.ItemSets | Options.SkillOrder | Options.Counters;
 
         private const int OverviewWorld = 12;
         private const int OverviewPlatPlus = 10;
@@ -52,7 +52,7 @@ namespace Legendary_Rune_Maker.Data.Providers
             return _LolUGGVersion;
         }
 
-        private IDictionary<int, JObject> ChampionData = new Dictionary<int, JObject>();
+        private readonly IDictionary<int, JObject> ChampionData = new Dictionary<int, JObject>();
         protected async Task<JObject> GetChampionData(int championId)
         {
             if (!ChampionData.TryGetValue(championId, out var data))
@@ -160,6 +160,17 @@ namespace Legendary_Rune_Maker.Data.Providers
                 .Cast<JProperty>()
                 .OrderByDescending(o => o.Value[0][0][0])
                 .Select(o => new PositionData(IdToPosition[int.Parse(o.Name)], o.Value[0][0][0].ToObject<float>() / totalGames));
+        }
+
+        public override async Task<Champion[]> GetCountersFor(int championId, Position position, int maxCount = 5)
+        {
+            var json = JObject.Parse(await WebCache.String($"https://stats2.u.gg/lol/{UGGApiVersion}/matchups/{await GetLolUGGVersion()}/ranked_solo_5x5/{championId}/{UGGOverviewVersion}.json"));
+
+            var ret = await Task.WhenAll(json["1"]["1"][IdToPosition.Invert()[position].ToString()][0]
+                .Take(maxCount)
+                .Select(o => Riot.GetChampionAsync(o[0].Value<int>())).ToArray());
+
+            return ret;
         }
     }
 }

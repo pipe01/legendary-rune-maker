@@ -8,13 +8,15 @@ namespace Legendary_Rune_Maker.Overlay
         public Champion[] GoodPicks { get; }
         public Champion[] BadPicks { get; }
         public string Position { get; }
+        public bool IsOpponent { get; }
 
-        public Enemy(Champion champion, Champion[] goodPicks, Champion[] badPicks, string position)
+        public Enemy(Champion champion, Champion[] goodPicks, Champion[] badPicks, string position, bool isOpponent)
         {
             this.Champion = champion;
             this.GoodPicks = goodPicks;
             this.BadPicks = badPicks;
             this.Position = position;
+            this.IsOpponent = isOpponent;
         }
     }
 }
