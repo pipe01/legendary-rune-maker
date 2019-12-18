@@ -6,6 +6,7 @@
     <UseWPF>true</UseWPF>
     <RootNamespace>Legendary_Rune_Maker</RootNamespace>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <ApplicationIcon>Images\lrm_icon.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
