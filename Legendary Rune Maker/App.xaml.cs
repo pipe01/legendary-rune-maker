@@ -113,7 +113,7 @@ namespace Legendary_Rune_Maker
 
             Container.Bind<ITeamGuesser>().To<TeamGuesser>().InSingletonScope();
 
-            Container.Get<OverlayWindow>().Show();
+            //Container.Get<OverlayWindow>().Show();
             //return;
 
             var loadingWindow = Container.Get<LoadingWindow>();

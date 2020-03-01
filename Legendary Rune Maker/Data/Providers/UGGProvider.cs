@@ -22,7 +22,7 @@ namespace Legendary_Rune_Maker.Data.Providers
 
         private const string UGGApiVersion = "1.1";
         private const string UGGDataVersion = "1.2";
-        private const string UGGOverviewVersion = "1.2.6";
+        private const string UGGOverviewVersion = "1.3.0";
 
         private readonly static IDictionary<int, Position> IdToPosition = new Dictionary<int, Position>
         {
