@@ -21,7 +21,8 @@ namespace Legendary_Rune_Maker.Data
         public static readonly string[] AvailableLanguages = new[]
         {
             "en-US",
-            "es-ES"
+            "es-ES",
+            "it-IT"
         };
 
         public int ConfigVersion { get; set; } = LatestVersion;
