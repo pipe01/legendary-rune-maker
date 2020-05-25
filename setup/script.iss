@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Legendary Rune Maker"
-#define MyAppVersion "1.3.7"
+#define MyAppVersion "1.3.8"
 #define MyAppPublisher "pipe01"
 #define MyAppURL "https://github.com/pipe01"
 #define MyAppExeName "Legendary Rune Maker.exe"
@@ -41,7 +41,7 @@ Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescrip
 Name: "StartMenuEntry" ; Description: "{cm:StartAtStartup}" ; GroupDescription: "{cm:AdditionalIcons}"; MinVersion: 4,4; Flags: unchecked
 
 [Files]
-Source: "..\Legendary Rune Maker\bin\Release\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "..\Legendary Rune Maker\bin\Release\net462\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [UninstallDelete]

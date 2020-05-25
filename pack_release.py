@@ -8,7 +8,7 @@ import subprocess
 
 
 def ziprelease(silent=False):
-    basedir = "./Legendary Rune Maker/bin/Release"
+    basedir = "./Legendary Rune Maker/bin/Release/net462"
 
     assert os.path.isdir(basedir)
     with closing(ZipFile("Release.zip", "w", ZIP_DEFLATED)) as z:
@@ -45,12 +45,12 @@ def setSetupVersion(version):
 
 print("Building version " + getVersion() + "...")
 
-code = os.system("msbuild /p:Configuration=Release /v:m")
+# code = os.system("msbuild /p:Configuration=Release")
 
-if (code != 0):
-    print("Build failed!")
-    input("Press Enter to continue...")
-    exit()
+# if (code != 0):
+#     print("Build failed!")
+#     input("Press Enter to continue...")
+#     exit()
 
 print("Packing...")
 ziprelease(True)
