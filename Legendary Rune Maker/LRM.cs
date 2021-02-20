@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+﻿using System.IO;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Legendary_Rune_Maker
 {
     public static class LRM
     {
-        public static readonly string GitBranch;
-        public static readonly string GitCommit;
+        public static string GitBranch { get; }
+        public static string GitCommit { get; }
 
         static LRM()
         {
