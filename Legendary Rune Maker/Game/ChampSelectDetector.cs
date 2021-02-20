@@ -59,6 +59,8 @@ namespace Legendary_Rune_Maker.Game
 
         private async void CurrentChampionUpdate(EventType eventType, int data)
         {
+            EnsureChampSelectState();
+
             if (eventType != EventType.Delete && State.Value?.LockedInChamp != data)
             {
                 State.Value.LockedInChamp = data;
@@ -90,8 +92,7 @@ namespace Legendary_Rune_Maker.Game
 
             if (eventType == EventType.Create || (eventType == EventType.Update && !State.HasValue))
             {
-                State.Value = new Actuator.State();
-                GameState.State.Fire(GameTriggers.EnterChampSelect);
+                EnsureChampSelectState();
             }
             else if (eventType == EventType.Delete)
             {
@@ -199,6 +200,15 @@ namespace Legendary_Rune_Maker.Game
                     await Task.Delay(Math.Max(Config.DelayBeforeAction, MinimumActionDelay));
                     await Actuator.BanChampion(Session.Position, myAction, Session.Data.myTeam);
                 }
+            }
+        }
+
+        private void EnsureChampSelectState()
+        {
+            if (!State.HasValue)
+            {
+                State.Value = new Actuator.State();
+                GameState.State.Fire(GameTriggers.EnterChampSelect);
             }
         }
 

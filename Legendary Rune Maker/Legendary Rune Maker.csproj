@@ -62,6 +62,11 @@
     <ProjectReference Include="..\notifyicon-wpf\Hardcodet.NotifyIcon.Wpf\Source\NotifyIconWpf\NotifyIconWpf.csproj" />
     <ProjectReference Include="..\pimachine\PiMachine.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <None Update="log4net.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
     <Exec Command="git branch --show-current &gt; GitData.txt&#xD;&#xA;git rev-parse --short HEAD &gt;&gt; GitData.txt" />
   </Target>
