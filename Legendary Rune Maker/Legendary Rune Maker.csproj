@@ -32,6 +32,7 @@
       <Version>3.3.2</Version>
     </PackageReference>
     <PackageReference Include="Nito.AsyncEx" Version="5.0.0" />
+    <PackageReference Include="Onova" Version="2.6.2" />
     <PackageReference Include="RestSharp">
       <Version>106.5.4</Version>
     </PackageReference>
@@ -59,7 +60,6 @@
     <ProjectReference Include="..\LCU.NET\LCU.NET.csproj" />
     <ProjectReference Include="..\Notifications.Wpf\Notifications.Wpf\Notifications.Wpf.csproj" />
     <ProjectReference Include="..\notifyicon-wpf\Hardcodet.NotifyIcon.Wpf\Source\NotifyIconWpf\NotifyIconWpf.csproj" />
-    <ProjectReference Include="..\Onova\Onova\Onova.csproj" />
     <ProjectReference Include="..\pimachine\PiMachine.csproj" />
   </ItemGroup>
   

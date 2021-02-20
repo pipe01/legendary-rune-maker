@@ -3,21 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29326.143
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Legendary Rune Maker", "Legendary Rune Maker\Legendary Rune Maker.csproj", "{F9A8635F-EB66-4F88-8581-CF779CF3AA59}"
-	ProjectSection(ProjectDependencies) = postProject
-		{5F02DE11-7D21-4A98-B00B-54C2A5D62544} = {5F02DE11-7D21-4A98-B00B-54C2A5D62544}
-	EndProjectSection
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Legendary Rune Maker", "Legendary Rune Maker\Legendary Rune Maker.csproj", "{F9A8635F-EB66-4F88-8581-CF779CF3AA59}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PiMachine", "pimachine\PiMachine.csproj", "{F4A1E544-6DE4-493B-9BD0-F0D5FCA3F836}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LCU.NET", "LCU.NET\LCU.NET.csproj", "{531938F3-2E4E-4C45-BE4D-CECED31AC294}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Onova", "Onova\Onova\Onova.csproj", "{15CF3641-6EB9-4913-A22B-F1FEB5E0DF23}"
-	ProjectSection(ProjectDependencies) = postProject
-		{5F02DE11-7D21-4A98-B00B-54C2A5D62544} = {5F02DE11-7D21-4A98-B00B-54C2A5D62544}
-	EndProjectSection
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Onova.Updater", "Onova\Onova.Updater\Onova.Updater.csproj", "{5F02DE11-7D21-4A98-B00B-54C2A5D62544}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Notifications.Wpf", "Notifications.Wpf\Notifications.Wpf\Notifications.Wpf.csproj", "{5C9A4F46-263D-4C23-B361-F09E14BB109E}"
 EndProject
@@ -64,26 +54,6 @@ Global
 		{531938F3-2E4E-4C45-BE4D-CECED31AC294}.Release 4.6.1|Any CPU.Build.0 = Release|Any CPU
 		{531938F3-2E4E-4C45-BE4D-CECED31AC294}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{531938F3-2E4E-4C45-BE4D-CECED31AC294}.Release|Any CPU.Build.0 = Release|Any CPU
-		{15CF3641-6EB9-4913-A22B-F1FEB5E0DF23}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{15CF3641-6EB9-4913-A22B-F1FEB5E0DF23}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{15CF3641-6EB9-4913-A22B-F1FEB5E0DF23}.Release 4.0|Any CPU.ActiveCfg = Release|Any CPU
-		{15CF3641-6EB9-4913-A22B-F1FEB5E0DF23}.Release 4.0|Any CPU.Build.0 = Release|Any CPU
-		{15CF3641-6EB9-4913-A22B-F1FEB5E0DF23}.Release 4.5|Any CPU.ActiveCfg = Release|Any CPU
-		{15CF3641-6EB9-4913-A22B-F1FEB5E0DF23}.Release 4.5|Any CPU.Build.0 = Release|Any CPU
-		{15CF3641-6EB9-4913-A22B-F1FEB5E0DF23}.Release 4.6.1|Any CPU.ActiveCfg = Release|Any CPU
-		{15CF3641-6EB9-4913-A22B-F1FEB5E0DF23}.Release 4.6.1|Any CPU.Build.0 = Release|Any CPU
-		{15CF3641-6EB9-4913-A22B-F1FEB5E0DF23}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{15CF3641-6EB9-4913-A22B-F1FEB5E0DF23}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5F02DE11-7D21-4A98-B00B-54C2A5D62544}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5F02DE11-7D21-4A98-B00B-54C2A5D62544}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5F02DE11-7D21-4A98-B00B-54C2A5D62544}.Release 4.0|Any CPU.ActiveCfg = Release|Any CPU
-		{5F02DE11-7D21-4A98-B00B-54C2A5D62544}.Release 4.0|Any CPU.Build.0 = Release|Any CPU
-		{5F02DE11-7D21-4A98-B00B-54C2A5D62544}.Release 4.5|Any CPU.ActiveCfg = Release|Any CPU
-		{5F02DE11-7D21-4A98-B00B-54C2A5D62544}.Release 4.5|Any CPU.Build.0 = Release|Any CPU
-		{5F02DE11-7D21-4A98-B00B-54C2A5D62544}.Release 4.6.1|Any CPU.ActiveCfg = Release|Any CPU
-		{5F02DE11-7D21-4A98-B00B-54C2A5D62544}.Release 4.6.1|Any CPU.Build.0 = Release|Any CPU
-		{5F02DE11-7D21-4A98-B00B-54C2A5D62544}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5F02DE11-7D21-4A98-B00B-54C2A5D62544}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5C9A4F46-263D-4C23-B361-F09E14BB109E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5C9A4F46-263D-4C23-B361-F09E14BB109E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5C9A4F46-263D-4C23-B361-F09E14BB109E}.Release 4.0|Any CPU.ActiveCfg = Release 4.0|Any CPU
