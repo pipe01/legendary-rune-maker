@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Legendary Rune Maker"
-#define MyAppVersion "1.3.8"
+#define MyAppVersion "1.3.9"
 #define MyAppPublisher "pipe01"
 #define MyAppURL "https://github.com/pipe01"
 #define MyAppExeName "Legendary Rune Maker.exe"
