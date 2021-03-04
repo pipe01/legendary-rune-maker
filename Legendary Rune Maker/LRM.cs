@@ -7,6 +7,7 @@ namespace Legendary_Rune_Maker
     {
         public static string GitBranch { get; }
         public static string GitCommit { get; }
+        public static string Version => Assembly.GetExecutingAssembly().GetName().Version.ToString(3);
 
         static LRM()
         {

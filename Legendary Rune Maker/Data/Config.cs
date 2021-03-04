@@ -16,7 +16,7 @@ namespace Legendary_Rune_Maker.Data
         public static Container<Config> Container { get; } = new Container<Config>(Load());
 
         private const string FilePath = "config.json";
-        private const int LatestVersion = 14;
+        private const int LatestVersion = 15;
 
         public static readonly string[] AvailableLanguages = new[]
         {
@@ -30,6 +30,7 @@ namespace Legendary_Rune_Maker.Data
         public bool CheckUpdatesBeforeStartup { get; set; } = true;
         public string CultureName { get; set; }
         public bool MinimizeToTaskbar { get; set; } = true;
+        public bool SendTrackRequest { get; set; } = true;
 
         public bool AutoAccept { get; set; } = true;
 

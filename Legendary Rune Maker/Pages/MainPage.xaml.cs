@@ -83,7 +83,7 @@ namespace Legendary_Rune_Maker.Pages
 
             InitializeComponent();
 
-            Version.Text = "Version " + Assembly.GetExecutingAssembly().GetName().Version.ToString(3);
+            Version.Text = "Version " + LRM.Version;
 #if DEBUG
             Version.Text += "-" + LRM.GitCommit.Substring(0, 7);
 #endif

@@ -13,7 +13,9 @@ using System.Globalization;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
+using System.Net.Http;
 using System.Reflection;
+using System.Threading.Tasks;
 using System.Windows;
 
 namespace Legendary_Rune_Maker
@@ -115,6 +117,25 @@ namespace Legendary_Rune_Maker
 
             //Container.Get<OverlayWindow>().Show();
             //return;
+
+#if RELEASE
+            if (Config.Current.SendTrackRequest)
+            {
+                Task.Run(async () =>
+                {
+                    LogTo.Debug("Sending track request");
+
+                    try
+                    {
+                        await new HttpClient().PostAsync("http://pipe01.net/lrm/track.php?version=" + LRM.Version, null);
+                    }
+                    catch (Exception ex)
+                    {
+                        LogTo.ErrorException("Failed to send track request", ex);
+                    }
+                });
+            }
+#endif
 
             var loadingWindow = Container.Get<LoadingWindow>();
             Current.MainWindow = loadingWindow;
