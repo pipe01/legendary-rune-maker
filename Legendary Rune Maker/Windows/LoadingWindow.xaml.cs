@@ -54,9 +54,7 @@ namespace Legendary_Rune_Maker
             this.Close();
         }
 
-#pragma warning disable CS1998
         private async void Window_Initialized(object sender, EventArgs e)
-#pragma warning restore CS1998
         {
 #if !DEBUG
             if (Config.Current.CheckUpdatesBeforeStartup)

@@ -1,15 +1,20 @@
 ﻿using Legendary_Rune_Maker.Utils;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media.Imaging;
+
+#nullable enable
 
 namespace Legendary_Rune_Maker.Data
 {
@@ -17,11 +22,13 @@ namespace Legendary_Rune_Maker.Data
     {
         public static ImageCache Instance { get; } = new ImageCache("cache");
 
+        private static readonly bool IsDesignMode = DesignerProperties.GetIsInDesignMode(new DependencyObject());
+
         public bool LocalCache => Directory.Exists(CachePath);
 
         public string FullCachePath => Path.Combine(Path.GetFullPath("./"), CachePath);
 
-        private IDictionary<string, (BitmapSource n, BitmapSource g, byte[] d)> Dicc = new Dictionary<string, (BitmapSource, BitmapSource, byte[])>();
+        private readonly IDictionary<string, (BitmapSource Normal, BitmapSource? Grayscale, byte[] Raw)> Dicc = new ConcurrentDictionary<string, (BitmapSource, BitmapSource?, byte[])>();
 
         private readonly string CachePath;
 
@@ -32,6 +39,8 @@ namespace Legendary_Rune_Maker.Data
 
         public async Task<BitmapSource> Get(string url)
         {
+            var sw = Stopwatch.StartNew();
+
             if (!Dicc.TryGetValue(url, out var img))
             {
                 string file = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), CachePath, ToMD5(url));
@@ -45,17 +54,18 @@ namespace Legendary_Rune_Maker.Data
                 {
                     data = await new WebClient().DownloadDataTaskAsync(url);
 
-                    if (!DesignerProperties.GetIsInDesignMode(new DependencyObject()))
+                    if (!IsDesignMode)
                     {
                         Directory.CreateDirectory(CachePath);
                         File.WriteAllBytes(file, data);
                     }
                 }
 
-                Dicc[url] = (RawToBitmapImage(data), null, data);
+                Dicc[url] = img = (RawToBitmapImage(data), null, data);
             }
 
-            return Dicc[url].n;
+            Debug.WriteLine($"Time: {sw.Elapsed} {url}");
+            return img.Normal;
         }
 
         public async Task<BitmapSource> GetGrayscale(string url)
@@ -81,6 +91,7 @@ namespace Legendary_Rune_Maker.Data
             image.BeginInit();
             image.StreamSource = stream;
             image.EndInit();
+            image.Freeze();
             return image;
         }
 

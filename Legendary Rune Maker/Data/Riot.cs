@@ -3,12 +3,15 @@ using ICSharpCode.SharpZipLib.Zip;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Legendary_Rune_Maker.Data
@@ -217,15 +220,22 @@ namespace Legendary_Rune_Maker.Data
             var runes = (await GetRunesAsync()).Select(o => o.Value.IconURL);
             var trees = (await GetTreeStructuresAsync()).Select(o => o.Value.IconURL);
 
-            var total = runes.Concat(champions).Concat(spells).Concat(trees);
+            var total = runes.Concat(champions).Concat(spells).Concat(trees).ToArray();
             int count = total.Count();
 
             int p = 0;
-            await Task.WhenAll(total.Select(async o =>
+            var tasks = Partitioner.Create(total).GetPartitions(Environment.ProcessorCount).Select(o => Task.Run(async () =>
             {
-                await ImageCache.Instance.Get(o);
-                progress((double)p++ / count);
+                while (o.MoveNext())
+                {
+                    await ImageCache.Instance.Get(o.Current).ConfigureAwait(false);
+
+                    if (Interlocked.Increment(ref p) % 10 == 0)
+                        progress((double)p / count);
+                }
             }));
+
+            await Task.WhenAll(tasks);
         }
 
         public static string GetCDragonRuneIconUrl(string url)
