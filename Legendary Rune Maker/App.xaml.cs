@@ -10,7 +10,9 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.IO.Compression;
+using System.Net.Http;
 using System.Reflection;
+using System.Threading.Tasks;
 using System.Windows;
 
 namespace Legendary_Rune_Maker
