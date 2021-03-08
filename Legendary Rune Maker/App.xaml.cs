@@ -2,22 +2,15 @@
 using LCU.NET;
 using Legendary_Rune_Maker.Data;
 using Legendary_Rune_Maker.Game;
-using Legendary_Rune_Maker.Pages;
 using Legendary_Rune_Maker.Utils;
 using Legendary_Rune_Maker.Windows;
-using Newtonsoft.Json;
 using Ninject;
-using Nito.AsyncEx.Synchronous;
 using System;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.IO.Compression;
-using System.Linq;
-using System.Net.Http;
 using System.Reflection;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace Legendary_Rune_Maker

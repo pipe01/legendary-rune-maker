@@ -23,12 +23,12 @@ namespace Legendary_Rune_Maker.Game
             {
                 get
                 {
-                    var @this = this; //wtf c#
-                    return Data.myTeam?.SingleOrDefault(o => o.cellId == @this.Data.localPlayerCellId);
+                    var @this = this;
+                    return Data?.myTeam?.SingleOrDefault(o => o.cellId == @this.Data.localPlayerCellId);
                 }
             }
 
-            public Position Position => Player?.assignedPosition.ToPosition() ?? Position.Fill;
+            public Position Position => Player?.assignedPosition?.ToPosition() ?? Position.Fill;
 
             public SessionData(LolChampSelectChampSelectSession data)
             {
