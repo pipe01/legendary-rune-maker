@@ -7,7 +7,8 @@
     <RootNamespace>Legendary_Rune_Maker</RootNamespace>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <ApplicationIcon>Images\lrm_icon.ico</ApplicationIcon>
-      <LangVersion>latest</LangVersion>
+    <LangVersion>latest</LangVersion>
+    <StartupObject>Legendary_Rune_Maker.Program</StartupObject>
   </PropertyGroup>
 
   <ItemGroup>

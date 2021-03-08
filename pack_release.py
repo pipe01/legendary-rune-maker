@@ -28,8 +28,7 @@ def ziprelease(silent=False):
                 z.write(absfn, zfn)
 
 
-def getVersion():
-    return [x for x in
+version = [x for x in
             [re.findall(r"(?<=AssemblyVersion\(\").*(?=\")", line) for line in open("./Legendary Rune Maker/Properties/AssemblyInfo.cs")]
             if len(x) == 1][0][0]
 
@@ -43,7 +42,7 @@ def setSetupVersion(version):
         f.write(content)
 
 
-print("Building version " + getVersion() + "...")
+print("Building version " + version + "...")
 
 # code = os.system("msbuild /p:Configuration=Release")
 
@@ -56,7 +55,7 @@ print("Packing...")
 ziprelease(True)
 
 print("Setting version on InnoSetup script...")
-setSetupVersion(getVersion())
+setSetupVersion(version)
 
 print("Compiling setup...")
 subprocess.run("C:/Program Files (x86)/Inno Setup 5/ISCC.exe setup/script.iss")

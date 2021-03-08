@@ -7,6 +7,7 @@ using Legendary_Rune_Maker.Utils;
 using Legendary_Rune_Maker.Windows;
 using Newtonsoft.Json;
 using Ninject;
+using Nito.AsyncEx.Synchronous;
 using System;
 using System.Diagnostics;
 using System.Globalization;
@@ -15,6 +16,7 @@ using System.IO.Compression;
 using System.Linq;
 using System.Net.Http;
 using System.Reflection;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -43,15 +45,17 @@ namespace Legendary_Rune_Maker
 
         private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
-            if (!Debugger.IsAttached)
+            if (!Debugger.IsAttached || true)
             {
                 var exception = e.ExceptionObject as Exception;
 
                 LogTo.FatalException("Unhandled exception", exception);
 
                 var result = MessageBox.Show($"{exception.GetType().FullName}: {exception.Message}\n" +
-                    "Create minidump? You can use this to report this issue to me.", "Unhandled exception",
+                    "This error will be automatically reported. Create minidump? You can use it to manually report the issue to me.", "Unhandled exception",
                     MessageBoxButton.YesNoCancel, MessageBoxImage.Error);
+
+                Report();
 
                 if (result == MessageBoxResult.Yes)
                 {
@@ -93,6 +97,12 @@ namespace Legendary_Rune_Maker
                     Legendary_Rune_Maker.MainWindow.DisposeTaskbar();
                     Process.GetCurrentProcess().Kill();
                 }
+            }
+
+            static void Report()
+            {
+                var currProc = Process.GetCurrentProcess();
+                Process.Start(currProc.MainModule.FileName, "--report");
             }
         }
 

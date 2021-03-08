@@ -216,6 +216,10 @@ namespace Legendary_Rune_Maker
             {
                 new DebugProxyWindow(LoL.Client).Show();
             }
+            else if (e.Key == Key.Pause && (Keyboard.Modifiers & ModifierKeys.Shift) == ModifierKeys.Shift)
+            {
+                throw new Exception("Test exception");
+            }
         }
 
         private void Window_Closed(object sender, EventArgs e)

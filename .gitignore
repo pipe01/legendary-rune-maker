@@ -264,3 +264,4 @@ __pycache__/
 GitData.txt
 Release.zip
 MigrationBackup
+dist
