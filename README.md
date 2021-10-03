@@ -28,7 +28,7 @@ A rune maker for League of Legends that also offers a bunch of automation option
 | Champion.GG | ![](./table_mark.png) | ![](./table_mark.png) | ![](./table_mark.png) | ![](./table_mark.png) |
 | LoLFlavor   |                       | ![](./table_mark.png) |                       |                       |
 | MetaLoL     | ![](./table_mark.png) | ![](./table_mark.png) | ![](./table_mark.png) |                       |
-| Op.GG       | ![](./table_mark.png) |                       | ![](./table_mark.png) | ![](./table_mark.png) |
+| Op.GG       | ![](./table_mark.png) | ![](./table_mark.png) | ![](./table_mark.png) | ![](./table_mark.png) |
 | Runes.lol   | ![](./table_mark.png) |                       |                       |                       |
 | U.GG        | ![](./table_mark.png) | ![](./table_mark.png) | ![](./table_mark.png) | ![](./table_mark.png) |
 
